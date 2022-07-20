@@ -2,7 +2,7 @@
 
 
 
-Test and text based on Wooldridge (2012) with Arturo Bernal codes.
+The test in this chapter and some of the text is  based on Wooldridge (2012) with my own codes.
 
 ##   Shorts samples test of efficient markets hypothesis (EMH) for one asset
 
@@ -36,13 +36,10 @@ Note. Compute a lagged version of a time series, shifting the time base back by 
 ```r
 dji<-all[,4]
 dji<-Delt(all[,4])
-# un lag de dji function lag
 la2<-stats::lag(dji,2)
 la3<-stats::lag(dji,3)
-# voy a poner juntas lag con dji
 dji<-cbind(dji,la2,la3)
 dji<-na.omit(dji)
-# para cambiar  nombre de la columna
 colnames(dji)<-c("SP500","SP500_lag2","SP500_lag3")
 head(dji)
 #>                  SP500   SP500_lag2   SP500_lag3
@@ -55,7 +52,7 @@ head(dji)
 ```
 
 
-Correr la regresion de y= y(t-1)
+Run the regression
 
 ```r
 summary(lm(SP500~.,data =dji))
@@ -79,8 +76,6 @@ summary(lm(SP500~.,data =dji))
 #> Multiple R-squared:  0.000876,	Adjusted R-squared:  0.0003617 
 #> F-statistic: 1.703 on 2 and 3885 DF,  p-value: 0.1822
 ```
-
-
 
 
 Remember, a significant beta1 coefficient would reject EMH; then, we could use the past information to predict the a price, in this case the DJI. 
@@ -339,7 +334,7 @@ The following code counts the number of tickers that we could use to make a pred
 
 ```r
 library(dplyr)
-# generar una columna que diga si puedo hacer predicción o no con ese ticker
+
 pred<-ifelse(ar[,1]<0.1,"Predict","No Predict")
 # merge with the ar object 
 ar<-cbind(ar,pred)
@@ -453,10 +448,9 @@ arf<- df %>%
   filter(coll== "category")
 
 ```r
-library(dplyr) # faltaba habilitar esta libreria
+library(dplyr) 
 arf<- ar %>%
   filter(pred == "Predict")
- # arf debe tener 91 renglones
 ```
 
 

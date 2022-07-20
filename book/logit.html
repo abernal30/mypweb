@@ -4,18 +4,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>4 Machine learning with market direction prediction: Logit | Algorithms and Financial programing in R</title>
+<title>4 Machine learning with market direction prediction: Logit | Algorithms and Financial Programing in R</title>
 <meta name="author" content="Arturo Bernal">
-<meta name="description" content="Today we will cover machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. A logistic regression (Logit) and Linear...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="4 Machine learning with market direction prediction: Logit | Algorithms and Financial programing in R">
+<meta name="description" content="This chapter covers machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. A logistic regression (Logit) and Linear...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="4 Machine learning with market direction prediction: Logit | Algorithms and Financial Programing in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/logit.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
-<meta property="og:description" content="Today we will cover machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. A logistic regression (Logit) and Linear...">
+<meta property="og:description" content="This chapter covers machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. A logistic regression (Logit) and Linear...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="4 Machine learning with market direction prediction: Logit | Algorithms and Financial programing in R">
-<meta name="twitter:description" content="Today we will cover machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. A logistic regression (Logit) and Linear...">
+<meta name="twitter:title" content="4 Machine learning with market direction prediction: Logit | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="This chapter covers machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. A logistic regression (Logit) and Linear...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Algorithms and Financial programing in R</a>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -99,13 +99,13 @@
 <h1>
 <span class="header-section-number">4</span> Machine learning with market direction prediction: Logit<a class="anchor" aria-label="anchor" href="#logit"><i class="fas fa-link"></i></a>
 </h1>
-<p>Today we will cover machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward.</p>
+<p>This chapter covers machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward.</p>
 <p>A logistic regression (Logit) and Linear Discriminant Analysis (LDA) models help us to fit a model using binary behavior (up or down) and forecast market direction. Logistic regression.</p>
 <div id="data-preparation" class="section level2" number="4.1">
 <h2>
 <span class="header-section-number">4.1</span> Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://www.quantmod.com">"quantmod"</a></span><span class="op">)</span></span>
 <span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"BNB-USD"</span></span>
 <span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>,from<span class="op">=</span><span class="st">"2021-08-01"</span>,to<span class="op">=</span><span class="st">"2022-04-18"</span>,warnings <span class="op">=</span><span class="cn">FALSE</span>,auto.assign<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
@@ -120,7 +120,7 @@
 <span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span></code></pre></div>
 <p>The following commands are to create variable direction with either Up direction (1) or Down direction (0). In other words, Up up direction is a signal o buying and and down could be a signal of not buying. For this example, direction variable is created when a short SMA is greater than a long SMA and zero otherwise.</p>
 <p>First we make a plot.</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#par(mfrow=c(2,1))</span></span>
 <span><span class="va">plo0</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">data2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">plo</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">data2</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
@@ -132,18 +132,14 @@
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"topleft"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"actual"</span>,<span class="st">"short-sma"</span>,<span class="st">"long-sma"</span><span class="op">)</span>,lty <span class="op">=</span> <span class="fl">1</span>,lwd<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="st">"red"</span>,<span class="st">"green"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="04-Clasification-with-Logit_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>Now we create the signal.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># ifelse(condición,si se cumple la condición,si no se cmple la condición)</span></span>
-<span><span class="co"># si el SMA corto &gt; SMA largo, 1,0) </span></span>
-<span><span class="va">signal</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">data2</span><span class="op">[</span>,<span class="st">"SMA"</span><span class="op">]</span><span class="op">&gt;</span><span class="va">data2</span><span class="op">[</span>,<span class="st">"SMA.1"</span><span class="op">]</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">signal</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">data2</span><span class="op">[</span>,<span class="st">"SMA"</span><span class="op">]</span><span class="op">&gt;</span><span class="va">data2</span><span class="op">[</span>,<span class="st">"SMA.1"</span><span class="op">]</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">signal</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="04-Clasification-with-Logit_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># El numero 1 es señal de compra de Binance y cero es no comprar. </span></span></code></pre></div>
 <p>As in the machine learning example, where we predict BNB price, our model is:</p>
 <p><span class="math display">\[ signal_{t}=\alpha\ +\beta1\ macd_{t-1}+\beta2\ rsi_{t-2} +\beta3\ bb +\ e \]</span></p>
 <p>The only difference is the independent variable, in this case is signal.</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">std</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/rollapply.html">rollapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">lag2</span>,<span class="va">sd</span><span class="op">)</span> <span class="co"># var2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">std</span><span class="op">)</span><span class="op">&lt;-</span><span class="st">"std"</span></span>
 <span></span>
@@ -162,7 +158,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="st">"signal"</span></span>
 <span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span></code></pre></div>
 <p>We separate the sample into training and testing. The training data set is used for the building model process, and the testing dataset is used for evaluation purposes.</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">n_train</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">N</span><span class="op">*</span><span class="fl">.8</span>,<span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">part</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="va">n_train</span><span class="op">]</span></span>
@@ -175,8 +171,7 @@
 <span><span class="va">test</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">data2</span>,</span>
 <span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">&gt;=</span><span class="va">part</span><span class="op">+</span><span class="fl">1</span> <span class="op">&amp;</span></span>
 <span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">&lt;=</span><span class="st">"2022-04-18"</span><span class="op">)</span></span>
-<span><span class="va">y1</span><span class="op">&lt;-</span><span class="va">test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="co"># contiene la varaible que voy a pronosticar</span></span>
-<span><span class="co">#test&lt;-test[,-1] # las variables independientes, que voy a usar para haver mi pronóstico</span></span></code></pre></div>
+<span><span class="va">y1</span><span class="op">&lt;-</span><span class="va">test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> </span></code></pre></div>
 </div>
 <div id="logistic-regression" class="section level2" number="4.2">
 <h2>
@@ -185,7 +180,7 @@
 <p>The linear regression assumes that the response variable Y is quantitative. But in many situations, the response variable is instead qualitative. For example, eye color is qualitative, taking on values blue, brown, or green. Often qualitative variables are referred to as categorical ; we will use these terms interchangeably.</p>
 <p>In a binary response model, interest lies primarily in the response probability. However, we can not use the OLS to estimate the model, because it is a not linear binary response model. Then we apply Logistic regression.</p>
 <p>glm(y ~.,data= ,family=binomial())</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">signal</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span> <span class="va">train</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model</span>,<span class="va">test</span><span class="op">)</span></span>
 <span><span class="va">pred</span></span>
@@ -205,14 +200,14 @@
 <span><span class="co">#&gt; -0.1493334  0.3593882  0.6847538</span></span></code></pre></div>
 <p>We expect a forecast of a 0,1 result, as the signal. Then we transform it into a probabilistic model.
 exp(x)/(1+exp(x))</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prob</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Even when the result is a probability, between 0 and 1, we require a result 0,1. Then we transform it, creating a binary variable, that takes the value of 1 when the probability is higher than 0.5, and zero when is lower than 0.5.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predf</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">prob</span><span class="op">&gt;</span><span class="fl">.5</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">predf</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="04-Clasification-with-Logit_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># comparar vs el dato real que estaé en y1</span></span></code></pre></div>
 </div>
 <div id="confusion-matrix" class="section level2" number="4.3">
@@ -224,19 +219,14 @@ exp(x)/(1+exp(x))</p>
 <p>In the confusion matrix, one of the mesures of interest is the accuracy, defined as:</p>
 <p><span class="math display">\[ accuracy =\frac{TP+TN}{TP+TN+FP+FN}\]</span></p>
 <p>In this formula, the terms TP, TN, FP, and FN refer to the number of times the model’s predictions fell into each of these categories. The accuracy is therefore a proportion that represents the number of true positives and true negatives, divided by the total number of predictions.</p>
-<p>con 7 var
-RMSE de 7</p>
-<p>con 11 var
-RMSE de 6.5</p>
 <p>factor(x,levels=c(1,0))
 confusionMatrix(pred,real)</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
-<span><span class="co"># convertir en data frame  predf</span></span>
 <span><span class="va">predf2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">predf</span><span class="op">)</span></span>
-<span><span class="va">predf3</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">predf2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># niveles, el primer dato, el 1, es  la variable de mi interés. </span></span>
+<span><span class="va">predf3</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">predf2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>   </span>
 <span><span class="va">real</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">y1</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">predf3</span>,<span class="va">real</span><span class="op">)</span> <span class="co"># primero va la predicción y después el dato real</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">predf3</span>,<span class="va">real</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; Confusion Matrix and Statistics</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;           Reference</span></span>
@@ -263,9 +253,7 @@ confusionMatrix(pred,real)</p>
 <span><span class="co">#&gt;       Balanced Accuracy : 0.8000        </span></span>
 <span><span class="co">#&gt;                                         </span></span>
 <span><span class="co">#&gt;        'Positive' Class : 1             </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="op">(</span><span class="fl">25</span><span class="op">+</span><span class="fl">12</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">25</span><span class="op">+</span><span class="fl">12</span><span class="op">+</span><span class="fl">8</span><span class="op">+</span><span class="fl">0</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8222222</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span></code></pre></div>
 <p>Sensitivity</p>
 <p>Finding a useful classifier often involves a balance between predictions that are overly conservative and overly aggressive. For example, an e-mail filter could guarantee to eliminate every spam message by aggressively eliminating nearly every ham message at the same time. On the other hand, guaranteeing that no ham message is inadvertently filtered might require us to allow an unacceptable amount of spam to pass through the filter. A pair of performance measures captures this trade off: sensitivity and specificity.</p>
 <p>The sensitivity of a model (also called the true positive rate) measures the proportion of positive examples that were correctly classified. Therefore, as shown in the following formula, it is calculated as the number of true positives divided by the total number of positives, both correctly classified (the true positives) as well as incorrectly classified (the false negatives):</p>
@@ -282,7 +270,7 @@ logistic regression model are surprisingly unstable. Linear discriminant
 analysis does not suffer from this problem.</p>
 <p>• If number of observations <em>n</em> is small and the distribution of the predictors X is approximately normal in each of the classes, the linear discriminant model is again more stable than the logistic regression model.</p>
 <p>• Finally, when we have more than 2 categories, for example, c(-1,0,1).</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://www.quantmod.com">"quantmod"</a></span><span class="op">)</span></span>
 <span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"BNB-USD"</span></span>
 <span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>,from<span class="op">=</span><span class="st">"2018-08-01"</span>,to<span class="op">=</span><span class="st">"2022-04-18"</span>,warnings <span class="op">=</span><span class="cn">FALSE</span>,auto.assign<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
@@ -308,14 +296,13 @@ analysis does not suffer from this problem.</p>
 <span><span class="co">#colnames(data2)[1]&lt;-"signal"</span></span>
 <span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span></code></pre></div>
 <p>Signal creation, now 3 categories c(-1,0,1)</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">signal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">data2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&gt;</span> <span class="va">data2</span><span class="op">[</span>,<span class="st">'up'</span><span class="op">]</span> <span class="op">&amp;</span> <span class="va">data2</span><span class="op">[</span>,<span class="st">'macd'</span><span class="op">]</span><span class="op">&gt;</span> <span class="va">data2</span><span class="op">[</span>,<span class="st">'macd_signal'</span><span class="op">]</span>,<span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">data2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;</span> <span class="va">data2</span><span class="op">[</span>,<span class="st">'dn'</span><span class="op">]</span> <span class="op">&amp;</span> <span class="va">data2</span><span class="op">[</span>,<span class="st">'macd'</span><span class="op">]</span> <span class="op">&lt;</span><span class="va">data2</span><span class="op">[</span>,<span class="st">'macd_signal'</span><span class="op">]</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">signal</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="04-Clasification-with-Logit_files/figure-html/unnamed-chunk-11-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>1 es señal de compra, -1 de venta (o venta en corto), y cero es no hacer nada (ni comprar ni vender).</p>
-<p>$400 espero que baje 380.</p>
 <p>Combinig data2 and signal</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#We first replace bnp by signal </span></span>
 <span><span class="va">data2</span><span class="op">&lt;-</span><span class="va">data2</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span></span>
@@ -324,7 +311,7 @@ analysis does not suffer from this problem.</p>
 <span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">signal</span>,<span class="va">data2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="st">"signal"</span></span></code></pre></div>
 <p>Training and test partition</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">n_train</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">N</span><span class="op">*</span><span class="fl">.8</span>,<span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">part</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="va">n_train</span><span class="op">]</span></span>
@@ -345,7 +332,7 @@ analysis does not suffer from this problem.</p>
 <span><span class="co">#test&lt;-test[,-1] # las variables independientes, que voy a usar para haver mi pronóstico</span></span></code></pre></div>
 <p>LDA model and prediction
 lda(x~.,data= , prior = c(1,1,1)/3)</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
 <span><span class="va">modellda</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span><span class="op">(</span><span class="va">signal</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span> <span class="va">train</span>, prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">modellda</span>,<span class="va">test</span><span class="op">)</span></span>
@@ -417,7 +404,7 @@ lda(x~.,data= , prior = c(1,1,1)/3)</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Algorithms and Financial programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-16.</p>
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

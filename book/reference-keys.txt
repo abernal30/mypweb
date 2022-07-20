@@ -15,7 +15,6 @@ apis-apis-application-programming-interface
 quantmod-api
 in-house-api
 nasdaq-data-link-api
-databases-handling-xts-objects
 graphs-plots
 logit
 data-preparation

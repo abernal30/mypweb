@@ -5,7 +5,9 @@
 
 
 
-For this session, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the last session we applied the momentum strategy. Also, for Activity 2, you must estimate the return, standard deviation, and Sharpe of the first 3 stocks. In the file df_merge.xlsx you will find those estimations for the in_sample and out_sample. 
+For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy. 
+
+In the file df_merge.xlsx you will find those estimations for the in_sample and out_sample. 
 
 
 ```r
@@ -13,7 +15,7 @@ df_merge<-read.xlsx("df_merge.xlsx",rowNames=T)
 ```
 
 
-As we mention in the last session, If the performance on out-sample data is pretty like in-sample data, we assume the parameters and rule set have good generalization power and can be used for live trading. In this session, we filter for those stocks that have similar out-sample and in-sample data. For that purpose, we took the difference between Sharpe ratios in the in_sample and out_sample. We also need to define a threshold of tolerance for that difference. For example, we only take stocks for which the difference is less than 20% in absolute value.  
+As we mention in the previous chapter, If the performance on out-sample data is pretty like in-sample data, we assume the parameters and rule set have good generalization power and can be used for live trading. In this session, we filter for those stocks that have similar out-sample and in-sample data. For that purpose, we took the difference between Sharpe ratios in the in_sample and out_sample. We also need to define a threshold of tolerance for that difference. For example, we only take stocks for which the difference is less than 20% in absolute value.  
 df   %>%
   filter(Sharpe_diff < n & Sharpe_diff > -n)
 n is the threshold
@@ -90,19 +92,18 @@ The next code is to make the split for winners
 
 
 ```r
-# length te da el número de elementos de un vector
-# rownames te da el nombre de las rwnglones
 co<-rownames(df_filtered)
 le<-length(co)
-n<-round(le/3,0) # el número de las pocisiones largas y cortas, round para rendondear 
+n<-round(le/3,0)  
 win<-co[1:n] # long positions
 n
 #> [1] 8
 ```
+
+
 The next code is to make the split for losers
 
 ```r
-# las últimas 8
 loss<-co[(le-n):le]
 loss # short positions
 #> [1] "TM.Close"    "ORCL.Close"  "TSM.Close"   "VZ.Close"    "TMUS.Close" 
@@ -146,7 +147,6 @@ colnames(we_win)<-"we"
 # row names from win
 rownames(we_win)<-win
 ```
-
 
 
 For the short position the weights must be negative. Then, for the 3rd tranche:
@@ -360,8 +360,6 @@ Also, we filter to get only the filtered stocks, from co_all
 
 
 ```r
-# los nombre de las 17 filtradas, log and short 
-#subset de las 17 acciones de retx
 retx_all<-retx[,co_all]
 ```
 
@@ -413,33 +411,18 @@ The following code has the annualized returns of the in_sample data, only for th
 
 
 ```r
-# dame los rendimeinto sanualizados (que están en la priemra columna de df_merge2, pero solo los de los tickers de co_all)
 ret_a<-df_merge2[co_all,1]
-#mult por los pesos por los rendimientos para obtener rendimiento del portafoilo, con estos pesos simulados
-ret_a_f<-twe %*%ret_a # twe es el vector de pesos trasnpuesto 
+
+ret_a_f<-twe %*%ret_a 
 ret_a_f
 #>           [,1]
 #> [1,] 0.1818727
 ```
 
 
-
-
-
-
-
-
 ### Graphs of the results
-The next code creates a plot of the simulations, highlighting the higher sharp ratio portfolio (red circle).
 
-lines(df[1,1],df[1,2],col="red",type="p",cex=1.5,pch=16)
-
-
-
-
-The next code shows the portfolio with max sharp. 
-
-
+Pending
 
 ## Bibliography
 Cervantes, M., Montoya, M. Á., & Bernal Ponce, L. A. (2016). Effect of the Business Cycle on Investment Strategies: Evidence from Mexico. Revista Mexicana de Economía y Finanzas, 11(2).

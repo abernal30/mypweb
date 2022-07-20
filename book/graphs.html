@@ -4,18 +4,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>3 APIS and R graphs | Algorithms and Financial programing in R</title>
+<title>3 APIS and R graphs | Algorithms and Financial Programing in R</title>
 <meta name="author" content="Arturo Bernal">
-<meta name="description" content="We have pending the contents: reviewing categories in a column of a data frame (DF); - Filtering in a column of a “DF; - Conditional function”ifelse”; - Detecting and replacing missing values; -...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="3 APIS and R graphs | Algorithms and Financial programing in R">
+<meta name="description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="3 APIS and R graphs | Algorithms and Financial Programing in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/graphs.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
-<meta property="og:description" content="We have pending the contents: reviewing categories in a column of a data frame (DF); - Filtering in a column of a “DF; - Conditional function”ifelse”; - Detecting and replacing missing values; -...">
+<meta property="og:description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3 APIS and R graphs | Algorithms and Financial programing in R">
-<meta name="twitter:description" content="We have pending the contents: reviewing categories in a column of a data frame (DF); - Filtering in a column of a “DF; - Conditional function”ifelse”; - Detecting and replacing missing values; -...">
+<meta name="twitter:title" content="3 APIS and R graphs | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Algorithms and Financial programing in R</a>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -99,38 +99,26 @@
 <h1>
 <span class="header-section-number">3</span> APIS and R graphs<a class="anchor" aria-label="anchor" href="#graphs"><i class="fas fa-link"></i></a>
 </h1>
-<p>We have pending the contents:
-reviewing categories in a column of a data frame (DF);
-- Filtering in a column of a “DF;
-- Conditional function”ifelse”;
-- Detecting and replacing missing values;
-- Estimating mean, media;
-- Replacing missing values by a value such as as a median, mean, etc; or eliminating rows in a missing values.</p>
-<p>We will cover those contents while we cover the other contents.</p>
 <div id="apis-apis-application-programming-interface" class="section level2" number="3.1">
 <h2>
 <span class="header-section-number">3.1</span> 1. APIs API´s (Application Programming Interface)<a class="anchor" aria-label="anchor" href="#apis-apis-application-programming-interface"><i class="fas fa-link"></i></a>
 </h2>
-<p>Descargar de Canvas: R graphs and data bases a.Rmd</p>
 <div id="quantmod-api" class="section level3" number="3.1.1">
 <h3>
 <span class="header-section-number">3.1.1</span> 1.1 Quantmod API<a class="anchor" aria-label="anchor" href="#quantmod-api"><i class="fas fa-link"></i></a>
 </h3>
 <p>Quantitative Financial Modelling Framework</p>
-<p>The quantmod package for R is designed to assist the quantitative trader in the development, testing,
-and deployment of statistically based trading models.</p>
-<p>The function getSymbols is a wrapper to load data from various sources, local or remote.</p>
-<p>Getting a tikcer from <a href="https://finance.yahoo.com/" class="uri">https://finance.yahoo.com/</a>
-getSymbols(“Symbol”)</p>
+<p>The quantmod package for R is designed to assist the quantitative trader in the development, testing, and deployment of statistically based trading models.</p>
+<p>The function getSymbols is a wrapper to load data from various sources, local or remote. One of the more popular adn the default is yahoo fiannce, <a href="https://finance.yahoo.com/" class="uri">https://finance.yahoo.com/</a>,<br>
+getSymbols(“Symbol”):</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">AAPL</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "xts" "zoo"</span></span>
-<span></span>
-<span><span class="co"># objetos xts son como data frames, solo que la fecha del precio es el índice</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "xts" "zoo"</span></span></code></pre></div>
+<p>As you can see, the object class is xts.</p>
 <p>To eliminate warnings, we could add the argument warnings = F</p>
 <p>Getting the data from an specific date:</p>
 <p>getSymbols(“symbol”, from=“YY/m/d”,to=“YY/m/d”)</p>
@@ -138,51 +126,72 @@ getSymbols(“Symbol”)</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AMZN"</span>, from<span class="op">=</span><span class="st">"2020/04/01"</span>,to<span class="op">=</span><span class="st">"2022/04/04"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AMZN"</span></span></code></pre></div>
-<p>An xts class of object provide for uniform handling of R’s different time-based data classes.</p>
-<p>Into an environment
-data &lt;- new.env()
+<p>The previous way to download the data store the information in an object on the environment, and by default assign a name to that object, in the previous example would be “AMZN”.</p>
+<p>Another way to do it or to store with a different name, form example with the name “data”, is the following:</p>
+<p>data &lt;- new.env()
 getSymbols(“ticker”,env=data)</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># otra forma de descrgar los datos, dandole nombre al objeto</span></span>
-<span><span class="va">apple2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">apple2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span>, env<span class="op">=</span><span class="va">apple2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">apple2</span><span class="op">)</span> <span class="co"># el objeto apple2, es un environmte o una lista, almacena varios tipos de objetos.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">apple2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "environment"</span></span></code></pre></div>
-<p>Intraday from
-<a href="https://www.alphavantage.co/" class="uri">https://www.alphavantage.co/</a></p>
+<p>The object class is a list. To get the information we have to apply the following code.</p>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">apple3</span><span class="op">&lt;-</span><span class="va">apple2</span><span class="op">[[</span><span class="st">"AAPL"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p>The previous method is useful when we have tickers like Bitcoin:</p>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"BTC-USD"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "BTC-USD"</span></span></code></pre></div>
+<p>Because apparently the name of that object in the environment is “BTC-USD”, but if we want to modify it with that name, it would show a debug like: “object ‘BTC’ not found”</p>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># bit&lt;-BTC-USD[,4]</span></span></code></pre></div>
+<p>This is because even when looks “BTC-USD” the name has these kind of brackets:</p>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># `BTC-USD`</span></span></code></pre></div>
+<p>Anhother alternative, wich is helpful when we apply loops to get the onformation from the environment is:</p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bit</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"BTC-USD"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bit</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            BTC-USD.Open BTC-USD.High BTC-USD.Low BTC-USD.Close BTC-USD.Volume</span></span>
+<span><span class="co">#&gt; 2014-09-17      465.864      468.174     452.422       457.334       21056800</span></span>
+<span><span class="co">#&gt; 2014-09-18      456.860      456.860     413.104       424.440       34483200</span></span>
+<span><span class="co">#&gt; 2014-09-19      424.103      427.835     384.532       394.796       37919700</span></span>
+<span><span class="co">#&gt; 2014-09-20      394.673      423.296     389.883       408.904       36863600</span></span>
+<span><span class="co">#&gt; 2014-09-21      408.085      412.426     393.181       398.821       26580100</span></span>
+<span><span class="co">#&gt; 2014-09-22      399.100      406.916     397.130       402.152       24127600</span></span>
+<span><span class="co">#&gt;            BTC-USD.Adjusted</span></span>
+<span><span class="co">#&gt; 2014-09-17          457.334</span></span>
+<span><span class="co">#&gt; 2014-09-18          424.440</span></span>
+<span><span class="co">#&gt; 2014-09-19          394.796</span></span>
+<span><span class="co">#&gt; 2014-09-20          408.904</span></span>
+<span><span class="co">#&gt; 2014-09-21          398.821</span></span>
+<span><span class="co">#&gt; 2014-09-22          402.152</span></span></code></pre></div>
+<p>If we would like to download intraday data, we could use the Alphavantage</p>
+<p><a href="https://www.alphavantage.co/" class="uri">https://www.alphavantage.co/</a></p>
 <p>getSymbols(“ticker”, src=“av”, api.key=“yourKey”, output.size=“full”,
 periodicity=“intraday”)</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span>, src<span class="op">=</span><span class="st">"av"</span>, api.key<span class="op">=</span><span class="st">"yourKey"</span>, output.size<span class="op">=</span><span class="st">"full"</span>,</span>
 <span>periodicity<span class="op">=</span><span class="st">"intraday"</span>,interval<span class="op">=</span><span class="st">"5min"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span></code></pre></div>
 <p>Dividends
 getDividends(“ticker”), the xts objetc if the ticker needs to be in the R environment</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Al parecer solo si ticker tiene iformación de divididendos</span></span>
 <span><span class="va">ap_div</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getDividends.html">getDividends</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span></code></pre></div>
-<p>Descargar a m</p>
-<p>i PC en xlsx o en csv</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#write.csv(AMZN,"MY_AMZN.csv")</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html">write.xlsx</a></span><span class="op">(</span><span class="va">AMZN</span>,<span class="st">"MY_AMZN.xlsx"</span><span class="op">)</span></span></code></pre></div>
-<p>Break de 10 min, regresamos a las 12,
-regresamos para kahoot</p>
 </div>
 <div id="in-house-api" class="section level3" number="3.1.2">
 <h3>
 <span class="header-section-number">3.1.2</span> 1.2 In-house Api<a class="anchor" aria-label="anchor" href="#in-house-api"><i class="fas fa-link"></i></a>
 </h3>
 <p>(this will not be covered in the final exam or activities, is only for exposition)</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/">xml2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvest.tidyverse.org/">rvest</a></span><span class="op">)</span></span></code></pre></div>
 <p>Harvesting the web with rvest (to get tickers)</p>
 <p>This code is to read characters from web pages. In this case, to get the tickers from yahoo finance.</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the page of of the criptocurrencies</span></span>
 <span><span class="co">#yf &lt;- "https://finance.yahoo.com/cryptocurrencies/"</span></span>
 <span></span>
@@ -204,17 +213,17 @@ regresamos para kahoot</p>
 <span></span>
 <span><span class="va">tickers1</span><span class="op">&lt;-</span><span class="va">tickers</span></span>
 <span><span class="va">tickers1</span></span>
-<span><span class="co">#&gt;  [1] "IENOVA.MX"     "AMXL.MX"       "ASURB.MX"      "GCC.MX"       </span></span>
-<span><span class="co">#&gt;  [5] "TLEVISACPO.MX" "MEGACPO.MX"    "GFNORTEO.MX"   "FEMSAUBD.MX"  </span></span>
-<span><span class="co">#&gt;  [9] "GMEXICOB.MX"   "GENTERA.MX"    "GCARSOA1.MX"   "LABB.MX"      </span></span>
-<span><span class="co">#&gt; [13] "BBAJIOO.MX"    "GRUMAB.MX"     "GAPB.MX"       "PINFRA.MX"    </span></span>
-<span><span class="co">#&gt; [17] "AC.MX"         "CEMEXCPO.MX"   "OMAB.MX"       "ALSEA.MX"     </span></span>
-<span><span class="co">#&gt; [21] "KIMBERA.MX"    "BOLSAA.MX"     "CUERVO.MX"     "BIMBOA.MX"    </span></span>
-<span><span class="co">#&gt; [25] "ALPEKA.MX"     "LIVEPOLC1.MX"  "MEXCHEM.MX"    "KOFL.MX"      </span></span>
+<span><span class="co">#&gt;  [1] "IENOVA.MX"     "BOLSAA.MX"     "ALSEA.MX"      "OMAB.MX"      </span></span>
+<span><span class="co">#&gt;  [5] "LABB.MX"       "TLEVISACPO.MX" "BIMBOA.MX"     "CEMEXCPO.MX"  </span></span>
+<span><span class="co">#&gt;  [9] "GCC.MX"        "MEGACPO.MX"    "GCARSOA1.MX"   "GENTERA.MX"   </span></span>
+<span><span class="co">#&gt; [13] "FEMSAUBD.MX"   "ASURB.MX"      "CUERVO.MX"     "ALPEKA.MX"    </span></span>
+<span><span class="co">#&gt; [17] "LIVEPOLC1.MX"  "MEXCHEM.MX"    "GMEXICOB.MX"   "GRUMAB.MX"    </span></span>
+<span><span class="co">#&gt; [21] "GAPB.MX"       "BBAJIOO.MX"    "GFNORTEO.MX"   "KOFL.MX"      </span></span>
+<span><span class="co">#&gt; [25] "PINFRA.MX"     "KIMBERA.MX"    "AMXL.MX"       "AC.MX"        </span></span>
 <span><span class="co">#&gt; [29] "PEOLES.MX"     "SITESB1.MX"</span></span></code></pre></div>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] "IENOVA.MX" "AMXL.MX"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "IENOVA.MX" "BOLSAA.MX"</span></span></code></pre></div>
 </div>
 <div id="nasdaq-data-link-api" class="section level3" number="3.1.3">
 <h3>
@@ -224,7 +233,7 @@ regresamos para kahoot</p>
 <p>Nasdaq Data Link API (before it eas Quandl) <a href="https://data.nasdaq.com/" class="uri">https://data.nasdaq.com/</a></p>
 <p>The class of objects from Quandl are Data Frames, but if e add the argument: type=“xts”, an xts object we get.</p>
 <p>Emerging Markets High Grade Corporate Bond Index Yield</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quandl/quandl-r">Quandl</a></span><span class="op">)</span></span>
 <span><span class="co"># por default como data frame, pero podemos darle unargumento para que sea xts la descarga</span></span>
 <span><span class="va">eurex</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/Quandl/man/Quandl.html">Quandl</a></span><span class="op">(</span><span class="st">"ML/EMHGY"</span>, api_key<span class="op">=</span><span class="st">"e7Z7FD5siZ8mDi_yTVLD"</span>,type<span class="op">=</span><span class="st">"xts"</span><span class="op">)</span></span>
@@ -237,189 +246,35 @@ regresamos para kahoot</p>
 <span><span class="co">#&gt; 1999-01-06 8.37</span></span>
 <span><span class="co">#&gt; 1999-01-07 8.43</span></span>
 <span><span class="co">#&gt; 1999-01-08 8.40</span></span></code></pre></div>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tickers</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">tickers</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="databases-handling-xts-objects" class="section level2" number="3.2">
+<div id="graphs-plots" class="section level2" number="3.2">
 <h2>
-<span class="header-section-number">3.2</span> 2. databases handling (xts objects)<a class="anchor" aria-label="anchor" href="#databases-handling-xts-objects"><i class="fas fa-link"></i></a>
-</h2>
-<p>Subset by year, for example 2015
-object[“year”]</p>
-<p>tickers&lt;-c(“AAPL”,“AMZN”)</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tickers</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AAPL"</span>,<span class="st">"AMZN"</span><span class="op">)</span></span>
-<span><span class="co"># vector de caracteres</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "AAPL" "AMZN"</span></span></code></pre></div>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># que app solo tuvses el precio de cierre de apple</span></span>
-<span><span class="va">app</span><span class="op">&lt;-</span><span class="va">AAPL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="co"># juntar precio de cierre de apple y de amazon en un osolo objeto, usando cbind</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">app</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 100   1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">AMZN</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 3911    6</span></span>
-<span><span class="co"># CON OBJETOS XTS SI PUEDO USAR cbind para combinar estos dos objetos aunque tenga diferente dimension</span></span>
-<span><span class="co"># voy a genera o tro ojeto que sea precio de cierre de amz</span></span>
-<span><span class="va">am</span><span class="op">&lt;-</span><span class="va">AMZN</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="va">both</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">app</span>,<span class="va">am</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            AAPL.Close AMZN.Close</span></span>
-<span><span class="co">#&gt; 2007-01-03   2.992857     1.9350</span></span>
-<span><span class="co">#&gt; 2007-01-04   3.059286     1.9450</span></span>
-<span><span class="co">#&gt; 2007-01-05   3.037500     1.9185</span></span>
-<span><span class="co">#&gt; 2007-01-08   3.052500     1.8750</span></span>
-<span><span class="co">#&gt; 2007-01-09   3.306071     1.8890</span></span>
-<span><span class="co">#&gt; 2007-01-10   3.464286     1.8575</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            AAPL.Close AMZN.Close</span></span>
-<span><span class="co">#&gt; 2022-07-08         NA     115.54</span></span>
-<span><span class="co">#&gt; 2022-07-11         NA     111.75</span></span>
-<span><span class="co">#&gt; 2022-07-12         NA     109.22</span></span>
-<span><span class="co">#&gt; 2022-07-13         NA     110.40</span></span>
-<span><span class="co">#&gt; 2022-07-14         NA     110.63</span></span>
-<span><span class="co">#&gt; 2022-07-15         NA     113.55</span></span>
-<span><span class="co"># na son missin values o datos faltantes</span></span></code></pre></div>
-<p>Merging xts objects. We mentioned before that the data frames could not be merged spplying cbind when do not have the same numbers of rows. The xts objects can be merged even when it does not have the same numbers of rows, because are merged by their index (the dates).</p>
-<p>Making Subset in xts objects.</p>
-<p>name&lt;-subset(object,
-+index(object)&gt;=“YY-mm-dd” &amp;
-+index(object)&lt;=“YY-mm-dd”)</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
-<span><span class="va">tickers</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AAPL"</span>,<span class="st">"AMZN"</span><span class="op">)</span></span>
-<span><span class="co"># vector de caracteres</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "AAPL" "AMZN"</span></span>
-<span><span class="va">app</span><span class="op">&lt;-</span><span class="va">AAPL</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="va">am</span><span class="op">&lt;-</span><span class="va">AMZN</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="va">both</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">app</span>,<span class="va">am</span><span class="op">)</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            AAPL.Close AMZN.Close</span></span>
-<span><span class="co">#&gt; 2007-01-03   2.992857     1.9350</span></span>
-<span><span class="co">#&gt; 2007-01-04   3.059286     1.9450</span></span>
-<span><span class="co">#&gt; 2007-01-05   3.037500     1.9185</span></span>
-<span><span class="co">#&gt; 2007-01-08   3.052500     1.8750</span></span>
-<span><span class="co">#&gt; 2007-01-09   3.306071     1.8890</span></span>
-<span><span class="co">#&gt; 2007-01-10   3.464286     1.8575</span></span>
-<span><span class="co"># crear un subset de periodo 7 de marzo al 7 de abril 2022</span></span>
-<span><span class="co"># primer arguemnto nombre del objecto</span></span>
-<span><span class="va">sub_1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">both</span>,</span>
-<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span><span class="op">&gt;=</span><span class="st">"2022-03-07"</span> <span class="op">&amp;</span></span>
-<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span><span class="op">&lt;=</span><span class="st">"2022-04-07"</span><span class="op">)</span></span>
-<span><span class="va">sub_1</span></span>
-<span><span class="co">#&gt;            AAPL.Close AMZN.Close</span></span>
-<span><span class="co">#&gt; 2022-03-07     159.30   137.4530</span></span>
-<span><span class="co">#&gt; 2022-03-08     157.44   136.0145</span></span>
-<span><span class="co">#&gt; 2022-03-09     162.95   139.2790</span></span>
-<span><span class="co">#&gt; 2022-03-10     158.52   146.8175</span></span>
-<span><span class="co">#&gt; 2022-03-11     154.73   145.5245</span></span>
-<span><span class="co">#&gt; 2022-03-14     150.62   141.8530</span></span>
-<span><span class="co">#&gt; 2022-03-15     155.09   147.3665</span></span>
-<span><span class="co">#&gt; 2022-03-16     159.59   153.1040</span></span>
-<span><span class="co">#&gt; 2022-03-17     160.62   157.2390</span></span>
-<span><span class="co">#&gt; 2022-03-18     163.98   161.2505</span></span>
-<span><span class="co">#&gt; 2022-03-21     165.38   161.4915</span></span>
-<span><span class="co">#&gt; 2022-03-22     168.82   164.8890</span></span>
-<span><span class="co">#&gt; 2022-03-23     170.21   163.4080</span></span>
-<span><span class="co">#&gt; 2022-03-24     174.07   163.6495</span></span>
-<span><span class="co">#&gt; 2022-03-25     174.72   164.7735</span></span>
-<span><span class="co">#&gt; 2022-03-28     175.60   168.9905</span></span>
-<span><span class="co">#&gt; 2022-03-29     178.96   169.3150</span></span>
-<span><span class="co">#&gt; 2022-03-30     177.77   166.3010</span></span>
-<span><span class="co">#&gt; 2022-03-31     174.61   162.9975</span></span>
-<span><span class="co">#&gt; 2022-04-01     174.31   163.5600</span></span>
-<span><span class="co">#&gt; 2022-04-04     178.44   168.3465</span></span>
-<span><span class="co">#&gt; 2022-04-05     175.06   164.0550</span></span>
-<span><span class="co">#&gt; 2022-04-06     171.83   158.7560</span></span>
-<span><span class="co">#&gt; 2022-04-07     172.14   157.7845</span></span></code></pre></div>
-<p>In financial series it is common to converts an xts object into a lower periodicity (e.g., days converted to months or years) specified by period with the OHLC statistics. It could work for OHLC objects: “Open”, “High”, “Low”, “Close”, “Volume”, or “Adjusted”.</p>
-<p>The function to.period takes the last day of the time series, is not the average.</p>
-<p>to.period(object, period = “months”, OHLC = T)</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># supports: "seconds", "minutes", "hours", "days", "weeks", "months", "quarters", and "years".</span></span>
-<span><span class="co"># vamos a convertir  app en datos semanales</span></span>
-<span><span class="co">#OHLC CONTIENEN LA INFORMACION DE apertura, cierre, volumne, etc</span></span>
-<span><span class="va">app_2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/to.period.html">to.period</a></span><span class="op">(</span><span class="va">app</span>, period <span class="op">=</span> <span class="st">"weeks"</span>, OHLC <span class="op">=</span><span class="cn">T</span> <span class="op">)</span></span>
-<span><span class="co"># si OHLC T entonces me incorpora precios de apertura, cierre, volumen, etc (los mismis que vienen de origen de getSymbol, si F, entonces solo el precio que vienene en el objecto)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">app_2</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            app.Open app.High  app.Low app.Close</span></span>
-<span><span class="co">#&gt; 2007-01-05 2.992857 3.059286 2.992857  3.037500</span></span>
-<span><span class="co">#&gt; 2007-01-12 3.052500 3.464286 3.052500  3.379286</span></span>
-<span><span class="co">#&gt; 2007-01-19 3.467857 3.467857 3.160714  3.160714</span></span>
-<span><span class="co">#&gt; 2007-01-26 3.099643 3.099643 3.049286  3.049286</span></span>
-<span><span class="co">#&gt; 2007-02-02 3.069286 3.069286 3.026429  3.026786</span></span>
-<span><span class="co">#&gt; 2007-02-09 2.997857 3.077857 2.973929  2.973929</span></span></code></pre></div>
-</div>
-<div id="graphs-plots" class="section level2" number="3.3">
-<h2>
-<span class="header-section-number">3.3</span> 3. Graphs (Plots)<a class="anchor" aria-label="anchor" href="#graphs-plots"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2</span> 3. Graphs (Plots)<a class="anchor" aria-label="anchor" href="#graphs-plots"><i class="fas fa-link"></i></a>
 </h2>
 <p>The basic function for ploting is plot(x, type = “h”, col = “red”, lwd = 10, “xlab”,“ylab”).
 In help plot.xy and plot.default we can see the arguments.
-Plot the HSI close price
-<img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-17-2.png" width="90%" style="display: block; margin: auto;"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-17-3.png" width="90%" style="display: block; margin: auto;"></p>
-<p>Adding another vector of information (another stock price, for example)
-lines</p>
-<p>We use lines to add another time serie</p>
-<p>Adding leggend</p>
-<p>The function legends only work with data frames, not xts., then we transform it in dataframe
-as.data.frame(object)</p>
-<p>legend(x= “topleft”, legend = c(“objst”,“objt2”),lty = 1,col=c(“green”,“red”))</p>
-<p>For more details of legends look in <a href="http://www.sthda.com/english" class="uri">http://www.sthda.com/english</a>, for the legend function arguments.</p>
-<p>De los temas pendientes, el de detectar valores faltantes (missing values o NA´s) y estimar medidas como la media, mediana, etc.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tickers</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AAPL"</span>,<span class="st">"AMZN"</span><span class="op">)</span></span>
+Plot the HSI close price</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#tickers&lt;-c("AAPL","AMZN")</span></span>
 <span><span class="co"># vector de caracteres</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AAPL"</span></span>
 <span><span class="co">#&gt; [1] "AAPL" "AMZN"</span></span>
 <span><span class="va">app</span><span class="op">&lt;-</span><span class="va">AAPL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="va">am</span><span class="op">&lt;-</span><span class="va">AMZN</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">110</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="va">both</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">app</span>,<span class="va">am</span><span class="op">)</span> </span>
-<span><span class="co"># primra forma de viuzalizar si existen mising valus</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Index              AAPL.Close      AMZN.Close   </span></span>
-<span><span class="co">#&gt;  Min.   :2007-01-03   Min.   :2.974   Min.   :1.821  </span></span>
-<span><span class="co">#&gt;  1st Qu.:2007-02-12   1st Qu.:3.080   1st Qu.:1.919  </span></span>
-<span><span class="co">#&gt;  Median :2007-03-22   Median :3.252   Median :2.012  </span></span>
-<span><span class="co">#&gt;  Mean   :2007-03-23   Mean   :3.326   Mean   :2.367  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:2007-05-01   3rd Qu.:3.422   3rd Qu.:3.065  </span></span>
-<span><span class="co">#&gt;  Max.   :2007-06-11   Max.   :4.058   Max.   :3.683  </span></span>
-<span><span class="co">#&gt;                       NA's   :10</span></span></code></pre></div>
-<p>Otra forma de detectar si tenemos datos faltantes es con función is.na()</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
-<p>Que puedo hacer para coregir el tema de los misisng values
-1. Elimiar todo el renglón con fuión na.omit()</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">both_2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">both_2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">both</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 110   2</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">both_2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 100   2</span></span></code></pre></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Alternativa 2, es reemplazar los missing values por alguna medida como la media, mediana</li>
-</ol>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># estimar la media y la media de primera collumna de both</span></span>
-<span><span class="co"># función mean(objeto)</span></span>
-<span><span class="va">me</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">both</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
-<span><span class="co"># na.rm=T entonces, amite los nas, y realizae el calculo, si na.rm=F no realices elc alculo y arroja NA</span></span>
-<span><span class="va">med</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">both</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">med</span></span>
-<span><span class="co">#&gt; [1] 3.251786</span></span></code></pre></div>
-<ul>
-<li>Conditional function “ifelse”;</li>
-<li>Detecting and replacing missing values;</li>
-<li>Estimating mean, media;</li>
-<li>Replacing missing values by a value such as as a median, mean, etc; or eliminating rows in a missing values.</li>
-<li>Filtering in a column of a “DF;</li>
-</ul>
+<span><span class="co">#am&lt;-AMZN[1:110,4]</span></span>
+<span><span class="co">#both&lt;-cbind(app,am) </span></span></code></pre></div>
+<p><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-16-2.png" width="90%" style="display: block; margin: auto;"></p>
+<p>Adding leggend</p>
+<p>The function legends only work with data frames, not xts., then we transform it in dataframe
+as.data.frame(object).</p>
+<p>To add a legend, but it only works for data frames objects, not in xts. Then we need to transform it into data frame.</p>
+<div class="inline-figure">legend(x= “topleft”, legend = c(“objst”,“objt2”),lty = 1,col=c(“green”,“red”))
+<img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;">
+</div>
+<p>For more details of legends look in <a href="http://www.sthda.com/english" class="uri">http://www.sthda.com/english</a>, for the legend function arguments.</p>
+
 </div>
 </div>
   <div class="chapter-nav">
@@ -436,8 +291,7 @@ as.data.frame(object)</p>
 <li><a class="nav-link" href="#nasdaq-data-link-api"><span class="header-section-number">3.1.3</span> 1.3 Nasdaq Data Link API</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#databases-handling-xts-objects"><span class="header-section-number">3.2</span> 2. databases handling (xts objects)</a></li>
-<li><a class="nav-link" href="#graphs-plots"><span class="header-section-number">3.3</span> 3. Graphs (Plots)</a></li>
+<li><a class="nav-link" href="#graphs-plots"><span class="header-section-number">3.2</span> 3. Graphs (Plots)</a></li>
 </ul>
 
       <div class="book-extra">
@@ -455,7 +309,7 @@ as.data.frame(object)</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Algorithms and Financial programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-16.</p>
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -493,4 +347,34 @@ for (let popover of popovers) {
 }
 </script>
 </body>
+</html>
+ "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+<script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+
 </html>

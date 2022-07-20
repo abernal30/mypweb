@@ -168,8 +168,7 @@ Or you could install the library from:
 
 
 ```r
-library(dataclean) #descarga en línea
- # para los que instalaron con el archivo
+library(dataclean) 
 df5<-asnum(df4)
 head(df5)
 #>   Default loan_amnt term int_rate installment grade sub_grade emp_title
@@ -272,6 +271,15 @@ glm(y ~x1+x2+x3,data=,family=binomial())
 
 ```r
 model<-glm(Default~. ,data=train,family=binomial())
+```
+
+
+The prediction:
+predict(model,newdata = test,type = "response")
+
+the type = "response" argument is for get the transformation of the logit model into probability. Also we need  to transform the probability into c(0,1).
+
+```r
 predict<-predict(model,newdata = test,type = "response")
 #trasnform that probability into a 0,1
 predictp<-ifelse(predict>.5,1,0)
@@ -295,13 +303,6 @@ predictp
 #> 804 807 810 811 812 814 819 825 829 835 836 843 844 851 854 
 #>   0   0   0  NA   0   0   0   0   0   0   0   0   0   1   0
 ```
-
-
-The prediction:
-predict(model,newdata = test,type = "response")
-
-the type = "response" argument is for get the transformation of the logit model into probability. Also we need  to transform the probability into c(0,1).
-
 
 
 

@@ -124,6 +124,8 @@ I writted a library for data processing, "dataclean" To install it run the follo
 remotes::install_github("abernal30/dataclean")
 devtools::install_github("abernal30/dataclean")
 
+
+
 We use the charname function to see how many categorical variables there are. We print only the first rows using the head function.
 
 
@@ -192,8 +194,13 @@ head(charname(data2))
 
 ## Missing values
 
+To treat missing values, I suggest taking one of the following alternatives or a combination of those: i) eliminating columns with a significant amount of missing values; ii) eliminating the row where the missing(s) value(s) is(are) located; iii) replace missing values or Na´s by some statistic. 
 
-Lets apply the function "sumna" to detect columns with more than 50 percent of missing values: 
+
+
+
+
+For the firs alternative, lets first apply the function "sumna" to detect columns with more than 50 percent of missing values: 
 
 
 ```r
@@ -215,7 +222,18 @@ me<-cbind(me,se)
 cole<-c()
 colem<-c()
 cole_name<-c()
+me
+#}
+#me<-sumna(data2,.5)
+
+#ifelse(is.na(me[1,1])==TRUE,0,me[1,1]) 
+
 for (i in 1:dim[1]){ 
+me[i,1]<-ifelse(is.na(me[i,1])==TRUE,0,me[i,1]) 
+}
+
+for (i in 1:dim[1]){ 
+
   if (me[i,1] > p) {
   cole<-c(cole,me[i,1])  
   colem<-c(colem,me[i,2])
@@ -225,9 +243,15 @@ for (i in 1:dim[1]){
 col2<-data.frame(cole)
 col2<-cbind(col2,colem)
 rownames(col2)<-cole_name
-colnames(col2)<-c("% of NA´s","Column number")
+
+# This conditional is becausue when applying the na.omit, there is a error
+
+if (dim(col2)[1]!=0){
+  colnames(col2)<-c("% of NA´s","Column number")
+} else {col2<-"There are no columns with missing values"}
 col2
 }
+
 na_perc<-sumna(data2,.5)
 head(na_perc)
 #>                             % of NA´s Column number
@@ -240,12 +264,7 @@ head(na_perc)
 ```
 
 
-
-```
-#> [1] 30  2
-```
-
-In this case there are  30 columns with more than 50 percent of missing values. if we sould like to eliminate those colums we apply the following:
+In this case there are  30 columns with more than 50 percent of missing values. if we would like to eliminate those columns we apply the following:
 
 
 
@@ -253,8 +272,164 @@ In this case there are  30 columns with more than 50 percent of missing values. 
 data3<-data2[,-na_perc[,2]]
 ```
 
-To replace missing values or Na´s by some statistic, we us the function "repnas":
 
+for the second alternative, which is eliminating the rows where the missing(s) value(s) is(are) located; we could applying the na.omit function. However, we have to be careful, because it could be the case that each row of the data frame has at least one missing value, in which cace it would delete all rows of the data frame, like this case: 
+
+
+```r
+data3_1<-na.omit(data2)
+head(data3_1)
+#>   [1] loan_amnt                                 
+#>   [2] funded_amnt                               
+#>   [3] funded_amnt_inv                           
+#>   [4] term                                      
+#>   [5] int_rate                                  
+#>   [6] installment                               
+#>   [7] grade                                     
+#>   [8] sub_grade                                 
+#>   [9] emp_title                                 
+#>  [10] emp_length                                
+#>  [11] home_ownership                            
+#>  [12] annual_inc                                
+#>  [13] verification_status                       
+#>  [14] issue_d                                   
+#>  [15] loan_status                               
+#>  [16] purpose                                   
+#>  [17] title                                     
+#>  [18] zip_code                                  
+#>  [19] addr_state                                
+#>  [20] dti                                       
+#>  [21] delinq_2yrs                               
+#>  [22] earliest_cr_line                          
+#>  [23] fico_range_low                            
+#>  [24] fico_range_high                           
+#>  [25] inq_last_6mths                            
+#>  [26] mths_since_last_delinq                    
+#>  [27] mths_since_last_record                    
+#>  [28] open_acc                                  
+#>  [29] pub_rec                                   
+#>  [30] revol_bal                                 
+#>  [31] revol_util                                
+#>  [32] total_acc                                 
+#>  [33] initial_list_status                       
+#>  [34] out_prncp                                 
+#>  [35] out_prncp_inv                             
+#>  [36] total_pymnt                               
+#>  [37] total_pymnt_inv                           
+#>  [38] total_rec_prncp                           
+#>  [39] total_rec_int                             
+#>  [40] total_rec_late_fee                        
+#>  [41] recoveries                                
+#>  [42] collection_recovery_fee                   
+#>  [43] last_pymnt_d                              
+#>  [44] last_pymnt_amnt                           
+#>  [45] next_pymnt_d                              
+#>  [46] last_credit_pull_d                        
+#>  [47] last_fico_range_high                      
+#>  [48] last_fico_range_low                       
+#>  [49] collections_12_mths_ex_med                
+#>  [50] mths_since_last_major_derog               
+#>  [51] policy_code                               
+#>  [52] application_type                          
+#>  [53] annual_inc_joint                          
+#>  [54] dti_joint                                 
+#>  [55] verification_status_joint                 
+#>  [56] acc_now_delinq                            
+#>  [57] tot_coll_amt                              
+#>  [58] tot_cur_bal                               
+#>  [59] open_acc_6m                               
+#>  [60] open_act_il                               
+#>  [61] open_il_12m                               
+#>  [62] open_il_24m                               
+#>  [63] mths_since_rcnt_il                        
+#>  [64] total_bal_il                              
+#>  [65] il_util                                   
+#>  [66] open_rv_12m                               
+#>  [67] open_rv_24m                               
+#>  [68] max_bal_bc                                
+#>  [69] all_util                                  
+#>  [70] total_rev_hi_lim                          
+#>  [71] inq_fi                                    
+#>  [72] total_cu_tl                               
+#>  [73] inq_last_12m                              
+#>  [74] acc_open_past_24mths                      
+#>  [75] avg_cur_bal                               
+#>  [76] bc_open_to_buy                            
+#>  [77] bc_util                                   
+#>  [78] chargeoff_within_12_mths                  
+#>  [79] delinq_amnt                               
+#>  [80] mo_sin_old_il_acct                        
+#>  [81] mo_sin_old_rev_tl_op                      
+#>  [82] mo_sin_rcnt_rev_tl_op                     
+#>  [83] mo_sin_rcnt_tl                            
+#>  [84] mort_acc                                  
+#>  [85] mths_since_recent_bc                      
+#>  [86] mths_since_recent_bc_dlq                  
+#>  [87] mths_since_recent_inq                     
+#>  [88] mths_since_recent_revol_delinq            
+#>  [89] num_accts_ever_120_pd                     
+#>  [90] num_actv_bc_tl                            
+#>  [91] num_actv_rev_tl                           
+#>  [92] num_bc_sats                               
+#>  [93] num_bc_tl                                 
+#>  [94] num_il_tl                                 
+#>  [95] num_op_rev_tl                             
+#>  [96] num_rev_accts                             
+#>  [97] num_rev_tl_bal_gt_0                       
+#>  [98] num_sats                                  
+#>  [99] num_tl_120dpd_2m                          
+#> [100] num_tl_30dpd                              
+#> [101] num_tl_90g_dpd_24m                        
+#> [102] num_tl_op_past_12m                        
+#> [103] pct_tl_nvr_dlq                            
+#> [104] percent_bc_gt_75                          
+#> [105] pub_rec_bankruptcies                      
+#> [106] tax_liens                                 
+#> [107] tot_hi_cred_lim                           
+#> [108] total_bal_ex_mort                         
+#> [109] total_bc_limit                            
+#> [110] total_il_high_credit_limit                
+#> [111] revol_bal_joint                           
+#> [112] sec_app_fico_range_low                    
+#> [113] sec_app_fico_range_high                   
+#> [114] sec_app_earliest_cr_line                  
+#> [115] sec_app_inq_last_6mths                    
+#> [116] sec_app_mort_acc                          
+#> [117] sec_app_open_acc                          
+#> [118] sec_app_revol_util                        
+#> [119] sec_app_open_act_il                       
+#> [120] sec_app_num_rev_accts                     
+#> [121] sec_app_chargeoff_within_12_mths          
+#> [122] sec_app_collections_12_mths_ex_med        
+#> [123] sec_app_mths_since_last_major_derog       
+#> [124] hardship_flag                             
+#> [125] hardship_type                             
+#> [126] hardship_reason                           
+#> [127] hardship_status                           
+#> [128] deferral_term                             
+#> [129] hardship_amount                           
+#> [130] hardship_start_date                       
+#> [131] hardship_end_date                         
+#> [132] payment_plan_start_date                   
+#> [133] hardship_length                           
+#> [134] hardship_dpd                              
+#> [135] hardship_loan_status                      
+#> [136] orig_projected_additional_accrued_interest
+#> [137] hardship_payoff_balance_amount            
+#> [138] hardship_last_payment_amount              
+#> [139] disbursement_method                       
+#> [140] debt_settlement_flag                      
+#> [141] debt_settlement_flag_date                 
+#> [142] settlement_status                         
+#> [143] settlement_date                           
+#> [144] settlement_amount                         
+#> [145] settlement_percentage                     
+#> [146] settlement_term                           
+#> <0 rows> (or 0-length row.names)
+```
+
+
+The third alternative is replacing missing values by a metric. In this  we us the function "repnas", to the object data3 wich already has the drop the columns with more than 50 percent of missing values:
 
 ```r
 repnas<-function(data,metric){
@@ -461,7 +636,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 pairs(data4[,cw],upper.panel=panel.cor,na.action = na.omit)
 ```
 
-<img src="02-data-cleaning_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;" />
+<img src="02-data-cleaning_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;" />
 
 open_acc, revol_bal,total_rev_hi_lim
 

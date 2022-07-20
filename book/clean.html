@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>2 Big data and data cleaning | Algorithms and Financial programing in R</title>
+<title>2 Big data and data cleaning | Algorithms and Financial Programing in R</title>
 <meta name="author" content="Arturo Bernal">
 <meta name="description" content="For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="2 Big data and data cleaning | Algorithms and Financial programing in R">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="2 Big data and data cleaning | Algorithms and Financial Programing in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/clean.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <meta property="og:description" content="For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2 Big data and data cleaning | Algorithms and Financial programing in R">
+<meta name="twitter:title" content="2 Big data and data cleaning | Algorithms and Financial Programing in R">
 <meta name="twitter:description" content="For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -65,7 +65,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Algorithms and Financial programing in R</a>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -221,7 +221,8 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <h2>
 <span class="header-section-number">2.2</span> Missing values<a class="anchor" aria-label="anchor" href="#missing-values"><i class="fas fa-link"></i></a>
 </h2>
-<p>Lets apply the function “sumna” to detect columns with more than 50 percent of missing values:</p>
+<p>To treat missing values, I suggest taking one of the following alternatives or a combination of those: i) eliminating columns with a significant amount of missing values; ii) eliminating the row where the missing(s) value(s) is(are) located; iii) replace missing values or Na´s by some statistic.</p>
+<p>For the firs alternative, lets first apply the function “sumna” to detect columns with more than 50 percent of missing values:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sumna</span><span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>,<span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
 <span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -241,7 +242,18 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <span><span class="va">cole</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">colem</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">cole_name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">me</span></span>
+<span><span class="co">#}</span></span>
+<span><span class="co">#me&lt;-sumna(data2,.5)</span></span>
+<span></span>
+<span><span class="co">#ifelse(is.na(me[1,1])==TRUE,0,me[1,1]) </span></span>
+<span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">{</span> </span>
+<span><span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">==</span><span class="cn">TRUE</span>,<span class="fl">0</span>,<span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> </span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">{</span> </span>
+<span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">&gt;</span> <span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">cole</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cole</span>,<span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>  </span>
 <span>  <span class="va">colem</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">colem</span>,<span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
@@ -251,9 +263,15 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <span><span class="va">col2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">cole</span><span class="op">)</span></span>
 <span><span class="va">col2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">col2</span>,<span class="va">colem</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">cole_name</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"% of NA´s"</span>,<span class="st">"Column number"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># This conditional is becausue when applying the na.omit, there is a error</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"% of NA´s"</span>,<span class="st">"Column number"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span><span class="va">col2</span><span class="op">&lt;-</span><span class="st">"There are no columns with missing values"</span><span class="op">}</span></span>
 <span><span class="va">col2</span></span>
 <span><span class="op">}</span></span>
+<span></span>
 <span><span class="va">na_perc</span><span class="op">&lt;-</span><span class="fu">sumna</span><span class="op">(</span><span class="va">data2</span>,<span class="fl">.5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">na_perc</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                             % of NA´s Column number</span></span>
@@ -263,11 +281,161 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <span><span class="co">#&gt; annual_inc_joint            0.9931034            53</span></span>
 <span><span class="co">#&gt; dti_joint                   0.9931034            54</span></span>
 <span><span class="co">#&gt; mths_since_recent_bc_dlq    0.7103448            86</span></span></code></pre></div>
-<pre><code>#&gt; [1] 30  2</code></pre>
-<p>In this case there are 30 columns with more than 50 percent of missing values. if we sould like to eliminate those colums we apply the following:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<p>In this case there are 30 columns with more than 50 percent of missing values. if we would like to eliminate those columns we apply the following:</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data3</span><span class="op">&lt;-</span><span class="va">data2</span><span class="op">[</span>,<span class="op">-</span><span class="va">na_perc</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
-<p>To replace missing values or Na´s by some statistic, we us the function “repnas”:</p>
+<p>for the second alternative, which is eliminating the rows where the missing(s) value(s) is(are) located; we could applying the na.omit function. However, we have to be careful, because it could be the case that each row of the data frame has at least one missing value, in which cace it would delete all rows of the data frame, like this case:</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data3_1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data3_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   [1] loan_amnt                                 </span></span>
+<span><span class="co">#&gt;   [2] funded_amnt                               </span></span>
+<span><span class="co">#&gt;   [3] funded_amnt_inv                           </span></span>
+<span><span class="co">#&gt;   [4] term                                      </span></span>
+<span><span class="co">#&gt;   [5] int_rate                                  </span></span>
+<span><span class="co">#&gt;   [6] installment                               </span></span>
+<span><span class="co">#&gt;   [7] grade                                     </span></span>
+<span><span class="co">#&gt;   [8] sub_grade                                 </span></span>
+<span><span class="co">#&gt;   [9] emp_title                                 </span></span>
+<span><span class="co">#&gt;  [10] emp_length                                </span></span>
+<span><span class="co">#&gt;  [11] home_ownership                            </span></span>
+<span><span class="co">#&gt;  [12] annual_inc                                </span></span>
+<span><span class="co">#&gt;  [13] verification_status                       </span></span>
+<span><span class="co">#&gt;  [14] issue_d                                   </span></span>
+<span><span class="co">#&gt;  [15] loan_status                               </span></span>
+<span><span class="co">#&gt;  [16] purpose                                   </span></span>
+<span><span class="co">#&gt;  [17] title                                     </span></span>
+<span><span class="co">#&gt;  [18] zip_code                                  </span></span>
+<span><span class="co">#&gt;  [19] addr_state                                </span></span>
+<span><span class="co">#&gt;  [20] dti                                       </span></span>
+<span><span class="co">#&gt;  [21] delinq_2yrs                               </span></span>
+<span><span class="co">#&gt;  [22] earliest_cr_line                          </span></span>
+<span><span class="co">#&gt;  [23] fico_range_low                            </span></span>
+<span><span class="co">#&gt;  [24] fico_range_high                           </span></span>
+<span><span class="co">#&gt;  [25] inq_last_6mths                            </span></span>
+<span><span class="co">#&gt;  [26] mths_since_last_delinq                    </span></span>
+<span><span class="co">#&gt;  [27] mths_since_last_record                    </span></span>
+<span><span class="co">#&gt;  [28] open_acc                                  </span></span>
+<span><span class="co">#&gt;  [29] pub_rec                                   </span></span>
+<span><span class="co">#&gt;  [30] revol_bal                                 </span></span>
+<span><span class="co">#&gt;  [31] revol_util                                </span></span>
+<span><span class="co">#&gt;  [32] total_acc                                 </span></span>
+<span><span class="co">#&gt;  [33] initial_list_status                       </span></span>
+<span><span class="co">#&gt;  [34] out_prncp                                 </span></span>
+<span><span class="co">#&gt;  [35] out_prncp_inv                             </span></span>
+<span><span class="co">#&gt;  [36] total_pymnt                               </span></span>
+<span><span class="co">#&gt;  [37] total_pymnt_inv                           </span></span>
+<span><span class="co">#&gt;  [38] total_rec_prncp                           </span></span>
+<span><span class="co">#&gt;  [39] total_rec_int                             </span></span>
+<span><span class="co">#&gt;  [40] total_rec_late_fee                        </span></span>
+<span><span class="co">#&gt;  [41] recoveries                                </span></span>
+<span><span class="co">#&gt;  [42] collection_recovery_fee                   </span></span>
+<span><span class="co">#&gt;  [43] last_pymnt_d                              </span></span>
+<span><span class="co">#&gt;  [44] last_pymnt_amnt                           </span></span>
+<span><span class="co">#&gt;  [45] next_pymnt_d                              </span></span>
+<span><span class="co">#&gt;  [46] last_credit_pull_d                        </span></span>
+<span><span class="co">#&gt;  [47] last_fico_range_high                      </span></span>
+<span><span class="co">#&gt;  [48] last_fico_range_low                       </span></span>
+<span><span class="co">#&gt;  [49] collections_12_mths_ex_med                </span></span>
+<span><span class="co">#&gt;  [50] mths_since_last_major_derog               </span></span>
+<span><span class="co">#&gt;  [51] policy_code                               </span></span>
+<span><span class="co">#&gt;  [52] application_type                          </span></span>
+<span><span class="co">#&gt;  [53] annual_inc_joint                          </span></span>
+<span><span class="co">#&gt;  [54] dti_joint                                 </span></span>
+<span><span class="co">#&gt;  [55] verification_status_joint                 </span></span>
+<span><span class="co">#&gt;  [56] acc_now_delinq                            </span></span>
+<span><span class="co">#&gt;  [57] tot_coll_amt                              </span></span>
+<span><span class="co">#&gt;  [58] tot_cur_bal                               </span></span>
+<span><span class="co">#&gt;  [59] open_acc_6m                               </span></span>
+<span><span class="co">#&gt;  [60] open_act_il                               </span></span>
+<span><span class="co">#&gt;  [61] open_il_12m                               </span></span>
+<span><span class="co">#&gt;  [62] open_il_24m                               </span></span>
+<span><span class="co">#&gt;  [63] mths_since_rcnt_il                        </span></span>
+<span><span class="co">#&gt;  [64] total_bal_il                              </span></span>
+<span><span class="co">#&gt;  [65] il_util                                   </span></span>
+<span><span class="co">#&gt;  [66] open_rv_12m                               </span></span>
+<span><span class="co">#&gt;  [67] open_rv_24m                               </span></span>
+<span><span class="co">#&gt;  [68] max_bal_bc                                </span></span>
+<span><span class="co">#&gt;  [69] all_util                                  </span></span>
+<span><span class="co">#&gt;  [70] total_rev_hi_lim                          </span></span>
+<span><span class="co">#&gt;  [71] inq_fi                                    </span></span>
+<span><span class="co">#&gt;  [72] total_cu_tl                               </span></span>
+<span><span class="co">#&gt;  [73] inq_last_12m                              </span></span>
+<span><span class="co">#&gt;  [74] acc_open_past_24mths                      </span></span>
+<span><span class="co">#&gt;  [75] avg_cur_bal                               </span></span>
+<span><span class="co">#&gt;  [76] bc_open_to_buy                            </span></span>
+<span><span class="co">#&gt;  [77] bc_util                                   </span></span>
+<span><span class="co">#&gt;  [78] chargeoff_within_12_mths                  </span></span>
+<span><span class="co">#&gt;  [79] delinq_amnt                               </span></span>
+<span><span class="co">#&gt;  [80] mo_sin_old_il_acct                        </span></span>
+<span><span class="co">#&gt;  [81] mo_sin_old_rev_tl_op                      </span></span>
+<span><span class="co">#&gt;  [82] mo_sin_rcnt_rev_tl_op                     </span></span>
+<span><span class="co">#&gt;  [83] mo_sin_rcnt_tl                            </span></span>
+<span><span class="co">#&gt;  [84] mort_acc                                  </span></span>
+<span><span class="co">#&gt;  [85] mths_since_recent_bc                      </span></span>
+<span><span class="co">#&gt;  [86] mths_since_recent_bc_dlq                  </span></span>
+<span><span class="co">#&gt;  [87] mths_since_recent_inq                     </span></span>
+<span><span class="co">#&gt;  [88] mths_since_recent_revol_delinq            </span></span>
+<span><span class="co">#&gt;  [89] num_accts_ever_120_pd                     </span></span>
+<span><span class="co">#&gt;  [90] num_actv_bc_tl                            </span></span>
+<span><span class="co">#&gt;  [91] num_actv_rev_tl                           </span></span>
+<span><span class="co">#&gt;  [92] num_bc_sats                               </span></span>
+<span><span class="co">#&gt;  [93] num_bc_tl                                 </span></span>
+<span><span class="co">#&gt;  [94] num_il_tl                                 </span></span>
+<span><span class="co">#&gt;  [95] num_op_rev_tl                             </span></span>
+<span><span class="co">#&gt;  [96] num_rev_accts                             </span></span>
+<span><span class="co">#&gt;  [97] num_rev_tl_bal_gt_0                       </span></span>
+<span><span class="co">#&gt;  [98] num_sats                                  </span></span>
+<span><span class="co">#&gt;  [99] num_tl_120dpd_2m                          </span></span>
+<span><span class="co">#&gt; [100] num_tl_30dpd                              </span></span>
+<span><span class="co">#&gt; [101] num_tl_90g_dpd_24m                        </span></span>
+<span><span class="co">#&gt; [102] num_tl_op_past_12m                        </span></span>
+<span><span class="co">#&gt; [103] pct_tl_nvr_dlq                            </span></span>
+<span><span class="co">#&gt; [104] percent_bc_gt_75                          </span></span>
+<span><span class="co">#&gt; [105] pub_rec_bankruptcies                      </span></span>
+<span><span class="co">#&gt; [106] tax_liens                                 </span></span>
+<span><span class="co">#&gt; [107] tot_hi_cred_lim                           </span></span>
+<span><span class="co">#&gt; [108] total_bal_ex_mort                         </span></span>
+<span><span class="co">#&gt; [109] total_bc_limit                            </span></span>
+<span><span class="co">#&gt; [110] total_il_high_credit_limit                </span></span>
+<span><span class="co">#&gt; [111] revol_bal_joint                           </span></span>
+<span><span class="co">#&gt; [112] sec_app_fico_range_low                    </span></span>
+<span><span class="co">#&gt; [113] sec_app_fico_range_high                   </span></span>
+<span><span class="co">#&gt; [114] sec_app_earliest_cr_line                  </span></span>
+<span><span class="co">#&gt; [115] sec_app_inq_last_6mths                    </span></span>
+<span><span class="co">#&gt; [116] sec_app_mort_acc                          </span></span>
+<span><span class="co">#&gt; [117] sec_app_open_acc                          </span></span>
+<span><span class="co">#&gt; [118] sec_app_revol_util                        </span></span>
+<span><span class="co">#&gt; [119] sec_app_open_act_il                       </span></span>
+<span><span class="co">#&gt; [120] sec_app_num_rev_accts                     </span></span>
+<span><span class="co">#&gt; [121] sec_app_chargeoff_within_12_mths          </span></span>
+<span><span class="co">#&gt; [122] sec_app_collections_12_mths_ex_med        </span></span>
+<span><span class="co">#&gt; [123] sec_app_mths_since_last_major_derog       </span></span>
+<span><span class="co">#&gt; [124] hardship_flag                             </span></span>
+<span><span class="co">#&gt; [125] hardship_type                             </span></span>
+<span><span class="co">#&gt; [126] hardship_reason                           </span></span>
+<span><span class="co">#&gt; [127] hardship_status                           </span></span>
+<span><span class="co">#&gt; [128] deferral_term                             </span></span>
+<span><span class="co">#&gt; [129] hardship_amount                           </span></span>
+<span><span class="co">#&gt; [130] hardship_start_date                       </span></span>
+<span><span class="co">#&gt; [131] hardship_end_date                         </span></span>
+<span><span class="co">#&gt; [132] payment_plan_start_date                   </span></span>
+<span><span class="co">#&gt; [133] hardship_length                           </span></span>
+<span><span class="co">#&gt; [134] hardship_dpd                              </span></span>
+<span><span class="co">#&gt; [135] hardship_loan_status                      </span></span>
+<span><span class="co">#&gt; [136] orig_projected_additional_accrued_interest</span></span>
+<span><span class="co">#&gt; [137] hardship_payoff_balance_amount            </span></span>
+<span><span class="co">#&gt; [138] hardship_last_payment_amount              </span></span>
+<span><span class="co">#&gt; [139] disbursement_method                       </span></span>
+<span><span class="co">#&gt; [140] debt_settlement_flag                      </span></span>
+<span><span class="co">#&gt; [141] debt_settlement_flag_date                 </span></span>
+<span><span class="co">#&gt; [142] settlement_status                         </span></span>
+<span><span class="co">#&gt; [143] settlement_date                           </span></span>
+<span><span class="co">#&gt; [144] settlement_amount                         </span></span>
+<span><span class="co">#&gt; [145] settlement_percentage                     </span></span>
+<span><span class="co">#&gt; [146] settlement_term                           </span></span>
+<span><span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span></span></code></pre></div>
+<p>The third alternative is replacing missing values by a metric. In this we us the function “repnas”, to the object data3 wich already has the drop the columns with more than 50 percent of missing values:</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">repnas</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">data</span>,<span class="va">metric</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
@@ -410,7 +578,7 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="va">txt</span>, cex <span class="op">=</span> <span class="va">cex.cor</span> <span class="op">*</span> <span class="va">r</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">data4</span><span class="op">[</span>,<span class="va">cw</span><span class="op">]</span>,upper.panel<span class="op">=</span><span class="va">panel.cor</span>,na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="02-data-cleaning_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="02-data-cleaning_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>open_acc, revol_bal,total_rev_hi_lim</p>
 <p>total_acc</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
@@ -466,7 +634,7 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Algorithms and Financial programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-16.</p>
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -504,4 +672,111 @@ for (let popover of popovers) {
 }
 </script>
 </body>
+</html>
+href="clean.html#cb71-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; total_bc_limit       0.3771416</span></span>
+<span id="cb71-17"><a href="clean.html#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; num_rev_accts        1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="clean.html#cb72-1" aria-hidden="true" tabindex="-1"></a>panel.cor <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">prefix =</span> <span class="st">&quot;&quot;</span>, cex.cor, ...)</span>
+<span id="cb72-2"><a href="clean.html#cb72-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb72-3"><a href="clean.html#cb72-3" aria-hidden="true" tabindex="-1"></a>    usr <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>); <span class="fu">on.exit</span>(<span class="fu">par</span>(usr))</span>
+<span id="cb72-4"><a href="clean.html#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(<span class="at">usr =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb72-5"><a href="clean.html#cb72-5" aria-hidden="true" tabindex="-1"></a>    r <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">cor</span>(x, y,<span class="at">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>))</span>
+<span id="cb72-6"><a href="clean.html#cb72-6" aria-hidden="true" tabindex="-1"></a>    txt <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">c</span>(r, <span class="fl">0.123456789</span>), <span class="at">digits =</span> digits)[<span class="dv">1</span>]</span>
+<span id="cb72-7"><a href="clean.html#cb72-7" aria-hidden="true" tabindex="-1"></a>    txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(prefix, txt)</span>
+<span id="cb72-8"><a href="clean.html#cb72-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">missing</span>(cex.cor)) cex.cor <span class="ot">&lt;-</span> <span class="fl">0.8</span><span class="sc">/</span><span class="fu">strwidth</span>(txt)</span>
+<span id="cb72-9"><a href="clean.html#cb72-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, txt, <span class="at">cex =</span> cex.cor <span class="sc">*</span> r)</span>
+<span id="cb72-10"><a href="clean.html#cb72-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb72-11"><a href="clean.html#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(data4[,cw],<span class="at">upper.panel=</span>panel.cor,<span class="at">na.action =</span> na.omit)</span></code></pre></div>
+<p><img src="02-data-cleaning_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>open_acc, revol_bal,total_rev_hi_lim</p>
+<p>total_acc</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="clean.html#cb73-1" aria-hidden="true" tabindex="-1"></a>descrCor <span class="ot">&lt;-</span>  <span class="fu">cor</span>(data4)</span>
+<span id="cb73-2"><a href="clean.html#cb73-2" aria-hidden="true" tabindex="-1"></a>highlyCorDescr <span class="ot">&lt;-</span> <span class="fu">findCorrelation</span>(descrCor, <span class="at">cutoff =</span> .<span class="dv">75</span>,<span class="at">names=</span>T)</span>
+<span id="cb73-3"><a href="clean.html#cb73-3" aria-hidden="true" tabindex="-1"></a>highlyCorDescr</span>
+<span id="cb73-4"><a href="clean.html#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;total_rev_hi_lim&quot;           &quot;total_acc&quot;                 </span></span>
+<span id="cb73-5"><a href="clean.html#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;open_acc&quot;                   &quot;num_sats&quot;                  </span></span>
+<span id="cb73-6"><a href="clean.html#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;num_op_rev_tl&quot;              &quot;total_bal_ex_mort&quot;         </span></span>
+<span id="cb73-7"><a href="clean.html#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;total_bc_limit&quot;             &quot;num_rev_accts&quot;             </span></span>
+<span id="cb73-8"><a href="clean.html#cb73-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;loan_amnt&quot;                  &quot;funded_amnt&quot;               </span></span>
+<span id="cb73-9"><a href="clean.html#cb73-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] &quot;funded_amnt_inv&quot;            &quot;num_bc_sats&quot;               </span></span>
+<span id="cb73-10"><a href="clean.html#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;tot_hi_cred_lim&quot;            &quot;acc_open_past_24mths&quot;      </span></span>
+<span id="cb73-11"><a href="clean.html#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [15] &quot;num_actv_rev_tl&quot;            &quot;tot_cur_bal&quot;               </span></span>
+<span id="cb73-12"><a href="clean.html#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] &quot;num_tl_op_past_12m&quot;         &quot;total_pymnt&quot;               </span></span>
+<span id="cb73-13"><a href="clean.html#cb73-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [19] &quot;total_pymnt_inv&quot;            &quot;total_il_high_credit_limit&quot;</span></span>
+<span id="cb73-14"><a href="clean.html#cb73-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] &quot;open_il_12m&quot;                &quot;recoveries&quot;                </span></span>
+<span id="cb73-15"><a href="clean.html#cb73-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [23] &quot;bc_util&quot;                    &quot;fico_range_low&quot;            </span></span>
+<span id="cb73-16"><a href="clean.html#cb73-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] &quot;debt_settlement_flag&quot;       &quot;zip_code&quot;                  </span></span>
+<span id="cb73-17"><a href="clean.html#cb73-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [27] &quot;purpose&quot;                    &quot;tax_liens&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="clean.html#cb74-1" aria-hidden="true" tabindex="-1"></a>highCorr <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(descrCor[<span class="fu">upper.tri</span>(descrCor)]) <span class="sc">&gt;</span> .<span class="dv">999</span>)</span>
+<span id="cb74-2"><a href="clean.html#cb74-2" aria-hidden="true" tabindex="-1"></a>highCorr </span>
+<span id="cb74-3"><a href="clean.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+
+</div>
+</div>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-20.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+<script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+
 </html>

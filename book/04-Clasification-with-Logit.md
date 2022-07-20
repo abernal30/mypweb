@@ -1,7 +1,7 @@
 # Machine learning with market direction prediction: Logit {#logit}
 
  
-Today we will cover machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. 
+This chapter covers machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. 
 
 A logistic regression (Logit) and Linear Discriminant Analysis (LDA) models help us to fit a model using binary behavior (up or down)  and forecast market direction. Logistic regression.
 
@@ -47,17 +47,11 @@ legend(x= "topleft", legend = c("actual","short-sma","long-sma"),lty = 1,lwd=2,c
 Now we create the signal.
 
 ```r
-# ifelse(condición,si se cumple la condición,si no se cmple la condición)
-# si el SMA corto > SMA largo, 1,0) 
 signal<-ifelse(data2[,"SMA"]>data2[,"SMA.1"],1,0)
 plot(signal)
 ```
 
 <img src="04-Clasification-with-Logit_files/figure-html/unnamed-chunk-3-1.png" width="90%" style="display: block; margin: auto;" />
-
-```r
-# El numero 1 es señal de compra de Binance y cero es no comprar. 
-```
 
 
 As in the machine learning example, where we predict BNB price, our model is:
@@ -90,7 +84,6 @@ data2<-na.omit(data2)
 
 
 
-
 We separate the sample into training and testing. The training data set is used for the building model process, and the testing dataset is used for evaluation purposes. 
 
 
@@ -107,8 +100,7 @@ train<-subset(data2,
 test<-subset(data2,
   +index(data2)>=part+1 &
   +index(data2)<="2022-04-18")
-y1<-test[,1] # contiene la varaible que voy a pronosticar
-#test<-test[,-1] # las variables independientes, que voy a usar para haver mi pronóstico
+y1<-test[,1] 
 ```
 
 
@@ -175,23 +167,16 @@ $$ accuracy =\frac{TP+TN}{TP+TN+FP+FN}$$
 
 In this formula, the terms TP, TN, FP, and FN refer to the number of times the model's predictions fell into each of these categories. The accuracy is therefore a proportion that represents the number of true positives and true negatives, divided by the total number of predictions.
 
-con 7 var
-RMSE de 7
-
-con 11 var
-RMSE de 6.5
-
 
 factor(x,levels=c(1,0))
 confusionMatrix(pred,real)
 
 ```r
 library(caret)
-# convertir en data frame  predf
 predf2<-as.data.frame(predf)
-predf3<-factor(predf2[,1],levels=c(1,0)) # niveles, el primer dato, el 1, es  la variable de mi interés. 
+predf3<-factor(predf2[,1],levels=c(1,0))   
 real<-factor(y1,levels=c(1,0))
-confusionMatrix(predf3,real) # primero va la predicción y después el dato real
+confusionMatrix(predf3,real) 
 #> Confusion Matrix and Statistics
 #> 
 #>           Reference
@@ -219,8 +204,6 @@ confusionMatrix(predf3,real) # primero va la predicción y después el dato real
 #>                                         
 #>        'Positive' Class : 1             
 #> 
-(25+12)/(25+12+8+0)
-#> [1] 0.8222222
 ```
 
 Sensitivity 
@@ -230,8 +213,6 @@ Finding a useful classifier often involves a balance between predictions that ar
 The sensitivity of a model (also called the true positive rate) measures the proportion of positive examples that were correctly classified. Therefore, as shown in the following formula, it is calculated as the number of true positives divided by the total number of positives, both correctly classified (the true positives) as well as incorrectly classified (the false negatives):
 
 $$sensitivity =\frac{TP}{TP+FN}$$
-
-
 
 
 ## Linear Discriminant Analysis LDA
@@ -288,7 +269,6 @@ plot(signal)
 
 1 es señal de compra, -1 de venta (o venta en corto), y cero es no hacer nada (ni comprar ni vender).
 
-$400 espero que baje 380. 
 
 Combinig data2 and signal
 

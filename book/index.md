@@ -1,7 +1,7 @@
 --- 
-title: "Algorithms and Financial programing in R"
+title: "Algorithms and Financial Programing in R"
 author: "Arturo Bernal"
-date: "2022-07-16"
+date: "2022-07-20"
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
@@ -24,14 +24,9 @@ description: "A guide financial modeling in R"
 
 <a href=""><img src="images/coverf.png" width="350" height="460" alt="Buy from Amazon" class="cover" /></a>
 
-This is the [website]() for *Algorithms and Financial programing in R*! Visit the [GitHub repository for this site](), find the book at [O'Reilly](), or [buy it on Amazon]().
+This is the [website]() for *Algorithms and Financial programing in R*! 
 
-This work by [Aturo Bernal]() is licensed under a <a rel="license" href="">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License</a>.
-
-<a rel="license" href=""><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png" /></a>
-
-<a href="https://www.netlify.com"> <img src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg" alt="Deploys by Netlify" /> </a>
-
+This work by [Aturo Bernal]() 
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -47,11 +42,9 @@ This work by [Aturo Bernal]() is licensed under a <a rel="license" href="">Creat
 
 # Preface {-}
 
-Pending
-
+We started writing this book as guidance for some undergraduate courses related to algorithms and financial programming. We extend the content to become a book for those who wish to start learning to program in R or want to expand their knowledge in programming with applications in finance. The codes of this book are in R and were written in RStudio Markdowns because it is a worldwide known programming language.   
+This book aims to get some introductory programming competencies, as well as in the topics of data cleaning, data analysis, and machine learning, and to employ those concepts in finance.
 
 
 ## Outline {-}
-
-We start by introducing ....
 

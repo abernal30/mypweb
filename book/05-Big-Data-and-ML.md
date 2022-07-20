@@ -7,7 +7,7 @@
 
 Predicting market direction of a price is quite a challenging task as market data involves lots of noise. The market moves either upward or downward, and the nature of the market movement is binary (Jeet and Vat, 2017).
 
-In this session, we use a OLS, to predict a 1 day open price, the price of the 19 April 2022,  of a cryptocurency, in this case Bianance, "BNB-USD". Some ideas and code are adapted from  Jeet and Vat (2017). 
+In this chapter, we use a OLS, to predict a 1 day open price, the price of the 19 April 2022,  of a cryptocurency, in this case Bianance, "BNB-USD". Some ideas and code are adapted from  Jeet and Vat (2017). 
 
 Binance Launched in July 2017, Binance is the biggest cryptocurrency exchange globally based on daily trading volume. Binance aims to bring cryptocurrency exchanges to the forefront of financial activity globally. The idea behind Binance’s name is to show this new paradigm in global finance — Binary Finance, or Binance.
 
@@ -18,7 +18,7 @@ Binance Launched in July 2017, Binance is the biggest cryptocurrency exchange gl
 library("quantmod")
 ticker<-"LALAB.MX"
 y<-getSymbols(ticker,from="2021-01-01",to="2022-04-18",warnings =FALSE,auto.assign=FALSE)
-# the auto.assign=FALSE allow us to store the data in a variable, in this case "y", and not only in the RStudio environment.
+
 y<-y[,1]
 colnames(y)<-"bnb"
 head(y)
@@ -101,6 +101,7 @@ In this case, the forecast of the 19 April 2022 would be:
 bnb_t1<-406.3009 # price 18 April 2022
 bnb_t2<-417.4115 # price 17 April 2022
 
+# The prediction manually would be:
 47.13630+0.90113*bnb_t1-0.01765*bnb_t1
 #> [1] 406.095
 ```
@@ -200,8 +201,7 @@ test<-subset(data2,
 To our forecast vs the real data, we are going to takeout the  real data of the BNB prices of the test set, and store it in an object call it y1.
 
 ```r
-y1<-test[,1] # contiene la varaible que voy a pronosticar
-#test<-test[,-1] # las variables independientes, que voy a usar para haver mi pronóstico
+y1<-test[,1] 
 head(test)
 #>              bnb bnb_1 bnb_2      SMA       std      macd macd_signal       rsi
 #> 2022-01-20 16.79 16.80 16.91 17.19167 0.4656785 -1.077298  -0.1888210  3.816726
@@ -248,7 +248,7 @@ summary(model1)
 #> F-statistic:  1594 on 7 and 225 DF,  p-value: < 2.2e-16
 ```
 
-To make the prediction, we need to apply the function predict, but on the test set.  Break de 5 mins () a las 12:50 kahoot final.  
+To make the prediction, we need to apply the function predict, but on the test set.  
 
 ```r
 pred<-predict(model1,test)
@@ -279,8 +279,6 @@ pred
 Where the first prediction, of the 2022-04-04, 433.6627, is 
 
 $$ bnb_{t}=\ -20.28047\ +\ 0.06146\ bnb_{t-1}\ -0.27979\ bnb_{t-2} + \\1.15805\ sma +\ 0.33934206\ std -3.76813\ macd\\ -6.68031\ macd\_ signal\ + 0.74661\ rsi $$
-
-
 And so on. 
 
 ## Accuracy of the prediction
@@ -288,15 +286,10 @@ And so on.
 Lest make a  plot of the forecast vs the real value of BNB.
 
 ```r
-# almanenar la predicción y el dato real en un objeto, DF
-# convetir la pred en DF
 pred2<-as.data.frame(pred)
-# conv y1 en DF, # y1 tiene el dato real
 y2<-as.data.frame(y1)
 all<-cbind(y2,pred2)
-# all[,1] plot de la primera columna del objeto all, type="l" no es uno, sino letra L minúscula.
 plot(all[,1],type = "l",col="blue",ylab="x")
-# lines es para agregar otra gráfica, 
 lines(all[,2],col="green")
 legend(x= "topleft", legend = c("real","prediction"),lty = 1,lwd=2,col=c("blue","green"))
 ```
@@ -323,8 +316,6 @@ sqrt(mean((real-forecast)^2,na.rm = T ))
 sqrt(mean((all[,1]-all[,2])^2,na.rm = T ))
 #> [1] 0.242318
 ```
-macd, sma, RSI 
-
 
 
 ## Appendix

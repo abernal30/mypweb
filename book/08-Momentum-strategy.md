@@ -1,14 +1,12 @@
 # Momentum or directional trading 
 
-In the last session, we covered the "Long samples test of efficient markets hypothesis (EMH) applied to portfolio". as you remember, we filter to get only those stocks for which the EMH fails, or the test suggests that it is an inefficient market, then we can make a prediction based on past information. 
+In the previous chapter, we covered the "Long samples test of efficient markets hypothesis (EMH) applied to portfolio". as you remember, we filter to get only those stocks for which the EMH fails, or the test suggests that it is an inefficient market, then we can make a prediction based on past information. 
 
 The final goal (that we expect to cover in the final session) is to create a portfolio of filtered stocks and submit it to a trading platform, such as interactive brokers.
 
-For this session, we will make another filter to get those stocks with high expected performance. We will apply a trading strategy called Momentum. That strategy consists of buying stocks when the instrument is trending up or selling when is down. The idea is that historical winners are expected to be winners and historical losers are expected to lose in the short run. The momentum effect is considered a market anomaly (see Cervantes, M., Montoya, M. Á., & Bernal, L.A. (2016)) 
+For this chapter, we will make another filter to get those stocks with high expected performance. We will apply a trading strategy called Momentum. That strategy consists of buying stocks when the instrument is trending up or selling when is down. The idea is that historical winners are expected to be winners and historical losers are expected to lose in the short run. The momentum effect is considered a market anomaly (see Cervantes, M., Montoya, M. Á., & Bernal, L.A. (2016)) 
 
 Note. We also could apply a machine learning technique to predict stocks and make a filter to get the ones with better risk-reward expected performance, however, probably you covered that topic in the UF Algorithms and Data Analysis, as I did in the 2nd period. 
-
-
 
 
 We will create a signal to buy or sell, based on variables created from past information (that is the reason why we made the EMH test). Finally, we will cover how to make the back-testing using historical data. 
@@ -134,8 +132,7 @@ plot(signal[,1])
 <img src="08-Momentum-strategy_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;" />
 
 
- We can modify this signal generation mechanism and use any other criterion. We haven't included any transaction cost and slippage cost to calculate its performance as none of the strategies are directly for trading. 
-
+We can modify this signal generation mechanism and use any other criterion. We haven't included any transaction cost and slippage cost to calculate its performance as none of the strategies are directly for trading. 
 
 
 To estimate the strategy return, we will use the return and the previous day signal. I like assuming that, if is a buying signal, we buy today and sell it tomorrow, making a one day profit. 
@@ -169,13 +166,6 @@ ret_annual<-Return.annualized(strat_ret,geometric = T,scale= 252)
 ret_annual
 #>                   AAPL.Close
 #> Annualized Return -0.3863758
-
-sd<-StdDev.annualized(strat_ret,scale=252)
-
-# Sharpe ratio
-ret_annual/sd
-#>                   AAPL.Close
-#> Annualized Return  -1.077952
 ```
 
 
@@ -186,16 +176,27 @@ $$ Std\ Dev.annualized  = (variance(HPR)*252)^{0.5}$$
 StdDev.annualized(x,scale=)
 
 
+```r
+
+sd<-StdDev.annualized(strat_ret,scale=252)
+```
 
 
 Assuming that the risk free rate is zero, estimate the Sharp Ratio.
 
+```r
+
+# Sharpe ratio
+ret_annual/sd
+#>                   AAPL.Close
+#> Annualized Return  -1.077952
+```
 
 
 
 ## Bibliography
 Cervantes, M., Montoya, M. Á., & Bernal, L.A. (2016). Effect of the Business Cycle on Investment Strategies: Evidence from Mexico. Revista Mexicana de Economía y Finanzas, 11(2).
 
-Based on:  Jeet, P and  VatsLearning, P (2017). Quantitative Finance with R. Packt Publishing. 
+Jeet, P and  VatsLearning, P (2017). Quantitative Finance with R. Packt Publishing. 
 
 
