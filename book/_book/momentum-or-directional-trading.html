@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>8 Momentum or directional trading | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="In the previous chapter, we covered the “Long samples test of efficient markets hypothesis (EMH) applied to portfolio”. as you remember, we filter to get only those stocks for which the EMH fails,...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="8 Momentum or directional trading | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/momentum-or-directional-trading.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="In the previous chapter, we covered the “Long samples test of efficient markets hypothesis (EMH) applied to portfolio”. as you remember, we filter to get only those stocks for which the EMH fails,...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8 Momentum or directional trading | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="In the previous chapter, we covered the “Long samples test of efficient markets hypothesis (EMH) applied to portfolio”. as you remember, we filter to get only those stocks for which the EMH fails,...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="active" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="momentum-or-directional-trading" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Momentum or directional trading<a class="anchor" aria-label="anchor" href="#momentum-or-directional-trading"><i class="fas fa-link"></i></a>
+</h1>
+<p>In the previous chapter, we covered the “Long samples test of efficient markets hypothesis (EMH) applied to portfolio”. as you remember, we filter to get only those stocks for which the EMH fails, or the test suggests that it is an inefficient market, then we can make a prediction based on past information.</p>
+<p>The final goal (that we expect to cover in the final session) is to create a portfolio of filtered stocks and submit it to a trading platform, such as interactive brokers.</p>
+<p>For this chapter, we will make another filter to get those stocks with high expected performance. We will apply a trading strategy called Momentum. That strategy consists of buying stocks when the instrument is trending up or selling when is down. The idea is that historical winners are expected to be winners and historical losers are expected to lose in the short run. The momentum effect is considered a market anomaly (see Cervantes, M., Montoya, M. Á., &amp; Bernal, L.A. (2016))</p>
+<p>Note. We also could apply a machine learning technique to predict stocks and make a filter to get the ones with better risk-reward expected performance, however, probably you covered that topic in the UF Algorithms and Data Analysis, as I did in the 2nd period.</p>
+<p>We will create a signal to buy or sell, based on variables created from past information (that is the reason why we made the EMH test). Finally, we will cover how to make the back-testing using historical data.</p>
+<p>Some of the code and methodology is based on Based on: Jeet and Vats Learning (2017). Other code is from my own authorship.</p>
+<p>First we read the data</p>
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/dfx_2.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># The following codes are to transform the data frame date into xts (as we did last session)</span></span>
+<span><span class="va">date</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># liminating the fits column</span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co">#Applying the xts function</span></span>
+<span><span class="va">datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Eliminating rows with missing values</span></span>
+<span><span class="va">datax</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Also we estimate the returns for each stock, as we did in last session</span></span>
+<span><span class="va">ret</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">datax</span>,<span class="fl">2</span>,<span class="va">Delt</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># we lost the xts </span></span>
+<span><span class="va">retx</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">ret</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Eliminating rows with missing values</span></span>
+<span><span class="va">retx</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">retx</span><span class="op">)</span></span></code></pre></div>
+<p>To back-test the momentum strategy, we have to divide the data set into two smaller data sets called in-sample and out-sample data sets. Something similar to the training and test in machine learning.</p>
+<p>we define four dates. in_sd defines the date by which the in-sample data starts, and in_ed the in-sample end date. Similarly, out_sd and out_ed are defined for the out-sample start and end dates. The dates are defined in order as our data is in time series format and we are interested in building a model on historical data which would be used on real-time data, that is, a data set which has dates later than historical data:</p>
+<p>The in sample could 1-3 years and the out sample 1 year.</p>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">in_sd</span><span class="op">&lt;-</span> <span class="st">"2018-05-26"</span></span>
+<span><span class="va">in_ed</span><span class="op">&lt;-</span> <span class="st">"2021-05-26"</span> </span>
+<span></span>
+<span><span class="va">out_sd</span><span class="op">&lt;-</span> <span class="st">"2021-05-27"</span></span>
+<span><span class="va">out_ed</span><span class="op">&lt;-</span> <span class="st">"2022-05-27"</span></span></code></pre></div>
+<p>To back-test the momentum strategy, we will divide the data set into two: in-sample and out-sample. Something like the training and test in machine learning. The back-testing is for proving the strategy performance before implementing it, without having to wait days, or months to see if it works. Also, it helps to control human bias towards parameter estimation. We should use in-sample data to back-test our strategy, estimate the optimal set of parameters, and evaluate its performance.</p>
+<p>The in-sample data is for estimating the optimal set of parameters, and evaluate its performance. The optimal set of parameters must be applied on out-sample data to understand the generalization capacity of rules and parameters. If the performance on out-sample data is pretty similar to in-sample data, we assume the parameters and rule set have good generalization power and can be used for live trading.</p>
+<p>We create the in and out subsample, for the price and for the return, for datax and retx.</p>
+<p>subset(data,
++index(data)&gt;= initial date &amp;
++index(data)&lt;= final date)</p>
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">in_sd</span><span class="op">&lt;-</span> <span class="st">"2018-05-26"</span>  <span class="co"># están en la 59</span></span>
+<span><span class="va">in_ed</span><span class="op">&lt;-</span> <span class="st">"2021-05-26"</span> </span>
+<span><span class="co"># in_sample of the price of the stocks</span></span>
+<span><span class="va">in_datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">datax</span>,</span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span><span class="op">&gt;=</span> <span class="va">in_sd</span> <span class="op">&amp;</span></span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span><span class="op">&lt;=</span> <span class="va">in_ed</span><span class="op">)</span></span>
+<span><span class="co"># in_sample of the returns</span></span>
+<span><span class="va">in_ret</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">retx</span>,</span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">retx</span><span class="op">)</span><span class="op">&gt;=</span> <span class="va">in_sd</span> <span class="op">&amp;</span></span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">retx</span><span class="op">)</span><span class="op">&lt;=</span> <span class="va">in_ed</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">out_datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">datax</span>,</span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span><span class="op">&gt;=</span> <span class="va">out_sd</span> <span class="op">&amp;</span></span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span><span class="op">&lt;=</span> <span class="va">out_ed</span><span class="op">)</span></span>
+<span><span class="co"># in_sample of the returns</span></span>
+<span><span class="va">out_ret</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">retx</span>,</span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">retx</span><span class="op">)</span><span class="op">&gt;=</span> <span class="va">out_sd</span> <span class="op">&amp;</span></span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">retx</span><span class="op">)</span><span class="op">&lt;=</span> <span class="va">out_ed</span><span class="op">)</span></span></code></pre></div>
+<p>We will use moving average convergence divergence (MACD) and Bollinger band indicators to generate automated trading signals.</p>
+<p>MACD and Bollinger band indicators are calculated using the following two lines of code. I used the same parameter values in both of these functions; however, you can use the parameters which you think are best for your dataset. The output variable macd contains the MACD indicator and its signal value; however, the output variable bb contains the lower band, average, upper band, and percentage Bollinger band:</p>
+<p>Here is where we use the 26 days lags of the ArchTest function. We are generating a MACD for 26 lags, implying that we could use the information of the past 26 days to predict a signal for buying or selling a stock.</p>
+<p>We are going to star with a single stock, the one of the first column, to understand what we are doing. After we will apply the procedure to all the stocks.</p>
+<p>We apply it for the first stock price, in_sample[,1]
+MACD(data, nFast = , nSlow = , nSig = ,maType=“SMA”)</p>
+<p>usually nfast is 12 and nSlow 26 and nsig 9.</p>
+<p>BBands(data, n = , maType=“SMA”, sd = )
+usually n=20 and se=2</p>
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">macd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/TTR/man/MACD.html">MACD</a></span><span class="op">(</span><span class="va">in_datax</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span> , nFast <span class="op">=</span><span class="fl">12</span> , nSlow <span class="op">=</span><span class="fl">26</span>  , nSig <span class="op">=</span><span class="fl">9</span> ,maType<span class="op">=</span><span class="st">"SMA"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bb</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/TTR/man/bollingerBands.html">BBands</a></span><span class="op">(</span><span class="va">in_datax</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">20</span>, maType<span class="op">=</span><span class="st">"SMA"</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>Now we create the variable signal and initializes it with NULL. In the second line, I generated a buy signal (1) when dji is above the upper Bollinger band and the macd value is above its macd-signal value; a sell signal (-1) when dji is down the lower Bollinger band and macd is less than its macd-signal value; and out of market when the signal is 0:</p>
+<p>signal &lt;- ifelse(in_data[,col]&gt; bb[,‘up’] &amp;macd[,‘macd’] &gt;macd[,‘signal’],1,ifelse(in_sample[,col]&lt; bb[,‘dn’] &amp;macd[,‘macd’] &lt;macd[,‘signal’],-1,0))
+where “col” is the column number</p>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">signal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">in_datax</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&gt;</span> <span class="va">bb</span><span class="op">[</span>,<span class="st">'up'</span><span class="op">]</span> <span class="op">&amp;</span> <span class="va">macd</span><span class="op">[</span>,<span class="st">'macd'</span><span class="op">]</span> <span class="op">&gt;</span><span class="va">macd</span><span class="op">[</span>,<span class="st">'signal'</span><span class="op">]</span>,<span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">in_datax</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;</span> <span class="va">bb</span><span class="op">[</span>,<span class="st">'dn'</span><span class="op">]</span> <span class="op">&amp;</span><span class="va">macd</span><span class="op">[</span>,<span class="st">'macd'</span><span class="op">]</span> <span class="op">&lt;</span><span class="va">macd</span><span class="op">[</span>,<span class="st">'signal'</span><span class="op">]</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">signal</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="08-Momentum-strategy_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>We can modify this signal generation mechanism and use any other criterion. We haven’t included any transaction cost and slippage cost to calculate its performance as none of the strategies are directly for trading.</p>
+<p>To estimate the strategy return, we will use the return and the previous day signal. I like assuming that, if is a buying signal, we buy today and sell it tomorrow, making a one day profit.</p>
+<p>in_return[,col]*(stats::lag(signal[,col]))
+where “col” is the column number</p>
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">strat_ret</span><span class="op">&lt;-</span><span class="va">in_ret</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">signal</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We will use the package PerformanceAnalytics to calculate strategy performance such as annual return.
+Estimating Returns</p>
+<p>Annualized geometric return</p>
+<p><span class="math display">\[ geometric\ return =\prod_{i=1}^{n} (1+HPR)^{scale/n}\]</span>
+where <span class="math inline">\(\prod_{i=1}^{n} (1+HPR)\)</span> is the product of (1+HPR). Also, n is the number of observations, scale is number of periods in a year (daily scale = 252, monthly scale = 12, quarterly scale = 4) and HPR is the Holding Period Return:</p>
+<p><span class="math display">\[HPR=  \frac{Price_{t} - Price_{t-1}}{Price_{t-1}}\]</span></p>
+<p>Return.annualized(data,geometric = T,scale= )</p>
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/braverock/PerformanceAnalytics">PerformanceAnalytics</a></span><span class="op">)</span></span>
+<span><span class="co"># The strategy return signal </span></span>
+<span><span class="va">ret_annual</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/Return.annualized.html">Return.annualized</a></span><span class="op">(</span><span class="va">strat_ret</span>,geometric <span class="op">=</span> <span class="cn">T</span>,scale<span class="op">=</span> <span class="fl">252</span><span class="op">)</span></span>
+<span><span class="va">ret_annual</span></span>
+<span><span class="co">#&gt;                   AAPL.Close</span></span>
+<span><span class="co">#&gt; Annualized Return -0.3863758</span></span></code></pre></div>
+<p>Annualized SD</p>
+<p><span class="math display">\[ Std\ Dev.annualized  = (variance(HPR)*252)^{0.5}\]</span></p>
+<p>StdDev.annualized(x,scale=)</p>
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">sd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/StdDev.annualized.html">StdDev.annualized</a></span><span class="op">(</span><span class="va">strat_ret</span>,scale<span class="op">=</span><span class="fl">252</span><span class="op">)</span></span></code></pre></div>
+<p>Assuming that the risk free rate is zero, estimate the Sharp Ratio.</p>
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Sharpe ratio</span></span>
+<span><span class="va">ret_annual</span><span class="op">/</span><span class="va">sd</span></span>
+<span><span class="co">#&gt;                   AAPL.Close</span></span>
+<span><span class="co">#&gt; Annualized Return  -1.077952</span></span></code></pre></div>
+<div id="bibliography-2" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Bibliography<a class="anchor" aria-label="anchor" href="#bibliography-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>Cervantes, M., Montoya, M. Á., &amp; Bernal, L.A. (2016). Effect of the Business Cycle on Investment Strategies: Evidence from Mexico. Revista Mexicana de Economía y Finanzas, 11(2).</p>
+<p>Jeet, P and VatsLearning, P (2017). Quantitative Finance with R. Packt Publishing.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></div>
+<div class="next"><a href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#momentum-or-directional-trading"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="nav-link" href="#bibliography-2"><span class="header-section-number">8.1</span> Bibliography</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/08-Momentum-strategy.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/08-Momentum-strategy.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

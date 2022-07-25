@@ -1,0 +1,392 @@
+# Big data and data cleaning {#clean}
+
+
+For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations and the 150 variables. using the 2 million rows sample would make our processor very low, but I challenge you to try the original data set to see what big data is. 
+
+dataset source:
+https://www.kaggle.com/wordsforthewise/lending-club
+
+```{r}
+library(openxlsx)
+data<-read.xlsx("data/credit_semioriginal.xlsx")
+```
+
+Review the data structure of the credit dataset and descriptive statistics, only of the first 10 columns. 
+```{r}
+str(data[,1:10])
+```
+We could see that there are some numerical columns and some categorical. For categorical I mean that its elements are characters.
+
+## Categorical into numerical: filtering and coditionals
+
+There are several reasons to transform a numerical column or variable into categorical.  For a detailed explanation I suggest to review the chapter "Handling Text and Categorical Attributes" of the book "Machine learning introductory guide in R". For the moment that some functions we will use in this chapter will not work if the variables are categorical. 
+
+If you see the "loan_status" variable is categorical. First we review how many categories does the column loan_status has:
+
+data[,col][!duplicated(data[,"col"])]
+
+where data is the name of the dataframe and col is the column name 
+```{r}
+col<-"loan_status"
+data[,col][!duplicated(data[,col])]
+
+```
+```{r echo=FALSE}
+le<-length(data[,col][!duplicated(data[,col])]
+)
+le
+```
+
+There are `r le` categories, but we going to transform the column verification_status into numeric:
+
+Create a filter, in such a way that the loan_status contains only Fully Paid and Charged Off.
+
+data %>%
+  filter(col== "categ1" |col== "categ2")
+```{r}
+library(dplyr)
+
+data1<-data %>%
+  filter(col== "Fully Paid" |loan_status== "Charged Off")
+```
+
+```{r echo=FALSE}
+di<-dim(data1)
+di[1]
+```
+
+As a result, now we only have `r di[1]` rows. 
+
+
+Besides "loan_status" three are several categorical columns, for example term, winch has 2 categories:
+```{r}
+col<-"term"
+cat<-data[,col][!duplicated(data[,col])]
+cat
+
+```
+The method we use to transform is simple, in this example "36 months" will take the value of one and "60 months" the value of 2. If the column would have 3 categories, the 3rd categories would take value 3 and so on. 
+
+
+```{r}
+
+ncat<-c(1:length(cat))
+ncat
+```
+```{r}
+cat[1]
+```
+
+```{r}
+col_cat<-ifelse(data1[, col] == cat[1],ncat[1],data1[, col])
+head(col_cat)
+```
+
+```{r}
+col_cat<-ifelse(data1[, col] == cat[1],ncat[1],ncat[2])
+col_cat
+```
+
+The former example was easy because we only have 3 categories, however, there are other 
+
+
+
+
+I writted a library for data processing, "dataclean" To install it run the following code in a chunk:
+
+remotes::install_github("abernal30/dataclean")
+devtools::install_github("abernal30/dataclean")
+
+
+
+We use the charname function to see how many categorical variables there are. We print only the first rows using the head function.
+
+
+```{r}
+data1[1,"mths_since_recent_bc"]*2
+```
+
+
+```{r}
+library(dataclean)
+charname(data1)
+```
+
+
+```{r echo=FALSE}
+le2<-length(charname(data1))
+le2
+```
+
+There are `r le2` categorical columns. The function "tonum" transform a categorical column into numeric, for example transforming column "grade", it has the following categories:
+```{r}
+col<-"grade"
+cat<-data[,col][!duplicated(data[,col])]
+cat
+```
+
+We need to specify the data source and the column name.
+```{r}
+col_cat2<-tonum(data1,col)
+head(col_cat2)
+```
+
+
+Finally, if we are sure that we want to transform all the data set into numerical, the function "asnum" reviews detect the categorical columns and transform it into numeric, and as a result we would get a data frame. If we apply the function and review now winch are categorical columns, we do not get any.  
+```{r}
+data2<-asnum(data1)
+head(charname(data2))
+```
+
+
+## Missing values
+
+To treat missing values, I suggest taking one of the following alternatives or a combination of those: i) eliminating columns with a significant amount of missing values; ii) eliminating the row where the missing(s) value(s) is(are) located; iii) replace missing values or Na´s by some statistic. 
+
+
+
+```{r echo=FALSE}
+p<-0.5
+```
+
+For the firs alternative, lets first apply the function "sumna" to detect columns with more than `r p*100` percent of missing values: 
+
+```{r}
+sumna<- function(x,p) {
+dim<-dim(x)
+prov<-c()
+co<-c()
+for (i in 1:dim[2]){
+su<-sum(is.na(x[,i]))/dim[1]
+prov<-c(prov,su)
+ind<-c()
+co<-c(co,colnames(x[,i]))
+}
+me<-data.frame(prov)
+rownames(me)<-colnames(x)
+dim<-dim(me)
+se<-c(1:dim[1])
+me<-cbind(me,se)
+cole<-c()
+colem<-c()
+cole_name<-c()
+me
+#}
+#me<-sumna(data2,.5)
+
+#ifelse(is.na(me[1,1])==TRUE,0,me[1,1]) 
+
+for (i in 1:dim[1]){ 
+me[i,1]<-ifelse(is.na(me[i,1])==TRUE,0,me[i,1]) 
+}
+
+for (i in 1:dim[1]){ 
+
+  if (me[i,1] > p) {
+  cole<-c(cole,me[i,1])  
+  colem<-c(colem,me[i,2])
+  cole_name<-c(cole_name,rownames(me)[i])
+  }
+}
+col2<-data.frame(cole)
+col2<-cbind(col2,colem)
+rownames(col2)<-cole_name
+
+# This conditional is becausue when applying the na.omit, there is a error
+
+if (dim(col2)[1]!=0){
+  colnames(col2)<-c("% of NA´s","Column number")
+} else {col2<-"There are no columns with missing values"}
+col2
+}
+
+na_perc<-sumna(data2,.5)
+head(na_perc)
+
+```
+```{r echo=FALSE}
+di2<-dim(na_perc)
+```
+
+In this case there are  `r di2[1]` columns with more than `r p*100` percent of missing values. if we would like to eliminate those columns we apply the following:
+
+
+```{r}
+data3<-data2[,-na_perc[,2]]
+
+```
+
+
+for the second alternative, which is eliminating the rows where the missing(s) value(s) is(are) located; we could applying the na.omit function. However, we have to be careful, because it could be the case that each row of the data frame has at least one missing value, in which cace it would delete all rows of the data frame, like this case: 
+
+```{r}
+data3_1<-na.omit(data2)
+head(data3_1)
+```
+
+
+The third alternative is replacing missing values by a metric. In this  we us the function "repnas", to the object data3 wich already has the drop the columns with more than `r p*100` percent of missing values:
+```{r}
+repnas<-function(data,metric){
+dim<-dim(data)
+for (i in 1:dim[2]){data[,i][is.na(data[,i])]<-
+  if(metric=="median"){
+  median(data[,i],na.rm = TRUE)} else{
+     if(metric=="mean"){
+  mean(data[,i],na.rm = TRUE)}
+    
+  } 
+}
+data
+}
+data3<-repnas(data3,"median")
+```
+
+
+
+## Zero- and Near Zero-Variance Predictors
+
+We wil use the library [@R-caret] for this section. Zero- and Near Zero-Variance Predictors  are variables or columns that only have a single unique value, winch is refereed as a “zero-variance predictor”. Also, the variables might have only a a few unique values that occur with very low frequencies. In both cases it may cause troubles when estimating an econometric or machine learning model. 
+
+The function nearZeroVar shows the columns number of the Zero- and Near Zero-Variance Predictors. 
+
+
+```{r message=FALSE,warning=FALSE}
+library(caret)
+nzv <- nearZeroVar(data3,saveMetrics= TRUE)
+head(nzv)
+```
+```{r}
+tail(nzv)
+```
+
+```{r echo=FALSE}
+col<-"settlement_date"
+```
+
+To understand better what the "nearZeroVar" function is doing, lets estimate the metrics for the `r col`  columns, first we apply the function "table", which gives the frequency per category:
+
+```{r}
+t<-table(data3[,col])
+t
+```
+
+
+```{r echo=FALSE}
+t1<-as.data.frame(table(data3[,col]))
+va1<-as.numeric(t1[1,1])
+fre1<-as.numeric(t1[1,2])
+va2<-as.numeric(t1[2,1])
+fre2<-as.numeric(t1[2,2])
+```
+
+
+There are `r fre1` rows  with label `r va1`, there are `r fre2` rows  with label `r va2` and so on. 
+
+
+The "frequency ratio" is the frequency of the most prevalent value over the second most frequent value. It  would be near one for well-behaved predictors and very large for highly-unbalanced, for the "grade" column it would be:
+
+To estimate the "frequency ratio" e apply the "which.max" function that gives the position of the frequency of the most prevalent value:
+```{r}
+w <- which.max(t)
+w
+```
+To get the most frequent value:
+```{r}
+t[w]
+```
+
+The second most frequent value would be
+
+```{r}
+max(t[-w])
+```
+Then, the "frequency ratio" is:
+```{r}
+t[w]/max(t[-w])
+```
+
+By default, it has a threshold of 19 (or 95/5), which in terms of our object "nzv" would show only those column for which the "frequency ratio" are higher than 19.
+
+
+Also, the nearZeroVar  function shows the "percent of unique values", which is the number of unique values divided by the total number of rows of the data frame (times 100). It approaches zero as the granularity of the data increases.
+
+The percent unique is the number of categories, which in the case of  the `r fre1` column is estimated applying first the function "length":
+
+```{r}
+length(table(data3[,col])) 
+```
+between the number of rows of the data frame, which we obtain applying the fucntio "dim":
+
+```{r}
+dim(data3)[1]
+```
+
+
+Then the "percent of unique values" is:
+```{r}
+(length(table(data3[,col]))/dim(data3)[1])*100
+
+```
+
+The object "nzv" shows the "frequency ratio" and the "percent of unique values", however, to apply the filter and get only those columns with a "frequency ratio" and "percent of unique values" higher than the respective threshold we apply again the "nearZeroVar" but this time whitout the argument "saveMetrics= TRUE":
+
+```{r}
+nzv_2 <- nearZeroVar(data3)
+nzv_2 
+```
+The object nzv_2  shows the position of the colums for which the tresholds are higher, then we create other object excluding that columns.
+
+```{r}
+data4<-data3[,-nzv_2]
+```
+
+## Collinearity 
+
+Collinearity is the situation in which two or more variables are closely related to one another. The presence of collinearity can pose problems in a model esimatio, such as regression, becasue it could be difficult to separate out the individual effects of collinear variables on the response [@statistical_lerarning]. 
+
+
+```{r echo=FALSE}
+descrCor <-  cor(data4)
+highlyCorDescr <- findCorrelation(descrCor, cutoff = .8,names=T)
+sub_col<-highlyCorDescr
+sub_col
+```
+
+
+```{r}
+cw<-c("open_acc", "total_rev_hi_lim","total_acc","num_sats","total_bc_limit","num_rev_accts")
+descrCor <-  data.frame(cor(data4[,cw]))
+descrCor
+```
+```{r}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y,use="pairwise.complete.obs"))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+pairs(data4[,cw],upper.panel=panel.cor,na.action = na.omit)
+```
+
+open_acc, revol_bal,total_rev_hi_lim
+
+total_acc
+```{r}
+descrCor <-  cor(data4)
+highlyCorDescr <- findCorrelation(descrCor, cutoff = .75,names=T)
+highlyCorDescr
+```
+
+
+```{r}
+highCorr <- sum(abs(descrCor[upper.tri(descrCor)]) > .999)
+highCorr 
+```
+
+
+

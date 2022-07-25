@@ -1,0 +1,187 @@
+# Portfolio management algorithms
+
+
+
+```{r warning=FALSE,message=FALSE, echo=FALSE}
+library(openxlsx)
+library(quantmod)
+library(dplyr)
+library(PerformanceAnalytics)
+```
+
+
+For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy. 
+
+In the file df_merge.xlsx you will find those estimations for the in_sample and out_sample. 
+
+```{r}
+df_merge<-read.xlsx("data/df_merge.xlsx",rowNames=T)
+
+```
+
+
+As we mention in the previous chapter, If the performance on out-sample data is pretty like in-sample data, we assume the parameters and rule set have good generalization power and can be used for live trading. In this session, we filter for those stocks that have similar out-sample and in-sample data. For that purpose, we took the difference between Sharpe ratios in the in_sample and out_sample. We also need to define a threshold of tolerance for that difference. For example, we only take stocks for which the difference is less than 20% in absolute value.  
+df   %>%
+  filter(Sharpe_diff < n & Sharpe_diff > -n)
+n is the threshold
+
+```{r}
+treh<-0.2
+
+  df_merge2<- df_merge   %>%
+  filter(Sharpe_diff < treh & Sharpe_diff > -treh)
+df_merge2
+```
+
+
+
+The momentum strategy consists of buying stocks when the instrument is trending up or selling when is down. For this case, we will order the sample by the in_Sharpe, and split the sample into 3 tranches. The first will be the stocks for taking long positions and the 3rd the one of shorts positions.    
+
+df %>% arrange(desc(col))
+
+```{r}
+df_filtered<- df_merge2 %>% arrange(desc(in_Sharpe))
+# to gt the names of those stocks
+```
+The next code is to make the split for winners
+
+```{r}
+co<-rownames(df_filtered)
+le<-length(co)
+n<-round(le/3,0)  
+win<-co[1:n] # long positions
+n
+```
+
+
+The next code is to make the split for losers
+```{r}
+loss<-co[(le-n):le]
+loss # short positions
+```
+
+Finally, we combine the tranches 1 and 3 in one single object
+
+```{r}
+co_all<-c(win,loss)
+co_all
+```
+
+
+We will generate thousands of simulations of the portfolio weights, and we need to generate aleatory numbers for the weights. For the long position, the weights must be positive and for the short position, the weight must be negative. Then, for the first tranche
+
+The function runif will create random numbers if we apply that function to the first tranche, runif(n, 0, 1), n the number of simulations we want. We need to generate the number of random weights that are in the rend_win object.
+
+Regarding the set.seed(42), because runif generate aleatory numbers. Then it is useful to take out the # before set.seed(42) and get the same result. After everyone gets the same results, insert the # again.
+
+For simplicity, we will generate one portfolio weights simulation, and late we will generate more.
+runif. 
+```{r }
+w<- 1.2 # long position weight
+w_short<- 1-w 
+set.seed(42)
+#runif 
+ru<-runif(n , 0, 1)
+# weigths sum
+su<-sum(ru)
+# runif/sum and trasnsforming into data frame
+we_win<-data.frame(ru*w/su)
+#colnanmes weigth
+colnames(we_win)<-"we"
+# row names from win
+rownames(we_win)<-win
+```
+
+
+For the short position the weights must be negative. Then, for the 3rd tranche:
+```{r}
+ru<-runif(length(loss), 0, 1)
+set.seed(42)
+su<-sum(ru)
+# runif/sum and trasnsforming into data frame
+we_loss<-data.frame(ru*w_short/su) 
+#colnanmes weigth
+colnames(we_loss)<-"we"
+# row names from loss
+rownames(we_loss)<-loss
+sum(we_loss) # set.seed(42)
+we_loss
+```
+
+
+Finally, we combine both weights.
+```{r}
+we_all<-rbind(we_win,we_loss)
+we_all
+```
+
+The portfolio standard deviation is the result of the covariance multiplied by the portfolio weights. 
+
+We estimate the covariance matrix, only for the tickers in tranches 1 and 3. For that covariance we need the returs of that tickers only.
+
+Once we have the filtered stocks, get the returns of those stocks, taking the returns that we estimated the last session, from:
+
+```{r}
+data<-read.xlsx("data/dfx_2.xlsx")
+date<-data[,1]
+data<-data[,-1]
+datax<- xts(data,
+         order.by = as.Date(date))
+datax<-na.omit(datax)
+ret<-apply(datax,2,Delt)
+retx<- xts(ret,
+         order.by = as.Date(date))
+retx<-na.omit(retx)
+head(retx[,1:5])
+```
+
+Also, we filter to get only the filtered stocks, from co_all
+
+```{r}
+retx_all<-retx[,co_all]
+
+```
+
+portfolio covariance
+cov(df,use="complete.obs")
+```{r }
+covar<-cov(retx_all,use="complete.obs")
+```
+
+portfolio_std =cov%*% weigths
+%*% para multiplicar matrices
+```{r }
+portfolio_std =covar %*% we_all[,1]
+portfolio_std
+```
+
+
+
+But we need annualized the portfolio_std
+twe<-t(weigths)
+portfolio_std_1=(twe%*%portfolio_std*252)^.5
+```{r }
+twe<-t(we_all[,1])
+portfolio_std_1=(twe%*%portfolio_std*252)^.5
+
+```
+
+The following code has the annualized returns of the in_sample data, only for the momentum portfolio.
+
+```{r}
+ret_a<-df_merge2[co_all,1]
+
+ret_a_f<-twe %*%ret_a 
+ret_a_f
+```
+
+
+### Graphs of the results
+
+Pending
+
+## Bibliography
+Cervantes, M., Montoya, M. Á., & Bernal Ponce, L. A. (2016). Effect of the Business Cycle on Investment Strategies: Evidence from Mexico. Revista Mexicana de Economía y Finanzas, 11(2).
+
+Hilpisch (2019). Python for Finance, 2nd Edition. O’Reilly Media, Inc. Sebastopol, CA.
+

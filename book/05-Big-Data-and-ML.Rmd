@@ -1,0 +1,241 @@
+# Big data and machine learning
+
+ 
+
+```{r, include=FALSE}
+library("quantmod")
+```
+
+
+Predicting market direction of a price is quite a challenging task as market data involves lots of noise. The market moves either upward or downward, and the nature of the market movement is binary (Jeet and Vat, 2017).
+
+In this chapter, we use a OLS, to predict a 1 day open price, the price of the 19 April 2022,  of a cryptocurency, in this case Bianance, "BNB-USD". Some ideas and code are adapted from  Jeet and Vat (2017). 
+
+Binance Launched in July 2017, Binance is the biggest cryptocurrency exchange globally based on daily trading volume. Binance aims to bring cryptocurrency exchanges to the forefront of financial activity globally. The idea behind Binance’s name is to show this new paradigm in global finance — Binary Finance, or Binance.
+
+## Data preparation
+
+```{r warning=FALSE, message=FALSE}
+library("quantmod")
+ticker<-"LALAB.MX"
+y<-getSymbols(ticker,from="2021-01-01",to="2022-04-18",warnings =FALSE,auto.assign=FALSE)
+
+y<-y[,1]
+colnames(y)<-"bnb"
+head(y)
+```
+
+We are going to start with an OLS (Ordinary least square) model. As independent variables we are using some lags of the independent variable. 
+
+For simplicity, suppose that to predict the 19 April 2022 BNB price, we  make a regression, by OLS, of the following model:
+
+$$bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} + e $$
+
+where $\alpha$ is intercept, $beta$ are the parameters to be estimated, $bnb_{t-1}$ are the bnb price of the traiding previouse day, in this case 18 April 2022, and  $bnb_{t-2}$ is the bnb price of the day before, 17 April 2022, and "e" is the the error term of the regression. In other words, the price of today is explained by the price of yesterday and the day before yesterday. 
+
+data<-stats::lag(y,lag)
+```{r}
+lag<-1
+lag1<-2
+data<-stats::lag(y,lag)
+data2<-stats::lag(y,lag1)
+data<-cbind(y,data,data2)
+colnames(data)[2:3]<-c("bnb_1","bnb_2")
+```
+
+Para realizar la regresión por OLS
+lm(bnb~.,data=data)
+```{r}
+model<-lm(bnb~.,data=data)
+summary(model)
+```
+
+
+Also, suppose we found the following result of the regression:
+
+$$bnb_{t}=\ 52.42583\ +\ 0.88235\ bnb_{t-1}\ -0.01226\ bnb_{t-2} $$
+```{r}
+tail(y)
+```
+
+
+In this case, the forecast of the 19 April 2022 would be:
+```{r}
+bnb_t1<-406.3009 # price 18 April 2022
+bnb_t2<-417.4115 # price 17 April 2022
+
+# The prediction manually would be:
+47.13630+0.90113*bnb_t1-0.01765*bnb_t1
+```
+Given that the last price is 406.3009.
+
+However, the last example was only for exposition purposes. In reality, we need to test other independent variables besides the lags of the dependent variable. For this session, besides the lags values if the close prices as the dependent variable, we are going to add some variables used in technical analysis, such as moving average, standard deviation, RSI (see appendix for a detailed explanation), MACD, and so on, which has some predictive power in market direction. These indicators can be constructed using the following commands:
+
+## Variable creation
+
+- SMA Calculate a moving averages 
+SMA(x, n = 10, ...), where x is the time serie, n is the Number of periods to average over
+
+- The rollapply is a function for applying a function to rolling margins of an array, in this case we used to make a moving standard deviation.
+rollapply(x,n,sd), where sd is standard deviation
+
+- The MACD is the moving average converge diverge (see Appendix)
+- MACD(x, nFast = 12, nSlow = 26, nSig = 9, maType=SMA or EMA)
+
+- RSI is the relative strength index 
+RSI(x, n = 14, maType=SMA or EMA)
+
+```{r warning=FALSE}
+lag2<-6
+lag3<-9
+lag4<-26
+avg<-SMA(data[,1],lag2) # var1
+std<- rollapply(data[,1],lag2,sd) # var2
+colnames(std)<-"std"
+
+macd<- MACD(data[,1], lag2,lag3,lag4, "SMA") # var2
+colnames(macd)[2]<-"macd_signal"
+  
+rsi<-  RSI(data[,1],lag2,"SMA")# var3
+
+
+data2<-cbind(data,avg,std,macd,rsi)
+head(data2)
+```
+
+
+
+Then our model is:
+$$bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} +\beta3\ sma +\\ \beta4\ std\ +\beta5\ macd\ + \beta6\ rsi +\ e$$
+
+As we see, because of the lags and new variables, we have many missing values in the early dates, then we apply the na.omit, to eliminate the rows with nas. 
+```{r warning=FALSE}
+data2<-na.omit(data2)
+```
+
+
+## Sub samples 
+We separate the sample into training and testing. The training data set is used for the building model process, and the testing dataset is used for evaluation purposes. 
+
+
+This code automate the sub-sample creation, usually we split into 80% the training set and 20% the test set. 
+```{r}
+N<-dim(data2)[1]
+n_train<-round(N*.8,0)
+part<-index(data2)[n_train]
+part
+```
+
+In this case, "2022-01-31" is the date that represents the 80% of all observations, where the starting date is "2022-01-01".
+
+We use the function subset:
+
+name<-subset(object,
+  +index(object)>="YY-mm-dd" &
+  +index(object)<="YY-mm-dd") 
+  
+```{r}
+
+#This is the test data set.
+train<-subset(data2,
+  +index(data2)>=index(data2)[1] &
+  +index(data2)<=part)
+
+# The subset of the training data set.
+test<-subset(data2,
+  +index(data2)>=part+1 &
+  +index(data2)<="2022-04-18")
+```
+
+
+To our forecast vs the real data, we are going to takeout the  real data of the BNB prices of the test set, and store it in an object call it y1.
+```{r}
+y1<-test[,1] 
+head(test)
+```
+
+
+
+## Making the model
+We estimate a OLS model aplying the function lm, 
+
+lm(bnb~.,data=train)
+```{r}
+model1<-lm(bnb~.,data=train)
+summary(model1)
+```
+
+To make the prediction, we need to apply the function predict, but on the test set.  
+```{r}
+pred<-predict(model1,test)
+head(pred)
+pred
+```
+
+Where the first prediction, of the 2022-04-04, 433.6627, is 
+
+$$ bnb_{t}=\ -20.28047\ +\ 0.06146\ bnb_{t-1}\ -0.27979\ bnb_{t-2} + \\1.15805\ sma +\ 0.33934206\ std -3.76813\ macd\\ -6.68031\ macd\_ signal\ + 0.74661\ rsi $$
+And so on. 
+
+## Accuracy of the prediction
+
+Lest make a  plot of the forecast vs the real value of BNB.
+```{r}
+pred2<-as.data.frame(pred)
+y2<-as.data.frame(y1)
+all<-cbind(y2,pred2)
+plot(all[,1],type = "l",col="blue",ylab="x")
+lines(all[,2],col="green")
+legend(x= "topleft", legend = c("real","prediction"),lty = 1,lwd=2,col=c("blue","green"))
+```
+
+
+Finaly, to measure the accuracy of our prediction, we apply the Root Mean Square Error (RMSE). It gives an idea of how much error the system typically makes in its predictions. The formula of the RMSE is:
+
+$$RMSE =\frac{1}{n}\ \sum_{i=1}^{n} (y_{i}-\hat{f(x_{i}))^{2}} $$
+where $ \hat{f(x_{i})} $ is the prediction for the ith observation (the actual), $ y_{i} $ is the observation ith of the independent variable, and n is the number of observations. 
+
+$$\hat{f(x_{i})}=\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n}$$
+
+
+The RMSE is computed using the training data that was used to fit the model, and so should more accurately be referred to as the training RMSE. 
+
+
+Where, the RMSE close to zero, is the better.
+sqrt(mean((real-forecast)^2,na.rm = T ))
+
+```{r}
+sqrt(mean((all[,1]-all[,2])^2,na.rm = T ))
+
+```
+
+
+## Appendix
+
+The MACD and signals (from investopedia). 
+
+Moving Average Convergence Divergence (MACD) is a trend-following momentum indicator that shows the relationship between two moving averages of a security’s price. The MACD is calculated by subtracting the 26-period Exponential Moving Average (EMA) from the 12-period EMA.
+
+The result of that calculation is the MACD line. A nine-day EMA of the MACD called the "signal line," is then plotted with the MACD line, which can be a signal for buy and sell. Traders may buy the security when the MACD crosses above its signal line and sell - or short - the security when the MACD crosses below the signal line. 
+
+An exponential moving average (EMA) is a type of moving average (MA) that places a greater weight and significance on the most recent data points. The exponential moving average is also referred to as the exponentially weighted moving average. An exponentially weighted moving average reacts more significantly to recent price changes than a simple moving average (SMA), which applies an equal weight to all observations in the period.
+
+In the next example, by default, the function MACD creates a 12 days EMA and 26-days EMA.
+
+
+
+The relative strength index (RSI)
+
+Is a momentum indicator that measures the magnitude of recent price changes to evaluate overbought or oversold conditions in the price of a stock or other asset. The RSI is displayed as an oscillator (a line graph that moves between two extremes) and can have a reading from 0 to 100. The indicator was originally developed by J. Welles Wilder Jr. and introduced in his seminal 1978 book, New Concepts in Technical Trading Systems.
+
+The Relative Strength Index (RSI) calculates a ratio of the recent upward price movements to the absolute price movement. Developed by J. Welles Wilder. The RSI calculation is RSI = 100 - 100 / ( 1 + RS ), where RS is the smoothed ratio of 'average' gains over 'average' losses. The 'averages' aren't true averages, since they're divided by the value of n and not the number of periods in which there are gains/losses.
+
+Traditional interpretation and usage of the RSI are that values of 70 or above indicate that a security is becoming overbought or overvalued and may be primed for a trend reversal or corrective pullback (drop in a stock) in price. An RSI reading of 30 or below indicates an oversold or undervalued condition (Investopedia).
+
+## Bibliography
+
+
+Jeet, P  and Vat, P. (2017). Learning Quantitative finance with R (2017), Packt Publishing, Birmingham, UK.
+
+
+

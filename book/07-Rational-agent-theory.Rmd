@@ -1,0 +1,226 @@
+# Rational agent and behavioral finance in investment
+
+```{r include=FALSE}
+library(quantmod)
+library(FinTS)
+library(tseries)
+library(rugarch)
+```
+
+The test in this chapter and some of the text is  based on Wooldridge (2012) with my own codes.
+
+##   Shorts samples test of efficient markets hypothesis (EMH) for one asset
+
+Let yt be the daily price of the S&P500. A strict form of the efficient markets hypothesis states that information observable to the market prior to day t should not help to predict the price. If we use only past information on y, the EMH is stated as:
+
+$$E(y_t/ y_{t-1} ,y_{t-1},.... )=E(y_t) $$
+
+If the previous equation is false, we could use the information on the past to predict the current price. 
+
+The EMH presumes that such investment opportunities will be noticed and will disappear almost instantaneously.
+
+One simple way that equation is to specify the AR(1) model as the alternative model. 
+
+$$y_t= \beta_0 +\beta_1\ y_{t-1}+u_t, $$
+
+
+A significant beta1 coefficient would reject EMH; then, we could use the information on the past to predict the current price. However, it is a common practice to make the test using more lags.  
+
+$$y_t= \beta_0 +\beta_1\ y_{t-1},...,y_{t-n}+u_t$$
+
+
+```{r include=FALSE}
+ticker<-"GAPB.MX"
+getSymbols(ticker)
+all<-get(ticker)
+```
+
+Now, to make the lags of the price, we make a Loop For, creating the lag and storing the created lags into the xts object where the S&P500 close price is stored.
+
+Note. Compute a lagged version of a time series, shifting the time base back by a given number of observations.
+
+
+
+```{r}
+dji<-all[,4]
+dji<-Delt(all[,4])
+la2<-stats::lag(dji,2)
+la3<-stats::lag(dji,3)
+dji<-cbind(dji,la2,la3)
+dji<-na.omit(dji)
+colnames(dji)<-c("SP500","SP500_lag2","SP500_lag3")
+head(dji)
+```
+
+
+Run the regression
+```{r}
+summary(lm(SP500~.,data =dji))
+```
+
+
+Remember, a significant beta1 coefficient would reject EMH; then, we could use the past information to predict the a price, in this case the DJI. 
+
+
+## Long samples test of efficient markets hypothesis (EMH) for one asset
+
+
+
+Although the EMH states that the expected return given past observable information should be constant, it says nothing about the conditional variance. It could be tested using a 
+heteroskedasticity, such as Breusch-Pagan, for example. However, this heteroskedasticity is better characterized by the ARCH model.
+
+Suppose we have the dependent variable, y(t), a contemporary exogenous variable, z(t).
+
+
+$$E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \beta_0 +\beta_1\ z_t+\beta_2\ y_{t-1}+\beta_3\ z_{t-1}. $$
+
+
+The typical approach is to assume that: 
+
+$$Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \sigma, $$
+is a constant. But this variance could follow an ARCH model:
+
+$$Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=Var(u_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=\\ \alpha_0 +\alpha_1\ u^2_{t-2}.$$
+Where
+
+$$u_t=y_t-E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)$$
+
+We can check for ARCH effects by using the ArchTest() function from the FinTS package. Lagrange Multiplier (LM) test for autoregressive conditional heteroscedasticity (ARCH). Computes the Lagrange multiplier test for conditional heteroscedasticity. Equivalent to the test by OLS: 
+
+$$u_t=\alpha_0 +\alpha_1\ u^2_{t-2}$$
+We look to verify the significance of alpha 1. If alpha 1 significant, we reject the null hypothesis and conclude the presence of ARCH(1) effects. Then we could use past information to predict the future.
+ArchTest(object,lags=n), usually lags=1
+
+```{r}
+ticker<-"^GSPC"
+getSymbols(ticker,from="2021-05-01",to="2022-05-01")
+dji_long<-GSPC[,4]
+```
+
+
+
+```{r}
+ar<-ArchTest(dji_long,lags=1)
+data.frame(ar$p.value)
+```
+
+If p-value is <10%, in this case, we conclude the presence of ARCH(1) effects, then we could make a forecast of the time series using past information.
+
+
+
+```{r}
+library(quantmod)
+#library(xml2) # this are for the  code 
+#library(rvest) # in 154 to 177 lines, just instaal it if you are running that code
+library(openxlsx)
+library(FinTS)
+library(tseries)
+library(rugarch)
+```
+
+
+## Long samples test of efficient markets hypothesis (EMH) applyied to portfolio 
+
+In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We will assume that is going to be a long-term horizon portfolio. Then, we need to apply the long samples test of the efficient markets hypothesis. 
+
+
+```{r}
+df<-read.xlsx("data/df_dates.xlsx", detectDates = T)
+
+date<-df[,1]
+
+dim<-dim(df)
+
+# important to takeout the data before transforming to xts, other wise does not transform into numeric. 
+data<-df[,2:dim[2]]
+
+datax<- xts(data,
+         order.by = as.Date(date))
+
+dfx<-na.omit(datax)
+```
+
+
+The following code makes the long samples test of the efficient markets hypothesis (EMH) applied to many assets of the dfx object. 
+
+We start by estimating the returns for each time series and deleteing missig valies. 
+```{r}
+return<-Delt(dfx[,1])
+
+# we are going to apply the Delt function to the 100 stocks
+
+# function apply()
+return_all<-apply(dfx, 2, Delt)
+# es 1 for rows o 2for columns
+
+```
+
+
+The next loops knowledge is over the level of this course contents requires, so its application could be covered in the final exam, but the topic of loops will not be covered.
+
+
+
+```{r}
+dfr<-return_all
+m<-26
+#---de aqui es la creación del Loop for, esto rebasa el nivel de este curso
+ar<-c()
+n<-dim(dfr)[2]
+for (i in 1:n){
+ar1<-ArchTest(dfr[,i],lags=m)$p.value
+ar<-c(ar,ar1)
+}
+#----- 
+ar<-data.frame(ar)
+# it has the p value of the EMH test, if the p-value is lees than 10%, then we could make predictions 
+
+# add the name of the ticker
+col_name<-colnames(return_all)
+col_name
+# add the ticker na,me
+rownames(ar)<-col_name
+ar
+```
+
+The following code counts the number of tickers that we could use to make a prediction, applyinf the ifelse function and combing it with the object that contains the EMH test.
+```{r}
+library(dplyr)
+
+pred<-ifelse(ar[,1]<0.1,"Predict","No Predict")
+# merge with the ar object 
+ar<-cbind(ar,pred)
+ar
+```
+
+Finally, we could filter to get only those tickers with category predict. 
+
+arf<- df %>%
+  filter(coll== "category")
+```{r}
+library(dplyr) 
+arf<- ar %>%
+  filter(pred == "Predict")
+```
+
+
+Also we take the historical information of the filtered stocks
+```{r}
+# this code takes the names of the filtered tickers
+col_filterd<-rownames(arf)
+dfx_2<-dfx[,col_filterd]
+
+```
+
+
+
+```{r}
+dfx_3<-data.frame(dfx_2)
+date<-rownames(dfx_3)
+dfx_4<-cbind(date,dfx_3)
+```
+
+
+## Bibliography
+
+Wooldridge, J. M. (2012). Introductory econometrics: A modern approach. Mason, OH: Thomson/South-Western.
+

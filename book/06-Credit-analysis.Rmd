@@ -1,0 +1,249 @@
+# Credit analysis
+
+```{r warning=FALSE, message=FALSE}
+library(openxlsx)
+library(dplyr)
+library(caret)
+```
+
+
+## Example 
+
+The database credit_short.xlsx has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. One of the spreadsheets has the variable description. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations.
+
+In the following example, you will find an example of a "prediction model" for the credit_short.xlsx, which only has 26 variables.
+
+dataset source:
+https://www.kaggle.com/wordsforthewise/lending-club
+
+### a) Independent variable creation
+```{r}
+df<-read.xlsx("data/credit_short.xlsx")
+```
+
+
+Function count(df,col,sort = T) could give us the number of observations per category of the variable loan_status: 
+```{r}
+co<-count(df,loan_status,sort =T )
+co
+# para saber cuantas cztegorias tiene term
+```
+
+
+For this example, and for the evidence, we will create a binary variable, based on Fully Paid and Charged Off categories, which are equivalent to no-default and default respectively. 
+
+
+Charge off" means that the credit grantor wrote your account off of their receivables as a loss, and it is closed to future charges. When an account displays a status of "charge off," it means the account is closed to future use, although the debt is still owed.
+
+
+
+barplot(df$colsum , names.arg=df$colnames , las=2, 
+                  col=c("red","blue","green","purple","black"),
+                  ylim=c(0,700))
+                  
+df is the data frame name, colsum is the column of the data frame with the number for each categorie and colnames is the column of the data frame with the names of the categories. 
+```{r}
+co<-count(df,loan_status,sort =T )
+barplot(co$n , names.arg=co$loan_status , las=2 , 
+  col=c("red","blue","green","purple","black"),
+                  ylim=c(0,700))
+
+```
+
+
+I make a filter, in such a way that the loan_status contains only Fully Paid and Charged Off:
+
+library dplyr
+
+%>% is a pipe to
+
+df %>%
+  filter(col== "r1" |col== "r2")
+  df is a data frame, col is the column name, r1 and r2 is the category 1 and 2 respectively, in this case Fully Paid and Charged Off
+  
+```{r}
+df2<-df %>%
+  filter(loan_status == "Fully Paid" | loan_status== "Charged Off") 
+count(df2,loan_status)
+```
+  
+For the logit model to run, we need to transform the loan_status into  (0,1), if "Fully Paid" then 0, and "Charged Off", 1. The relevant variable is "Charged Off", because we are concerned about the expected losses (if customers do not pay the loan).  
+
+We apply the ifelse function and cbind to combine in an object.
+
+```{r }
+Default<-ifelse(df2$loan_status=="Fully Paid",0,1)
+#Default<-factor(Default ,levels =c(1,0))
+# combining default and df2
+df3<-cbind(Default,df2)
+# delete loan status, is the second colum
+df4<-df3[,-2]
+head(df4)
+# Don´t forget to eliminate the column loan_status, because it would be duplicated with Default
+```
+
+
+### b) "Prediction model"
+
+If we run the model like this, when some variables are categorical, for example, term, grade, and many others, the model accuracy will be very low. More importantly, the predict function may not work. Then we need to transform the variables into numeric.   
+
+For example, the column term has the following categories:
+
+
+
+The following code transforms that categorical variable into numerical. The code is above the level of this course and is shown for exposition purposes (not covered in the final exam). 
+
+
+
+
+Further, I created my package that makes the procedure for us for the entire data set in one click. 
+
+Download the file: Art_0.1.0.tar.gz and install it as a package archive file. Apply the function asnum(df). Also, for simplicity, we are going to apply the na.omit() function, which eliminates the rows with missing values. 
+
+Or you could install the library from:
+
+```{r}
+#library(devtools)
+#doremotes::install_github("abernal30/dataclean")
+
+#library(devtools)
+#devtools::install_github("abernal30/dataclean")
+```
+
+
+
+```{r}
+library(dataclean) 
+df5<-asnum(df4)
+head(df5)
+```
+
+Split the data set into training and test in 80% the training and 20% the test data set. 
+
+When the data set is not a time series, we use the function sample. Which randomly generates dim[1]*n  numbers of the full data set. Where dim[1] is the number of rows of the full data set and n is a %, in this case 80%. 
+
+set.seed (1)
+train_sample<-sample(dim[1],dim[1]*n)
+
+train <- df[train_sample, ]
+test  <- df[-train_sample, ]
+set.seed (13)
+
+
+
+
+```{r echo=FALSE}
+set.seed (3)
+dim<-dim(df5)
+train_sample<-sample(dim[1],dim[1]*.8)
+train <- df5[train_sample, ] # this is the 80% o the sample
+test  <- df5[-train_sample, ] # This is 20%
+head(train)
+```
+
+
+The result of running the logit model with all the variables and using the train set is:
+glm(y ~x1+x2+x3,data=,family=binomial())
+
+where y is the dependent variable, and x1, x2, x3 are the independent variables in the model: 
+
+$$y=\alpha_{0}\ +\beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+e$$
+and e is the error term. 
+
+If we want to appli the model for all the variables
+glm(y ~.,data=,family=binomial())
+
+$$y=\alpha_{0}\ +\beta_{1}x_{1}+\beta_{2}x_{2}+...+\beta_{n}x_{n}+e$$
+
+In this case, y is the Default variable.
+glm(y ~x1+x2+x3,data=,family=binomial())
+```{r}
+model<-glm(Default~. ,data=train,family=binomial())
+
+```
+
+
+The prediction:
+predict(model,newdata = test,type = "response")
+
+the type = "response" argument is for get the transformation of the logit model into probability. Also we need  to transform the probability into c(0,1).
+```{r}
+predict<-predict(model,newdata = test,type = "response")
+#trasnform that probability into a 0,1
+predictp<-ifelse(predict>.5,1,0)
+predictp
+```
+
+
+
+### Measuring model performance
+
+The confusion Matrix. Before that we need to transform the variables into factor.
+
+confusionMatrix(prediction,real)
+```{r echo=FALSE}
+# the real data is in test and we need to transoform in factor
+real<-factor(test[,"Default"],levels = c(1,0))
+predictf<-factor(predictp,levels = c(1,0))
+confusionMatrix(predictf,real)
+```
+
+
+Cross validation. 
+
+Resampling methods are an indispensable tool in modern statistics. They involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the model.  Such an approach may allow us to obtain information that would not be available from fitting the model only once using the original training sample.
+
+
+Also, it would help us to get the best variables that improves the accuracy. First we need to transform the dependent variable into factor.
+```{r}
+def_train_f<-factor(train$Default,levels=c(1,0))
+trainf<-train
+trainf[,"Default"]<-def_train_f
+testf<-test
+testf[,"Default"]<-real # antes una f 
+```
+
+
+K Fold Cross Validation
+
+This approach involves randomly k-fold CV dividing the set of observations into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k − 1 folds.
+
+glm(Default ~ ., data = train)
+```{r}
+#set.seed(1)
+trainf<-na.omit(trainf)# delete the rows with nas or missing values
+gbmFit1 <- train(Default ~ ., data = trainf,
+                 method = "glmStepAIC", 
+                            trControl = trainControl(method = "cv", number = 10),
+                        trace=0,   metric="Accuracy")
+gbmFit1 
+```
+
+The model glmStepAIC makes a selection of variables. In this case, to improve the Accuracy.
+
+          
+Making the prediction.
+
+
+```{r}
+gbmFit1$finalModel$formula
+```
+
+Suponiendo que este es mi modelo final, voy a hacer la predicción real. 
+Una persona pide crédito y tiene los siguietes datos
+```{r}
+test[1,]
+```
+
+
+
+```{r}
+model<-glm(Default~loan_amnt + term + int_rate + installment + grade + 
+    sub_grade + home_ownership + open_acc + pub_rec + mort_acc + 
+    pub_rec_bankruptcies ,data=train,family=binomial())
+predict<-predict(model,newdata = test[1,],type = "response")
+#trasnform that probability into a 0,1
+predictp<-ifelse(predict>.5,1,0)
+predictp
+```
+
