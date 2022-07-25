@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 Big data and data cleaning | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="2 Big data and data cleaning | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/clean.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 Big data and data cleaning | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="active" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="clean" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Big data and data cleaning<a class="anchor" aria-label="anchor" href="#clean"><i class="fas fa-link"></i></a>
+</h1>
+<p>For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, <a href="https://www.lendingclub.com/" class="uri">https://www.lendingclub.com/</a> fintech marketplace bank at scale. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations and the 150 variables. using the 2 million rows sample would make our processor very low, but I challenge you to try the original data set to see what big data is.</p>
+<p>dataset source:
+<a href="https://www.kaggle.com/wordsforthewise/lending-club" class="uri">https://www.kaggle.com/wordsforthewise/lending-club</a></p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/credit_semioriginal.xlsx"</span><span class="op">)</span></span></code></pre></div>
+<p>Review the data structure of the credit dataset and descriptive statistics, only of the first 10 columns.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    1000 obs. of  10 variables:</span></span>
+<span><span class="co">#&gt;  $ loan_amnt      : num  3600 24700 20000 35000 10400 ...</span></span>
+<span><span class="co">#&gt;  $ funded_amnt    : num  3600 24700 20000 35000 10400 ...</span></span>
+<span><span class="co">#&gt;  $ funded_amnt_inv: num  3600 24700 20000 35000 10400 ...</span></span>
+<span><span class="co">#&gt;  $ term           : chr  "36 months" "36 months" "60 months" "60 months" ...</span></span>
+<span><span class="co">#&gt;  $ int_rate       : num  14 12 10.8 14.8 22.4 ...</span></span>
+<span><span class="co">#&gt;  $ installment    : num  123 820 433 830 290 ...</span></span>
+<span><span class="co">#&gt;  $ grade          : chr  "C" "C" "B" "C" ...</span></span>
+<span><span class="co">#&gt;  $ sub_grade      : chr  "C4" "C1" "B4" "C5" ...</span></span>
+<span><span class="co">#&gt;  $ emp_title      : chr  "leadman" "Engineer" "truck driver" "Information Systems Officer" ...</span></span>
+<span><span class="co">#&gt;  $ emp_length     : chr  "10+ years" "10+ years" "10+ years" "10+ years" ...</span></span></code></pre></div>
+<p>We could see that there are some numerical columns and some categorical. For categorical I mean that its elements are characters.</p>
+<div id="categorical-into-numerical-filtering-and-coditionals" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Categorical into numerical: filtering and coditionals<a class="anchor" aria-label="anchor" href="#categorical-into-numerical-filtering-and-coditionals"><i class="fas fa-link"></i></a>
+</h2>
+<p>There are several reasons to transform a numerical column or variable into categorical. For a detailed explanation I suggest to review the chapter “Handling Text and Categorical Attributes” of the book “Machine learning introductory guide in R”. For the moment that some functions we will use in this chapter will not work if the variables are categorical.</p>
+<p>If you see the “loan_status” variable is categorical. First we review how many categories does the column loan_status has:</p>
+<p>data[,col][!duplicated(data[,“col”])]</p>
+<p>where data is the name of the dataframe and col is the column name</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">col</span><span class="op">&lt;-</span><span class="st">"loan_status"</span></span>
+<span><span class="va">data</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "Fully Paid"         "Current"            "Charged Off"       </span></span>
+<span><span class="co">#&gt; [4] "In Grace Period"    "Late (31-120 days)"</span></span></code></pre></div>
+<pre><code>#&gt; [1] 5</code></pre>
+<p>There are 5 categories, but we going to transform the column verification_status into numeric:</p>
+<p>Create a filter, in such a way that the loan_status contains only Fully Paid and Charged Off.</p>
+<p>data %&gt;%
+filter(col== “categ1” |col== “categ2”)</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">col</span><span class="op">==</span> <span class="st">"Fully Paid"</span> <span class="op">|</span><span class="va">loan_status</span><span class="op">==</span> <span class="st">"Charged Off"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>#&gt; [1] 145</code></pre>
+<p>As a result, now we only have 145 rows.</p>
+<p>Besides “loan_status” three are several categorical columns, for example term, winch has 2 categories:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">col</span><span class="op">&lt;-</span><span class="st">"term"</span></span>
+<span><span class="va">cat</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">cat</span></span>
+<span><span class="co">#&gt; [1] "36 months" "60 months"</span></span></code></pre></div>
+<p>The method we use to transform is simple, in this example “36 months” will take the value of one and “60 months” the value of 2. If the column would have 3 categories, the 3rd categories would take value 3 and so on.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">ncat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">cat</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ncat</span></span>
+<span><span class="co">#&gt; [1] 1 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "36 months"</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">col_cat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">data1</span><span class="op">[</span>, <span class="va">col</span><span class="op">]</span> <span class="op">==</span> <span class="va">cat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">ncat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">data1</span><span class="op">[</span>, <span class="va">col</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">col_cat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "60 months" "1"         "1"         "60 months" "60 months" "60 months"</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">col_cat</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">data1</span><span class="op">[</span>, <span class="va">col</span><span class="op">]</span> <span class="op">==</span> <span class="va">cat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">ncat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">ncat</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">col_cat</span></span>
+<span><span class="co">#&gt;   [1] 2 1 1 2 2 2 2 2 2 2 2 2 2 1 1 2 1 1 2 2 1 2 1 1 1 1 1 1 1 1 2 2 2 2 1 1 2</span></span>
+<span><span class="co">#&gt;  [38] 1 2 2 2 1 1 2 2 1 2 2 1 1 1 1 2 1 1 2 1 1 1 1 2 2 2 1 2 2 2 1 1 2 2 1 2 1</span></span>
+<span><span class="co">#&gt;  [75] 1 1 1 1 2 1 2 1 2 2 1 1 1 1 2 2 2 1 1 1 2 1 1 1 1 1 1 1 1 1 1 2 2 1 2 1 1</span></span>
+<span><span class="co">#&gt; [112] 1 2 2 1 2 2 1 1 1 1 2 2 1 2 1 2 2 2 1 1 2 1 1 2 1 1 1 2 1 2 1 2 1 1</span></span></code></pre></div>
+<p>The former example was easy because we only have 3 categories, however, there are other</p>
+<p>I writted a library for data processing, “dataclean” To install it run the following code in a chunk:</p>
+<p>remotes::install_github(“abernal30/dataclean”)
+devtools::install_github(“abernal30/dataclean”)</p>
+<p>We use the charname function to see how many categorical variables there are. We print only the first rows using the head function.</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data1</span><span class="op">[</span><span class="fl">1</span>,<span class="st">"mths_since_recent_bc"</span><span class="op">]</span><span class="op">*</span><span class="fl">2</span></span>
+<span><span class="co">#&gt; [1] 18</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dataclean</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/charname.html">charname</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "term"                      "grade"                    </span></span>
+<span><span class="co">#&gt;  [3] "sub_grade"                 "emp_title"                </span></span>
+<span><span class="co">#&gt;  [5] "emp_length"                "home_ownership"           </span></span>
+<span><span class="co">#&gt;  [7] "verification_status"       "issue_d"                  </span></span>
+<span><span class="co">#&gt;  [9] "loan_status"               "purpose"                  </span></span>
+<span><span class="co">#&gt; [11] "title"                     "zip_code"                 </span></span>
+<span><span class="co">#&gt; [13] "addr_state"                "earliest_cr_line"         </span></span>
+<span><span class="co">#&gt; [15] "initial_list_status"       "last_pymnt_d"             </span></span>
+<span><span class="co">#&gt; [17] "next_pymnt_d"              "last_credit_pull_d"       </span></span>
+<span><span class="co">#&gt; [19] "application_type"          "verification_status_joint"</span></span>
+<span><span class="co">#&gt; [21] "hardship_flag"             "hardship_type"            </span></span>
+<span><span class="co">#&gt; [23] "hardship_reason"           "hardship_status"          </span></span>
+<span><span class="co">#&gt; [25] "hardship_start_date"       "hardship_end_date"        </span></span>
+<span><span class="co">#&gt; [27] "payment_plan_start_date"   "hardship_loan_status"     </span></span>
+<span><span class="co">#&gt; [29] "disbursement_method"       "debt_settlement_flag"     </span></span>
+<span><span class="co">#&gt; [31] "debt_settlement_flag_date" "settlement_status"        </span></span>
+<span><span class="co">#&gt; [33] "settlement_date"</span></span></code></pre></div>
+<pre><code>#&gt; [1] 33</code></pre>
+<p>There are 33 categorical columns. The function “tonum” transform a categorical column into numeric, for example transforming column “grade”, it has the following categories:</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">col</span><span class="op">&lt;-</span><span class="st">"grade"</span></span>
+<span><span class="va">cat</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">cat</span></span>
+<span><span class="co">#&gt; [1] "C" "B" "F" "A" "E" "D" "G"</span></span></code></pre></div>
+<p>We need to specify the data source and the column name.</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">col_cat2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/tonum.html">tonum</a></span><span class="op">(</span><span class="va">data1</span>,<span class="va">col</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">col_cat2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1 2 2 3 2 4</span></span></code></pre></div>
+<p>Finally, if we are sure that we want to transform all the data set into numerical, the function “asnum” reviews detect the categorical columns and transform it into numeric, and as a result we would get a data frame. If we apply the function and review now winch are categorical columns, we do not get any.</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/asnum.html">asnum</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/charname.html">charname</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+</div>
+<div id="missing-values" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Missing values<a class="anchor" aria-label="anchor" href="#missing-values"><i class="fas fa-link"></i></a>
+</h2>
+<p>To treat missing values, I suggest taking one of the following alternatives or a combination of those: i) eliminating columns with a significant amount of missing values; ii) eliminating the row where the missing(s) value(s) is(are) located; iii) replace missing values or Na´s by some statistic.</p>
+<p>For the firs alternative, lets first apply the function “sumna” to detect columns with more than 50 percent of missing values:</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sumna</span><span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>,<span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="va">prov</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">co</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">{</span></span>
+<span><span class="va">su</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">prov</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">prov</span>,<span class="va">su</span><span class="op">)</span></span>
+<span><span class="va">ind</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">co</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">co</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">me</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">prov</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">me</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">me</span><span class="op">)</span></span>
+<span><span class="va">se</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">me</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">me</span>,<span class="va">se</span><span class="op">)</span></span>
+<span><span class="va">cole</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">colem</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">cole_name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">me</span></span>
+<span><span class="co">#}</span></span>
+<span><span class="co">#me&lt;-sumna(data2,.5)</span></span>
+<span></span>
+<span><span class="co">#ifelse(is.na(me[1,1])==TRUE,0,me[1,1]) </span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">{</span> </span>
+<span><span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">==</span><span class="cn">TRUE</span>,<span class="fl">0</span>,<span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> </span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">{</span> </span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">&gt;</span> <span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">cole</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cole</span>,<span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>  </span>
+<span>  <span class="va">colem</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">colem</span>,<span class="va">me</span><span class="op">[</span><span class="va">i</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">cole_name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">cole_name</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">me</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">col2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">cole</span><span class="op">)</span></span>
+<span><span class="va">col2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">col2</span>,<span class="va">colem</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">cole_name</span></span>
+<span></span>
+<span><span class="co"># This conditional is becausue when applying the na.omit, there is a error</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">col2</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"% of NA´s"</span>,<span class="st">"Column number"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span><span class="va">col2</span><span class="op">&lt;-</span><span class="st">"There are no columns with missing values"</span><span class="op">}</span></span>
+<span><span class="va">col2</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">na_perc</span><span class="op">&lt;-</span><span class="fu">sumna</span><span class="op">(</span><span class="va">data2</span>,<span class="fl">.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">na_perc</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                             % of NA´s Column number</span></span>
+<span><span class="co">#&gt; mths_since_last_record      0.7448276            27</span></span>
+<span><span class="co">#&gt; next_pymnt_d                1.0000000            45</span></span>
+<span><span class="co">#&gt; mths_since_last_major_derog 0.6275862            50</span></span>
+<span><span class="co">#&gt; annual_inc_joint            0.9931034            53</span></span>
+<span><span class="co">#&gt; dti_joint                   0.9931034            54</span></span>
+<span><span class="co">#&gt; mths_since_recent_bc_dlq    0.7103448            86</span></span></code></pre></div>
+<p>In this case there are 30 columns with more than 50 percent of missing values. if we would like to eliminate those columns we apply the following:</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data3</span><span class="op">&lt;-</span><span class="va">data2</span><span class="op">[</span>,<span class="op">-</span><span class="va">na_perc</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p>for the second alternative, which is eliminating the rows where the missing(s) value(s) is(are) located; we could applying the na.omit function. However, we have to be careful, because it could be the case that each row of the data frame has at least one missing value, in which cace it would delete all rows of the data frame, like this case:</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data3_1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data3_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   [1] loan_amnt                                 </span></span>
+<span><span class="co">#&gt;   [2] funded_amnt                               </span></span>
+<span><span class="co">#&gt;   [3] funded_amnt_inv                           </span></span>
+<span><span class="co">#&gt;   [4] term                                      </span></span>
+<span><span class="co">#&gt;   [5] int_rate                                  </span></span>
+<span><span class="co">#&gt;   [6] installment                               </span></span>
+<span><span class="co">#&gt;   [7] grade                                     </span></span>
+<span><span class="co">#&gt;   [8] sub_grade                                 </span></span>
+<span><span class="co">#&gt;   [9] emp_title                                 </span></span>
+<span><span class="co">#&gt;  [10] emp_length                                </span></span>
+<span><span class="co">#&gt;  [11] home_ownership                            </span></span>
+<span><span class="co">#&gt;  [12] annual_inc                                </span></span>
+<span><span class="co">#&gt;  [13] verification_status                       </span></span>
+<span><span class="co">#&gt;  [14] issue_d                                   </span></span>
+<span><span class="co">#&gt;  [15] loan_status                               </span></span>
+<span><span class="co">#&gt;  [16] purpose                                   </span></span>
+<span><span class="co">#&gt;  [17] title                                     </span></span>
+<span><span class="co">#&gt;  [18] zip_code                                  </span></span>
+<span><span class="co">#&gt;  [19] addr_state                                </span></span>
+<span><span class="co">#&gt;  [20] dti                                       </span></span>
+<span><span class="co">#&gt;  [21] delinq_2yrs                               </span></span>
+<span><span class="co">#&gt;  [22] earliest_cr_line                          </span></span>
+<span><span class="co">#&gt;  [23] fico_range_low                            </span></span>
+<span><span class="co">#&gt;  [24] fico_range_high                           </span></span>
+<span><span class="co">#&gt;  [25] inq_last_6mths                            </span></span>
+<span><span class="co">#&gt;  [26] mths_since_last_delinq                    </span></span>
+<span><span class="co">#&gt;  [27] mths_since_last_record                    </span></span>
+<span><span class="co">#&gt;  [28] open_acc                                  </span></span>
+<span><span class="co">#&gt;  [29] pub_rec                                   </span></span>
+<span><span class="co">#&gt;  [30] revol_bal                                 </span></span>
+<span><span class="co">#&gt;  [31] revol_util                                </span></span>
+<span><span class="co">#&gt;  [32] total_acc                                 </span></span>
+<span><span class="co">#&gt;  [33] initial_list_status                       </span></span>
+<span><span class="co">#&gt;  [34] out_prncp                                 </span></span>
+<span><span class="co">#&gt;  [35] out_prncp_inv                             </span></span>
+<span><span class="co">#&gt;  [36] total_pymnt                               </span></span>
+<span><span class="co">#&gt;  [37] total_pymnt_inv                           </span></span>
+<span><span class="co">#&gt;  [38] total_rec_prncp                           </span></span>
+<span><span class="co">#&gt;  [39] total_rec_int                             </span></span>
+<span><span class="co">#&gt;  [40] total_rec_late_fee                        </span></span>
+<span><span class="co">#&gt;  [41] recoveries                                </span></span>
+<span><span class="co">#&gt;  [42] collection_recovery_fee                   </span></span>
+<span><span class="co">#&gt;  [43] last_pymnt_d                              </span></span>
+<span><span class="co">#&gt;  [44] last_pymnt_amnt                           </span></span>
+<span><span class="co">#&gt;  [45] next_pymnt_d                              </span></span>
+<span><span class="co">#&gt;  [46] last_credit_pull_d                        </span></span>
+<span><span class="co">#&gt;  [47] last_fico_range_high                      </span></span>
+<span><span class="co">#&gt;  [48] last_fico_range_low                       </span></span>
+<span><span class="co">#&gt;  [49] collections_12_mths_ex_med                </span></span>
+<span><span class="co">#&gt;  [50] mths_since_last_major_derog               </span></span>
+<span><span class="co">#&gt;  [51] policy_code                               </span></span>
+<span><span class="co">#&gt;  [52] application_type                          </span></span>
+<span><span class="co">#&gt;  [53] annual_inc_joint                          </span></span>
+<span><span class="co">#&gt;  [54] dti_joint                                 </span></span>
+<span><span class="co">#&gt;  [55] verification_status_joint                 </span></span>
+<span><span class="co">#&gt;  [56] acc_now_delinq                            </span></span>
+<span><span class="co">#&gt;  [57] tot_coll_amt                              </span></span>
+<span><span class="co">#&gt;  [58] tot_cur_bal                               </span></span>
+<span><span class="co">#&gt;  [59] open_acc_6m                               </span></span>
+<span><span class="co">#&gt;  [60] open_act_il                               </span></span>
+<span><span class="co">#&gt;  [61] open_il_12m                               </span></span>
+<span><span class="co">#&gt;  [62] open_il_24m                               </span></span>
+<span><span class="co">#&gt;  [63] mths_since_rcnt_il                        </span></span>
+<span><span class="co">#&gt;  [64] total_bal_il                              </span></span>
+<span><span class="co">#&gt;  [65] il_util                                   </span></span>
+<span><span class="co">#&gt;  [66] open_rv_12m                               </span></span>
+<span><span class="co">#&gt;  [67] open_rv_24m                               </span></span>
+<span><span class="co">#&gt;  [68] max_bal_bc                                </span></span>
+<span><span class="co">#&gt;  [69] all_util                                  </span></span>
+<span><span class="co">#&gt;  [70] total_rev_hi_lim                          </span></span>
+<span><span class="co">#&gt;  [71] inq_fi                                    </span></span>
+<span><span class="co">#&gt;  [72] total_cu_tl                               </span></span>
+<span><span class="co">#&gt;  [73] inq_last_12m                              </span></span>
+<span><span class="co">#&gt;  [74] acc_open_past_24mths                      </span></span>
+<span><span class="co">#&gt;  [75] avg_cur_bal                               </span></span>
+<span><span class="co">#&gt;  [76] bc_open_to_buy                            </span></span>
+<span><span class="co">#&gt;  [77] bc_util                                   </span></span>
+<span><span class="co">#&gt;  [78] chargeoff_within_12_mths                  </span></span>
+<span><span class="co">#&gt;  [79] delinq_amnt                               </span></span>
+<span><span class="co">#&gt;  [80] mo_sin_old_il_acct                        </span></span>
+<span><span class="co">#&gt;  [81] mo_sin_old_rev_tl_op                      </span></span>
+<span><span class="co">#&gt;  [82] mo_sin_rcnt_rev_tl_op                     </span></span>
+<span><span class="co">#&gt;  [83] mo_sin_rcnt_tl                            </span></span>
+<span><span class="co">#&gt;  [84] mort_acc                                  </span></span>
+<span><span class="co">#&gt;  [85] mths_since_recent_bc                      </span></span>
+<span><span class="co">#&gt;  [86] mths_since_recent_bc_dlq                  </span></span>
+<span><span class="co">#&gt;  [87] mths_since_recent_inq                     </span></span>
+<span><span class="co">#&gt;  [88] mths_since_recent_revol_delinq            </span></span>
+<span><span class="co">#&gt;  [89] num_accts_ever_120_pd                     </span></span>
+<span><span class="co">#&gt;  [90] num_actv_bc_tl                            </span></span>
+<span><span class="co">#&gt;  [91] num_actv_rev_tl                           </span></span>
+<span><span class="co">#&gt;  [92] num_bc_sats                               </span></span>
+<span><span class="co">#&gt;  [93] num_bc_tl                                 </span></span>
+<span><span class="co">#&gt;  [94] num_il_tl                                 </span></span>
+<span><span class="co">#&gt;  [95] num_op_rev_tl                             </span></span>
+<span><span class="co">#&gt;  [96] num_rev_accts                             </span></span>
+<span><span class="co">#&gt;  [97] num_rev_tl_bal_gt_0                       </span></span>
+<span><span class="co">#&gt;  [98] num_sats                                  </span></span>
+<span><span class="co">#&gt;  [99] num_tl_120dpd_2m                          </span></span>
+<span><span class="co">#&gt; [100] num_tl_30dpd                              </span></span>
+<span><span class="co">#&gt; [101] num_tl_90g_dpd_24m                        </span></span>
+<span><span class="co">#&gt; [102] num_tl_op_past_12m                        </span></span>
+<span><span class="co">#&gt; [103] pct_tl_nvr_dlq                            </span></span>
+<span><span class="co">#&gt; [104] percent_bc_gt_75                          </span></span>
+<span><span class="co">#&gt; [105] pub_rec_bankruptcies                      </span></span>
+<span><span class="co">#&gt; [106] tax_liens                                 </span></span>
+<span><span class="co">#&gt; [107] tot_hi_cred_lim                           </span></span>
+<span><span class="co">#&gt; [108] total_bal_ex_mort                         </span></span>
+<span><span class="co">#&gt; [109] total_bc_limit                            </span></span>
+<span><span class="co">#&gt; [110] total_il_high_credit_limit                </span></span>
+<span><span class="co">#&gt; [111] revol_bal_joint                           </span></span>
+<span><span class="co">#&gt; [112] sec_app_fico_range_low                    </span></span>
+<span><span class="co">#&gt; [113] sec_app_fico_range_high                   </span></span>
+<span><span class="co">#&gt; [114] sec_app_earliest_cr_line                  </span></span>
+<span><span class="co">#&gt; [115] sec_app_inq_last_6mths                    </span></span>
+<span><span class="co">#&gt; [116] sec_app_mort_acc                          </span></span>
+<span><span class="co">#&gt; [117] sec_app_open_acc                          </span></span>
+<span><span class="co">#&gt; [118] sec_app_revol_util                        </span></span>
+<span><span class="co">#&gt; [119] sec_app_open_act_il                       </span></span>
+<span><span class="co">#&gt; [120] sec_app_num_rev_accts                     </span></span>
+<span><span class="co">#&gt; [121] sec_app_chargeoff_within_12_mths          </span></span>
+<span><span class="co">#&gt; [122] sec_app_collections_12_mths_ex_med        </span></span>
+<span><span class="co">#&gt; [123] sec_app_mths_since_last_major_derog       </span></span>
+<span><span class="co">#&gt; [124] hardship_flag                             </span></span>
+<span><span class="co">#&gt; [125] hardship_type                             </span></span>
+<span><span class="co">#&gt; [126] hardship_reason                           </span></span>
+<span><span class="co">#&gt; [127] hardship_status                           </span></span>
+<span><span class="co">#&gt; [128] deferral_term                             </span></span>
+<span><span class="co">#&gt; [129] hardship_amount                           </span></span>
+<span><span class="co">#&gt; [130] hardship_start_date                       </span></span>
+<span><span class="co">#&gt; [131] hardship_end_date                         </span></span>
+<span><span class="co">#&gt; [132] payment_plan_start_date                   </span></span>
+<span><span class="co">#&gt; [133] hardship_length                           </span></span>
+<span><span class="co">#&gt; [134] hardship_dpd                              </span></span>
+<span><span class="co">#&gt; [135] hardship_loan_status                      </span></span>
+<span><span class="co">#&gt; [136] orig_projected_additional_accrued_interest</span></span>
+<span><span class="co">#&gt; [137] hardship_payoff_balance_amount            </span></span>
+<span><span class="co">#&gt; [138] hardship_last_payment_amount              </span></span>
+<span><span class="co">#&gt; [139] disbursement_method                       </span></span>
+<span><span class="co">#&gt; [140] debt_settlement_flag                      </span></span>
+<span><span class="co">#&gt; [141] debt_settlement_flag_date                 </span></span>
+<span><span class="co">#&gt; [142] settlement_status                         </span></span>
+<span><span class="co">#&gt; [143] settlement_date                           </span></span>
+<span><span class="co">#&gt; [144] settlement_amount                         </span></span>
+<span><span class="co">#&gt; [145] settlement_percentage                     </span></span>
+<span><span class="co">#&gt; [146] settlement_term                           </span></span>
+<span><span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span></span></code></pre></div>
+<p>The third alternative is replacing missing values by a metric. In this we us the function “repnas”, to the object data3 wich already has the drop the columns with more than 50 percent of missing values:</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">repnas</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">data</span>,<span class="va">metric</span><span class="op">)</span><span class="op">{</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">{</span><span class="va">data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">]</span><span class="op">&lt;-</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">metric</span><span class="op">==</span><span class="st">"median"</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>     <span class="kw">if</span><span class="op">(</span><span class="va">metric</span><span class="op">==</span><span class="st">"mean"</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">}</span></span>
+<span>    </span>
+<span>  <span class="op">}</span> </span>
+<span><span class="op">}</span></span>
+<span><span class="va">data</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">data3</span><span class="op">&lt;-</span><span class="fu">repnas</span><span class="op">(</span><span class="va">data3</span>,<span class="st">"median"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="zero--and-near-zero-variance-predictors" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Zero- and Near Zero-Variance Predictors<a class="anchor" aria-label="anchor" href="#zero--and-near-zero-variance-predictors"><i class="fas fa-link"></i></a>
+</h2>
+<p>We wil use the library <span class="citation">(<a href="portfolio-management-algorithms.html#ref-R-caret" role="doc-biblioref">Kuhn 2019</a>)</span> for this section. Zero- and Near Zero-Variance Predictors are variables or columns that only have a single unique value, winch is refereed as a “zero-variance predictor”. Also, the variables might have only a a few unique values that occur with very low frequencies. In both cases it may cause troubles when estimating an econometric or machine learning model.</p>
+<p>The function nearZeroVar shows the columns number of the Zero- and Near Zero-Variance Predictors.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="va">nzv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/nearZeroVar.html">nearZeroVar</a></span><span class="op">(</span><span class="va">data3</span>,saveMetrics<span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">nzv</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                 freqRatio percentUnique zeroVar   nzv</span></span>
+<span><span class="co">#&gt; loan_amnt        1.444444      49.65517   FALSE FALSE</span></span>
+<span><span class="co">#&gt; funded_amnt      1.444444      49.65517   FALSE FALSE</span></span>
+<span><span class="co">#&gt; funded_amnt_inv  1.444444      49.65517   FALSE FALSE</span></span>
+<span><span class="co">#&gt; term             1.265625       1.37931   FALSE FALSE</span></span>
+<span><span class="co">#&gt; int_rate         1.076923      19.31034   FALSE FALSE</span></span>
+<span><span class="co">#&gt; installment      1.500000      93.79310   FALSE FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">nzv</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                           freqRatio percentUnique zeroVar   nzv</span></span>
+<span><span class="co">#&gt; hardship_loan_status      71.500000     1.3793103   FALSE  TRUE</span></span>
+<span><span class="co">#&gt; disbursement_method        0.000000     0.6896552    TRUE  TRUE</span></span>
+<span><span class="co">#&gt; debt_settlement_flag       5.590909     1.3793103   FALSE FALSE</span></span>
+<span><span class="co">#&gt; debt_settlement_flag_date 24.800000     8.2758621   FALSE  TRUE</span></span>
+<span><span class="co">#&gt; settlement_status         11.818182     2.0689655   FALSE FALSE</span></span>
+<span><span class="co">#&gt; settlement_date           41.333333    10.3448276   FALSE FALSE</span></span></code></pre></div>
+<p>To understand better what the “nearZeroVar” function is doing, lets estimate the metrics for the settlement_date columns, first we apply the function “table”, which gives the frequency per category:</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">data3</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">t</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 </span></span>
+<span><span class="co">#&gt; 124   2   2   2   3   1   1   1   1   2   1   1   1   2   1</span></span></code></pre></div>
+<p>There are 124 rows with label 1, there are 2 rows with label 2 and so on.</p>
+<p>The “frequency ratio” is the frequency of the most prevalent value over the second most frequent value. It would be near one for well-behaved predictors and very large for highly-unbalanced, for the “grade” column it would be:</p>
+<p>To estimate the “frequency ratio” e apply the “which.max” function that gives the position of the frequency of the most prevalent value:</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span></span>
+<span><span class="va">w</span></span>
+<span><span class="co">#&gt; 1 </span></span>
+<span><span class="co">#&gt; 1</span></span></code></pre></div>
+<p>To get the most frequent value:</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t</span><span class="op">[</span><span class="va">w</span><span class="op">]</span></span>
+<span><span class="co">#&gt;   1 </span></span>
+<span><span class="co">#&gt; 124</span></span></code></pre></div>
+<p>The second most frequent value would be</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">t</span><span class="op">[</span><span class="op">-</span><span class="va">w</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
+<p>Then, the “frequency ratio” is:</p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t</span><span class="op">[</span><span class="va">w</span><span class="op">]</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">t</span><span class="op">[</span><span class="op">-</span><span class="va">w</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        1 </span></span>
+<span><span class="co">#&gt; 41.33333</span></span></code></pre></div>
+<p>By default, it has a threshold of 19 (or 95/5), which in terms of our object “nzv” would show only those column for which the “frequency ratio” are higher than 19.</p>
+<p>Also, the nearZeroVar function shows the “percent of unique values”, which is the number of unique values divided by the total number of rows of the data frame (times 100). It approaches zero as the granularity of the data increases.</p>
+<p>The percent unique is the number of categories, which in the case of the 124 column is estimated applying first the function “length”:</p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">data3</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; [1] 15</span></span></code></pre></div>
+<p>between the number of rows of the data frame, which we obtain applying the fucntio “dim”:</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data3</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 145</span></span></code></pre></div>
+<p>Then the “percent of unique values” is:</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">data3</span><span class="op">[</span>,<span class="va">col</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data3</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span></span>
+<span><span class="co">#&gt; [1] 10.34483</span></span></code></pre></div>
+<p>The object “nzv” shows the “frequency ratio” and the “percent of unique values”, however, to apply the filter and get only those columns with a “frequency ratio” and “percent of unique values” higher than the respective threshold we apply again the “nearZeroVar” but this time whitout the argument “saveMetrics= TRUE”:</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nzv_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/nearZeroVar.html">nearZeroVar</a></span><span class="op">(</span><span class="va">data3</span><span class="op">)</span></span>
+<span><span class="va">nzv_2</span> </span>
+<span><span class="co">#&gt;  [1]  14  15  32  33  34  47  48  49  50  51  73  74  92  93 104 105 106 107 108</span></span>
+<span><span class="co">#&gt; [20] 109 110 111 112 114</span></span></code></pre></div>
+<p>The object nzv_2 shows the position of the colums for which the tresholds are higher, then we create other object excluding that columns.</p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data4</span><span class="op">&lt;-</span><span class="va">data3</span><span class="op">[</span>,<span class="op">-</span><span class="va">nzv_2</span><span class="op">]</span></span></code></pre></div>
+</div>
+<div id="collinearity" class="section level2" number="2.4">
+<h2>
+<span class="header-section-number">2.4</span> Collinearity<a class="anchor" aria-label="anchor" href="#collinearity"><i class="fas fa-link"></i></a>
+</h2>
+<p>Collinearity is the situation in which two or more variables are closely related to one another. The presence of collinearity can pose problems in a model esimatio, such as regression, becasue it could be difficult to separate out the individual effects of collinear variables on the response <span class="citation">(<a href="portfolio-management-algorithms.html#ref-statistical_lerarning" role="doc-biblioref">James and Tibshirani 2017</a>)</span>.</p>
+<pre><code>#&gt;  [1] "total_rev_hi_lim"           "total_acc"                 
+#&gt;  [3] "open_acc"                   "num_sats"                  
+#&gt;  [5] "num_op_rev_tl"              "total_bal_ex_mort"         
+#&gt;  [7] "total_bc_limit"             "num_rev_accts"             
+#&gt;  [9] "loan_amnt"                  "funded_amnt"               
+#&gt; [11] "funded_amnt_inv"            "num_bc_sats"               
+#&gt; [13] "tot_hi_cred_lim"            "acc_open_past_24mths"      
+#&gt; [15] "num_actv_rev_tl"            "tot_cur_bal"               
+#&gt; [17] "num_tl_op_past_12m"         "total_pymnt"               
+#&gt; [19] "total_pymnt_inv"            "total_il_high_credit_limit"
+#&gt; [21] "recoveries"                 "bc_util"                   
+#&gt; [23] "fico_range_low"             "debt_settlement_flag"      
+#&gt; [25] "purpose"</code></pre>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cw</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"open_acc"</span>, <span class="st">"total_rev_hi_lim"</span>,<span class="st">"total_acc"</span>,<span class="st">"num_sats"</span>,<span class="st">"total_bc_limit"</span>,<span class="st">"num_rev_accts"</span><span class="op">)</span></span>
+<span><span class="va">descrCor</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">data4</span><span class="op">[</span>,<span class="va">cw</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">descrCor</span></span>
+<span><span class="co">#&gt;                   open_acc total_rev_hi_lim total_acc  num_sats total_bc_limit</span></span>
+<span><span class="co">#&gt; open_acc         1.0000000        0.5522515 0.7360423 0.9997421      0.3786225</span></span>
+<span><span class="co">#&gt; total_rev_hi_lim 0.5522515        1.0000000 0.4929105 0.5514165      0.8771811</span></span>
+<span><span class="co">#&gt; total_acc        0.7360423        0.4929105 1.0000000 0.7372437      0.3232249</span></span>
+<span><span class="co">#&gt; num_sats         0.9997421        0.5514165 0.7372437 1.0000000      0.3777843</span></span>
+<span><span class="co">#&gt; total_bc_limit   0.3786225        0.8771811 0.3232249 0.3777843      1.0000000</span></span>
+<span><span class="co">#&gt; num_rev_accts    0.6645154        0.5581800 0.8815264 0.6657604      0.3771416</span></span>
+<span><span class="co">#&gt;                  num_rev_accts</span></span>
+<span><span class="co">#&gt; open_acc             0.6645154</span></span>
+<span><span class="co">#&gt; total_rev_hi_lim     0.5581800</span></span>
+<span><span class="co">#&gt; total_acc            0.8815264</span></span>
+<span><span class="co">#&gt; num_sats             0.6657604</span></span>
+<span><span class="co">#&gt; total_bc_limit       0.3771416</span></span>
+<span><span class="co">#&gt; num_rev_accts        1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panel.cor</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">digits</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">""</span>, <span class="va">cex.cor</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>    <span class="va">usr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="st">"usr"</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="va">usr</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>usr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>,use<span class="op">=</span><span class="st">"pairwise.complete.obs"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">r</span>, <span class="fl">0.123456789</span><span class="op">)</span>, digits <span class="op">=</span> <span class="va">digits</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="va">txt</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">cex.cor</span><span class="op">)</span><span class="op">)</span> <span class="va">cex.cor</span> <span class="op">&lt;-</span> <span class="fl">0.8</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/graphics/strwidth.html">strwidth</a></span><span class="op">(</span><span class="va">txt</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="va">txt</span>, cex <span class="op">=</span> <span class="va">cex.cor</span> <span class="op">*</span> <span class="va">r</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">data4</span><span class="op">[</span>,<span class="va">cw</span><span class="op">]</span>,upper.panel<span class="op">=</span><span class="va">panel.cor</span>,na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02-data-cleaning_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>open_acc, revol_bal,total_rev_hi_lim</p>
+<p>total_acc</p>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">descrCor</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">data4</span><span class="op">)</span></span>
+<span><span class="va">highlyCorDescr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/findCorrelation.html">findCorrelation</a></span><span class="op">(</span><span class="va">descrCor</span>, cutoff <span class="op">=</span> <span class="fl">.75</span>,names<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">highlyCorDescr</span></span>
+<span><span class="co">#&gt;  [1] "total_rev_hi_lim"           "total_acc"                 </span></span>
+<span><span class="co">#&gt;  [3] "open_acc"                   "num_sats"                  </span></span>
+<span><span class="co">#&gt;  [5] "num_op_rev_tl"              "total_bal_ex_mort"         </span></span>
+<span><span class="co">#&gt;  [7] "total_bc_limit"             "num_rev_accts"             </span></span>
+<span><span class="co">#&gt;  [9] "loan_amnt"                  "funded_amnt"               </span></span>
+<span><span class="co">#&gt; [11] "funded_amnt_inv"            "num_bc_sats"               </span></span>
+<span><span class="co">#&gt; [13] "tot_hi_cred_lim"            "acc_open_past_24mths"      </span></span>
+<span><span class="co">#&gt; [15] "num_actv_rev_tl"            "tot_cur_bal"               </span></span>
+<span><span class="co">#&gt; [17] "num_tl_op_past_12m"         "total_pymnt"               </span></span>
+<span><span class="co">#&gt; [19] "total_pymnt_inv"            "total_il_high_credit_limit"</span></span>
+<span><span class="co">#&gt; [21] "open_il_12m"                "recoveries"                </span></span>
+<span><span class="co">#&gt; [23] "bc_util"                    "fico_range_low"            </span></span>
+<span><span class="co">#&gt; [25] "debt_settlement_flag"       "zip_code"                  </span></span>
+<span><span class="co">#&gt; [27] "purpose"                    "tax_liens"</span></span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">highCorr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">descrCor</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">descrCor</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">.999</span><span class="op">)</span></span>
+<span><span class="va">highCorr</span> </span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></div>
+<div class="next"><a href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#clean"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="nav-link" href="#categorical-into-numerical-filtering-and-coditionals"><span class="header-section-number">2.1</span> Categorical into numerical: filtering and coditionals</a></li>
+<li><a class="nav-link" href="#missing-values"><span class="header-section-number">2.2</span> Missing values</a></li>
+<li><a class="nav-link" href="#zero--and-near-zero-variance-predictors"><span class="header-section-number">2.3</span> Zero- and Near Zero-Variance Predictors</a></li>
+<li><a class="nav-link" href="#collinearity"><span class="header-section-number">2.4</span> Collinearity</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/02-data-cleaning.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/02-data-cleaning.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

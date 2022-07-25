@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>6 Credit analysis | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="library(openxlsx) library(dplyr) library(caret)  6.1 Example The database credit_short.xlsx has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="6 Credit analysis | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/credit-analysis.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="library(openxlsx) library(dplyr) library(caret)  6.1 Example The database credit_short.xlsx has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="6 Credit analysis | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="library(openxlsx) library(dplyr) library(caret)  6.1 Example The database credit_short.xlsx has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="active" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="credit-analysis" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Credit analysis<a class="anchor" aria-label="anchor" href="#credit-analysis"><i class="fas fa-link"></i></a>
+</h1>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span></code></pre></div>
+<div id="example" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> Example<a class="anchor" aria-label="anchor" href="#example"><i class="fas fa-link"></i></a>
+</h2>
+<p>The database credit_short.xlsx has historical information of lendingclub, <a href="https://www.lendingclub.com/" class="uri">https://www.lendingclub.com/</a> fintech marketplace bank at scale. One of the spreadsheets has the variable description. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations.</p>
+<p>In the following example, you will find an example of a “prediction model” for the credit_short.xlsx, which only has 26 variables.</p>
+<p>dataset source:
+<a href="https://www.kaggle.com/wordsforthewise/lending-club" class="uri">https://www.kaggle.com/wordsforthewise/lending-club</a></p>
+<div id="a-independent-variable-creation" class="section level3" number="6.1.1">
+<h3>
+<span class="header-section-number">6.1.1</span> a) Independent variable creation<a class="anchor" aria-label="anchor" href="#a-independent-variable-creation"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/credit_short.xlsx"</span><span class="op">)</span></span></code></pre></div>
+<p>Function count(df,col,sort = T) could give us the number of observations per category of the variable loan_status:</p>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">co</span><span class="op">&lt;-</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">df</span>,<span class="va">loan_status</span>,sort <span class="op">=</span><span class="cn">T</span> <span class="op">)</span></span>
+<span><span class="va">co</span></span>
+<span><span class="co">#&gt;          loan_status   n</span></span>
+<span><span class="co">#&gt; 1         Fully Paid 728</span></span>
+<span><span class="co">#&gt; 2        Charged Off 145</span></span>
+<span><span class="co">#&gt; 3            Current 121</span></span>
+<span><span class="co">#&gt; 4 Late (31-120 days)   5</span></span>
+<span><span class="co">#&gt; 5    In Grace Period   1</span></span>
+<span><span class="co"># para saber cuantas cztegorias tiene term</span></span></code></pre></div>
+<p>For this example, and for the evidence, we will create a binary variable, based on Fully Paid and Charged Off categories, which are equivalent to no-default and default respectively.</p>
+<p>Charge off” means that the credit grantor wrote your account off of their receivables as a loss, and it is closed to future charges. When an account displays a status of “charge off,” it means the account is closed to future use, although the debt is still owed.</p>
+<p>barplot(df<span class="math inline">\(colsum , names.arg=df\)</span>colnames , las=2,
+col=c(“red”,“blue”,“green”,“purple”,“black”),
+ylim=c(0,700))</p>
+<p>df is the data frame name, colsum is the column of the data frame with the number for each categorie and colnames is the column of the data frame with the names of the categories.</p>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">co</span><span class="op">&lt;-</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">df</span>,<span class="va">loan_status</span>,sort <span class="op">=</span><span class="cn">T</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="va">co</span><span class="op">$</span><span class="va">n</span> , names.arg<span class="op">=</span><span class="va">co</span><span class="op">$</span><span class="va">loan_status</span> , las<span class="op">=</span><span class="fl">2</span> , </span>
+<span>  col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>,<span class="st">"blue"</span>,<span class="st">"green"</span>,<span class="st">"purple"</span>,<span class="st">"black"</span><span class="op">)</span>,</span>
+<span>                  ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">700</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Credit-analysis_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>I make a filter, in such a way that the loan_status contains only Fully Paid and Charged Off:</p>
+<p>library dplyr</p>
+<p>%&gt;% is a pipe to</p>
+<p>df %&gt;%
+filter(col== “r1” |col== “r2”)
+df is a data frame, col is the column name, r1 and r2 is the category 1 and 2 respectively, in this case Fully Paid and Charged Off</p>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df2</span><span class="op">&lt;-</span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">loan_status</span> <span class="op">==</span> <span class="st">"Fully Paid"</span> <span class="op">|</span> <span class="va">loan_status</span><span class="op">==</span> <span class="st">"Charged Off"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">df2</span>,<span class="va">loan_status</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   loan_status   n</span></span>
+<span><span class="co">#&gt; 1 Charged Off 145</span></span>
+<span><span class="co">#&gt; 2  Fully Paid 728</span></span></code></pre></div>
+<p>For the logit model to run, we need to transform the loan_status into (0,1), if “Fully Paid” then 0, and “Charged Off”, 1. The relevant variable is “Charged Off”, because we are concerned about the expected losses (if customers do not pay the loan).</p>
+<p>We apply the ifelse function and cbind to combine in an object.</p>
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Default</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">loan_status</span><span class="op">==</span><span class="st">"Fully Paid"</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#Default&lt;-factor(Default ,levels =c(1,0))</span></span>
+<span><span class="co"># combining default and df2</span></span>
+<span><span class="va">df3</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">Default</span>,<span class="va">df2</span><span class="op">)</span></span>
+<span><span class="co"># delete loan status, is the second colum</span></span>
+<span><span class="va">df4</span><span class="op">&lt;-</span><span class="va">df3</span><span class="op">[</span>,<span class="op">-</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df4</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Default loan_amnt      term int_rate installment grade sub_grade</span></span>
+<span><span class="co">#&gt; 1       0      3600 36 months    13.99      123.03     C        C4</span></span>
+<span><span class="co">#&gt; 2       0     24700 36 months    11.99      820.28     C        C1</span></span>
+<span><span class="co">#&gt; 3       0     20000 60 months    10.78      432.66     B        B4</span></span>
+<span><span class="co">#&gt; 4       0     10400 60 months    22.45      289.91     F        F1</span></span>
+<span><span class="co">#&gt; 5       0     11950 36 months    13.44      405.18     C        C3</span></span>
+<span><span class="co">#&gt; 6       0     20000 36 months     9.17      637.58     B        B2</span></span>
+<span><span class="co">#&gt;                                 emp_title emp_length home_ownership annual_inc</span></span>
+<span><span class="co">#&gt; 1                                 leadman  10+ years       MORTGAGE      55000</span></span>
+<span><span class="co">#&gt; 2                                Engineer  10+ years       MORTGAGE      65000</span></span>
+<span><span class="co">#&gt; 3                            truck driver  10+ years       MORTGAGE      63000</span></span>
+<span><span class="co">#&gt; 4                     Contract Specialist    3 years       MORTGAGE     104433</span></span>
+<span><span class="co">#&gt; 5                    Veterinary Tecnician    4 years           RENT      34000</span></span>
+<span><span class="co">#&gt; 6 Vice President of Recruiting Operations  10+ years       MORTGAGE     180000</span></span>
+<span><span class="co">#&gt;   verification_status            purpose              title   dti</span></span>
+<span><span class="co">#&gt; 1        Not Verified debt_consolidation Debt consolidation  5.91</span></span>
+<span><span class="co">#&gt; 2        Not Verified     small_business           Business 16.06</span></span>
+<span><span class="co">#&gt; 3        Not Verified   home_improvement               &lt;NA&gt; 10.78</span></span>
+<span><span class="co">#&gt; 4     Source Verified     major_purchase     Major purchase 25.37</span></span>
+<span><span class="co">#&gt; 5     Source Verified debt_consolidation Debt consolidation 10.20</span></span>
+<span><span class="co">#&gt; 6        Not Verified debt_consolidation Debt consolidation 14.67</span></span>
+<span><span class="co">#&gt;   earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc</span></span>
+<span><span class="co">#&gt; 1         Aug-2003        7       0      2765       29.7        13</span></span>
+<span><span class="co">#&gt; 2         Dec-1999       22       0     21470       19.2        38</span></span>
+<span><span class="co">#&gt; 3         Aug-2000        6       0      7869       56.2        18</span></span>
+<span><span class="co">#&gt; 4         Jun-1998       12       0     21929       64.5        35</span></span>
+<span><span class="co">#&gt; 5         Oct-1987        5       0      8822       68.4         6</span></span>
+<span><span class="co">#&gt; 6         Jun-1990       12       0     87329       84.5        27</span></span>
+<span><span class="co">#&gt;   initial_list_status application_type mort_acc pub_rec_bankruptcies</span></span>
+<span><span class="co">#&gt; 1                   w       Individual        1                    0</span></span>
+<span><span class="co">#&gt; 2                   w       Individual        4                    0</span></span>
+<span><span class="co">#&gt; 3                   w        Joint App        5                    0</span></span>
+<span><span class="co">#&gt; 4                   w       Individual        6                    0</span></span>
+<span><span class="co">#&gt; 5                   w       Individual        0                    0</span></span>
+<span><span class="co">#&gt; 6                   f       Individual        4                    0</span></span>
+<span><span class="co"># Don´t forget to eliminate the column loan_status, because it would be duplicated with Default</span></span></code></pre></div>
+</div>
+<div id="b-prediction-model" class="section level3" number="6.1.2">
+<h3>
+<span class="header-section-number">6.1.2</span> b) “Prediction model”<a class="anchor" aria-label="anchor" href="#b-prediction-model"><i class="fas fa-link"></i></a>
+</h3>
+<p>If we run the model like this, when some variables are categorical, for example, term, grade, and many others, the model accuracy will be very low. More importantly, the predict function may not work. Then we need to transform the variables into numeric.</p>
+<p>For example, the column term has the following categories:</p>
+<p>The following code transforms that categorical variable into numerical. The code is above the level of this course and is shown for exposition purposes (not covered in the final exam).</p>
+<p>Further, I created my package that makes the procedure for us for the entire data set in one click.</p>
+<p>Download the file: Art_0.1.0.tar.gz and install it as a package archive file. Apply the function asnum(df). Also, for simplicity, we are going to apply the na.omit() function, which eliminates the rows with missing values.</p>
+<p>Or you could install the library from:</p>
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#library(devtools)</span></span>
+<span><span class="co">#doremotes::install_github("abernal30/dataclean")</span></span>
+<span></span>
+<span><span class="co">#library(devtools)</span></span>
+<span><span class="co">#devtools::install_github("abernal30/dataclean")</span></span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dataclean</span><span class="op">)</span> </span>
+<span><span class="va">df5</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/asnum.html">asnum</a></span><span class="op">(</span><span class="va">df4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Default loan_amnt term int_rate installment grade sub_grade emp_title</span></span>
+<span><span class="co">#&gt; 1       0      3600    1    13.99      123.03     1         1         1</span></span>
+<span><span class="co">#&gt; 2       0     24700    1    11.99      820.28     1         2         2</span></span>
+<span><span class="co">#&gt; 3       0     20000    2    10.78      432.66     2         3         3</span></span>
+<span><span class="co">#&gt; 4       0     10400    2    22.45      289.91     3         4         4</span></span>
+<span><span class="co">#&gt; 5       0     11950    1    13.44      405.18     1         5         5</span></span>
+<span><span class="co">#&gt; 6       0     20000    1     9.17      637.58     2         6         6</span></span>
+<span><span class="co">#&gt;   emp_length home_ownership annual_inc verification_status purpose title   dti</span></span>
+<span><span class="co">#&gt; 1          1              1      55000                   1       1     1  5.91</span></span>
+<span><span class="co">#&gt; 2          1              1      65000                   1       2     2 16.06</span></span>
+<span><span class="co">#&gt; 3          1              1      63000                   1       3     3 10.78</span></span>
+<span><span class="co">#&gt; 4          2              1     104433                   2       4     4 25.37</span></span>
+<span><span class="co">#&gt; 5          3              2      34000                   2       1     1 10.20</span></span>
+<span><span class="co">#&gt; 6          1              1     180000                   1       1     1 14.67</span></span>
+<span><span class="co">#&gt;   earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc</span></span>
+<span><span class="co">#&gt; 1                1        7       0      2765       29.7        13</span></span>
+<span><span class="co">#&gt; 2                2       22       0     21470       19.2        38</span></span>
+<span><span class="co">#&gt; 3                3        6       0      7869       56.2        18</span></span>
+<span><span class="co">#&gt; 4                4       12       0     21929       64.5        35</span></span>
+<span><span class="co">#&gt; 5                5        5       0      8822       68.4         6</span></span>
+<span><span class="co">#&gt; 6                6       12       0     87329       84.5        27</span></span>
+<span><span class="co">#&gt;   initial_list_status application_type mort_acc pub_rec_bankruptcies</span></span>
+<span><span class="co">#&gt; 1                   1                1        1                    0</span></span>
+<span><span class="co">#&gt; 2                   1                1        4                    0</span></span>
+<span><span class="co">#&gt; 3                   1                2        5                    0</span></span>
+<span><span class="co">#&gt; 4                   1                1        6                    0</span></span>
+<span><span class="co">#&gt; 5                   1                1        0                    0</span></span>
+<span><span class="co">#&gt; 6                   2                1        4                    0</span></span></code></pre></div>
+<p>Split the data set into training and test in 80% the training and 20% the test data set.</p>
+<p>When the data set is not a time series, we use the function sample. Which randomly generates dim[1]*n numbers of the full data set. Where dim[1] is the number of rows of the full data set and n is a %, in this case 80%.</p>
+<p>set.seed (1)
+train_sample&lt;-sample(dim[1],dim[1]*n)</p>
+<p>train &lt;- df[train_sample, ]
+test &lt;- df[-train_sample, ]
+set.seed (13)</p>
+<pre><code>#&gt;     Default loan_amnt term int_rate installment grade sub_grade emp_title
+#&gt; 773       0     13050    2    26.06      391.19     3        27        39
+#&gt; 698       0     15000    1     9.80      482.61     2        19       533
+#&gt; 652       0      2000    1    11.99       66.42     1         2       500
+#&gt; 548       0     20000    1    11.48      659.33     2         9       426
+#&gt; 872       0      5500    1    11.99      182.66     1         2       648
+#&gt; 392       0     22600    1    15.77      791.99     6        18        39
+#&gt;     emp_length home_ownership annual_inc verification_status purpose title
+#&gt; 773          1              1      43500                   3       1     1
+#&gt; 698          7              2      89000                   1       1     1
+#&gt; 652          3              2      35000                   2       1     1
+#&gt; 548         11              2     185000                   3       1     1
+#&gt; 872          2              2      37000                   2       1     1
+#&gt; 392          2              1      53867                   1       1     1
+#&gt;       dti earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc
+#&gt; 773 22.79              305        8       0     12799       88.3        21
+#&gt; 698 19.50               29       11       0      6273       26.4        24
+#&gt; 652  4.01              256        7       1      1024       17.1        16
+#&gt; 548 25.70              242       17       0     31201       90.2        28
+#&gt; 872 21.15               42        7       0      5914       81.0        21
+#&gt; 392 25.31               40       33       0     23959       53.5        46
+#&gt;     initial_list_status application_type mort_acc pub_rec_bankruptcies
+#&gt; 773                   1                1        3                    0
+#&gt; 698                   1                1        1                    0
+#&gt; 652                   1                1        0                    0
+#&gt; 548                   1                1        0                    0
+#&gt; 872                   1                1        0                    0
+#&gt; 392                   1                1        0                    0</code></pre>
+<p>The result of running the logit model with all the variables and using the train set is:
+glm(y ~x1+x2+x3,data=,family=binomial())</p>
+<p>where y is the dependent variable, and x1, x2, x3 are the independent variables in the model:</p>
+<p><span class="math display">\[y=\alpha_{0}\ +\beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+e\]</span>
+and e is the error term.</p>
+<p>If we want to appli the model for all the variables
+glm(y ~.,data=,family=binomial())</p>
+<p><span class="math display">\[y=\alpha_{0}\ +\beta_{1}x_{1}+\beta_{2}x_{2}+...+\beta_{n}x_{n}+e\]</span></p>
+<p>In this case, y is the Default variable.
+glm(y ~x1+x2+x3,data=,family=binomial())</p>
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span><span class="op">~</span><span class="va">.</span> ,data<span class="op">=</span><span class="va">train</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The prediction:
+predict(model,newdata = test,type = “response”)</p>
+<p>the type = “response” argument is for get the transformation of the logit model into probability. Also we need to transform the probability into c(0,1).</p>
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">predict</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model</span>,newdata <span class="op">=</span> <span class="va">test</span>,type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="co">#trasnform that probability into a 0,1</span></span>
+<span><span class="va">predictp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">predict</span><span class="op">&gt;</span><span class="fl">.5</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">predictp</span></span>
+<span><span class="co">#&gt;   7  21  29  31  34  35  38  39  41  43  46  55  57  61  66  68  83  90  91  97 </span></span>
+<span><span class="co">#&gt;   0   0   0   0   0   0   0   0   1   0   0   1   0  NA   0   1   0   0   0   0 </span></span>
+<span><span class="co">#&gt; 106 107 112 113 119 124 126 141 150 152 156 160 162 167 173 174 179 196 199 200 </span></span>
+<span><span class="co">#&gt;   0   0   1   0   0  NA   1   0   0   0   0   0  NA   0   0   0   1   0   0   0 </span></span>
+<span><span class="co">#&gt; 203 207 210 211 216 218 221 230 232 235 239 240 249 254 259 264 267 268 279 281 </span></span>
+<span><span class="co">#&gt;   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1 </span></span>
+<span><span class="co">#&gt; 288 290 301 302 308 313 315 323 329 335 341 342 348 350 351 359 361 363 365 368 </span></span>
+<span><span class="co">#&gt;   0  NA   0   0   0   1   0   0   0   0   0   0   1   0   0  NA   0   0   0   0 </span></span>
+<span><span class="co">#&gt; 384 396 402 404 408 409 414 419 423 425 434 435 445 447 451 452 453 454 458 459 </span></span>
+<span><span class="co">#&gt;   0   0   0   0   0   0   0   0   0  NA   0   0   0   0   0   1   0   0   0   1 </span></span>
+<span><span class="co">#&gt; 464 467 480 491 499 501 506 511 523 525 526 530 536 537 543 544 545 546 568 569 </span></span>
+<span><span class="co">#&gt;   0   0   0   0  NA   0   0   0   0   1   1   0   0   0  NA   0   0   0   0   0 </span></span>
+<span><span class="co">#&gt; 573 585 588 595 599 600 609 622 627 632 638 655 657 661 665 687 692 699 700 706 </span></span>
+<span><span class="co">#&gt;   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 </span></span>
+<span><span class="co">#&gt; 708 719 724 726 735 740 748 751 754 755 758 775 777 781 783 784 789 794 799 803 </span></span>
+<span><span class="co">#&gt;   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  NA   0   0 </span></span>
+<span><span class="co">#&gt; 804 807 810 811 812 814 819 825 829 835 836 843 844 851 854 </span></span>
+<span><span class="co">#&gt;   0   0   0  NA   0   0   0   0   0   0   0   0   0   1   0</span></span></code></pre></div>
+</div>
+<div id="measuring-model-performance" class="section level3" number="6.1.3">
+<h3>
+<span class="header-section-number">6.1.3</span> Measuring model performance<a class="anchor" aria-label="anchor" href="#measuring-model-performance"><i class="fas fa-link"></i></a>
+</h3>
+<p>The confusion Matrix. Before that we need to transform the variables into factor.</p>
+<p>confusionMatrix(prediction,real)</p>
+<pre><code>#&gt; Confusion Matrix and Statistics
+#&gt; 
+#&gt;           Reference
+#&gt; Prediction   1   0
+#&gt;          1   7   8
+#&gt;          0  16 134
+#&gt;                                           
+#&gt;                Accuracy : 0.8545          
+#&gt;                  95% CI : (0.7913, 0.9045)
+#&gt;     No Information Rate : 0.8606          
+#&gt;     P-Value [Acc &gt; NIR] : 0.6409          
+#&gt;                                           
+#&gt;                   Kappa : 0.2903          
+#&gt;                                           
+#&gt;  Mcnemar's Test P-Value : 0.1530          
+#&gt;                                           
+#&gt;             Sensitivity : 0.30435         
+#&gt;             Specificity : 0.94366         
+#&gt;          Pos Pred Value : 0.46667         
+#&gt;          Neg Pred Value : 0.89333         
+#&gt;              Prevalence : 0.13939         
+#&gt;          Detection Rate : 0.04242         
+#&gt;    Detection Prevalence : 0.09091         
+#&gt;       Balanced Accuracy : 0.62400         
+#&gt;                                           
+#&gt;        'Positive' Class : 1               
+#&gt; </code></pre>
+<p>Cross validation.</p>
+<p>Resampling methods are an indispensable tool in modern statistics. They involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the model. Such an approach may allow us to obtain information that would not be available from fitting the model only once using the original training sample.</p>
+<p>Also, it would help us to get the best variables that improves the accuracy. First we need to transform the dependent variable into factor.</p>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">def_train_f</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">train</span><span class="op">$</span><span class="va">Default</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">trainf</span><span class="op">&lt;-</span><span class="va">train</span></span>
+<span><span class="va">trainf</span><span class="op">[</span>,<span class="st">"Default"</span><span class="op">]</span><span class="op">&lt;-</span><span class="va">def_train_f</span></span>
+<span><span class="va">testf</span><span class="op">&lt;-</span><span class="va">test</span></span>
+<span><span class="va">testf</span><span class="op">[</span>,<span class="st">"Default"</span><span class="op">]</span><span class="op">&lt;-</span><span class="va">real</span> <span class="co"># antes una f </span></span></code></pre></div>
+<p>K Fold Cross Validation</p>
+<p>This approach involves randomly k-fold CV dividing the set of observations into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k − 1 folds.</p>
+<p>glm(Default ~ ., data = train)</p>
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#set.seed(1)</span></span>
+<span><span class="va">trainf</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">trainf</span><span class="op">)</span><span class="co"># delete the rows with nas or missing values</span></span>
+<span><span class="va">gbmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">trainf</span>,</span>
+<span>                 method <span class="op">=</span> <span class="st">"glmStepAIC"</span>, </span>
+<span>                            trControl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>, number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>                        trace<span class="op">=</span><span class="fl">0</span>,   metric<span class="op">=</span><span class="st">"Accuracy"</span><span class="op">)</span></span>
+<span><span class="va">gbmFit1</span> </span>
+<span><span class="co">#&gt; Generalized Linear Model with Stepwise Feature Selection </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 665 samples</span></span>
+<span><span class="co">#&gt;  24 predictor</span></span>
+<span><span class="co">#&gt;   2 classes: '1', '0' </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 598, 598, 598, 598, 599, 599, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Accuracy  Kappa    </span></span>
+<span><span class="co">#&gt;   0.818227  0.1285474</span></span></code></pre></div>
+<p>The model glmStepAIC makes a selection of variables. In this case, to improve the Accuracy.</p>
+<p>Making the prediction.</p>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gbmFit1</span><span class="op">$</span><span class="va">finalModel</span><span class="op">$</span><span class="va">formula</span></span>
+<span><span class="co">#&gt; .outcome ~ loan_amnt + term + int_rate + emp_length + home_ownership + </span></span>
+<span><span class="co">#&gt;     open_acc + pub_rec + mort_acc</span></span>
+<span><span class="co">#&gt; &lt;environment: 0x000000003e1d1030&gt;</span></span></code></pre></div>
+<p>Suponiendo que este es mi modelo final, voy a hacer la predicción real.
+Una persona pide crédito y tiene los siguietes datos</p>
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">test</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span>
+<span><span class="co">#&gt;   Default loan_amnt term int_rate installment grade sub_grade emp_title</span></span>
+<span><span class="co">#&gt; 7       0     20000    1     8.49      631.26     2         7         7</span></span>
+<span><span class="co">#&gt;   emp_length home_ownership annual_inc verification_status purpose title   dti</span></span>
+<span><span class="co">#&gt; 7          1              1      85000                   1       4     4 17.61</span></span>
+<span><span class="co">#&gt;   earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc</span></span>
+<span><span class="co">#&gt; 7                7        8       0       826        5.7        15</span></span>
+<span><span class="co">#&gt;   initial_list_status application_type mort_acc pub_rec_bankruptcies</span></span>
+<span><span class="co">#&gt; 7                   1                1        3                    0</span></span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span><span class="op">~</span><span class="va">loan_amnt</span> <span class="op">+</span> <span class="va">term</span> <span class="op">+</span> <span class="va">int_rate</span> <span class="op">+</span> <span class="va">installment</span> <span class="op">+</span> <span class="va">grade</span> <span class="op">+</span> </span>
+<span>    <span class="va">sub_grade</span> <span class="op">+</span> <span class="va">home_ownership</span> <span class="op">+</span> <span class="va">open_acc</span> <span class="op">+</span> <span class="va">pub_rec</span> <span class="op">+</span> <span class="va">mort_acc</span> <span class="op">+</span> </span>
+<span>    <span class="va">pub_rec_bankruptcies</span> ,data<span class="op">=</span><span class="va">train</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">predict</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model</span>,newdata <span class="op">=</span> <span class="va">test</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>,type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="co">#trasnform that probability into a 0,1</span></span>
+<span><span class="va">predictp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">predict</span><span class="op">&gt;</span><span class="fl">.5</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">predictp</span></span>
+<span><span class="co">#&gt; 7 </span></span>
+<span><span class="co">#&gt; 0</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></div>
+<div class="next"><a href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#credit-analysis"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li>
+<a class="nav-link" href="#example"><span class="header-section-number">6.1</span> Example</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#a-independent-variable-creation"><span class="header-section-number">6.1.1</span> a) Independent variable creation</a></li>
+<li><a class="nav-link" href="#b-prediction-model"><span class="header-section-number">6.1.2</span> b) “Prediction model”</a></li>
+<li><a class="nav-link" href="#measuring-model-performance"><span class="header-section-number">6.1.3</span> Measuring model performance</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/06-Credit-analysis.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/06-Credit-analysis.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

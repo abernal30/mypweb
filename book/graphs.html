@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>3 APIS and R graphs | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="3 APIS and R graphs | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/graphs.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 APIS and R graphs | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="active" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="graphs" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> APIS and R graphs<a class="anchor" aria-label="anchor" href="#graphs"><i class="fas fa-link"></i></a>
+</h1>
+<div id="apis-apis-application-programming-interface" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> 1. APIs API´s (Application Programming Interface)<a class="anchor" aria-label="anchor" href="#apis-apis-application-programming-interface"><i class="fas fa-link"></i></a>
+</h2>
+<div id="quantmod-api" class="section level3" number="3.1.1">
+<h3>
+<span class="header-section-number">3.1.1</span> 1.1 Quantmod API<a class="anchor" aria-label="anchor" href="#quantmod-api"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quantitative Financial Modelling Framework</p>
+<p>The quantmod package for R is designed to assist the quantitative trader in the development, testing, and deployment of statistically based trading models.</p>
+<p>The function getSymbols is a wrapper to load data from various sources, local or remote. One of the more popular adn the default is yahoo fiannce, <a href="https://finance.yahoo.com/" class="uri">https://finance.yahoo.com/</a>,<br>
+getSymbols(“Symbol”):</p>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AAPL"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">AAPL</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "xts" "zoo"</span></span></code></pre></div>
+<p>As you can see, the object class is xts.</p>
+<p>To eliminate warnings, we could add the argument warnings = F</p>
+<p>Getting the data from an specific date:</p>
+<p>getSymbols(“symbol”, from=“YY/m/d”,to=“YY/m/d”)</p>
+<p>Where: YY= is 4 digit year, m= 2 digit month, d= 2 digit day.</p>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AMZN"</span>, from<span class="op">=</span><span class="st">"2020/04/01"</span>,to<span class="op">=</span><span class="st">"2022/04/04"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AMZN"</span></span></code></pre></div>
+<p>The previous way to download the data store the information in an object on the environment, and by default assign a name to that object, in the previous example would be “AMZN”.</p>
+<p>Another way to do it or to store with a different name, form example with the name “data”, is the following:</p>
+<p>data &lt;- new.env()
+getSymbols(“ticker”,env=data)</p>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">apple2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span>, env<span class="op">=</span><span class="va">apple2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AAPL"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">apple2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "environment"</span></span></code></pre></div>
+<p>The object class is a list. To get the information we have to apply the following code.</p>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">apple3</span><span class="op">&lt;-</span><span class="va">apple2</span><span class="op">[[</span><span class="st">"AAPL"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p>The previous method is useful when we have tickers like Bitcoin:</p>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"BTC-USD"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "BTC-USD"</span></span></code></pre></div>
+<p>Because apparently the name of that object in the environment is “BTC-USD”, but if we want to modify it with that name, it would show a debug like: “object ‘BTC’ not found”</p>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># bit&lt;-BTC-USD[,4]</span></span></code></pre></div>
+<p>This is because even when looks “BTC-USD” the name has these kind of brackets:</p>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># `BTC-USD`</span></span></code></pre></div>
+<p>Anhother alternative, wich is helpful when we apply loops to get the onformation from the environment is:</p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bit</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"BTC-USD"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bit</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            BTC-USD.Open BTC-USD.High BTC-USD.Low BTC-USD.Close BTC-USD.Volume</span></span>
+<span><span class="co">#&gt; 2014-09-17      465.864      468.174     452.422       457.334       21056800</span></span>
+<span><span class="co">#&gt; 2014-09-18      456.860      456.860     413.104       424.440       34483200</span></span>
+<span><span class="co">#&gt; 2014-09-19      424.103      427.835     384.532       394.796       37919700</span></span>
+<span><span class="co">#&gt; 2014-09-20      394.673      423.296     389.883       408.904       36863600</span></span>
+<span><span class="co">#&gt; 2014-09-21      408.085      412.426     393.181       398.821       26580100</span></span>
+<span><span class="co">#&gt; 2014-09-22      399.100      406.916     397.130       402.152       24127600</span></span>
+<span><span class="co">#&gt;            BTC-USD.Adjusted</span></span>
+<span><span class="co">#&gt; 2014-09-17          457.334</span></span>
+<span><span class="co">#&gt; 2014-09-18          424.440</span></span>
+<span><span class="co">#&gt; 2014-09-19          394.796</span></span>
+<span><span class="co">#&gt; 2014-09-20          408.904</span></span>
+<span><span class="co">#&gt; 2014-09-21          398.821</span></span>
+<span><span class="co">#&gt; 2014-09-22          402.152</span></span></code></pre></div>
+<p>If we would like to download intraday data, we could use the Alphavantage</p>
+<p><a href="https://www.alphavantage.co/" class="uri">https://www.alphavantage.co/</a></p>
+<p>getSymbols(“ticker”, src=“av”, api.key=“yourKey”, output.size=“full”,
+periodicity=“intraday”)</p>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span>, src<span class="op">=</span><span class="st">"av"</span>, api.key<span class="op">=</span><span class="st">"yourKey"</span>, output.size<span class="op">=</span><span class="st">"full"</span>,</span>
+<span>periodicity<span class="op">=</span><span class="st">"intraday"</span>,interval<span class="op">=</span><span class="st">"5min"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AAPL"</span></span></code></pre></div>
+<p>Dividends
+getDividends(“ticker”), the xts objetc if the ticker needs to be in the R environment</p>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Al parecer solo si ticker tiene iformación de divididendos</span></span>
+<span><span class="va">ap_div</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getDividends.html">getDividends</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="in-house-api" class="section level3" number="3.1.2">
+<h3>
+<span class="header-section-number">3.1.2</span> 1.2 In-house Api<a class="anchor" aria-label="anchor" href="#in-house-api"><i class="fas fa-link"></i></a>
+</h3>
+<p>(this will not be covered in the final exam or activities, is only for exposition)</p>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/">xml2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvest.tidyverse.org/">rvest</a></span><span class="op">)</span></span></code></pre></div>
+<p>Harvesting the web with rvest (to get tickers)</p>
+<p>This code is to read characters from web pages. In this case, to get the tickers from yahoo finance.</p>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># the page of of the criptocurrencies</span></span>
+<span><span class="co">#yf &lt;- "https://finance.yahoo.com/cryptocurrencies/"</span></span>
+<span></span>
+<span><span class="co"># for the IPC components</span></span>
+<span><span class="va">yf</span> <span class="op">&lt;-</span> <span class="st">"https://finance.yahoo.com/quote/%5EMXX/components?p=%5EMXX"</span></span>
+<span><span class="va">html</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html">read_html</a></span><span class="op">(</span><span class="va">yf</span><span class="op">)</span></span>
+<span><span class="co"># To get the node a, wich contains characters </span></span>
+<span><span class="va">node</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rvest.tidyverse.org/reference/rename.html">html_nodes</a></span><span class="op">(</span><span class="va">html</span>,<span class="st">"a"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># To read the text in the node</span></span>
+<span><span class="va">node</span><span class="op">&lt;-</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/html_text.html">html_text</a></span><span class="op">(</span><span class="va">node</span>, trim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># To get the elements that have USD (the tickers). For the IPC tickers, replace "USD" with ".MX". For other tickers, print the node object and look for patterns or select by rows.</span></span>
+<span><span class="co">#tickers&lt;-grep(pattern = "USD", x = node, value = TRUE)</span></span>
+<span></span>
+<span><span class="va">tickers</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">".MX"</span>, x <span class="op">=</span> <span class="va">node</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># to get only the first 5 tickers</span></span>
+<span></span>
+<span><span class="va">tickers1</span><span class="op">&lt;-</span><span class="va">tickers</span></span>
+<span><span class="va">tickers1</span></span>
+<span><span class="co">#&gt;  [1] "IENOVA.MX"     "ALSEA.MX"      "MEGACPO.MX"    "ASURB.MX"     </span></span>
+<span><span class="co">#&gt;  [5] "ALPEKA.MX"     "FEMSAUBD.MX"   "LABB.MX"       "GCARSOA1.MX"  </span></span>
+<span><span class="co">#&gt;  [9] "BIMBOA.MX"     "AMXL.MX"       "GCC.MX"        "GMEXICOB.MX"  </span></span>
+<span><span class="co">#&gt; [13] "CEMEXCPO.MX"   "BOLSAA.MX"     "PINFRA.MX"     "CUERVO.MX"    </span></span>
+<span><span class="co">#&gt; [17] "TLEVISACPO.MX" "GENTERA.MX"    "LIVEPOLC1.MX"  "MEXCHEM.MX"   </span></span>
+<span><span class="co">#&gt; [21] "GAPB.MX"       "GRUMAB.MX"     "BBAJIOO.MX"    "AC.MX"        </span></span>
+<span><span class="co">#&gt; [25] "GFNORTEO.MX"   "KOFL.MX"       "KIMBERA.MX"    "PEOLES.MX"    </span></span>
+<span><span class="co">#&gt; [29] "OMAB.MX"       "SITESB1.MX"</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; [1] "IENOVA.MX" "ALSEA.MX"</span></span></code></pre></div>
+</div>
+<div id="nasdaq-data-link-api" class="section level3" number="3.1.3">
+<h3>
+<span class="header-section-number">3.1.3</span> 1.3 Nasdaq Data Link API<a class="anchor" aria-label="anchor" href="#nasdaq-data-link-api"><i class="fas fa-link"></i></a>
+</h3>
+<p>You need to create an account (I suggest for you a free academic account)</p>
+<p>Nasdaq Data Link API (before it eas Quandl) <a href="https://data.nasdaq.com/" class="uri">https://data.nasdaq.com/</a></p>
+<p>The class of objects from Quandl are Data Frames, but if e add the argument: type=“xts”, an xts object we get.</p>
+<p>Emerging Markets High Grade Corporate Bond Index Yield</p>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quandl/quandl-r">Quandl</a></span><span class="op">)</span></span>
+<span><span class="co"># por default como data frame, pero podemos darle unargumento para que sea xts la descarga</span></span>
+<span><span class="va">eurex</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/Quandl/man/Quandl.html">Quandl</a></span><span class="op">(</span><span class="st">"ML/EMHGY"</span>, api_key<span class="op">=</span><span class="st">"e7Z7FD5siZ8mDi_yTVLD"</span>,type<span class="op">=</span><span class="st">"xts"</span><span class="op">)</span></span>
+<span><span class="co"># api_key </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">eurex</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            [,1]</span></span>
+<span><span class="co">#&gt; 1998-12-31 8.48</span></span>
+<span><span class="co">#&gt; 1999-01-04 8.48</span></span>
+<span><span class="co">#&gt; 1999-01-05 8.46</span></span>
+<span><span class="co">#&gt; 1999-01-06 8.37</span></span>
+<span><span class="co">#&gt; 1999-01-07 8.43</span></span>
+<span><span class="co">#&gt; 1999-01-08 8.40</span></span></code></pre></div>
+</div>
+</div>
+<div id="graphs-plots" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> 3. Graphs (Plots)<a class="anchor" aria-label="anchor" href="#graphs-plots"><i class="fas fa-link"></i></a>
+</h2>
+<p>The basic function for ploting is plot(x, type = “h”, col = “red”, lwd = 10, “xlab”,“ylab”).
+In help plot.xy and plot.default we can see the arguments.
+Plot the HSI close price</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#tickers&lt;-c("AAPL","AMZN")</span></span>
+<span><span class="co"># vector de caracteres</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AAPL"</span></span>
+<span><span class="co">#&gt; [1] "AAPL" "AMZN"</span></span>
+<span><span class="va">app</span><span class="op">&lt;-</span><span class="va">AAPL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="fl">4</span><span class="op">]</span></span>
+<span><span class="co">#am&lt;-AMZN[1:110,4]</span></span>
+<span><span class="co">#both&lt;-cbind(app,am) </span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">app</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"green"</span>, main <span class="op">=</span> <span class="st">"APPL"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># to add anhother time series, for example: apple*1.1</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">app</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">1.1</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-16-2.png" width="90%" style="display: block; margin: auto;"></div>
+<p>Note: After applying the function plot, to add another line, it must be in the same data frame, otherwise it may not appear in the plot.</p>
+<p>Adding leggend</p>
+<p>The function legends only work with data frames, not xts., then we transform it in dataframe
+as.data.frame(object).</p>
+<p>To add a legend, but it only works for data frames objects, not in xts. Then we need to transform it into data frame.</p>
+<p>legend(x= “topleft”, legend = c(“objst”,“objt2”),lty = 1,col=c(“green”,“red”))</p>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">appdf</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">app</span><span class="op">)</span></span>
+<span><span class="va">app_1df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">app</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">1.1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">appdf</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"green"</span>, main <span class="op">=</span> <span class="st">"APPL"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">app_1df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"topleft"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"app"</span>,<span class="st">"app*1.1"</span><span class="op">)</span>,lty <span class="op">=</span> <span class="fl">1</span>,lwd<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"green"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>For more details of legends look in <a href="http://www.sthda.com/english" class="uri">http://www.sthda.com/english</a>, for the legend function arguments.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></div>
+<div class="next"><a href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#graphs"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li>
+<a class="nav-link" href="#apis-apis-application-programming-interface"><span class="header-section-number">3.1</span> 1. APIs API´s (Application Programming Interface)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#quantmod-api"><span class="header-section-number">3.1.1</span> 1.1 Quantmod API</a></li>
+<li><a class="nav-link" href="#in-house-api"><span class="header-section-number">3.1.2</span> 1.2 In-house Api</a></li>
+<li><a class="nav-link" href="#nasdaq-data-link-api"><span class="header-section-number">3.1.3</span> 1.3 Nasdaq Data Link API</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#graphs-plots"><span class="header-section-number">3.2</span> 3. Graphs (Plots)</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/03-APIS-and-graphs.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/03-APIS-and-graphs.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

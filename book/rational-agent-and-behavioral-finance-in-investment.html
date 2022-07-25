@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>7 Rational agent and behavioral finance in investment | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="The test in this chapter and some of the text is based on Wooldridge (2012) with my own codes.  7.1 Shorts samples test of efficient markets hypothesis (EMH) for one asset Let yt be the daily...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="7 Rational agent and behavioral finance in investment | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/rational-agent-and-behavioral-finance-in-investment.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="The test in this chapter and some of the text is based on Wooldridge (2012) with my own codes.  7.1 Shorts samples test of efficient markets hypothesis (EMH) for one asset Let yt be the daily...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Rational agent and behavioral finance in investment | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="The test in this chapter and some of the text is based on Wooldridge (2012) with my own codes.  7.1 Shorts samples test of efficient markets hypothesis (EMH) for one asset Let yt be the daily...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="active" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="rational-agent-and-behavioral-finance-in-investment" class="section level1" number="7">
+<h1>
+<span class="header-section-number">7</span> Rational agent and behavioral finance in investment<a class="anchor" aria-label="anchor" href="#rational-agent-and-behavioral-finance-in-investment"><i class="fas fa-link"></i></a>
+</h1>
+<p>The test in this chapter and some of the text is based on Wooldridge (2012) with my own codes.</p>
+<div id="shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Shorts samples test of efficient markets hypothesis (EMH) for one asset<a class="anchor" aria-label="anchor" href="#shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let yt be the daily price of the S&amp;P500. A strict form of the efficient markets hypothesis states that information observable to the market prior to day t should not help to predict the price. If we use only past information on y, the EMH is stated as:</p>
+<p><span class="math display">\[E(y_t/ y_{t-1} ,y_{t-1},.... )=E(y_t) \]</span></p>
+<p>If the previous equation is false, we could use the information on the past to predict the current price.</p>
+<p>The EMH presumes that such investment opportunities will be noticed and will disappear almost instantaneously.</p>
+<p>One simple way that equation is to specify the AR(1) model as the alternative model.</p>
+<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1}+u_t, \]</span></p>
+<p>A significant beta1 coefficient would reject EMH; then, we could use the information on the past to predict the current price. However, it is a common practice to make the test using more lags.</p>
+<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1},...,y_{t-n}+u_t\]</span></p>
+<p>Now, to make the lags of the price, we make a Loop For, creating the lag and storing the created lags into the xts object where the S&amp;P500 close price is stored.</p>
+<p>Note. Compute a lagged version of a time series, shifting the time base back by a given number of observations.</p>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dji</span><span class="op">&lt;-</span><span class="va">all</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
+<span><span class="va">dji</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/Delt.html">Delt</a></span><span class="op">(</span><span class="va">all</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">la2</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">dji</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">la3</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">dji</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">dji</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">dji</span>,<span class="va">la2</span>,<span class="va">la3</span><span class="op">)</span></span>
+<span><span class="va">dji</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dji</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">dji</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SP500"</span>,<span class="st">"SP500_lag2"</span>,<span class="st">"SP500_lag3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dji</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  SP500   SP500_lag2   SP500_lag3</span></span>
+<span><span class="co">#&gt; 2007-01-08  0.01412499 -0.014953248 -0.012687405</span></span>
+<span><span class="co">#&gt; 2007-01-09 -0.01652505 -0.009250474 -0.014953248</span></span>
+<span><span class="co">#&gt; 2007-01-10  0.01032165  0.014124994 -0.009250474</span></span>
+<span><span class="co">#&gt; 2007-01-11  0.04110240 -0.016525047  0.014124994</span></span>
+<span><span class="co">#&gt; 2007-01-12  0.01437702  0.010321651 -0.016525047</span></span>
+<span><span class="co">#&gt; 2007-01-15  0.02137235  0.041102400  0.010321651</span></span></code></pre></div>
+<p>Run the regression</p>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SP500</span><span class="op">~</span><span class="va">.</span>,data <span class="op">=</span><span class="va">dji</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = SP500 ~ ., data = dji)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;       Min        1Q    Median        3Q       Max </span></span>
+<span><span class="co">#&gt; -0.170951 -0.009607 -0.000202  0.009729  0.136626 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span><span class="co">#&gt; (Intercept)  0.0007028  0.0003145   2.235   0.0255 *</span></span>
+<span><span class="co">#&gt; SP500_lag2   0.0272148  0.0160414   1.697   0.0899 .</span></span>
+<span><span class="co">#&gt; SP500_lag3  -0.0120675  0.0160421  -0.752   0.4520  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.0196 on 3890 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.0008625,  Adjusted R-squared:  0.0003488 </span></span>
+<span><span class="co">#&gt; F-statistic: 1.679 on 2 and 3890 DF,  p-value: 0.1867</span></span></code></pre></div>
+<p>Remember, a significant beta1 coefficient would reject EMH; then, we could use the past information to predict the a price, in this case the DJI.</p>
+</div>
+<div id="long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Long samples test of efficient markets hypothesis (EMH) for one asset<a class="anchor" aria-label="anchor" href="#long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><i class="fas fa-link"></i></a>
+</h2>
+<p>Although the EMH states that the expected return given past observable information should be constant, it says nothing about the conditional variance. It could be tested using a
+heteroskedasticity, such as Breusch-Pagan, for example. However, this heteroskedasticity is better characterized by the ARCH model.</p>
+<p>Suppose we have the dependent variable, y(t), a contemporary exogenous variable, z(t).</p>
+<p><span class="math display">\[E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \beta_0 +\beta_1\ z_t+\beta_2\ y_{t-1}+\beta_3\ z_{t-1}. \]</span></p>
+<p>The typical approach is to assume that:</p>
+<p><span class="math display">\[Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \sigma, \]</span>
+is a constant. But this variance could follow an ARCH model:</p>
+<p><span class="math display">\[Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=Var(u_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=\\ \alpha_0 +\alpha_1\ u^2_{t-2}.\]</span>
+Where</p>
+<p><span class="math display">\[u_t=y_t-E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)\]</span></p>
+<p>We can check for ARCH effects by using the ArchTest() function from the FinTS package. Lagrange Multiplier (LM) test for autoregressive conditional heteroscedasticity (ARCH). Computes the Lagrange multiplier test for conditional heteroscedasticity. Equivalent to the test by OLS:</p>
+<p><span class="math display">\[u_t=\alpha_0 +\alpha_1\ u^2_{t-2}\]</span>
+We look to verify the significance of alpha 1. If alpha 1 significant, we reject the null hypothesis and conclude the presence of ARCH(1) effects. Then we could use past information to predict the future.
+ArchTest(object,lags=n), usually lags=1</p>
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"^GSPC"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>,from<span class="op">=</span><span class="st">"2021-05-01"</span>,to<span class="op">=</span><span class="st">"2022-05-01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "^GSPC"</span></span>
+<span><span class="va">dji_long</span><span class="op">&lt;-</span><span class="va">GSPC</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu">ArchTest</span><span class="op">(</span><span class="va">dji_long</span>,lags<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">ar</span><span class="op">$</span><span class="va">p.value</span><span class="op">)</span></span>
+<span><span class="co">#&gt;               ar.p.value</span></span>
+<span><span class="co">#&gt; Chi-squared 9.801502e-53</span></span></code></pre></div>
+<p>If p-value is &lt;10%, in this case, we conclude the presence of ARCH(1) effects, then we could make a forecast of the time series using past information.</p>
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
+<span><span class="co">#library(xml2) # this are for the  code </span></span>
+<span><span class="co">#library(rvest) # in 154 to 177 lines, just instaal it if you are running that code</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/fints/">FinTS</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tseries</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.unstarched.net">rugarch</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> Long samples test of efficient markets hypothesis (EMH) applyied to portfolio<a class="anchor" aria-label="anchor" href="#long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio"><i class="fas fa-link"></i></a>
+</h2>
+<p>In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We will assume that is going to be a long-term horizon portfolio. Then, we need to apply the long samples test of the efficient markets hypothesis.</p>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/df_dates.xlsx"</span>, detectDates <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">date</span><span class="op">&lt;-</span><span class="va">df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># important to takeout the data before transforming to xts, other wise does not transform into numeric. </span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="va">df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dfx</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span></span></code></pre></div>
+<p>The following code makes the long samples test of the efficient markets hypothesis (EMH) applied to many assets of the dfx object.</p>
+<p>We start by estimating the returns for each time series and deleteing missig valies.</p>
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">return</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/Delt.html">Delt</a></span><span class="op">(</span><span class="va">dfx</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># we are going to apply the Delt function to the 100 stocks</span></span>
+<span></span>
+<span><span class="co"># function apply()</span></span>
+<span><span class="va">return_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dfx</span>, <span class="fl">2</span>, <span class="va">Delt</span><span class="op">)</span></span>
+<span><span class="co"># es 1 for rows o 2for columns</span></span></code></pre></div>
+<p>The next loops knowledge is over the level of this course contents requires, so its application could be covered in the final exam, but the topic of loops will not be covered.</p>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dfr</span><span class="op">&lt;-</span><span class="va">return_all</span></span>
+<span><span class="va">m</span><span class="op">&lt;-</span><span class="fl">26</span></span>
+<span><span class="co">#---de aqui es la creación del Loop for, esto rebasa el nivel de este curso</span></span>
+<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">n</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
+<span><span class="va">ar1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/FinTS/man/ArchTest.html">ArchTest</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,lags<span class="op">=</span><span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
+<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ar</span>,<span class="va">ar1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#----- </span></span>
+<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">ar</span><span class="op">)</span></span>
+<span><span class="co"># it has the p value of the EMH test, if the p-value is lees than 10%, then we could make predictions </span></span>
+<span></span>
+<span><span class="co"># add the name of the ticker</span></span>
+<span><span class="va">col_name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">return_all</span><span class="op">)</span></span>
+<span><span class="va">col_name</span></span>
+<span><span class="co">#&gt;   [1] "AAPL.Close"   "MSFT.Close"   "GOOG.Close"   "GOOGL.Close"  "AMZN.Close"  </span></span>
+<span><span class="co">#&gt;   [6] "TSLA.Close"   "BRK.A.Close"  "BRK.B.Close"  "FB.Close"     "TSM.Close"   </span></span>
+<span><span class="co">#&gt;  [11] "JNJ.Close"    "UNH.Close"    "NVDA.Close"   "V.Close"      "JPM.Close"   </span></span>
+<span><span class="co">#&gt;  [16] "TCEHY.Close"  "TCTZF.Close"  "XOM.Close"    "BAC.Close"    "PG.Close"    </span></span>
+<span><span class="co">#&gt;  [21] "WMT.Close"    "MA.Close"     "CVX.Close"    "JPM.PC.Close" "JPM.PD.Close"</span></span>
+<span><span class="co">#&gt;  [26] "NSRGY.Close"  "NSRGF.Close"  "LVMUY.Close"  "BAC.PK.Close" "HD.Close"    </span></span>
+<span><span class="co">#&gt;  [31] "LVMHF.Close"  "BAC.PL.Close" "LLY.Close"    "PFE.Close"    "RHHBF.Close" </span></span>
+<span><span class="co">#&gt;  [36] "RHHBY.Close"  "RHHVF.Close"  "KO.Close"     "BML.PL.Close" "BAC.PE.Close"</span></span>
+<span><span class="co">#&gt;  [41] "ABBV.Close"   "BML.PG.Close" "BAC.PB.Close" "BML.PH.Close" "BML.PJ.Close"</span></span>
+<span><span class="co">#&gt;  [46] "BABA.Close"   "BABAF.Close"  "AVGO.Close"   "NVO.Close"    "NONOF.Close" </span></span>
+<span><span class="co">#&gt;  [51] "IDCBF.Close"  "IDCBY.Close"  "PEP.Close"    "MRK.Close"    "ASML.Close"  </span></span>
+<span><span class="co">#&gt;  [56] "ASMLF.Close"  "TM.Close"     "TOYOF.Close"  "RYDAF.Close"  "SHEL.Close"  </span></span>
+<span><span class="co">#&gt;  [61] "TMO.Close"    "BHP.Close"    "BHPLF.Close"  "VZ.Close"     "AZN.Close"   </span></span>
+<span><span class="co">#&gt;  [66] "COST.Close"   "AZNCF.Close"  "ABT.Close"    "NVS.Close"    "WFC.PY.Close"</span></span>
+<span><span class="co">#&gt;  [71] "ADBE.Close"   "NVSEF.Close"  "DIS.Close"    "WFC.PL.Close" "CMCSA.Close" </span></span>
+<span><span class="co">#&gt;  [76] "ORCL.Close"   "DHR.Close"    "WFC.PR.Close" "WFC.PQ.Close" "ACN.Close"   </span></span>
+<span><span class="co">#&gt;  [81] "CSCO.Close"   "LRLCF.Close"  "LRLCY.Close"  "CICHF.Close"  "CICHY.Close" </span></span>
+<span><span class="co">#&gt;  [86] "MCD.Close"    "NKE.Close"    "INTC.Close"   "WFC.Close"    "C.PJ.Close"  </span></span>
+<span><span class="co">#&gt;  [91] "TMUS.Close"   "PM.Close"     "AMD.Close"    "LIN.Close"    "TXN.Close"   </span></span>
+<span><span class="co">#&gt;  [96] "CRM.Close"    "BMY.Close"    "UPS.Close"    "RLLCF.Close"  "QCOM.Close"</span></span>
+<span><span class="co"># add the ticker na,me</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ar</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">col_name</span></span>
+<span><span class="va">ar</span></span>
+<span><span class="co">#&gt;                        ar</span></span>
+<span><span class="co">#&gt; AAPL.Close   3.731438e-17</span></span>
+<span><span class="co">#&gt; MSFT.Close   6.033001e-39</span></span>
+<span><span class="co">#&gt; GOOG.Close   3.224007e-16</span></span>
+<span><span class="co">#&gt; GOOGL.Close  2.570860e-16</span></span>
+<span><span class="co">#&gt; AMZN.Close   5.093709e-04</span></span>
+<span><span class="co">#&gt; TSLA.Close   2.275599e-05</span></span>
+<span><span class="co">#&gt; BRK.A.Close  9.677118e-32</span></span>
+<span><span class="co">#&gt; BRK.B.Close  1.239809e-42</span></span>
+<span><span class="co">#&gt; FB.Close     9.999469e-01</span></span>
+<span><span class="co">#&gt; TSM.Close    1.023778e-17</span></span>
+<span><span class="co">#&gt; JNJ.Close    3.822835e-55</span></span>
+<span><span class="co">#&gt; UNH.Close    4.686889e-41</span></span>
+<span><span class="co">#&gt; NVDA.Close   5.391420e-16</span></span>
+<span><span class="co">#&gt; V.Close      4.215814e-25</span></span>
+<span><span class="co">#&gt; JPM.Close    2.665692e-25</span></span>
+<span><span class="co">#&gt; TCEHY.Close  9.959273e-01</span></span>
+<span><span class="co">#&gt; TCTZF.Close  9.621425e-01</span></span>
+<span><span class="co">#&gt; XOM.Close    1.416110e-15</span></span>
+<span><span class="co">#&gt; BAC.Close    2.022251e-25</span></span>
+<span><span class="co">#&gt; PG.Close     3.813798e-46</span></span>
+<span><span class="co">#&gt; WMT.Close    6.208759e-18</span></span>
+<span><span class="co">#&gt; MA.Close     1.311943e-25</span></span>
+<span><span class="co">#&gt; CVX.Close    2.928436e-36</span></span>
+<span><span class="co">#&gt; JPM.PC.Close 1.177236e-31</span></span>
+<span><span class="co">#&gt; JPM.PD.Close 1.802175e-39</span></span>
+<span><span class="co">#&gt; NSRGY.Close  3.838131e-34</span></span>
+<span><span class="co">#&gt; NSRGF.Close  9.786318e-17</span></span>
+<span><span class="co">#&gt; LVMUY.Close  3.131397e-30</span></span>
+<span><span class="co">#&gt; BAC.PK.Close 1.334235e-44</span></span>
+<span><span class="co">#&gt; HD.Close     1.407075e-28</span></span>
+<span><span class="co">#&gt; LVMHF.Close  4.802603e-23</span></span>
+<span><span class="co">#&gt; BAC.PL.Close 5.073425e-39</span></span>
+<span><span class="co">#&gt; LLY.Close    4.523789e-01</span></span>
+<span><span class="co">#&gt; PFE.Close    4.057538e-10</span></span>
+<span><span class="co">#&gt; RHHBF.Close  3.191309e-10</span></span>
+<span><span class="co">#&gt; RHHBY.Close  4.145604e-21</span></span>
+<span><span class="co">#&gt; RHHVF.Close  4.923693e-22</span></span>
+<span><span class="co">#&gt; KO.Close     7.387011e-37</span></span>
+<span><span class="co">#&gt; BML.PL.Close 3.373921e-38</span></span>
+<span><span class="co">#&gt; BAC.PE.Close 4.353408e-40</span></span>
+<span><span class="co">#&gt; ABBV.Close   8.142840e-15</span></span>
+<span><span class="co">#&gt; BML.PG.Close 5.972559e-27</span></span>
+<span><span class="co">#&gt; BAC.PB.Close 1.512724e-39</span></span>
+<span><span class="co">#&gt; BML.PH.Close 1.148495e-37</span></span>
+<span><span class="co">#&gt; BML.PJ.Close 5.720375e-32</span></span>
+<span><span class="co">#&gt; BABA.Close   9.584327e-01</span></span>
+<span><span class="co">#&gt; BABAF.Close  9.915286e-01</span></span>
+<span><span class="co">#&gt; AVGO.Close   6.211754e-36</span></span>
+<span><span class="co">#&gt; NVO.Close    2.608217e-17</span></span>
+<span><span class="co">#&gt; NONOF.Close  6.222725e-03</span></span>
+<span><span class="co">#&gt; IDCBF.Close  6.026186e-06</span></span>
+<span><span class="co">#&gt; IDCBY.Close  5.635984e-05</span></span>
+<span><span class="co">#&gt; PEP.Close    9.403916e-42</span></span>
+<span><span class="co">#&gt; MRK.Close    4.164260e-16</span></span>
+<span><span class="co">#&gt; ASML.Close   2.102782e-21</span></span>
+<span><span class="co">#&gt; ASMLF.Close  7.137022e-18</span></span>
+<span><span class="co">#&gt; TM.Close     4.283555e-10</span></span>
+<span><span class="co">#&gt; TOYOF.Close  1.000000e+00</span></span>
+<span><span class="co">#&gt; RYDAF.Close  2.468392e-29</span></span>
+<span><span class="co">#&gt; SHEL.Close   6.660111e-28</span></span>
+<span><span class="co">#&gt; TMO.Close    1.081827e-17</span></span>
+<span><span class="co">#&gt; BHP.Close    2.567945e-27</span></span>
+<span><span class="co">#&gt; BHPLF.Close  4.454357e-06</span></span>
+<span><span class="co">#&gt; VZ.Close     2.605012e-23</span></span>
+<span><span class="co">#&gt; AZN.Close    1.370948e-12</span></span>
+<span><span class="co">#&gt; COST.Close   6.450225e-13</span></span>
+<span><span class="co">#&gt; AZNCF.Close  3.414503e-05</span></span>
+<span><span class="co">#&gt; ABT.Close    2.771004e-30</span></span>
+<span><span class="co">#&gt; NVS.Close    2.446595e-34</span></span>
+<span><span class="co">#&gt; WFC.PY.Close 6.843455e-20</span></span>
+<span><span class="co">#&gt; ADBE.Close   3.030550e-27</span></span>
+<span><span class="co">#&gt; NVSEF.Close  2.347245e-28</span></span>
+<span><span class="co">#&gt; DIS.Close    3.796324e-12</span></span>
+<span><span class="co">#&gt; WFC.PL.Close 1.137063e-29</span></span>
+<span><span class="co">#&gt; CMCSA.Close  1.099444e-25</span></span>
+<span><span class="co">#&gt; ORCL.Close   1.339600e-13</span></span>
+<span><span class="co">#&gt; DHR.Close    4.817773e-25</span></span>
+<span><span class="co">#&gt; WFC.PR.Close 3.355589e-40</span></span>
+<span><span class="co">#&gt; WFC.PQ.Close 1.902654e-26</span></span>
+<span><span class="co">#&gt; ACN.Close    5.024203e-30</span></span>
+<span><span class="co">#&gt; CSCO.Close   5.216193e-16</span></span>
+<span><span class="co">#&gt; LRLCF.Close  2.238256e-27</span></span>
+<span><span class="co">#&gt; LRLCY.Close  2.921135e-35</span></span>
+<span><span class="co">#&gt; CICHF.Close  4.538511e-03</span></span>
+<span><span class="co">#&gt; CICHY.Close  7.367629e-03</span></span>
+<span><span class="co">#&gt; MCD.Close    4.305474e-27</span></span>
+<span><span class="co">#&gt; NKE.Close    4.117376e-07</span></span>
+<span><span class="co">#&gt; INTC.Close   4.792427e-23</span></span>
+<span><span class="co">#&gt; WFC.Close    1.886590e-30</span></span>
+<span><span class="co">#&gt; C.PJ.Close   7.192938e-31</span></span>
+<span><span class="co">#&gt; TMUS.Close   4.916386e-08</span></span>
+<span><span class="co">#&gt; PM.Close     1.502492e-46</span></span>
+<span><span class="co">#&gt; AMD.Close    3.990568e-08</span></span>
+<span><span class="co">#&gt; LIN.Close    1.617731e-22</span></span>
+<span><span class="co">#&gt; TXN.Close    2.126171e-36</span></span>
+<span><span class="co">#&gt; CRM.Close    9.968976e-01</span></span>
+<span><span class="co">#&gt; BMY.Close    2.116336e-17</span></span>
+<span><span class="co">#&gt; UPS.Close    2.309662e-02</span></span>
+<span><span class="co">#&gt; RLLCF.Close  3.103137e-01</span></span>
+<span><span class="co">#&gt; QCOM.Close   8.319828e-08</span></span></code></pre></div>
+<p>The following code counts the number of tickers that we could use to make a prediction, applyinf the ifelse function and combing it with the object that contains the EMH test.</p>
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">ar</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0.1</span>,<span class="st">"Predict"</span>,<span class="st">"No Predict"</span><span class="op">)</span></span>
+<span><span class="co"># merge with the ar object </span></span>
+<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ar</span>,<span class="va">pred</span><span class="op">)</span></span>
+<span><span class="va">ar</span></span>
+<span><span class="co">#&gt;                        ar       pred</span></span>
+<span><span class="co">#&gt; AAPL.Close   3.731438e-17    Predict</span></span>
+<span><span class="co">#&gt; MSFT.Close   6.033001e-39    Predict</span></span>
+<span><span class="co">#&gt; GOOG.Close   3.224007e-16    Predict</span></span>
+<span><span class="co">#&gt; GOOGL.Close  2.570860e-16    Predict</span></span>
+<span><span class="co">#&gt; AMZN.Close   5.093709e-04    Predict</span></span>
+<span><span class="co">#&gt; TSLA.Close   2.275599e-05    Predict</span></span>
+<span><span class="co">#&gt; BRK.A.Close  9.677118e-32    Predict</span></span>
+<span><span class="co">#&gt; BRK.B.Close  1.239809e-42    Predict</span></span>
+<span><span class="co">#&gt; FB.Close     9.999469e-01 No Predict</span></span>
+<span><span class="co">#&gt; TSM.Close    1.023778e-17    Predict</span></span>
+<span><span class="co">#&gt; JNJ.Close    3.822835e-55    Predict</span></span>
+<span><span class="co">#&gt; UNH.Close    4.686889e-41    Predict</span></span>
+<span><span class="co">#&gt; NVDA.Close   5.391420e-16    Predict</span></span>
+<span><span class="co">#&gt; V.Close      4.215814e-25    Predict</span></span>
+<span><span class="co">#&gt; JPM.Close    2.665692e-25    Predict</span></span>
+<span><span class="co">#&gt; TCEHY.Close  9.959273e-01 No Predict</span></span>
+<span><span class="co">#&gt; TCTZF.Close  9.621425e-01 No Predict</span></span>
+<span><span class="co">#&gt; XOM.Close    1.416110e-15    Predict</span></span>
+<span><span class="co">#&gt; BAC.Close    2.022251e-25    Predict</span></span>
+<span><span class="co">#&gt; PG.Close     3.813798e-46    Predict</span></span>
+<span><span class="co">#&gt; WMT.Close    6.208759e-18    Predict</span></span>
+<span><span class="co">#&gt; MA.Close     1.311943e-25    Predict</span></span>
+<span><span class="co">#&gt; CVX.Close    2.928436e-36    Predict</span></span>
+<span><span class="co">#&gt; JPM.PC.Close 1.177236e-31    Predict</span></span>
+<span><span class="co">#&gt; JPM.PD.Close 1.802175e-39    Predict</span></span>
+<span><span class="co">#&gt; NSRGY.Close  3.838131e-34    Predict</span></span>
+<span><span class="co">#&gt; NSRGF.Close  9.786318e-17    Predict</span></span>
+<span><span class="co">#&gt; LVMUY.Close  3.131397e-30    Predict</span></span>
+<span><span class="co">#&gt; BAC.PK.Close 1.334235e-44    Predict</span></span>
+<span><span class="co">#&gt; HD.Close     1.407075e-28    Predict</span></span>
+<span><span class="co">#&gt; LVMHF.Close  4.802603e-23    Predict</span></span>
+<span><span class="co">#&gt; BAC.PL.Close 5.073425e-39    Predict</span></span>
+<span><span class="co">#&gt; LLY.Close    4.523789e-01 No Predict</span></span>
+<span><span class="co">#&gt; PFE.Close    4.057538e-10    Predict</span></span>
+<span><span class="co">#&gt; RHHBF.Close  3.191309e-10    Predict</span></span>
+<span><span class="co">#&gt; RHHBY.Close  4.145604e-21    Predict</span></span>
+<span><span class="co">#&gt; RHHVF.Close  4.923693e-22    Predict</span></span>
+<span><span class="co">#&gt; KO.Close     7.387011e-37    Predict</span></span>
+<span><span class="co">#&gt; BML.PL.Close 3.373921e-38    Predict</span></span>
+<span><span class="co">#&gt; BAC.PE.Close 4.353408e-40    Predict</span></span>
+<span><span class="co">#&gt; ABBV.Close   8.142840e-15    Predict</span></span>
+<span><span class="co">#&gt; BML.PG.Close 5.972559e-27    Predict</span></span>
+<span><span class="co">#&gt; BAC.PB.Close 1.512724e-39    Predict</span></span>
+<span><span class="co">#&gt; BML.PH.Close 1.148495e-37    Predict</span></span>
+<span><span class="co">#&gt; BML.PJ.Close 5.720375e-32    Predict</span></span>
+<span><span class="co">#&gt; BABA.Close   9.584327e-01 No Predict</span></span>
+<span><span class="co">#&gt; BABAF.Close  9.915286e-01 No Predict</span></span>
+<span><span class="co">#&gt; AVGO.Close   6.211754e-36    Predict</span></span>
+<span><span class="co">#&gt; NVO.Close    2.608217e-17    Predict</span></span>
+<span><span class="co">#&gt; NONOF.Close  6.222725e-03    Predict</span></span>
+<span><span class="co">#&gt; IDCBF.Close  6.026186e-06    Predict</span></span>
+<span><span class="co">#&gt; IDCBY.Close  5.635984e-05    Predict</span></span>
+<span><span class="co">#&gt; PEP.Close    9.403916e-42    Predict</span></span>
+<span><span class="co">#&gt; MRK.Close    4.164260e-16    Predict</span></span>
+<span><span class="co">#&gt; ASML.Close   2.102782e-21    Predict</span></span>
+<span><span class="co">#&gt; ASMLF.Close  7.137022e-18    Predict</span></span>
+<span><span class="co">#&gt; TM.Close     4.283555e-10    Predict</span></span>
+<span><span class="co">#&gt; TOYOF.Close  1.000000e+00 No Predict</span></span>
+<span><span class="co">#&gt; RYDAF.Close  2.468392e-29    Predict</span></span>
+<span><span class="co">#&gt; SHEL.Close   6.660111e-28    Predict</span></span>
+<span><span class="co">#&gt; TMO.Close    1.081827e-17    Predict</span></span>
+<span><span class="co">#&gt; BHP.Close    2.567945e-27    Predict</span></span>
+<span><span class="co">#&gt; BHPLF.Close  4.454357e-06    Predict</span></span>
+<span><span class="co">#&gt; VZ.Close     2.605012e-23    Predict</span></span>
+<span><span class="co">#&gt; AZN.Close    1.370948e-12    Predict</span></span>
+<span><span class="co">#&gt; COST.Close   6.450225e-13    Predict</span></span>
+<span><span class="co">#&gt; AZNCF.Close  3.414503e-05    Predict</span></span>
+<span><span class="co">#&gt; ABT.Close    2.771004e-30    Predict</span></span>
+<span><span class="co">#&gt; NVS.Close    2.446595e-34    Predict</span></span>
+<span><span class="co">#&gt; WFC.PY.Close 6.843455e-20    Predict</span></span>
+<span><span class="co">#&gt; ADBE.Close   3.030550e-27    Predict</span></span>
+<span><span class="co">#&gt; NVSEF.Close  2.347245e-28    Predict</span></span>
+<span><span class="co">#&gt; DIS.Close    3.796324e-12    Predict</span></span>
+<span><span class="co">#&gt; WFC.PL.Close 1.137063e-29    Predict</span></span>
+<span><span class="co">#&gt; CMCSA.Close  1.099444e-25    Predict</span></span>
+<span><span class="co">#&gt; ORCL.Close   1.339600e-13    Predict</span></span>
+<span><span class="co">#&gt; DHR.Close    4.817773e-25    Predict</span></span>
+<span><span class="co">#&gt; WFC.PR.Close 3.355589e-40    Predict</span></span>
+<span><span class="co">#&gt; WFC.PQ.Close 1.902654e-26    Predict</span></span>
+<span><span class="co">#&gt; ACN.Close    5.024203e-30    Predict</span></span>
+<span><span class="co">#&gt; CSCO.Close   5.216193e-16    Predict</span></span>
+<span><span class="co">#&gt; LRLCF.Close  2.238256e-27    Predict</span></span>
+<span><span class="co">#&gt; LRLCY.Close  2.921135e-35    Predict</span></span>
+<span><span class="co">#&gt; CICHF.Close  4.538511e-03    Predict</span></span>
+<span><span class="co">#&gt; CICHY.Close  7.367629e-03    Predict</span></span>
+<span><span class="co">#&gt; MCD.Close    4.305474e-27    Predict</span></span>
+<span><span class="co">#&gt; NKE.Close    4.117376e-07    Predict</span></span>
+<span><span class="co">#&gt; INTC.Close   4.792427e-23    Predict</span></span>
+<span><span class="co">#&gt; WFC.Close    1.886590e-30    Predict</span></span>
+<span><span class="co">#&gt; C.PJ.Close   7.192938e-31    Predict</span></span>
+<span><span class="co">#&gt; TMUS.Close   4.916386e-08    Predict</span></span>
+<span><span class="co">#&gt; PM.Close     1.502492e-46    Predict</span></span>
+<span><span class="co">#&gt; AMD.Close    3.990568e-08    Predict</span></span>
+<span><span class="co">#&gt; LIN.Close    1.617731e-22    Predict</span></span>
+<span><span class="co">#&gt; TXN.Close    2.126171e-36    Predict</span></span>
+<span><span class="co">#&gt; CRM.Close    9.968976e-01 No Predict</span></span>
+<span><span class="co">#&gt; BMY.Close    2.116336e-17    Predict</span></span>
+<span><span class="co">#&gt; UPS.Close    2.309662e-02    Predict</span></span>
+<span><span class="co">#&gt; RLLCF.Close  3.103137e-01 No Predict</span></span>
+<span><span class="co">#&gt; QCOM.Close   8.319828e-08    Predict</span></span></code></pre></div>
+<p>Finally, we could filter to get only those tickers with category predict.</p>
+<p>arf&lt;- df %&gt;%
+filter(coll== “category”)</p>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span> </span>
+<span><span class="va">arf</span><span class="op">&lt;-</span> <span class="va">ar</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pred</span> <span class="op">==</span> <span class="st">"Predict"</span><span class="op">)</span></span></code></pre></div>
+<p>Also we take the historical information of the filtered stocks</p>
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># this code takes the names of the filtered tickers</span></span>
+<span><span class="va">col_filterd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">arf</span><span class="op">)</span></span>
+<span><span class="va">dfx_2</span><span class="op">&lt;-</span><span class="va">dfx</span><span class="op">[</span>,<span class="va">col_filterd</span><span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dfx_3</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">dfx_2</span><span class="op">)</span></span>
+<span><span class="va">date</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">dfx_3</span><span class="op">)</span></span>
+<span><span class="va">dfx_4</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">date</span>,<span class="va">dfx_3</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="bibliography-1" class="section level2" number="7.4">
+<h2>
+<span class="header-section-number">7.4</span> Bibliography<a class="anchor" aria-label="anchor" href="#bibliography-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>Wooldridge, J. M. (2012). Introductory econometrics: A modern approach. Mason, OH: Thomson/South-Western.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></div>
+<div class="next"><a href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#rational-agent-and-behavioral-finance-in-investment"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="nav-link" href="#shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><span class="header-section-number">7.1</span> Shorts samples test of efficient markets hypothesis (EMH) for one asset</a></li>
+<li><a class="nav-link" href="#long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><span class="header-section-number">7.2</span> Long samples test of efficient markets hypothesis (EMH) for one asset</a></li>
+<li><a class="nav-link" href="#long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio"><span class="header-section-number">7.3</span> Long samples test of efficient markets hypothesis (EMH) applyied to portfolio</a></li>
+<li><a class="nav-link" href="#bibliography-1"><span class="header-section-number">7.4</span> Bibliography</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/07-Rational-agent-theory.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/07-Rational-agent-theory.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

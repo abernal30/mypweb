@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>9 Portfolio management algorithms | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy. In...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="9 Portfolio management algorithms | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/portfolio-management-algorithms.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy. In...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="9 Portfolio management algorithms | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy. In...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="active" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="portfolio-management-algorithms" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> Portfolio management algorithms<a class="anchor" aria-label="anchor" href="#portfolio-management-algorithms"><i class="fas fa-link"></i></a>
+</h1>
+<p>For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy.</p>
+<p>In the file df_merge.xlsx you will find those estimations for the in_sample and out_sample.</p>
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_merge</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/df_merge.xlsx"</span>,rowNames<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>As we mention in the previous chapter, If the performance on out-sample data is pretty like in-sample data, we assume the parameters and rule set have good generalization power and can be used for live trading. In this session, we filter for those stocks that have similar out-sample and in-sample data. For that purpose, we took the difference between Sharpe ratios in the in_sample and out_sample. We also need to define a threshold of tolerance for that difference. For example, we only take stocks for which the difference is less than 20% in absolute value.<br>
+df %&gt;%
+filter(Sharpe_diff &lt; n &amp; Sharpe_diff &gt; -n)
+n is the threshold</p>
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">treh</span><span class="op">&lt;-</span><span class="fl">0.2</span></span>
+<span></span>
+<span>  <span class="va">df_merge2</span><span class="op">&lt;-</span> <span class="va">df_merge</span>   <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Sharpe_diff</span> <span class="op">&lt;</span> <span class="va">treh</span> <span class="op">&amp;</span> <span class="va">Sharpe_diff</span> <span class="op">&gt;</span> <span class="op">-</span><span class="va">treh</span><span class="op">)</span></span>
+<span><span class="va">df_merge2</span></span>
+<span><span class="co">#&gt;                 in_return     in_sd in_Sharpe   out_return     out_sd</span></span>
+<span><span class="co">#&gt; AAPL.Close   -0.054771548 0.2747365   -0.1994 -0.082373325 0.23299812</span></span>
+<span><span class="co">#&gt; AMZN.Close   -0.016509915 0.2788159   -0.0592 -0.035770361 0.29049652</span></span>
+<span><span class="co">#&gt; TSLA.Close    0.564098218 0.5666686    0.9955  0.532664333 0.45951725</span></span>
+<span><span class="co">#&gt; TSM.Close    -0.135791198 0.3021663   -0.4494 -0.121677232 0.22938977</span></span>
+<span><span class="co">#&gt; BAC.Close     0.027169757 0.3355819    0.0810 -0.011570730 0.20220638</span></span>
+<span><span class="co">#&gt; NSRGF.Close  -0.223354678 0.1760606   -1.2686 -0.210133138 0.15186225</span></span>
+<span><span class="co">#&gt; LVMUY.Close  -0.108547037 0.2736889   -0.3966 -0.101687079 0.24380399</span></span>
+<span><span class="co">#&gt; BAC.PK.Close  0.017871194 0.1272181    0.1405  0.001189315 0.06644728</span></span>
+<span><span class="co">#&gt; RHHBF.Close  -0.667692583 0.3264243   -2.0455 -0.660057680 0.33908716</span></span>
+<span><span class="co">#&gt; KO.Close     -0.038464295 0.2080766   -0.1849 -0.023579715 0.12021278</span></span>
+<span><span class="co">#&gt; TM.Close     -0.091717493 0.2144692   -0.4276 -0.118928664 0.21121348</span></span>
+<span><span class="co">#&gt; RYDAF.Close   0.017644987 0.3660373    0.0482  0.001445751 0.20941036</span></span>
+<span><span class="co">#&gt; SHEL.Close   -0.010895257 0.3851020   -0.0283 -0.003778604 0.17708269</span></span>
+<span><span class="co">#&gt; BHP.Close    -0.028648261 0.3246614   -0.0882 -0.029134810 0.25596044</span></span>
+<span><span class="co">#&gt; VZ.Close     -0.119001044 0.1588481   -0.7491 -0.102977092 0.12531984</span></span>
+<span><span class="co">#&gt; AZN.Close    -0.207450467 0.2140546   -0.9691 -0.193951418 0.17725594</span></span>
+<span><span class="co">#&gt; AZNCF.Close  -0.372264173 0.2180492   -1.7072 -0.346987471 0.21398241</span></span>
+<span><span class="co">#&gt; ADBE.Close   -0.044939517 0.2979994   -0.1508 -0.049712045 0.24744804</span></span>
+<span><span class="co">#&gt; NVSEF.Close  -0.095764445 0.2272564   -0.4214 -0.034737903 0.11387070</span></span>
+<span><span class="co">#&gt; DIS.Close    -0.045685926 0.2775004   -0.1646 -0.079449603 0.21852916</span></span>
+<span><span class="co">#&gt; ORCL.Close   -0.121939597 0.2788517   -0.4373 -0.095171013 0.25138906</span></span>
+<span><span class="co">#&gt; WFC.PR.Close -0.002421536 0.1492000   -0.0162  0.002284474 0.05670749</span></span>
+<span><span class="co">#&gt; TMUS.Close   -0.216877202 0.2408982   -0.9003 -0.195021363 0.18670398</span></span>
+<span><span class="co">#&gt;              out_Sharpe Sharpe_diff</span></span>
+<span><span class="co">#&gt; AAPL.Close      -0.3535      0.1541</span></span>
+<span><span class="co">#&gt; AMZN.Close      -0.1231      0.0639</span></span>
+<span><span class="co">#&gt; TSLA.Close       1.1592     -0.1637</span></span>
+<span><span class="co">#&gt; TSM.Close       -0.5304      0.0810</span></span>
+<span><span class="co">#&gt; BAC.Close       -0.0572      0.1382</span></span>
+<span><span class="co">#&gt; NSRGF.Close     -1.3837      0.1151</span></span>
+<span><span class="co">#&gt; LVMUY.Close     -0.4171      0.0205</span></span>
+<span><span class="co">#&gt; BAC.PK.Close     0.0179      0.1226</span></span>
+<span><span class="co">#&gt; RHHBF.Close     -1.9466     -0.0989</span></span>
+<span><span class="co">#&gt; KO.Close        -0.1961      0.0112</span></span>
+<span><span class="co">#&gt; TM.Close        -0.5631      0.1355</span></span>
+<span><span class="co">#&gt; RYDAF.Close      0.0069      0.0413</span></span>
+<span><span class="co">#&gt; SHEL.Close      -0.0213     -0.0070</span></span>
+<span><span class="co">#&gt; BHP.Close       -0.1138      0.0256</span></span>
+<span><span class="co">#&gt; VZ.Close        -0.8217      0.0726</span></span>
+<span><span class="co">#&gt; AZN.Close       -1.0942      0.1251</span></span>
+<span><span class="co">#&gt; AZNCF.Close     -1.6216     -0.0856</span></span>
+<span><span class="co">#&gt; ADBE.Close      -0.2009      0.0501</span></span>
+<span><span class="co">#&gt; NVSEF.Close     -0.3051     -0.1163</span></span>
+<span><span class="co">#&gt; DIS.Close       -0.3636      0.1990</span></span>
+<span><span class="co">#&gt; ORCL.Close      -0.3786     -0.0587</span></span>
+<span><span class="co">#&gt; WFC.PR.Close     0.0403     -0.0565</span></span>
+<span><span class="co">#&gt; TMUS.Close      -1.0445      0.1442</span></span></code></pre></div>
+<p>The momentum strategy consists of buying stocks when the instrument is trending up or selling when is down. For this case, we will order the sample by the in_Sharpe, and split the sample into 3 tranches. The first will be the stocks for taking long positions and the 3rd the one of shorts positions.</p>
+<p>df %&gt;% arrange(desc(col))</p>
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_filtered</span><span class="op">&lt;-</span> <span class="va">df_merge2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">in_Sharpe</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># to gt the names of those stocks</span></span></code></pre></div>
+<p>The next code is to make the split for winners</p>
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">co</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">df_filtered</span><span class="op">)</span></span>
+<span><span class="va">le</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></span>
+<span><span class="va">n</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">le</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">0</span><span class="op">)</span>  </span>
+<span><span class="va">win</span><span class="op">&lt;-</span><span class="va">co</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span> <span class="co"># long positions</span></span>
+<span><span class="va">n</span></span>
+<span><span class="co">#&gt; [1] 8</span></span></code></pre></div>
+<p>The next code is to make the split for losers</p>
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">loss</span><span class="op">&lt;-</span><span class="va">co</span><span class="op">[</span><span class="op">(</span><span class="va">le</span><span class="op">-</span><span class="va">n</span><span class="op">)</span><span class="op">:</span><span class="va">le</span><span class="op">]</span></span>
+<span><span class="va">loss</span> <span class="co"># short positions</span></span>
+<span><span class="co">#&gt; [1] "TM.Close"    "ORCL.Close"  "TSM.Close"   "VZ.Close"    "TMUS.Close" </span></span>
+<span><span class="co">#&gt; [6] "AZN.Close"   "NSRGF.Close" "AZNCF.Close" "RHHBF.Close"</span></span></code></pre></div>
+<p>Finally, we combine the tranches 1 and 3 in one single object</p>
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">co_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">win</span>,<span class="va">loss</span><span class="op">)</span></span>
+<span><span class="va">co_all</span></span>
+<span><span class="co">#&gt;  [1] "TSLA.Close"   "BAC.PK.Close" "BAC.Close"    "RYDAF.Close"  "WFC.PR.Close"</span></span>
+<span><span class="co">#&gt;  [6] "SHEL.Close"   "AMZN.Close"   "BHP.Close"    "TM.Close"     "ORCL.Close"  </span></span>
+<span><span class="co">#&gt; [11] "TSM.Close"    "VZ.Close"     "TMUS.Close"   "AZN.Close"    "NSRGF.Close" </span></span>
+<span><span class="co">#&gt; [16] "AZNCF.Close"  "RHHBF.Close"</span></span></code></pre></div>
+<p>We will generate thousands of simulations of the portfolio weights, and we need to generate aleatory numbers for the weights. For the long position, the weights must be positive and for the short position, the weight must be negative. Then, for the first tranche</p>
+<p>The function runif will create random numbers if we apply that function to the first tranche, runif(n, 0, 1), n the number of simulations we want. We need to generate the number of random weights that are in the rend_win object.</p>
+<p>Regarding the set.seed(42), because runif generate aleatory numbers. Then it is useful to take out the # before set.seed(42) and get the same result. After everyone gets the same results, insert the # again.</p>
+<p>For simplicity, we will generate one portfolio weights simulation, and late we will generate more.
+runif.</p>
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">w</span><span class="op">&lt;-</span> <span class="fl">1.2</span> <span class="co"># long position weight</span></span>
+<span><span class="va">w_short</span><span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">w</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="co">#runif </span></span>
+<span><span class="va">ru</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span> , <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co"># weigths sum</span></span>
+<span><span class="va">su</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">ru</span><span class="op">)</span></span>
+<span><span class="co"># runif/sum and trasnsforming into data frame</span></span>
+<span><span class="va">we_win</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">ru</span><span class="op">*</span><span class="va">w</span><span class="op">/</span><span class="va">su</span><span class="op">)</span></span>
+<span><span class="co">#colnanmes weigth</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">we_win</span><span class="op">)</span><span class="op">&lt;-</span><span class="st">"we"</span></span>
+<span><span class="co"># row names from win</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">we_win</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">win</span></span></code></pre></div>
+<p>For the short position the weights must be negative. Then, for the 3rd tranche:</p>
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ru</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">loss</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">su</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">ru</span><span class="op">)</span></span>
+<span><span class="co"># runif/sum and trasnsforming into data frame</span></span>
+<span><span class="va">we_loss</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">ru</span><span class="op">*</span><span class="va">w_short</span><span class="op">/</span><span class="va">su</span><span class="op">)</span> </span>
+<span><span class="co">#colnanmes weigth</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">we_loss</span><span class="op">)</span><span class="op">&lt;-</span><span class="st">"we"</span></span>
+<span><span class="co"># row names from loss</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">we_loss</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">loss</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">we_loss</span><span class="op">)</span> <span class="co"># set.seed(42)</span></span>
+<span><span class="co">#&gt; [1] -0.2</span></span>
+<span><span class="va">we_loss</span></span>
+<span><span class="co">#&gt;                      we</span></span>
+<span><span class="co">#&gt; TM.Close    -0.02150707</span></span>
+<span><span class="co">#&gt; ORCL.Close  -0.02308076</span></span>
+<span><span class="co">#&gt; TSM.Close   -0.01498448</span></span>
+<span><span class="co">#&gt; VZ.Close    -0.02354061</span></span>
+<span><span class="co">#&gt; TMUS.Close  -0.03059711</span></span>
+<span><span class="co">#&gt; AZN.Close   -0.00836163</span></span>
+<span><span class="co">#&gt; NSRGF.Close -0.01513346</span></span>
+<span><span class="co">#&gt; AZNCF.Close -0.03077199</span></span>
+<span><span class="co">#&gt; RHHBF.Close -0.03202288</span></span></code></pre></div>
+<p>Finally, we combine both weights.</p>
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">we_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">we_win</span>,<span class="va">we_loss</span><span class="op">)</span></span>
+<span><span class="va">we_all</span></span>
+<span><span class="co">#&gt;                       we</span></span>
+<span><span class="co">#&gt; TSLA.Close    0.21952864</span></span>
+<span><span class="co">#&gt; BAC.PK.Close  0.22487269</span></span>
+<span><span class="co">#&gt; BAC.Close     0.06866573</span></span>
+<span><span class="co">#&gt; RYDAF.Close   0.19928491</span></span>
+<span><span class="co">#&gt; WFC.PR.Close  0.15400152</span></span>
+<span><span class="co">#&gt; SHEL.Close    0.12456895</span></span>
+<span><span class="co">#&gt; AMZN.Close    0.17676122</span></span>
+<span><span class="co">#&gt; BHP.Close     0.03231633</span></span>
+<span><span class="co">#&gt; TM.Close     -0.02150707</span></span>
+<span><span class="co">#&gt; ORCL.Close   -0.02308076</span></span>
+<span><span class="co">#&gt; TSM.Close    -0.01498448</span></span>
+<span><span class="co">#&gt; VZ.Close     -0.02354061</span></span>
+<span><span class="co">#&gt; TMUS.Close   -0.03059711</span></span>
+<span><span class="co">#&gt; AZN.Close    -0.00836163</span></span>
+<span><span class="co">#&gt; NSRGF.Close  -0.01513346</span></span>
+<span><span class="co">#&gt; AZNCF.Close  -0.03077199</span></span>
+<span><span class="co">#&gt; RHHBF.Close  -0.03202288</span></span></code></pre></div>
+<p>The portfolio standard deviation is the result of the covariance multiplied by the portfolio weights.</p>
+<p>We estimate the covariance matrix, only for the tickers in tranches 1 and 3. For that covariance we need the returs of that tickers only.</p>
+<p>Once we have the filtered stocks, get the returns of those stocks, taking the returns that we estimated the last session, from:</p>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/dfx_2.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">date</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">datax</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span></span>
+<span><span class="va">ret</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">datax</span>,<span class="fl">2</span>,<span class="va">Delt</span><span class="op">)</span></span>
+<span><span class="va">retx</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">ret</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">retx</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">retx</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">retx</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close   AMZN.Close</span></span>
+<span><span class="co">#&gt; 2020-01-03 -0.009722044 -0.012451750 -0.0049072022 -0.005231342 -0.012139050</span></span>
+<span><span class="co">#&gt; 2020-01-06  0.007968248  0.002584819  0.0246570974  0.026654062  0.014885590</span></span>
+<span><span class="co">#&gt; 2020-01-07 -0.004703042 -0.009117758 -0.0006240057 -0.001931646  0.002091556</span></span>
+<span><span class="co">#&gt; 2020-01-08  0.016086289  0.015928379  0.0078803309  0.007117757 -0.007808656</span></span>
+<span><span class="co">#&gt; 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921  0.004799272</span></span>
+<span><span class="co">#&gt; 2020-01-10  0.002260711 -0.004627059  0.0069726829  0.006458647 -0.009410597</span></span></code></pre></div>
+<p>Also, we filter to get only the filtered stocks, from co_all</p>
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">retx_all</span><span class="op">&lt;-</span><span class="va">retx</span><span class="op">[</span>,<span class="va">co_all</span><span class="op">]</span></span></code></pre></div>
+<p>portfolio covariance
+cov(df,use=“complete.obs”)</p>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">covar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span><span class="op">(</span><span class="va">retx_all</span>,use<span class="op">=</span><span class="st">"complete.obs"</span><span class="op">)</span></span></code></pre></div>
+<p>portfolio_std =cov%<em>% weigths
+%</em>% para multiplicar matrices</p>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">portfolio_std</span> <span class="op">=</span><span class="va">covar</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">we_all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">portfolio_std</span></span>
+<span><span class="co">#&gt;                      [,1]</span></span>
+<span><span class="co">#&gt; TSLA.Close   7.294191e-04</span></span>
+<span><span class="co">#&gt; BAC.PK.Close 1.071041e-04</span></span>
+<span><span class="co">#&gt; BAC.Close    3.251108e-04</span></span>
+<span><span class="co">#&gt; RYDAF.Close  4.231321e-04</span></span>
+<span><span class="co">#&gt; WFC.PR.Close 1.213717e-04</span></span>
+<span><span class="co">#&gt; SHEL.Close   4.451261e-04</span></span>
+<span><span class="co">#&gt; AMZN.Close   2.318799e-04</span></span>
+<span><span class="co">#&gt; BHP.Close    3.398317e-04</span></span>
+<span><span class="co">#&gt; TM.Close     1.541582e-04</span></span>
+<span><span class="co">#&gt; ORCL.Close   1.497664e-04</span></span>
+<span><span class="co">#&gt; TSM.Close    2.662127e-04</span></span>
+<span><span class="co">#&gt; VZ.Close     6.751342e-05</span></span>
+<span><span class="co">#&gt; TMUS.Close   2.029555e-04</span></span>
+<span><span class="co">#&gt; AZN.Close    1.142982e-04</span></span>
+<span><span class="co">#&gt; NSRGF.Close  9.421821e-05</span></span>
+<span><span class="co">#&gt; AZNCF.Close  7.306948e-05</span></span>
+<span><span class="co">#&gt; RHHBF.Close  8.447179e-05</span></span></code></pre></div>
+<p>But we need annualized the portfolio_std
+twe&lt;-t(weigths)
+portfolio_std_1=(twe%<em>%portfolio_std</em>252)^.5</p>
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">twe</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">we_all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">portfolio_std_1</span><span class="op">=</span><span class="op">(</span><span class="va">twe</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">portfolio_std</span><span class="op">*</span><span class="fl">252</span><span class="op">)</span><span class="op">^</span><span class="fl">.5</span></span></code></pre></div>
+<p>The following code has the annualized returns of the in_sample data, only for the momentum portfolio.</p>
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ret_a</span><span class="op">&lt;-</span><span class="va">df_merge2</span><span class="op">[</span><span class="va">co_all</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">ret_a_f</span><span class="op">&lt;-</span><span class="va">twe</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">ret_a</span> </span>
+<span><span class="va">ret_a_f</span></span>
+<span><span class="co">#&gt;           [,1]</span></span>
+<span><span class="co">#&gt; [1,] 0.1818727</span></span></code></pre></div>
+<div id="graphs-of-the-results" class="section level3" number="9.0.1">
+<h3>
+<span class="header-section-number">9.0.1</span> Graphs of the results<a class="anchor" aria-label="anchor" href="#graphs-of-the-results"><i class="fas fa-link"></i></a>
+</h3>
+<p>Pending</p>
+</div>
+<div id="bibliography-3" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Bibliography<a class="anchor" aria-label="anchor" href="#bibliography-3"><i class="fas fa-link"></i></a>
+</h2>
+<p>Cervantes, M., Montoya, M. Á., &amp; Bernal Ponce, L. A. (2016). Effect of the Business Cycle on Investment Strategies: Evidence from Mexico. Revista Mexicana de Economía y Finanzas, 11(2).</p>
+<p>Hilpisch (2019). Python for Finance, 2nd Edition. O’Reilly Media, Inc. Sebastopol, CA.</p>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-rstudio" class="csl-entry">
+Ismay, Chester, and Albert Y. Kim. 2019. <em>Statistical Inference via Data Science</em>. CRC Press. <a href="https://moderndive.netlify.app/index.html">https://moderndive.netlify.app/index.html</a>.
+</div>
+<div id="ref-statistical_lerarning" class="csl-entry">
+James, Witten, G, and R Tibshirani. 2017. <em>An Introduction to Statistical Learning with Applications in r</em>. Springer. <a href="https://www.springer.com/series/417">https://www.springer.com/series/417</a>.
+</div>
+<div id="ref-R-caret" class="csl-entry">
+Kuhn, Max. 2019. <em>The Caret Package</em>. <a href="https://topepo.github.io/caret/index.html">https://topepo.github.io/caret/index.html</a>.
+</div>
+<div id="ref-introduction-R" class="csl-entry">
+Team, R Core. 2022. <em>An Introduction to r</em>. <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">https://cran.r-project.org/doc/manuals/r-release/R-intro.html</a>.
+</div>
+<div id="ref-wooldridge" class="csl-entry">
+Wooldridge, Jeffrey M. 2020. <em>Introductory Econometrics: A Modern Approach</em>. South-Western Cengage Learning.
+</div>
+<div id="ref-R-Markdown" class="csl-entry">
+Yihui Xie, J. J. Allaire, and Garrett Grolemund. 2019. <em>R Markdown: The Definitive Guide</em>. Chapman &amp; Hall/CRC. <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.
+</div>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li>
+<a class="nav-link" href="#portfolio-management-algorithms"><span class="header-section-number">9</span> Portfolio management algorithms</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#graphs-of-the-results"><span class="header-section-number">9.0.1</span> Graphs of the results</a></li></ul>
+</li>
+<li><a class="nav-link" href="#bibliography-3"><span class="header-section-number">9.1</span> Bibliography</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/09-Portfolio-management-algorithms.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/09-Portfolio-management-algorithms.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

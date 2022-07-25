@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>5 Big data and machine learning | Algorithms and Financial Programing in R</title>
+<meta name="author" content="Arturo Bernal">
+<meta name="description" content="Predicting market direction of a price is quite a challenging task as market data involves lots of noise. The market moves either upward or downward, and the nature of the market movement is...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="5 Big data and machine learning | Algorithms and Financial Programing in R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/big-data-and-machine-learning.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<meta property="og:description" content="Predicting market direction of a price is quite a challenging task as market data involves lots of noise. The market moves either upward or downward, and the nature of the market movement is...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5 Big data and machine learning | Algorithms and Financial Programing in R">
+<meta name="twitter:description" content="Predicting market direction of a price is quite a challenging task as market data involves lots of noise. The market moves either upward or downward, and the nature of the market movement is...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Algorithms and Financial Programing in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Algorithms and Financial Programing in R</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">1</span> R Basics</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">2</span> Big data and data cleaning</a></li>
+<li><a class="" href="graphs.html"><span class="header-section-number">3</span> APIS and R graphs</a></li>
+<li><a class="" href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></li>
+<li><a class="active" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
+<li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="big-data-and-machine-learning" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Big data and machine learning<a class="anchor" aria-label="anchor" href="#big-data-and-machine-learning"><i class="fas fa-link"></i></a>
+</h1>
+<p>Predicting market direction of a price is quite a challenging task as market data involves lots of noise. The market moves either upward or downward, and the nature of the market movement is binary (Jeet and Vat, 2017).</p>
+<p>In this chapter, we use a OLS, to predict a 1 day open price, the price of the 19 April 2022, of a cryptocurency, in this case Bianance, “BNB-USD”. Some ideas and code are adapted from Jeet and Vat (2017).</p>
+<p>Binance Launched in July 2017, Binance is the biggest cryptocurrency exchange globally based on daily trading volume. Binance aims to bring cryptocurrency exchanges to the forefront of financial activity globally. The idea behind Binance’s name is to show this new paradigm in global finance — Binary Finance, or Binance.</p>
+<div id="data-preparation-1" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://www.quantmod.com">"quantmod"</a></span><span class="op">)</span></span>
+<span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"LALAB.MX"</span></span>
+<span><span class="va">y</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>,from<span class="op">=</span><span class="st">"2021-01-01"</span>,to<span class="op">=</span><span class="st">"2022-04-18"</span>,warnings <span class="op">=</span><span class="cn">FALSE</span>,auto.assign<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">y</span><span class="op">&lt;-</span><span class="va">y</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">&lt;-</span><span class="st">"bnb"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              bnb</span></span>
+<span><span class="co">#&gt; 2021-01-04 15.54</span></span>
+<span><span class="co">#&gt; 2021-01-05 15.23</span></span>
+<span><span class="co">#&gt; 2021-01-06 15.75</span></span>
+<span><span class="co">#&gt; 2021-01-07 15.81</span></span>
+<span><span class="co">#&gt; 2021-01-08 15.90</span></span>
+<span><span class="co">#&gt; 2021-01-11 15.64</span></span></code></pre></div>
+<p>We are going to start with an OLS (Ordinary least square) model. As independent variables we are using some lags of the independent variable.</p>
+<p>For simplicity, suppose that to predict the 19 April 2022 BNB price, we make a regression, by OLS, of the following model:</p>
+<p><span class="math display">\[bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} + e \]</span></p>
+<p>where <span class="math inline">\(\alpha\)</span> is intercept, <span class="math inline">\(beta\)</span> are the parameters to be estimated, <span class="math inline">\(bnb_{t-1}\)</span> are the bnb price of the traiding previouse day, in this case 18 April 2022, and <span class="math inline">\(bnb_{t-2}\)</span> is the bnb price of the day before, 17 April 2022, and “e” is the the error term of the regression. In other words, the price of today is explained by the price of yesterday and the day before yesterday.</p>
+<p>data&lt;-stats::lag(y,lag)</p>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lag</span><span class="op">&lt;-</span><span class="fl">1</span></span>
+<span><span class="va">lag1</span><span class="op">&lt;-</span><span class="fl">2</span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">y</span>,<span class="va">lag</span><span class="op">)</span></span>
+<span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">y</span>,<span class="va">lag1</span><span class="op">)</span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">y</span>,<span class="va">data</span>,<span class="va">data2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"bnb_1"</span>,<span class="st">"bnb_2"</span><span class="op">)</span></span></code></pre></div>
+<p>Para realizar la regresión por OLS
+lm(bnb~.,data=data)</p>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bnb</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = bnb ~ ., data = data)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.25123 -0.13298  0.00724  0.08428  1.92931 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  0.40151    0.20665   1.943   0.0529 .  </span></span>
+<span><span class="co">#&gt; bnb_1        0.88236    0.05571  15.837   &lt;2e-16 ***</span></span>
+<span><span class="co">#&gt; bnb_2        0.09303    0.05572   1.670   0.0960 .  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.2664 on 319 degrees of freedom</span></span>
+<span><span class="co">#&gt;   (2 observations deleted due to missingness)</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.9486, Adjusted R-squared:  0.9482 </span></span>
+<span><span class="co">#&gt; F-statistic:  2941 on 2 and 319 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>Also, suppose we found the following result of the regression:</p>
+<p><span class="math display">\[bnb_{t}=\ 52.42583\ +\ 0.88235\ bnb_{t-1}\ -0.01226\ bnb_{t-2} \]</span></p>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              bnb</span></span>
+<span><span class="co">#&gt; 2022-04-06 17.25</span></span>
+<span><span class="co">#&gt; 2022-04-07 17.03</span></span>
+<span><span class="co">#&gt; 2022-04-08 17.20</span></span>
+<span><span class="co">#&gt; 2022-04-11 17.00</span></span>
+<span><span class="co">#&gt; 2022-04-12 16.80</span></span>
+<span><span class="co">#&gt; 2022-04-13 16.50</span></span></code></pre></div>
+<p>In this case, the forecast of the 19 April 2022 would be:</p>
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bnb_t1</span><span class="op">&lt;-</span><span class="fl">406.3009</span> <span class="co"># price 18 April 2022</span></span>
+<span><span class="va">bnb_t2</span><span class="op">&lt;-</span><span class="fl">417.4115</span> <span class="co"># price 17 April 2022</span></span>
+<span></span>
+<span><span class="co"># The prediction manually would be:</span></span>
+<span><span class="fl">47.13630</span><span class="op">+</span><span class="fl">0.90113</span><span class="op">*</span><span class="va">bnb_t1</span><span class="op">-</span><span class="fl">0.01765</span><span class="op">*</span><span class="va">bnb_t1</span></span>
+<span><span class="co">#&gt; [1] 406.095</span></span></code></pre></div>
+<p>Given that the last price is 406.3009.</p>
+<p>However, the last example was only for exposition purposes. In reality, we need to test other independent variables besides the lags of the dependent variable. For this session, besides the lags values if the close prices as the dependent variable, we are going to add some variables used in technical analysis, such as moving average, standard deviation, RSI (see appendix for a detailed explanation), MACD, and so on, which has some predictive power in market direction. These indicators can be constructed using the following commands:</p>
+</div>
+<div id="variable-creation" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Variable creation<a class="anchor" aria-label="anchor" href="#variable-creation"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>SMA Calculate a moving averages
+SMA(x, n = 10, …), where x is the time serie, n is the Number of periods to average over</p></li>
+<li><p>The rollapply is a function for applying a function to rolling margins of an array, in this case we used to make a moving standard deviation.
+rollapply(x,n,sd), where sd is standard deviation</p></li>
+<li><p>The MACD is the moving average converge diverge (see Appendix)</p></li>
+<li><p>MACD(x, nFast = 12, nSlow = 26, nSig = 9, maType=SMA or EMA)</p></li>
+<li><p>RSI is the relative strength index
+RSI(x, n = 14, maType=SMA or EMA)</p></li>
+</ul>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lag2</span><span class="op">&lt;-</span><span class="fl">6</span></span>
+<span><span class="va">lag3</span><span class="op">&lt;-</span><span class="fl">9</span></span>
+<span><span class="va">lag4</span><span class="op">&lt;-</span><span class="fl">26</span></span>
+<span><span class="va">avg</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/TTR/man/MovingAverages.html">SMA</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">lag2</span><span class="op">)</span> <span class="co"># var1</span></span>
+<span><span class="va">std</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/rollapply.html">rollapply</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">lag2</span>,<span class="va">sd</span><span class="op">)</span> <span class="co"># var2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">std</span><span class="op">)</span><span class="op">&lt;-</span><span class="st">"std"</span></span>
+<span></span>
+<span><span class="va">macd</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/TTR/man/MACD.html">MACD</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">lag2</span>,<span class="va">lag3</span>,<span class="va">lag4</span>, <span class="st">"SMA"</span><span class="op">)</span> <span class="co"># var2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">macd</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">&lt;-</span><span class="st">"macd_signal"</span></span>
+<span>  </span>
+<span><span class="va">rsi</span><span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/TTR/man/RSI.html">RSI</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">lag2</span>,<span class="st">"SMA"</span><span class="op">)</span><span class="co"># var3</span></span>
+<span></span>
+<span></span>
+<span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>,<span class="va">avg</span>,<span class="va">std</span>,<span class="va">macd</span>,<span class="va">rsi</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              bnb bnb_1 bnb_2    SMA       std macd macd_signal rsi</span></span>
+<span><span class="co">#&gt; 2021-01-04 15.54    NA    NA     NA        NA   NA          NA  NA</span></span>
+<span><span class="co">#&gt; 2021-01-05 15.23 15.54    NA     NA        NA   NA          NA  NA</span></span>
+<span><span class="co">#&gt; 2021-01-06 15.75 15.23 15.54     NA        NA   NA          NA  NA</span></span>
+<span><span class="co">#&gt; 2021-01-07 15.81 15.75 15.23     NA        NA   NA          NA  NA</span></span>
+<span><span class="co">#&gt; 2021-01-08 15.90 15.81 15.75     NA        NA   NA          NA  NA</span></span>
+<span><span class="co">#&gt; 2021-01-11 15.64 15.90 15.81 15.645 0.2393951   NA          NA  NA</span></span></code></pre></div>
+<p>Then our model is:
+<span class="math display">\[bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} +\beta3\ sma +\\ \beta4\ std\ +\beta5\ macd\ + \beta6\ rsi +\ e\]</span></p>
+<p>As we see, because of the lags and new variables, we have many missing values in the early dates, then we apply the na.omit, to eliminate the rows with nas.</p>
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="sub-samples" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Sub samples<a class="anchor" aria-label="anchor" href="#sub-samples"><i class="fas fa-link"></i></a>
+</h2>
+<p>We separate the sample into training and testing. The training data set is used for the building model process, and the testing dataset is used for evaluation purposes.</p>
+<p>This code automate the sub-sample creation, usually we split into 80% the training set and 20% the test set.</p>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">N</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">n_train</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">N</span><span class="op">*</span><span class="fl">.8</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">part</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="va">n_train</span><span class="op">]</span></span>
+<span><span class="va">part</span></span>
+<span><span class="co">#&gt; [1] "2022-01-19"</span></span></code></pre></div>
+<p>In this case, “2022-01-31” is the date that represents the 80% of all observations, where the starting date is “2022-01-01”.</p>
+<p>We use the function subset:</p>
+<p>name&lt;-subset(object,
++index(object)&gt;=“YY-mm-dd” &amp;
++index(object)&lt;=“YY-mm-dd”)</p>
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#This is the test data set.</span></span>
+<span><span class="va">train</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">data2</span>,</span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">&gt;=</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&amp;</span></span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">&lt;=</span><span class="va">part</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># The subset of the training data set.</span></span>
+<span><span class="va">test</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">data2</span>,</span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">&gt;=</span><span class="va">part</span><span class="op">+</span><span class="fl">1</span> <span class="op">&amp;</span></span>
+<span>  <span class="op">+</span><span class="fu"><a href="https://rdrr.io/pkg/zoo/man/index.html">index</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">&lt;=</span><span class="st">"2022-04-18"</span><span class="op">)</span></span></code></pre></div>
+<p>To our forecast vs the real data, we are going to takeout the real data of the BNB prices of the test set, and store it in an object call it y1.</p>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y1</span><span class="op">&lt;-</span><span class="va">test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              bnb bnb_1 bnb_2      SMA       std      macd macd_signal       rsi</span></span>
+<span><span class="co">#&gt; 2022-01-20 16.79 16.80 16.91 17.19167 0.4656785 -1.077298  -0.1888210  3.816726</span></span>
+<span><span class="co">#&gt; 2022-01-21 17.36 16.79 16.80 17.12667 0.3938356 -1.109900  -0.2228045 38.036818</span></span>
+<span><span class="co">#&gt; 2022-01-24 16.03 17.36 16.79 16.83167 0.4478131 -1.976833  -0.2798782 19.587642</span></span>
+<span><span class="co">#&gt; 2022-01-25 16.17 16.03 17.36 16.67667 0.4948401 -1.715669  -0.3048719 30.212749</span></span>
+<span><span class="co">#&gt; 2022-01-26 16.03 16.17 16.03 16.53000 0.5401851 -1.470294  -0.3000546 30.869562</span></span>
+<span><span class="co">#&gt; 2022-01-27 16.20 16.03 16.17 16.43000 0.5357239 -1.017469  -0.2740690 37.288156</span></span></code></pre></div>
+</div>
+<div id="making-the-model" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Making the model<a class="anchor" aria-label="anchor" href="#making-the-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>We estimate a OLS model aplying the function lm,</p>
+<p>lm(bnb~.,data=train)</p>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bnb</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">train</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = bnb ~ ., data = train)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -0.69108 -0.09940  0.02329  0.10403  1.10734 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept) -0.0910104  0.1643070  -0.554   0.5802    </span></span>
+<span><span class="co">#&gt; bnb_1        0.3459223  0.0643449   5.376 1.90e-07 ***</span></span>
+<span><span class="co">#&gt; bnb_2       -0.2987632  0.0692119  -4.317 2.37e-05 ***</span></span>
+<span><span class="co">#&gt; SMA          0.9308127  0.0896208  10.386  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; std          0.4042500  0.0749164   5.396 1.72e-07 ***</span></span>
+<span><span class="co">#&gt; macd        -0.0430484  0.0225301  -1.911   0.0573 .  </span></span>
+<span><span class="co">#&gt; macd_signal  0.0607983  0.0542453   1.121   0.2636    </span></span>
+<span><span class="co">#&gt; rsi          0.0075120  0.0007548   9.952  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.1813 on 225 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.9802, Adjusted R-squared:  0.9796 </span></span>
+<span><span class="co">#&gt; F-statistic:  1594 on 7 and 225 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>To make the prediction, we need to apply the function predict, but on the test set.</p>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>,<span class="va">test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 2022-01-20 2022-01-21 2022-01-24 2022-01-25 2022-01-26 2022-01-27 </span></span>
+<span><span class="co">#&gt;   16.92244   17.11869   16.96135   16.27277   16.59502   16.44019</span></span>
+<span><span class="va">pred</span></span>
+<span><span class="co">#&gt; 2022-01-20 2022-01-21 2022-01-24 2022-01-25 2022-01-26 2022-01-27 2022-01-28 </span></span>
+<span><span class="co">#&gt;   16.92244   17.11869   16.96135   16.27277   16.59502   16.44019   16.35616 </span></span>
+<span><span class="co">#&gt; 2022-01-31 2022-02-01 2022-02-02 2022-02-03 2022-02-04 2022-02-08 2022-02-09 </span></span>
+<span><span class="co">#&gt;   15.66042   15.86946   15.64015   15.54924   15.46544   15.57716   15.43428 </span></span>
+<span><span class="co">#&gt; 2022-02-10 2022-02-11 2022-02-14 2022-02-15 2022-02-16 2022-02-17 2022-02-18 </span></span>
+<span><span class="co">#&gt;   15.59519   15.64140   15.68066   15.65542   15.82226   16.17687   16.51849 </span></span>
+<span><span class="co">#&gt; 2022-02-21 2022-02-22 2022-02-23 2022-02-24 2022-02-25 2022-02-28 2022-03-01 </span></span>
+<span><span class="co">#&gt;   16.47065   16.31094   16.30532   16.60728   16.31808   16.30070   16.22510 </span></span>
+<span><span class="co">#&gt; 2022-03-02 2022-03-03 2022-03-04 2022-03-07 2022-03-08 2022-03-09 2022-03-10 </span></span>
+<span><span class="co">#&gt;   16.41384   15.92332   15.85047   15.72339   15.66347   15.35515   15.42859 </span></span>
+<span><span class="co">#&gt; 2022-03-11 2022-03-14 2022-03-15 2022-03-16 2022-03-17 2022-03-18 2022-03-22 </span></span>
+<span><span class="co">#&gt;   15.37003   15.35250   15.19145   15.87888   16.21718   16.00074   16.10055 </span></span>
+<span><span class="co">#&gt; 2022-03-23 2022-03-24 2022-03-25 2022-03-28 2022-03-29 2022-03-30 2022-03-31 </span></span>
+<span><span class="co">#&gt;   16.37870   16.38080   15.99185   15.87494   16.45360   16.65301   16.40199 </span></span>
+<span><span class="co">#&gt; 2022-04-01 2022-04-04 2022-04-05 2022-04-06 2022-04-07 2022-04-08 2022-04-11 </span></span>
+<span><span class="co">#&gt;   16.64081   16.76660   16.68875   16.92925   17.12510   17.01967   17.08268 </span></span>
+<span><span class="co">#&gt; 2022-04-12 2022-04-13 </span></span>
+<span><span class="co">#&gt;   16.98242   16.84476</span></span></code></pre></div>
+<p>Where the first prediction, of the 2022-04-04, 433.6627, is</p>
+<p><span class="math display">\[ bnb_{t}=\ -20.28047\ +\ 0.06146\ bnb_{t-1}\ -0.27979\ bnb_{t-2} + \\1.15805\ sma +\ 0.33934206\ std -3.76813\ macd\\ -6.68031\ macd\_ signal\ + 0.74661\ rsi \]</span>
+And so on.</p>
+</div>
+<div id="accuracy-of-the-prediction" class="section level2" number="5.5">
+<h2>
+<span class="header-section-number">5.5</span> Accuracy of the prediction<a class="anchor" aria-label="anchor" href="#accuracy-of-the-prediction"><i class="fas fa-link"></i></a>
+</h2>
+<p>Lest make a plot of the forecast vs the real value of BNB.</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pred2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span><span class="va">y2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+<span><span class="va">all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">y2</span>,<span class="va">pred2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,type <span class="op">=</span> <span class="st">"l"</span>,col<span class="op">=</span><span class="st">"blue"</span>,ylab<span class="op">=</span><span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">all</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,col<span class="op">=</span><span class="st">"green"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"topleft"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"real"</span>,<span class="st">"prediction"</span><span class="op">)</span>,lty <span class="op">=</span> <span class="fl">1</span>,lwd<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="st">"green"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-Big-Data-and-ML_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>Finaly, to measure the accuracy of our prediction, we apply the Root Mean Square Error (RMSE). It gives an idea of how much error the system typically makes in its predictions. The formula of the RMSE is:</p>
+<p><span class="math display">\[RMSE =\frac{1}{n}\ \sum_{i=1}^{n} (y_{i}-\hat{f(x_{i}))^{2}} \]</span>
+where $ $ is the prediction for the ith observation (the actual), $ y_{i} $ is the observation ith of the independent variable, and n is the number of observations.</p>
+<p><span class="math display">\[\hat{f(x_{i})}=\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n}\]</span></p>
+<p>The RMSE is computed using the training data that was used to fit the model, and so should more accurately be referred to as the training RMSE.</p>
+<p>Where, the RMSE close to zero, is the better.
+sqrt(mean((real-forecast)^2,na.rm = T ))</p>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">-</span><span class="va">all</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>,na.rm <span class="op">=</span> <span class="cn">T</span> <span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.242318</span></span></code></pre></div>
+</div>
+<div id="appendix" class="section level2" number="5.6">
+<h2>
+<span class="header-section-number">5.6</span> Appendix<a class="anchor" aria-label="anchor" href="#appendix"><i class="fas fa-link"></i></a>
+</h2>
+<p>The MACD and signals (from investopedia).</p>
+<p>Moving Average Convergence Divergence (MACD) is a trend-following momentum indicator that shows the relationship between two moving averages of a security’s price. The MACD is calculated by subtracting the 26-period Exponential Moving Average (EMA) from the 12-period EMA.</p>
+<p>The result of that calculation is the MACD line. A nine-day EMA of the MACD called the “signal line,” is then plotted with the MACD line, which can be a signal for buy and sell. Traders may buy the security when the MACD crosses above its signal line and sell - or short - the security when the MACD crosses below the signal line.</p>
+<p>An exponential moving average (EMA) is a type of moving average (MA) that places a greater weight and significance on the most recent data points. The exponential moving average is also referred to as the exponentially weighted moving average. An exponentially weighted moving average reacts more significantly to recent price changes than a simple moving average (SMA), which applies an equal weight to all observations in the period.</p>
+<p>In the next example, by default, the function MACD creates a 12 days EMA and 26-days EMA.</p>
+<p>The relative strength index (RSI)</p>
+<p>Is a momentum indicator that measures the magnitude of recent price changes to evaluate overbought or oversold conditions in the price of a stock or other asset. The RSI is displayed as an oscillator (a line graph that moves between two extremes) and can have a reading from 0 to 100. The indicator was originally developed by J. Welles Wilder Jr. and introduced in his seminal 1978 book, New Concepts in Technical Trading Systems.</p>
+<p>The Relative Strength Index (RSI) calculates a ratio of the recent upward price movements to the absolute price movement. Developed by J. Welles Wilder. The RSI calculation is RSI = 100 - 100 / ( 1 + RS ), where RS is the smoothed ratio of ‘average’ gains over ‘average’ losses. The ‘averages’ aren’t true averages, since they’re divided by the value of n and not the number of periods in which there are gains/losses.</p>
+<p>Traditional interpretation and usage of the RSI are that values of 70 or above indicate that a security is becoming overbought or overvalued and may be primed for a trend reversal or corrective pullback (drop in a stock) in price. An RSI reading of 30 or below indicates an oversold or undervalued condition (Investopedia).</p>
+</div>
+<div id="bibliography" class="section level2" number="5.7">
+<h2>
+<span class="header-section-number">5.7</span> Bibliography<a class="anchor" aria-label="anchor" href="#bibliography"><i class="fas fa-link"></i></a>
+</h2>
+<p>Jeet, P and Vat, P. (2017). Learning Quantitative finance with R (2017), Packt Publishing, Birmingham, UK.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="logit.html"><span class="header-section-number">4</span> Machine learning with market direction prediction: Logit</a></div>
+<div class="next"><a href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#big-data-and-machine-learning"><span class="header-section-number">5</span> Big data and machine learning</a></li>
+<li><a class="nav-link" href="#data-preparation-1"><span class="header-section-number">5.1</span> Data preparation</a></li>
+<li><a class="nav-link" href="#variable-creation"><span class="header-section-number">5.2</span> Variable creation</a></li>
+<li><a class="nav-link" href="#sub-samples"><span class="header-section-number">5.3</span> Sub samples</a></li>
+<li><a class="nav-link" href="#making-the-model"><span class="header-section-number">5.4</span> Making the model</a></li>
+<li><a class="nav-link" href="#accuracy-of-the-prediction"><span class="header-section-number">5.5</span> Accuracy of the prediction</a></li>
+<li><a class="nav-link" href="#appendix"><span class="header-section-number">5.6</span> Appendix</a></li>
+<li><a class="nav-link" href="#bibliography"><span class="header-section-number">5.7</span> Bibliography</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/main/05-Big-Data-and-ML.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/main/05-Big-Data-and-ML.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-07-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
