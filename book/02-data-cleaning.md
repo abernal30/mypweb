@@ -119,10 +119,10 @@ The former example was easy because we only have 3 categories, however, there ar
 
 
 
-I writted a library for data processing, "dataclean" To install it run the following code in a chunk:
+I writted a library for data processing, "datapro" To install it run the following code in a chunk:
 
-remotes::install_github("abernal30/dataclean")
-devtools::install_github("abernal30/dataclean")
+remotes::install_github("abernal30/datapro")
+devtools::install_github("abernal30/datapro")
 
 
 
@@ -138,7 +138,7 @@ data1[1,"mths_since_recent_bc"]*2
 
 
 ```r
-library(dataclean)
+library(datapro)
 charname(data1)
 #>  [1] "term"                      "grade"                    
 #>  [3] "sub_grade"                 "emp_title"                
