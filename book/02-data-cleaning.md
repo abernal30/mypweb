@@ -2,9 +2,15 @@
 
 
 For this chapter, we will use a library I write for data processing, "dataclean" To install it run the following code in a chunk:
+To install it run:
 
-remotes::install_github("abernal30/dataclean")
-devtools::install_github("abernal30/dataclean")
+remotes::install_github(“datanalyticss/data_pro”)
+
+or
+
+devtools::install_github(“datanalyticss/data_pro”)
+
+
 
 
 ```r
@@ -155,18 +161,6 @@ tail(col_cat)
 The former example was easy because we only have 3 categories, however, there are other 
 
 
-<<<<<<< HEAD
-=======
-
-
-I writted a library for data processing, "datapro" To install it run the following code in a chunk:
-
-remotes::install_github("abernal30/datapro")
-devtools::install_github("abernal30/datapro")
-
-
-
->>>>>>> a5f2750b27984ebe09a8a634cfd3ee49ad30cbc4
 We use the charname function to see how many categorical variables there are. We print only the first rows using the head function.
 
 
@@ -179,7 +173,6 @@ data1[1,"mths_since_recent_bc"]*2
 
 
 ```r
-<<<<<<< HEAD
 library(dataclean)
 head(charname(data1))
 #> [1] "term"           "grade"          "sub_grade"      "emp_title"     
@@ -188,27 +181,6 @@ tail(charname(data1))
 #> [1] "hardship_loan_status"      "disbursement_method"      
 #> [3] "debt_settlement_flag"      "debt_settlement_flag_date"
 #> [5] "settlement_status"         "settlement_date"
-=======
-library(datapro)
-charname(data1)
-#>  [1] "term"                      "grade"                    
-#>  [3] "sub_grade"                 "emp_title"                
-#>  [5] "emp_length"                "home_ownership"           
-#>  [7] "verification_status"       "issue_d"                  
-#>  [9] "loan_status"               "purpose"                  
-#> [11] "title"                     "zip_code"                 
-#> [13] "addr_state"                "earliest_cr_line"         
-#> [15] "initial_list_status"       "last_pymnt_d"             
-#> [17] "next_pymnt_d"              "last_credit_pull_d"       
-#> [19] "application_type"          "verification_status_joint"
-#> [21] "hardship_flag"             "hardship_type"            
-#> [23] "hardship_reason"           "hardship_status"          
-#> [25] "hardship_start_date"       "hardship_end_date"        
-#> [27] "payment_plan_start_date"   "hardship_loan_status"     
-#> [29] "disbursement_method"       "debt_settlement_flag"     
-#> [31] "debt_settlement_flag_date" "settlement_status"        
-#> [33] "settlement_date"
->>>>>>> a5f2750b27984ebe09a8a634cfd3ee49ad30cbc4
 ```
 
 

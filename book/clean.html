@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>2 Big data and data cleaning | Algorithms and Financial Programing in R</title>
 <meta name="author" content="Arturo Bernal">
-<meta name="description" content="For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk: remotes::install_github(“abernal30/dataclean”)...">
+<meta name="description" content="For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk: To install it run:...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="2 Big data and data cleaning | Algorithms and Financial Programing in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/clean.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
-<meta property="og:description" content="For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk: remotes::install_github(“abernal30/dataclean”)...">
+<meta property="og:description" content="For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk: To install it run:...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2 Big data and data cleaning | Algorithms and Financial Programing in R">
-<meta name="twitter:description" content="For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk: remotes::install_github(“abernal30/dataclean”)...">
+<meta name="twitter:description" content="For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk: To install it run:...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -99,9 +99,11 @@
 <h1>
 <span class="header-section-number">2</span> Big data and data cleaning<a class="anchor" aria-label="anchor" href="#clean"><i class="fas fa-link"></i></a>
 </h1>
-<p>For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk:</p>
-<p>remotes::install_github(“abernal30/dataclean”)
-devtools::install_github(“abernal30/dataclean”)</p>
+<p>For this chapter, we will use a library I write for data processing, “dataclean” To install it run the following code in a chunk:
+To install it run:</p>
+<p>remotes::install_github(“datanalyticss/data_pro”)</p>
+<p>or</p>
+<p>devtools::install_github(“datanalyticss/data_pro”)</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dataclean</span><span class="op">)</span></span></code></pre></div>
 <p>For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, <a href="https://www.lendingclub.com/" class="uri">https://www.lendingclub.com/</a> fintech marketplace bank at scale. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations and the 150 variables. using the 2 million rows sample would make our processor very low, but I challenge you to try the original data set to see what big data is.</p>
@@ -140,7 +142,7 @@ devtools::install_github(“abernal30/dataclean”)</p>
 <span><span class="co">#&gt; [4] "In Grace Period"    "Late (31-120 days)"</span></span></code></pre></div>
 <p>Another posibility is applying the function categ of library dataclean</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/categ.html">categ</a></span><span class="op">(</span><span class="va">data</span>,<span class="va">col</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">categ</span><span class="op">(</span><span class="va">data</span>,<span class="va">col</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Fully Paid"         "Current"            "Charged Off"       </span></span>
 <span><span class="co">#&gt; [4] "In Grace Period"    "Late (31-120 days)"</span></span></code></pre></div>
 <pre><code>#&gt; [1] 5</code></pre>
@@ -158,7 +160,7 @@ filter(col== “categ1” |col== “categ2”)</p>
 <p>Besides “loan_status” three are several categorical columns, for example term, winch has 2 categories:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">col</span> <span class="op">&lt;-</span> <span class="st">"term"</span></span>
-<span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/categ.html">categ</a></span><span class="op">(</span><span class="va">data</span>,<span class="va">col</span><span class="op">)</span></span>
+<span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu">categ</span><span class="op">(</span><span class="va">data</span>,<span class="va">col</span><span class="op">)</span></span>
 <span><span class="va">cat</span></span>
 <span><span class="co">#&gt; [1] "36 months" "60 months"</span></span></code></pre></div>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
@@ -191,10 +193,10 @@ filter(col== “categ1” |col== “categ2”)</p>
 <span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dataclean</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/charname.html">charname</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">charname</span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "term"           "grade"          "sub_grade"      "emp_title"     </span></span>
 <span><span class="co">#&gt; [5] "emp_length"     "home_ownership"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/charname.html">charname</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fu">charname</span><span class="op">(</span><span class="va">data1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "hardship_loan_status"      "disbursement_method"      </span></span>
 <span><span class="co">#&gt; [3] "debt_settlement_flag"      "debt_settlement_flag_date"</span></span>
 <span><span class="co">#&gt; [5] "settlement_status"         "settlement_date"</span></span></code></pre></div>
@@ -203,21 +205,21 @@ filter(col== “categ1” |col== “categ2”)</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">col</span> <span class="op">&lt;-</span> <span class="st">"grade"</span></span>
 <span></span>
-<span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/categ.html">categ</a></span><span class="op">(</span><span class="va">data</span>,<span class="va">col</span><span class="op">)</span></span>
+<span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu">categ</span><span class="op">(</span><span class="va">data</span>,<span class="va">col</span><span class="op">)</span></span>
 <span><span class="co">#cat &lt;- data[,col][!duplicated(data[,col])]</span></span>
 <span><span class="va">cat</span></span>
 <span><span class="co">#&gt; [1] "C" "B" "F" "A" "E" "D" "G"</span></span></code></pre></div>
 <p>We need to specify the data source and the column name.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">col_cat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/tonum.html">tonum</a></span><span class="op">(</span><span class="va">data1</span>,<span class="va">col</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">col_cat2</span> <span class="op">&lt;-</span> <span class="fu">tonum</span><span class="op">(</span><span class="va">data1</span>,<span class="va">col</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">col_cat2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1 1 2 3 1 2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">col_cat2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1 2 2 4 1 1</span></span></code></pre></div>
 <p>Finally, if we are sure that we want to transform all the data set into numerical, the function “asnum” reviews detect the categorical columns and transform it into numeric, and as a result we would get a data frame. If we apply the function and review now winch are categorical columns, we do not get any.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/asnum.html">asnum</a></span><span class="op">(</span><span class="va">data1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/charname.html">charname</a></span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu">asnum</span><span class="op">(</span><span class="va">data1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu">charname</span><span class="op">(</span><span class="va">data2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 <div id="missing-values" class="section level2" number="2.2">
@@ -228,7 +230,7 @@ filter(col== “categ1” |col== “categ2”)</p>
 <p>For the firs alternative, lets first apply the function “summaryna” to detect columns with more than 50 percent of missing values:</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">na_perc</span> <span class="op">&lt;-</span> <span class="fu">dataclean</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/summaryna.html">summaryna</a></span><span class="op">(</span><span class="va">data2</span>,<span class="fl">.5</span><span class="op">)</span></span>
+<span><span class="va">na_perc</span> <span class="op">&lt;-</span> <span class="fu">dataclean</span><span class="fu">::</span><span class="fu">summaryna</span><span class="op">(</span><span class="va">data2</span>,<span class="fl">.5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">na_perc</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                             Percentage of NAs Column number</span></span>
 <span><span class="co">#&gt; mths_since_last_record              0.8064147            27</span></span>
@@ -242,7 +244,7 @@ filter(col== “categ1” |col== “categ2”)</p>
 <code class="sourceCode R"><span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="va">data2</span><span class="op">[</span>,<span class="op">-</span><span class="va">na_perc</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p>To confirm, we apply again the function summaryna</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/summaryna.html">summaryna</a></span><span class="op">(</span><span class="va">data3</span>,<span class="fl">.5</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">summaryna</span><span class="op">(</span><span class="va">data3</span>,<span class="fl">.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "There are no columns with missing values"</span></span></code></pre></div>
 <p>for the second alternative, which is eliminating the rows where the missing(s) value(s) is(are) located; we could applying the na.omit function. However, we have to be careful, because it could be the case that each row of the data frame has at least one missing value, in which cace it would delete all rows of the data frame, like this case:</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
@@ -250,7 +252,7 @@ filter(col== “categ1” |col== “categ2”)</p>
 <p>The third alternative is replacing missing values by a metric. In this we us the function “repnas”, to the object data3 wich already has the drop the columns with more than 50 percent of missing values:</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="fu">dataclean</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dataclean/man/repnas.html">repnas</a></span><span class="op">(</span><span class="va">data3</span>,<span class="st">"median"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">data3</span> <span class="op">&lt;-</span> <span class="fu">dataclean</span><span class="fu">::</span><span class="fu">repnas</span><span class="op">(</span><span class="va">data3</span>,<span class="st">"median"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="zero--and-near-zero-variance-predictors" class="section level2" number="2.3">
 <h2>
