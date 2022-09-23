@@ -1,6 +1,20 @@
 # Credit analysis
 
 
+For this chapter, we will use a library I write for data processing, "datapro" To install it run the following code in a chunk:
+To install it run:
+
+library(devtools) 
+
+Then:
+
+remotes::install_github(“datanalyticss/data_pro”)
+
+or
+
+devtools::install_github(“datanalyticss/data_pro”)
+
+
 ```r
 library(openxlsx)
 library(dplyr)
@@ -142,31 +156,13 @@ For example, the column term has the following categories:
 
 
 
-The following code transforms that categorical variable into numerical. The code is above the level of this course and is shown for exposition purposes (not covered in the final exam). 
-
-
-
-
-Further, I created my package that makes the procedure for us for the entire data set in one click. 
-
-Download the file: Art_0.1.0.tar.gz and install it as a package archive file. Apply the function asnum(df). Also, for simplicity, we are going to apply the na.omit() function, which eliminates the rows with missing values. 
-
-Or you could install the library from:
-
-
-```r
-#library(devtools)
-#doremotes::install_github("abernal30/dataclean")
-
-#library(devtools)
-#devtools::install_github("abernal30/dataclean")
-```
+The following code transforms that categorical variable into numerical. The code is above the level of this course and is shown for exposition purposes (not covered in the final exam).
 
 
 
 
 ```r
-library(dataclean) 
+library(datapro) 
 df5<-asnum(df4)
 head(df5)
 #>   Default loan_amnt term int_rate installment grade sub_grade emp_title
@@ -392,7 +388,7 @@ Making the prediction.
 gbmFit1$finalModel$formula
 #> .outcome ~ loan_amnt + term + int_rate + emp_length + home_ownership + 
 #>     open_acc + pub_rec + mort_acc
-#> <environment: 0x000000003e20c6e0>
+#> <environment: 0x000000003e2620a8>
 ```
 
 Suponiendo que este es mi modelo final, voy a hacer la predicción real. 

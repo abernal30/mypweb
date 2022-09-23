@@ -166,13 +166,13 @@ tickers<-grep(pattern = ".MX", x = node, value = TRUE)
 
 tickers1<-tickers
 tickers1
-#>  [1] "IENOVA.MX"     "ALPEKA.MX"     "BIMBOA.MX"     "MEGACPO.MX"   
-#>  [5] "ASURB.MX"      "GCARSOA1.MX"   "GCC.MX"        "GMEXICOB.MX"  
-#>  [9] "FEMSAUBD.MX"   "PINFRA.MX"     "BOLSAA.MX"     "AC.MX"        
-#> [13] "GRUMAB.MX"     "TLEVISACPO.MX" "AMXL.MX"       "LABB.MX"      
-#> [17] "CUERVO.MX"     "GENTERA.MX"    "LIVEPOLC1.MX"  "MEXCHEM.MX"   
-#> [21] "GAPB.MX"       "CEMEXCPO.MX"   "GFNORTEO.MX"   "KOFL.MX"      
-#> [25] "BBAJIOO.MX"    "OMAB.MX"       "KIMBERA.MX"    "ALSEA.MX"     
+#>  [1] "IENOVA.MX"     "AMXL.MX"       "FEMSAUBD.MX"   "BBAJIOO.MX"   
+#>  [5] "AC.MX"         "PINFRA.MX"     "OMAB.MX"       "TLEVISACPO.MX"
+#>  [9] "GFNORTEO.MX"   "ASURB.MX"      "GCC.MX"        "CEMEXCPO.MX"  
+#> [13] "BIMBOA.MX"     "LABB.MX"       "CUERVO.MX"     "BOLSAA.MX"    
+#> [17] "GRUMAB.MX"     "GCARSOA1.MX"   "MEGACPO.MX"    "ALPEKA.MX"    
+#> [21] "GAPB.MX"       "GMEXICOB.MX"   "KIMBERA.MX"    "GENTERA.MX"   
+#> [25] "LIVEPOLC1.MX"  "MEXCHEM.MX"    "KOFL.MX"       "ALSEA.MX"     
 #> [29] "PEOLES.MX"     "SITESB1.MX"
 ```
 
@@ -181,7 +181,7 @@ tickers1
 
 ```r
 getSymbols(tickers1[1:2]) 
-#> [1] "IENOVA.MX" "ALPEKA.MX"
+#> [1] "IENOVA.MX" "AMXL.MX"
 ```
 
 ### 1.3 Nasdaq Data Link API

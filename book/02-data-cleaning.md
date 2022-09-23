@@ -1,8 +1,12 @@
 # Big data and data cleaning {#clean}
 
 
-For this chapter, we will use a library I write for data processing, "dataclean" To install it run the following code in a chunk:
+For this chapter, we will use a library I write for data processing, "datapro" To install it run the following code in a chunk:
 To install it run:
+
+library(devtools) 
+
+Then:
 
 remotes::install_github(“datanalyticss/data_pro”)
 
@@ -14,7 +18,7 @@ devtools::install_github(“datanalyticss/data_pro”)
 
 
 ```r
-library(dataclean)
+library(datapro)
 ```
 
 For this chapter we will use the file credit_semioriginal.xlsx, which has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations and the 150 variables. using the 2 million rows sample would make our processor very low, but I challenge you to try the original data set to see what big data is. 
@@ -68,7 +72,7 @@ data[,col][!duplicated(data[,col])]
 ```
 
 
-Another posibility is applying the function categ of library dataclean
+Another possibility is applying the function categ of library datapro
 
 ```r
 categ(data,col)
@@ -146,7 +150,7 @@ cat[1]
 ```r
 col_cat <- ifelse(data1[, col] == cat[1],ncat[1],data1[, col])
 head(col_cat)
-#> logical(0)
+#> [1] "1"         "1"         "60 months" "60 months" "1"         "1"
 ```
 
 
@@ -167,13 +171,12 @@ We use the charname function to see how many categorical variables there are. We
 
 ```r
 data1[1,"mths_since_recent_bc"]*2
-#> [1] NA
+#> [1] 8
 ```
 
 
 
 ```r
-library(dataclean)
 head(charname(data1))
 #> [1] "term"           "grade"          "sub_grade"      "emp_title"     
 #> [5] "emp_length"     "home_ownership"
@@ -233,7 +236,7 @@ For the firs alternative, lets first apply the function "summaryna" to detect co
 
 ```r
 
-na_perc <- dataclean::summaryna(data2,.5)
+na_perc <- datapro::summaryna(data2,.5)
 head(na_perc)
 #>                             Percentage of NAs Column number
 #> mths_since_last_record              0.8064147            27
@@ -272,7 +275,7 @@ The third alternative is replacing missing values by a metric. In this  we us th
 
 ```r
 
-data3 <- dataclean::repnas(data3,"median")
+data3 <- datapro::repnas(data3,"median")
 ```
 
 
