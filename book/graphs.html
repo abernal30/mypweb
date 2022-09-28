@@ -7,7 +7,7 @@
 <title>3 APIS and R graphs | Algorithms and Financial Programing in R</title>
 <meta name="author" content="Arturo Bernal">
 <meta name="description" content="3.1 1. APIs API´s (Application Programming Interface)  3.1.1 1.1 Quantmod API Quantitative Financial Modelling Framework The quantmod package for R is designed to assist the quantitative trader in...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
 <meta property="og:title" content="3 APIS and R graphs | Algorithms and Financial Programing in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/graphs.html">
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -213,17 +213,17 @@ getDividends(“ticker”), the xts objetc if the ticker needs to be in the R en
 <span></span>
 <span><span class="va">tickers1</span><span class="op">&lt;-</span><span class="va">tickers</span></span>
 <span><span class="va">tickers1</span></span>
-<span><span class="co">#&gt;  [1] "IENOVA.MX"     "AMXL.MX"       "FEMSAUBD.MX"   "BBAJIOO.MX"   </span></span>
-<span><span class="co">#&gt;  [5] "AC.MX"         "PINFRA.MX"     "OMAB.MX"       "TLEVISACPO.MX"</span></span>
-<span><span class="co">#&gt;  [9] "GFNORTEO.MX"   "ASURB.MX"      "GCC.MX"        "CEMEXCPO.MX"  </span></span>
-<span><span class="co">#&gt; [13] "BIMBOA.MX"     "LABB.MX"       "CUERVO.MX"     "BOLSAA.MX"    </span></span>
-<span><span class="co">#&gt; [17] "GRUMAB.MX"     "GCARSOA1.MX"   "MEGACPO.MX"    "ALPEKA.MX"    </span></span>
-<span><span class="co">#&gt; [21] "GAPB.MX"       "GMEXICOB.MX"   "KIMBERA.MX"    "GENTERA.MX"   </span></span>
-<span><span class="co">#&gt; [25] "LIVEPOLC1.MX"  "MEXCHEM.MX"    "KOFL.MX"       "ALSEA.MX"     </span></span>
+<span><span class="co">#&gt;  [1] "IENOVA.MX"     "AC.MX"         "GCARSOA1.MX"   "OMAB.MX"      </span></span>
+<span><span class="co">#&gt;  [5] "GMEXICOB.MX"   "GCC.MX"        "BOLSAA.MX"     "AMXL.MX"      </span></span>
+<span><span class="co">#&gt;  [9] "CEMEXCPO.MX"   "BBAJIOO.MX"    "GFNORTEO.MX"   "PINFRA.MX"    </span></span>
+<span><span class="co">#&gt; [13] "CUERVO.MX"     "TLEVISACPO.MX" "KIMBERA.MX"    "MEGACPO.MX"   </span></span>
+<span><span class="co">#&gt; [17] "BIMBOA.MX"     "GENTERA.MX"    "LABB.MX"       "ALPEKA.MX"    </span></span>
+<span><span class="co">#&gt; [21] "ASURB.MX"      "LIVEPOLC1.MX"  "MEXCHEM.MX"    "FEMSAUBD.MX"  </span></span>
+<span><span class="co">#&gt; [25] "GAPB.MX"       "KOFL.MX"       "ALSEA.MX"      "GRUMAB.MX"    </span></span>
 <span><span class="co">#&gt; [29] "PEOLES.MX"     "SITESB1.MX"</span></span></code></pre></div>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] "IENOVA.MX" "AMXL.MX"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "IENOVA.MX" "AC.MX"</span></span></code></pre></div>
 </div>
 <div id="nasdaq-data-link-api" class="section level3" number="3.1.3">
 <h3>
@@ -323,7 +323,7 @@ as.data.frame(object).</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-09-23.</p>
+    <p>"<strong>Algorithms and Financial Programing in R</strong>" was written by Arturo Bernal. It was last built on 2022-09-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -336,7 +336,7 @@ as.data.frame(object).</p>
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

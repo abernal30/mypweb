@@ -62,19 +62,19 @@ summary(lm(SP500~.,data =dji))
 #> 
 #> Residuals:
 #>       Min        1Q    Median        3Q       Max 
-#> -0.171212 -0.009604 -0.000205  0.009735  0.136620 
+#> -0.171209 -0.009613 -0.000191  0.009759  0.136574 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)  
-#> (Intercept)  0.0006999  0.0003123   2.241   0.0251 *
-#> SP500_lag2   0.0255296  0.0159561   1.600   0.1097  
-#> SP500_lag3  -0.0127589  0.0159559  -0.800   0.4240  
+#> (Intercept)  0.0006852  0.0003124   2.193   0.0284 *
+#> SP500_lag2   0.0256070  0.0159601   1.604   0.1087  
+#> SP500_lag3  -0.0134944  0.0159659  -0.845   0.3980  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
-#> Residual standard error: 0.01957 on 3932 degrees of freedom
-#> Multiple R-squared:  0.0007906,	Adjusted R-squared:  0.0002824 
-#> F-statistic: 1.556 on 2 and 3932 DF,  p-value: 0.2112
+#> Residual standard error: 0.01959 on 3936 degrees of freedom
+#> Multiple R-squared:  0.0008105,	Adjusted R-squared:  0.0003028 
+#> F-statistic: 1.596 on 2 and 3936 DF,  p-value: 0.2028
 ```
 
 

@@ -8,11 +8,11 @@ library(devtools)
 
 Then:
 
-remotes::install_github(“datanalyticss/data_pro”)
+remotes::install_github(“datanalyticss/datapro”)
 
 or
 
-devtools::install_github(“datanalyticss/data_pro”)
+devtools::install_github(“datanalyticss/datapro”)
 
 
 

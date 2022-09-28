@@ -388,7 +388,7 @@ Making the prediction.
 gbmFit1$finalModel$formula
 #> .outcome ~ loan_amnt + term + int_rate + emp_length + home_ownership + 
 #>     open_acc + pub_rec + mort_acc
-#> <environment: 0x000000003e2620a8>
+#> <environment: 0x0000021d8df165c8>
 ```
 
 Suponiendo que este es mi modelo final, voy a hacer la predicción real. 
