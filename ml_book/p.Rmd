@@ -1,0 +1,21 @@
+---
+title: "An Awesome Book"
+author: "John Smith"
+description: "This book introduces the ABC theory, and ..."
+url: 'https\://bookdown.org/john/awesome/'
+github-repo: "john/awesome"
+cover-image: "images/cover.png"
+apple-touch-icon: "touch-icon.png"
+apple-touch-icon-size: 120
+favicon: "favicon.ico"
+bs4_book(theme = bs4_book_theme(), repo = NULL, ...,
+  lib_dir = "libs", pandoc_args = NULL, extra_dependencies = NULL,
+  template = "default", split_bib = FALSE, footnotes_inline = TRUE)
+---
+
+
+\begin{equation}
+    \theta^{*}|L^{*}, \delta^{2},Y,\sigma^{2}_{u} \sim N\left(B^{-1}W'L^{*},\delta^{2}B^{-1} \right)
+    (\#eq:ncrep)
+\end{equation}
+
