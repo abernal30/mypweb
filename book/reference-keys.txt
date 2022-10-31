@@ -1,7 +1,8 @@
 r-basics
 r-markdown
 coding-basics
-objet-types-atomic-structures
+atomic-structures
+vectors
 data-frames
 xts-objects
 reading-and-writing-csv-and-xlsx
@@ -21,6 +22,7 @@ data-preparation
 logistic-regression
 confusion-matrix
 linear-discriminant-analysis-lda
+bibliography
 big-data-and-machine-learning
 data-preparation-1
 variable-creation
@@ -28,7 +30,7 @@ sub-samples
 making-the-model
 accuracy-of-the-prediction
 appendix
-bibliography
+bibliography-1
 credit-analysis
 example
 a-independent-variable-creation
@@ -38,9 +40,9 @@ rational-agent-and-behavioral-finance-in-investment
 shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset
 long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset
 long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio
-bibliography-1
-momentum-or-directional-trading
 bibliography-2
+momentum-or-directional-trading
+bibliography-3
 portfolio-management-algorithms
 graphs-of-the-results
-bibliography-3
+bibliography-4

@@ -1,6 +1,10 @@
 # Machine learning with market direction prediction: Logit {#logit}
 
  
+ 
+Machine Learning (ML) is an application of Artificial Intelligence (AI) that provides the AI system with the ability to automatically learn from the environment and apply those lessons to make better decisions. There are a variety of algorithms that machine learning uses to iteratively learn, describe and improve data, spot patterns, and then perform actions on these patterns (Tatsat, Puri & Lookabaugh, 2021).
+ 
+ 
 This chapter covers machine learning with market direction prediction. In particular, we will forecast the market moves either upward or downward. 
 
 A logistic regression (Logit) and Linear Discriminant Analysis (LDA) models help us to fit a model using binary behavior (up or down)  and forecast market direction. Logistic regression.
@@ -355,6 +359,6 @@ confusionMatrix(pred,real)
 ```
 
 
-
-
+## Bibliography
+Tatsat, H; Puri, S; Lookabaugh, B. (2021).Machine Learning and Data Science Blueprints for Finance. Sebastopol, CA. : O’Reilly Media.
 
