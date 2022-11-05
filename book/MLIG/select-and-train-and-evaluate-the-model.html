@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 5 Select and Train and evaluate the Model | Machine learning introductory guide</title>
+<meta name="author" content="L. Arturo Bernal">
+<meta name="description" content="5.1 For continuous variables For continuous variables, the goal of a machine learning model such as linear regression by OLS is to predict a variable y. For example, the “median_house_value” from...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="Chapter 5 5 Select and Train and evaluate the Model | Machine learning introductory guide">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/select-and-train-and-evaluate-the-model.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<meta property="og:description" content="5.1 For continuous variables For continuous variables, the goal of a machine learning model such as linear regression by OLS is to predict a variable y. For example, the “median_house_value” from...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 5 Select and Train and evaluate the Model | Machine learning introductory guide">
+<meta name="twitter:description" content="5.1 For continuous variables For continuous variables, the goal of a machine learning model such as linear regression by OLS is to predict a variable y. For example, the “median_house_value” from...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68765210-2', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Machine learning introductory guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Machine learning introductory guide</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="big-picture.html"><span class="header-section-number">1</span> Big picture</a></li>
+<li><a class="" href="data-collection.html"><span class="header-section-number">2</span> Data collection</a></li>
+<li><a class="" href="discover-and-visualize-the-data-to-gain-insights.html"><span class="header-section-number">3</span> 3 Discover and Visualize the Data to Gain Insights</a></li>
+<li><a class="" href="prepare-the-data-for-machine-learning-algorithms.html"><span class="header-section-number">4</span> 4 Prepare the Data for Machine Learning Algorithms</a></li>
+<li><a class="active" href="select-and-train-and-evaluate-the-model.html"><span class="header-section-number">5</span> 5 Select and Train and evaluate the Model</a></li>
+<li><a class="" href="fine-tune-or-tune-the-ml-model.html"><span class="header-section-number">6</span> 6 Fine-Tune or Tune the ML Model</a></li>
+<li><a class="" href="references.html"><span class="header-section-number">7</span> References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/abernal30/BookAFP">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="select-and-train-and-evaluate-the-model" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> 5 Select and Train and evaluate the Model<a class="anchor" aria-label="anchor" href="#select-and-train-and-evaluate-the-model"><i class="fas fa-link"></i></a>
+</h1>
+<div id="for-continuous-variables-1" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> For continuous variables<a class="anchor" aria-label="anchor" href="#for-continuous-variables-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>For continuous variables, the goal of a machine learning model such as linear regression by OLS is to predict a variable y. For example, the “median_house_value” from the house pricing data set.</p>
+<p><span class="math display">\[y=\beta_{0}+\beta_{1}x_{1}+,..,+\beta_{n}x_{n} +\epsilon \]</span>
+where <span class="math inline">\(x_{1}\)</span>, <span class="math inline">\(x_{n}\)</span> are the independent variables and <span class="math inline">\(\epsilon\)</span> is the error term.</p>
+<p>In this case, the predicted value of <span class="math inline">\(\hat{y}\)</span> :</p>
+<p><span class="math display">\[\hat{y}=\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n} \]</span></p>
+<p><span class="math display">\[\hat{y}=\hat{\beta_{0}}+\hat{\beta_{1}}Z_{1}+,..,+\hat{\beta_{n}}Z_{m} \]</span></p>
+<p>For the “median_house_value” from the house pricing data set, we use the function lm to make a Ordinary Least squares OLS estimation:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dep</span><span class="op">&lt;-</span><span class="st">"median_house_value"</span></span>
+<span><span class="va">house_model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">median_house_value</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">house_train</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">house_model</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = median_house_value ~ ., data = house_train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -435692  -42148  -10821   29840  455544 
+## 
+## Coefficients:
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)              -3.584e+06  7.403e+04 -48.417  &lt; 2e-16 ***
+## longitude                -4.146e+04  8.458e+02 -49.023  &lt; 2e-16 ***
+## latitude                 -4.100e+04  7.901e+02 -51.898  &lt; 2e-16 ***
+## housing_median_age        1.137e+03  4.772e+01  23.835  &lt; 2e-16 ***
+## total_rooms               2.336e+00  1.068e+00   2.188   0.0287 *  
+## total_bedrooms            1.412e+01  9.073e+00   1.556   0.1198    
+## population               -4.767e+01  1.363e+00 -34.978  &lt; 2e-16 ***
+## households                1.221e+02  9.579e+00  12.743  &lt; 2e-16 ***
+## median_income             4.319e+04  4.215e+02 102.454  &lt; 2e-16 ***
+## ocean_proximity          -5.589e+01  4.052e+02  -0.138   0.8903    
+## rooms_per_household       2.920e+03  3.192e+02   9.149  &lt; 2e-16 ***
+## bedrooms_per_room         3.335e+05  1.551e+04  21.504  &lt; 2e-16 ***
+## population_per_household  5.758e+02  1.268e+02   4.542 5.62e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 68290 on 16323 degrees of freedom
+##   (176 observations deleted due to missingness)
+## Multiple R-squared:  0.6509, Adjusted R-squared:  0.6506 
+## F-statistic:  2536 on 12 and 16323 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div id="linear-model-selection" class="section level3" number="5.1.1">
+<h3>
+<span class="header-section-number">5.1.1</span> Linear Model Selection<a class="anchor" aria-label="anchor" href="#linear-model-selection"><i class="fas fa-link"></i></a>
+</h3>
+<p>The spirit is the same we mention in a previous section, regarding the expected test of the MSE, for a given value of x(0),</p>
+<p><span class="math display">\[E (y_{0}-\hat{f(x_{0}))^{2}}= Var(\hat{f(x_{0}))}+[Bias\ \hat{f(x_{0}))}]^2+Var[\epsilon]\]</span></p>
+<p>In other words, we look for a subset of independent variables or predictors that we believe to be related to the response. We then fit a model using least squares on the reduced set of variables, as as consequence reducing the variance of the <span class="math inline">\(\hat{f}\)</span>, the test of the MSE, which improves the prediction accuracy.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">stepw</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/step.html">step</a></span><span class="op">(</span><span class="va">house_model</span>, direction <span class="op">=</span> <span class="st">"both"</span>,trace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">stepw</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = median_house_value ~ longitude + latitude + housing_median_age + 
+##     total_rooms + total_bedrooms + population + households + 
+##     median_income + rooms_per_household + bedrooms_per_room + 
+##     population_per_household, data = house_train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -435760  -42172  -10800   29838  455571 
+## 
+## Coefficients:
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)              -3.581e+06  7.073e+04 -50.637  &lt; 2e-16 ***
+## longitude                -4.143e+04  8.111e+02 -51.080  &lt; 2e-16 ***
+## latitude                 -4.098e+04  7.731e+02 -53.005  &lt; 2e-16 ***
+## housing_median_age        1.137e+03  4.769e+01  23.845  &lt; 2e-16 ***
+## total_rooms               2.329e+00  1.066e+00   2.184    0.029 *  
+## total_bedrooms            1.409e+01  9.071e+00   1.554    0.120    
+## population               -4.765e+01  1.355e+00 -35.157  &lt; 2e-16 ***
+## households                1.221e+02  9.578e+00  12.744  &lt; 2e-16 ***
+## median_income             4.319e+04  4.196e+02 102.950  &lt; 2e-16 ***
+## rooms_per_household       2.919e+03  3.191e+02   9.148  &lt; 2e-16 ***
+## bedrooms_per_room         3.335e+05  1.550e+04  21.509  &lt; 2e-16 ***
+## population_per_household  5.754e+02  1.267e+02   4.540 5.67e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 68290 on 16324 degrees of freedom
+##   (176 observations deleted due to missingness)
+## Multiple R-squared:  0.6509, Adjusted R-squared:  0.6506 
+## F-statistic:  2767 on 11 and 16324 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div id="select-the-model-for-categorical-variables" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Select the model for categorical variables<a class="anchor" aria-label="anchor" href="#select-the-model-for-categorical-variables"><i class="fas fa-link"></i></a>
+</h2>
+<div id="clasification-models" class="section level3" number="5.2.1">
+<h3>
+<span class="header-section-number">5.2.1</span> Clasification models<a class="anchor" aria-label="anchor" href="#clasification-models"><i class="fas fa-link"></i></a>
+</h3>
+<p>The linear regression assumes that the response variable Y is quantitative. But in many situations, the response variable is instead qualitative. For example, eye color is qualitative, taking on values blue, brown, or green. Often qualitative variables are referred to as categorical ; we will use these terms interchangeably. In this chapter, we study approaches for predicting qualitative responses, a process that is known as classification. Predicting a qualitative response for an observation can be referred to as classifying that observation, since it involves assigning the observation to a category, or class. On the other hand, often the methods used for classification first predict the probability of each of the categories of a qualitative variable, as the basis for making the classification.</p>
+<p>In this sense they also behave like regression methods.</p>
+<p>We discuss three of the most widely-used classifiers: logistic regression, linear discriminant analysis, and
+logistic regression linear discriminant analysis
+K-nearest neighbors.</p>
+<p>Examples of classification:
+1. A person arrives at the emergency room with a set of symptoms that could possibly be attributed to one of three medical conditions. Which of the three conditions does the individual have?</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>An online banking service must be able to determine whether or not a transaction being performed on the site is fraudulent, on the basis of the user’s IP address, past transaction history, and so forth.</p></li>
+<li><p>On the basis of DNA sequence data for a number of patients with and without a given disease, a biologist would like to figure out which DNA mutations are deleterious (disease-causing) and which are not</p></li>
+</ol>
+<div id="logistic-regression" class="section level4" number="5.2.1.1">
+<h4>
+<span class="header-section-number">5.2.1.1</span> Logistic Regression<a class="anchor" aria-label="anchor" href="#logistic-regression"><i class="fas fa-link"></i></a>
+</h4>
+<p>In a binary response model, interest lies primarily in the response probability:</p>
+<p><span class="math display">\[P(y=1/X)=P(y=1|x_{1},x_{2},..,x_{n}) \]</span>
+where we use <em>X</em> to denote the full set of explanatory variables. For example, when y is the default variable in the house pricing example or direction in the bit coin example. On the other hand, x is the set of independent variables. The previous equation reads: the probability that y=1, given X is equal to the probability that y=1, given <span class="math inline">\(x_{1},x_{2},..,x_{n}\)</span>.</p>
+<p>To simplify, we usually use a binary response c(0,1). One for the result of interest, the default for example, or zero for other case, not default. To ensures that the result predictions be a binary response c(0,1), also. First we estimate response probabilities that are strictly between zero and one. Specifying a model:</p>
+<p><span class="math display">\[P(y=1/X)=G(\beta_{0}+\beta_{1}x_{1}+,..,+\beta_{n}x_{n}) \]</span>
+where G is a function taking on values strictly between zero and one: 0 &lt; <em>G</em> &lt; 1.</p>
+<p>Various nonlinear functions have been suggested for the function <em>G</em> to make sure that the probabilities are between zero and one. The more common is the logit model, where <em>G</em> is the logistic function:</p>
+<p><span class="math display">\[G(z)=\frac{exp(z)}{1-(exp(z)}\]</span>
+which is between zero and one for all real numbers z. This is the cumulative distribution function for a standard logistic random variable.</p>
+<p>For the logit model <em>z</em> is the predicted model.</p>
+<p><span class="math display">\[ z=\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n}\]</span></p>
+<p><span class="math display">\[G(z)=\frac{exp(z)}{1-(exp(z)}\]</span>
+Then,</p>
+<p><span class="math display">\[P(y=1/X)=\frac{exp(\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n})}{1-(exp(\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n})}\]</span></p>
+<p>Which is the equation we will use for making a prediction. However, we can not use the OLS to estimate the model, because it is a not linear binary response model. Then we apply the maximum likelihood estimation (MLE).</p>
+<p>For the credit data set we use the function glm to estimate the Logistic regression.</p>
+<p>Before that, we trasnform the categorical values into numerival and eliminate Nas.</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">credit_train</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/datapro/man/asnum.html">asnum</a></span><span class="op">(</span><span class="va">credit_train</span><span class="op">)</span></span>
+<span><span class="va">credit_train</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">credit_train</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">credit_test</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/datapro/man/asnum.html">asnum</a></span><span class="op">(</span><span class="va">credit_test</span><span class="op">)</span></span>
+<span><span class="va">credit_test</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">credit_test</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Default ~ ., family = binomial(), data = credit_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.6715  -0.5833  -0.4045  -0.2269   2.7163  
+## 
+## Coefficients: (1 not defined because of singularities)
+##                        Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)          -4.146e+00  2.695e+00  -1.538  0.12405   
+## loan_amnt            -1.659e-04  1.074e-04  -1.546  0.12222   
+## term                  2.136e+00  7.051e-01   3.030  0.00245 **
+## int_rate             -6.764e-01  4.270e-01  -1.584  0.11317   
+## installment           5.081e-03  3.390e-03   1.499  0.13397   
+## grade                -2.724e-01  4.041e-01  -0.674  0.50019   
+## sub_grade             5.775e-01  3.035e-01   1.903  0.05708 . 
+## emp_title             5.335e-04  7.294e-04   0.731  0.46456   
+## emp_length            6.027e-02  4.280e-02   1.408  0.15909   
+## home_ownership        3.385e-01  1.383e-01   2.448  0.01437 * 
+## annual_inc           -2.877e-06  4.169e-06  -0.690  0.49008   
+## verification_status  -2.748e-01  1.594e-01  -1.724  0.08479 . 
+## issue_d                      NA         NA      NA       NA   
+## purpose              -6.848e-03  8.858e-02  -0.077  0.93838   
+## title                 8.493e-02  8.682e-02   0.978  0.32796   
+## dti                   1.688e-02  1.542e-02   1.094  0.27381   
+## earliest_cr_line     -1.137e-03  1.318e-03  -0.863  0.38825   
+## open_acc              5.082e-02  2.991e-02   1.699  0.08928 . 
+## pub_rec               4.611e-01  2.138e-01   2.157  0.03101 * 
+## revol_bal            -1.050e-05  1.120e-05  -0.937  0.34851   
+## revol_util            4.008e-03  5.821e-03   0.689  0.49111   
+## total_acc            -3.877e-03  1.334e-02  -0.291  0.77136   
+## initial_list_status   8.969e-01  6.913e-01   1.297  0.19451   
+## application_type     -7.003e-01  1.230e+00  -0.569  0.56921   
+## mort_acc             -1.104e-01  7.737e-02  -1.427  0.15358   
+## pub_rec_bankruptcies -4.767e-01  3.707e-01  -1.286  0.19838   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 631.12  on 697  degrees of freedom
+## Residual deviance: 521.51  on 673  degrees of freedom
+## AIC: 571.51
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = Default ~ term + sub_grade + home_ownership + verification_status + 
+##     open_acc + pub_rec + mort_acc + annual_inc, family = binomial(), 
+##     data = credit_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.1902  -0.6038  -0.4188  -0.2584   2.6427  
+## 
+## Coefficients:
+##                       Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)         -4.085e+00  5.892e-01  -6.933 4.11e-12 ***
+## term                 1.023e+00  2.731e-01   3.745  0.00018 ***
+## sub_grade            8.677e-02  2.148e-02   4.040 5.35e-05 ***
+## home_ownership       3.066e-01  1.323e-01   2.318  0.02048 *  
+## verification_status -2.955e-01  1.521e-01  -1.943  0.05207 .  
+## open_acc             3.959e-02  1.937e-02   2.043  0.04101 *  
+## pub_rec              3.551e-01  1.704e-01   2.084  0.03711 *  
+## mort_acc            -1.327e-01  7.199e-02  -1.843  0.06531 .  
+## annual_inc          -4.849e-06  3.321e-06  -1.460  0.14427    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 631.12  on 697  degrees of freedom
+## Residual deviance: 536.64  on 689  degrees of freedom
+## AIC: 554.64
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#credit_test&lt;-asnum(credit_test)</span></span></code></pre></div>
+<p>We apply the stepwise methodology to estimate a model using the argument “both” and trace = F:</p>
+<pre><code>##         15         19         24         26         32         34 
+## -1.4750804 -2.2810764 -0.9013844 -3.4618845 -0.5504505 -3.1938712</code></pre>
+<p>Take the stepwise result to predict the final model but this time using the test dataset, print the head and tai</p>
+<p>The argument type = “response” transform automatically the results into a probability. In other words, applies the formula exp(x)/(1+exp(x)). Then if we use that argument, is no correct to transform it into a probability.<br>
+predicted_test &lt;- predict(model, newdata=)</p>
+<p>Transform into a probabilistic model, applying the formula exp(x)/(1+exp(x)). Print the head and tail of the result:</p>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.01140 0.05696 0.10391 0.15324 0.19847 0.67279</code></pre>
+<div class="inline-figure">Create a conditional, if the prediction is bigger than 0.5, then 1, otherwise 0. Plot the results:
+<img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672">
+</div>
+<p>Now measure the Accuracy applying the confusion Matrix:</p>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   1   0
+##          1   6   1
+##          0  22 146
+##                                           
+##                Accuracy : 0.8686          
+##                  95% CI : (0.8093, 0.9148)
+##     No Information Rate : 0.84            
+##     P-Value [Acc &gt; NIR] : 0.1775          
+##                                           
+##                   Kappa : 0.2979          
+##                                           
+##  Mcnemar's Test P-Value : 3.042e-05       
+##                                           
+##             Sensitivity : 0.21429         
+##             Specificity : 0.99320         
+##          Pos Pred Value : 0.85714         
+##          Neg Pred Value : 0.86905         
+##              Prevalence : 0.16000         
+##          Detection Rate : 0.03429         
+##    Detection Prevalence : 0.04000         
+##       Balanced Accuracy : 0.60374         
+##                                           
+##        'Positive' Class : 1               
+## </code></pre>
+</div>
+<div id="linear-discriminant-analysis-lda" class="section level4" number="5.2.1.2">
+<h4>
+<span class="header-section-number">5.2.1.2</span> Linear Discriminant Analysis LDA<a class="anchor" aria-label="anchor" href="#linear-discriminant-analysis-lda"><i class="fas fa-link"></i></a>
+</h4>
+<p>Why do we need another method, when we have logistic regression?
+There are several reasons:</p>
+<p>• When the classes are well-separated, the parameter estimates for the
+logistic regression model are surprisingly unstable. Linear discriminant
+analysis does not suffer from this problem.</p>
+<p>• If number of observations <em>n</em> is small and the distribution of the predictors X is approximately normal in each of the classes, the linear discriminant model is again more stable than the logistic regression model.</p>
+<p>We apply the LDA model to the same credit data set. However, we takeout the variable issue_d, otherwise the model is not estimated.</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">credit_train</span><span class="op">&lt;-</span><span class="va">credit_train</span><span class="op">[</span>,<span class="op">-</span><span class="fl">12</span><span class="op">]</span></span>
+<span><span class="va">credit_test</span><span class="op">&lt;-</span><span class="va">credit_test</span><span class="op">[</span>,<span class="op">-</span><span class="fl">12</span><span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span> <span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Attaching package: 'MASS'</code></pre>
+<pre><code>## The following object is masked from 'package:dplyr':
+## 
+##     select</code></pre>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lda.fit</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span><span class="op">(</span><span class="va">Default</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">credit_train</span><span class="op">)</span></span>
+<span><span class="va">lda.fit</span></span></code></pre></div>
+<pre><code>## Call:
+## lda(Default ~ ., data = credit_train)
+## 
+## Prior probabilities of groups:
+##         0         1 
+## 0.8323782 0.1676218 
+## 
+## Group means:
+##   loan_amnt     term int_rate installment    grade sub_grade emp_title
+## 0  14992.13 1.173838 11.30895    453.9710 2.401033  9.772806  262.6816
+## 1  15283.55 1.461538 14.55598    437.5981 3.316239 14.504274  272.5556
+##   emp_length home_ownership annual_inc verification_status  purpose    title
+## 0   5.117040       1.752151   81069.05            1.764200 3.258176 5.067126
+## 1   5.512821       2.094017   70985.66            1.786325 3.418803 5.188034
+##        dti earliest_cr_line open_acc   pub_rec revol_bal revol_util total_acc
+## 0 18.90582         154.9449 12.38554 0.2271945  18348.62   49.06936  26.30465
+## 1 21.41171         151.0171 13.74359 0.3418803  15609.53   50.56667  27.13675
+##   initial_list_status application_type mort_acc pub_rec_bankruptcies
+## 0            1.955250         1.008606 1.975904            0.1376936
+## 1            1.974359         1.008547 1.316239            0.1794872
+## 
+## Coefficients of linear discriminants:
+##                                LD1
+## loan_amnt            -2.627499e-04
+## term                  2.977285e+00
+## int_rate             -4.457492e-01
+## installment           7.977948e-03
+## grade                -1.942167e-01
+## sub_grade             3.744479e-01
+## emp_title             3.137385e-04
+## emp_length            5.217647e-02
+## home_ownership        3.159080e-01
+## annual_inc           -1.086106e-06
+## verification_status  -2.259384e-01
+## purpose              -1.458813e-02
+## title                 7.267585e-02
+## dti                   1.467009e-02
+## earliest_cr_line     -1.054073e-03
+## open_acc              5.127933e-02
+## pub_rec               4.644621e-01
+## revol_bal            -4.349356e-06
+## revol_util            1.522495e-03
+## total_acc            -6.584011e-03
+## initial_list_status   6.992175e-01
+## application_type     -6.901451e-01
+## mort_acc             -6.956526e-02
+## pub_rec_bankruptcies -4.437124e-01</code></pre>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lda.pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lda.fit</span>, <span class="va">credit_test</span><span class="op">)</span></span>
+<span><span class="co">#names(lda.pred)</span></span>
+<span><span class="va">lda.pred</span><span class="op">$</span><span class="va">class</span></span></code></pre></div>
+<pre><code>##   [1] 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+##  [38] 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0
+##  [75] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [112] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [149] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0
+## Levels: 0 1</code></pre>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Defaultf_lda</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">lda.pred</span><span class="op">$</span><span class="va">class</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">credit_testf</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">credit_test</span><span class="op">$</span><span class="va">Default</span>,levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">confusionMatrix</span><span class="op">(</span><span class="va">Defaultf_lda</span>,<span class="va">credit_testf</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction   1   0
+##          1   5   4
+##          0  23 143
+##                                           
+##                Accuracy : 0.8457          
+##                  95% CI : (0.7835, 0.8958)
+##     No Information Rate : 0.84            
+##     P-Value [Acc &gt; NIR] : 0.468215        
+##                                           
+##                   Kappa : 0.2087          
+##                                           
+##  Mcnemar's Test P-Value : 0.000532        
+##                                           
+##             Sensitivity : 0.17857         
+##             Specificity : 0.97279         
+##          Pos Pred Value : 0.55556         
+##          Neg Pred Value : 0.86145         
+##              Prevalence : 0.16000         
+##          Detection Rate : 0.02857         
+##    Detection Prevalence : 0.05143         
+##       Balanced Accuracy : 0.57568         
+##                                           
+##        'Positive' Class : 1               
+## </code></pre>
+</div>
+</div>
+<div id="training-and-evaluating-on-the-training-set" class="section level3" number="5.2.2">
+<h3>
+<span class="header-section-number">5.2.2</span> Training and Evaluating on the Training Set<a class="anchor" aria-label="anchor" href="#training-and-evaluating-on-the-training-set"><i class="fas fa-link"></i></a>
+</h3>
+<p>Estimating the RMSE</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#dep="median_house_value"</span></span>
+<span><span class="co">#rmse&lt;-cbind(test[,dep],predicted_test)</span></span>
+<span><span class="co">#sqrt(mean((rmse[,2]-rmse[,1])^2,na.rm = T ))</span></span></code></pre></div>
+</div>
+</div>
+<div id="resampling-cross-validation" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Resampling (cross-validation)<a class="anchor" aria-label="anchor" href="#resampling-cross-validation"><i class="fas fa-link"></i></a>
+</h2>
+<p>Resampling methods are an indispensable tool in modern statistics. They involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. For example, in order to estimate the variability of a linear
+regression fit, we can repeatedly draw different samples from the training data, fit a linear regression to each new sample, and then examine the extent to which the resulting fits differ. Such an approach may allow us to obtain information that would not be available from fitting the model only once using the original training sample.</p>
+<p>One of the most common resampling method is K Fold Cross Validation. Cross-validation can be used to estimate the test
+error associated with a given statistical learning method in order to evaluate its performance, or to select the appropriate level of flexibility. The process of evaluating a model’s performance is known as model assessment, whereas model
+the process of selecting the proper level of flexibility for a model is known as assessment model selection.</p>
+<p>K Fold Cross Validation</p>
+<p>This approach involves randomly k-fold CV dividing the set of observations into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k − 1 folds. The mean squared error, MSE1, is then computed on the observations in the held-out fold. This procedure is repeated k times; each time, a different group of observations is treated
+as a validation set.</p>
+<p><span class="math display">\[CV_{k} =\frac{1}{k}\ \sum_{i=1}^{k} MSE_{i} \]</span>
+In practice, one typically performs k-fold CV using k = 5 or k = 10.</p>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="prepare-the-data-for-machine-learning-algorithms.html"><span class="header-section-number">4</span> 4 Prepare the Data for Machine Learning Algorithms</a></div>
+<div class="next"><a href="fine-tune-or-tune-the-ml-model.html"><span class="header-section-number">6</span> 6 Fine-Tune or Tune the ML Model</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#select-and-train-and-evaluate-the-model"><span class="header-section-number">5</span> 5 Select and Train and evaluate the Model</a></li>
+<li>
+<a class="nav-link" href="#for-continuous-variables-1"><span class="header-section-number">5.1</span> For continuous variables</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#linear-model-selection"><span class="header-section-number">5.1.1</span> Linear Model Selection</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#select-the-model-for-categorical-variables"><span class="header-section-number">5.2</span> Select the model for categorical variables</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#clasification-models"><span class="header-section-number">5.2.1</span> Clasification models</a></li>
+<li><a class="nav-link" href="#training-and-evaluating-on-the-training-set"><span class="header-section-number">5.2.2</span> Training and Evaluating on the Training Set</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#resampling-cross-validation"><span class="header-section-number">5.3</span> Resampling (cross-validation)</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/abernal30/BookAFP/blob/master/01-ml.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/abernal30/BookAFP/edit/master/01-ml.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Machine learning introductory guide</strong>" was written by L. Arturo Bernal. It was last built on 2022-11-05.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
