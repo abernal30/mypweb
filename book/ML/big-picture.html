@@ -135,9 +135,14 @@ test data.</p>
 </h3>
 <p>Confusion matrix</p>
 <p>Is a table that categorizes predictions according to whether they match the actual value. One of the table’s dimensions indicates the possible categories of predicted values, while the other dimension indicates the same for actual values. Although we have only seen 2 x 2 confusion matrices so far, a matrix can be created for models that predict any number of class values. The following figure shows a generic confusion matrix.</p>
-<div class="inline-figure"><img class="featurette-image img-responsive center-block" src="cm2.jpeg" width="260" height="330" alt="Generic placeholder image"></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="images/cm2.jpeg" alt="Confusion matrix." width="70%"><p class="caption">
+Figure 1.1: Confusion matrix.
+</p>
+</div>
 <p>Where True Positive (TP): Correctly classified as the class of interest. True Negative (TN) is Correctly classified as not the class of interest. False Positive (FP) is Incorrectly classified as the class of interest. False Negative (FN): Incorrectly classified as not the class of interest.</p>
-<p>In the confusion matrix, one of the mesures of interest is the accuracy, defined as:</p>
+<p>In the confusion matrix, one of the measure of interest is the accuracy, defined as:</p>
 <p><span class="math display">\[ accuracy =\frac{TP+TN}{TP+TN+FP+FN}\]</span></p>
 <p>In this formula, the terms TP, TN, FP, and FN refer to the number of times the model’s predictions fell into each of these categories. The accuracy is therefore a proportion that represents the number of true positives and true negatives, divided by the total number of predictions.</p>
 <p>The error rate or the proportion of the incorrectly classified examples is specified as:</p>

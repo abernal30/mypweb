@@ -120,7 +120,7 @@
 <p>Visualizing relationships among features – the scatterplot matrix</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span>,<span class="va">h_vars</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
 <p>Or a combination of correlation and relationships among features</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">panel.cor</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">digits</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">""</span>, <span class="va">cex.cor</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -134,7 +134,7 @@
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="va">txt</span>, cex <span class="op">=</span> <span class="va">cex.cor</span> <span class="op">*</span> <span class="va">r</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span>,<span class="va">h_vars</span><span class="op">]</span><span class="op">)</span>,upper.panel<span class="op">=</span><span class="va">panel.cor</span>,na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672"></div>
 </div>
 <div id="experimenting-with-attribute-combinations" class="section level2" number="3.2">
 <h2>
@@ -162,7 +162,7 @@
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="va">txt</span>, cex <span class="op">=</span> <span class="va">cex.cor</span> <span class="op">*</span> <span class="va">r</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span>,<span class="va">h_vars</span><span class="op">]</span>,upper.panel<span class="op">=</span><span class="va">panel.cor</span>,na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
 </div>
 </div>
   <div class="chapter-nav">
