@@ -32,10 +32,10 @@ accuracy-of-the-prediction
 appendix
 bibliography-1
 credit-analysis
-example
-a-independent-variable-creation
-b-prediction-model
+prediction-with-the-logit-model
 measuring-model-performance
+prediction-with-linear-discriminant-analysis-lda
+cross-validation.
 rational-agent-and-behavioral-finance-in-investment
 shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset
 long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset

@@ -1,7 +1,7 @@
 --- 
 title: "Algorithms and Financial Programming in R"
 author: "Arturo Bernal"
-date: "2022-10-31"
+date: "2022-11-12"
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
@@ -14,7 +14,7 @@ colorlinks: true
 github-repo: abernal30/BookAFP 
 cover-image: images/coverf.png
 url: https://www.arturo-bernal.com/book
-description: "A guide financial modeling in R"
+description: "A guide for financial modeling in R"
 ---
 
 

@@ -16,7 +16,24 @@ library(rugarch)
 library(dplyr) 
 ```
 
+Around 1970, economists argued that an efficient market (Fama, 1970) should instantaneously reflect all the available information of a particular financial security, Efficient market hypothesis EMH. 
+
+Then, arbitrage opportunities were difficult to exist, or they used to argue that those markets were not predictable.
+
+Academics were reasonably content with the efficient market hypothesis (EMH) until sometime toward the end of the twentieth century. The year 1987 was critical in undermining faith in the EMH. 
+
+
+U.S. stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average historic collapse. 
+
+What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view. 
+
+
+•Economists who were actively discussing and acting in financial markets seemed to believe that markets were predictable, a key tenet of modern behavioral finance.
 The test in this chapter and some of the text is  based on Wooldridge (2012) with my own codes.
+
+In summary, trading strategies perform best in non-efficient markets, where abundant arbitrage opportunities exist. Perfectly efficient markets instantaneously incorporate all available market information, then no trading opportunities. 
+
+•In this session, we will measure whether a market is efficient. We could build algorithms to predict the stock markets if the market is inefficient. 
 
 ##   Shorts samples test of efficient markets hypothesis (EMH) for one asset
 

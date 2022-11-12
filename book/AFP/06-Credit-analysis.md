@@ -1,423 +1,478 @@
 # Credit analysis
 
 
-For this chapter, we will use a library I write for data processing, "datapro" To install it run the following code in a chunk:
-To install it run:
-
-library(devtools) 
-
-Then:
-
-remotes::install_github(“datanalyticss/data_pro”)
-
-or
-
-devtools::install_github(“datanalyticss/data_pro”)
+In this chapter we will use the following libraries:
 
 
 ```r
 library(openxlsx)
-library(dplyr)
 library(caret)
+library(MASS)
 ```
 
 
-## Example 
 
-The database credit_short.xlsx has historical information of lendingclub, https://www.lendingclub.com/ fintech marketplace bank at scale. One of the spreadsheets has the variable description. The original data set has at least 2 million observations and 150 variables. You will find the credit_semioriginal.xlsx with the first 1,000 observations.
+In this chapter, we will cover Credit allocation (loan origination) by
+applying Big Data. The database credit.xlsx has historical information
+on Lendingclub, <https://www.lendingclub.com/> fintech marketplace bank
+at scale. On the spreadsheets, you will find the variable description.
+The original data set has at least 2 million observations and 150
+variables. Inside the file "credit.xlsx," you will find only 1000
+observations (rows) and 26 columns. Each row represents a
+Lendingclub client. We previously made the data cleaning (missing
+values, correlated variables, Zero- and Near Zero-Variance Predictors).
+To know more about data cleaning, see the 2nd chapter of this book.
 
-In the following example, you will find an example of a "prediction model" for the credit_short.xlsx, which only has 26 variables.
-
-dataset source:
-https://www.kaggle.com/wordsforthewise/lending-club
-
-### a) Independent variable creation
-
-```r
-df<-read.xlsx("data/credit_short.xlsx")
-```
-
-
-Function count(df,col,sort = T) could give us the number of observations per category of the variable loan_status: 
-
-```r
-co<-count(df,loan_status,sort =T )
-co
-#>          loan_status   n
-#> 1         Fully Paid 728
-#> 2        Charged Off 145
-#> 3            Current 121
-#> 4 Late (31-120 days)   5
-#> 5    In Grace Period   1
-# para saber cuantas cztegorias tiene term
-```
-
-
-For this example, and for the evidence, we will create a binary variable, based on Fully Paid and Charged Off categories, which are equivalent to no-default and default respectively. 
-
-
-Charge off" means that the credit grantor wrote your account off of their receivables as a loss, and it is closed to future charges. When an account displays a status of "charge off," it means the account is closed to future use, although the debt is still owed.
-
-
-
-barplot(df$colsum , names.arg=df$colnames , las=2, 
-                  col=c("red","blue","green","purple","black"),
-                  ylim=c(0,700))
-                  
-df is the data frame name, colsum is the column of the data frame with the number for each categorie and colnames is the column of the data frame with the names of the categories. 
-
-```r
-co<-count(df,loan_status,sort =T )
-barplot(co$n , names.arg=co$loan_status , las=2 , 
-  col=c("red","blue","green","purple","black"),
-                  ylim=c(0,700))
-```
-
-<img src="06-Credit-analysis_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;" />
-
-
-I make a filter, in such a way that the loan_status contains only Fully Paid and Charged Off:
-
-library dplyr
-
-%>% is a pipe to
-
-df %>%
-  filter(col== "r1" |col== "r2")
-  df is a data frame, col is the column name, r1 and r2 is the category 1 and 2 respectively, in this case Fully Paid and Charged Off
-  
-
-```r
-df2<-df %>%
-  filter(loan_status == "Fully Paid" | loan_status== "Charged Off") 
-count(df2,loan_status)
-#>   loan_status   n
-#> 1 Charged Off 145
-#> 2  Fully Paid 728
-```
-  
-For the logit model to run, we need to transform the loan_status into  (0,1), if "Fully Paid" then 0, and "Charged Off", 1. The relevant variable is "Charged Off", because we are concerned about the expected losses (if customers do not pay the loan).  
-
-We apply the ifelse function and cbind to combine in an object.
+In the next output, we see the variables of Lendingclub's customers when
+they granted the loan. For example, the variable term is the term, in
+years, of the loan, "annual_inc," which is the customer's annual income
+when she got the loan.
 
 
 ```r
-Default<-ifelse(df2$loan_status=="Fully Paid",0,1)
-#Default<-factor(Default ,levels =c(1,0))
-# combining default and df2
-df3<-cbind(Default,df2)
-# delete loan status, is the second colum
-df4<-df3[,-2]
-head(df4)
-#>   Default loan_amnt      term int_rate installment grade sub_grade
-#> 1       0      3600 36 months    13.99      123.03     C        C4
-#> 2       0     24700 36 months    11.99      820.28     C        C1
-#> 3       0     20000 60 months    10.78      432.66     B        B4
-#> 4       0     10400 60 months    22.45      289.91     F        F1
-#> 5       0     11950 36 months    13.44      405.18     C        C3
-#> 6       0     20000 36 months     9.17      637.58     B        B2
-#>                                 emp_title emp_length home_ownership annual_inc
-#> 1                                 leadman  10+ years       MORTGAGE      55000
-#> 2                                Engineer  10+ years       MORTGAGE      65000
-#> 3                            truck driver  10+ years       MORTGAGE      63000
-#> 4                     Contract Specialist    3 years       MORTGAGE     104433
-#> 5                    Veterinary Tecnician    4 years           RENT      34000
-#> 6 Vice President of Recruiting Operations  10+ years       MORTGAGE     180000
-#>   verification_status            purpose              title   dti
-#> 1        Not Verified debt_consolidation Debt consolidation  5.91
-#> 2        Not Verified     small_business           Business 16.06
-#> 3        Not Verified   home_improvement               <NA> 10.78
-#> 4     Source Verified     major_purchase     Major purchase 25.37
-#> 5     Source Verified debt_consolidation Debt consolidation 10.20
-#> 6        Not Verified debt_consolidation Debt consolidation 14.67
-#>   earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc
-#> 1         Aug-2003        7       0      2765       29.7        13
-#> 2         Dec-1999       22       0     21470       19.2        38
-#> 3         Aug-2000        6       0      7869       56.2        18
-#> 4         Jun-1998       12       0     21929       64.5        35
-#> 5         Oct-1987        5       0      8822       68.4         6
-#> 6         Jun-1990       12       0     87329       84.5        27
-#>   initial_list_status application_type mort_acc pub_rec_bankruptcies
-#> 1                   w       Individual        1                    0
-#> 2                   w       Individual        4                    0
-#> 3                   w        Joint App        5                    0
-#> 4                   w       Individual        6                    0
-#> 5                   w       Individual        0                    0
-#> 6                   f       Individual        4                    0
-# Don´t forget to eliminate the column loan_status, because it would be duplicated with Default
+data<-openxlsx::read.xlsx("data/credit.xlsx")
+str(data[,1:10])
+#> 'data.frame':	873 obs. of  10 variables:
+#>  $ Default            : chr  "Fully Paid" "Fully Paid" "Fully Paid" "Fully Paid" ...
+#>  $ term               : num  1 1 2 2 1 1 1 1 1 1 ...
+#>  $ installment        : num  123 820 433 290 405 ...
+#>  $ grade              : num  3 3 2 6 3 2 2 1 2 3 ...
+#>  $ emp_title          : num  299 209 623 126 633 636 481 540 631 314 ...
+#>  $ emp_length         : num  3 3 3 5 6 3 3 8 3 5 ...
+#>  $ home_ownership     : num  1 1 1 1 3 1 1 3 1 1 ...
+#>  $ annual_inc         : num  55000 65000 63000 104433 34000 ...
+#>  $ verification_status: num  1 1 1 2 2 1 1 1 1 1 ...
+#>  $ purpose            : num  3 10 4 6 3 3 6 2 2 9 ...
 ```
 
-
-### b) "Prediction model"
-
-If we run the model like this, when some variables are categorical, for example, term, grade, and many others, the model accuracy will be very low. More importantly, the predict function may not work. Then we need to transform the variables into numeric.   
-
-For example, the column term has the following categories:
-
-
-
-The following code transforms that categorical variable into numerical. The code is above the level of this course and is shown for exposition purposes (not covered in the final exam).
-
-
+The variable "Default", winch originally has the name "loan_status", it
+has two labels:
 
 
 ```r
-library(datapro) 
-df5<-asnum(df4)
-head(df5)
-#>   Default loan_amnt term int_rate installment grade sub_grade emp_title
-#> 1       0      3600    1    13.99      123.03     1         1         1
-#> 2       0     24700    1    11.99      820.28     1         2         2
-#> 3       0     20000    2    10.78      432.66     2         3         3
-#> 4       0     10400    2    22.45      289.91     3         4         4
-#> 5       0     11950    1    13.44      405.18     1         5         5
-#> 6       0     20000    1     9.17      637.58     2         6         6
-#>   emp_length home_ownership annual_inc verification_status purpose title   dti
-#> 1          1              1      55000                   1       1     1  5.91
-#> 2          1              1      65000                   1       2     2 16.06
-#> 3          1              1      63000                   1       3     3 10.78
-#> 4          2              1     104433                   2       4     4 25.37
-#> 5          3              2      34000                   2       1     1 10.20
-#> 6          1              1     180000                   1       1     1 14.67
-#>   earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc
-#> 1                1        7       0      2765       29.7        13
-#> 2                2       22       0     21470       19.2        38
-#> 3                3        6       0      7869       56.2        18
-#> 4                4       12       0     21929       64.5        35
-#> 5                5        5       0      8822       68.4         6
-#> 6                6       12       0     87329       84.5        27
-#>   initial_list_status application_type mort_acc pub_rec_bankruptcies
-#> 1                   1                1        1                    0
-#> 2                   1                1        4                    0
-#> 3                   1                2        5                    0
-#> 4                   1                1        6                    0
-#> 5                   1                1        0                    0
-#> 6                   2                1        4                    0
+table(data[,"Default"])
+#> 
+#> Charged Off  Fully Paid 
+#>         145         728
 ```
 
-Split the data set into training and test in 80% the training and 20% the test data set. 
+"Charge off" means that the credit grantor wrote your account off of
+their receivables as a loss and is closed to future charges. When an
+account displays a status of "charge off," it is closed to future use,
+although the customer still owns the debt. For this example, we will
+consider Charged Off equivalent to Default and Fully Paid as no default.
 
-When the data set is not a time series, we use the function sample. Which randomly generates dim[1]*n  numbers of the full data set. Where dim[1] is the number of rows of the full data set and n is a %, in this case 80%. 
+In a previous output, we show that the "Default" variable class is
+"character," and a function we will apply below does only accept numeric
+or factor variables. We transform that variable into "factor."
 
+
+```r
+data[,"Default"]<-factor(data[,"Default"])
+```
+
+### Prediction with the Logit model
+
+First, we split the data set into training and test, 80% of the training
+and 20% of the test data set. For an explanation of this procedure, see
+chapter [Machine learning with market direction prediction: Logit].
+
+We use the function sample when the data set is not a time series. Which
+randomly generates dim[1]\*n numbers of the full data set. Where dim[1]
+is the number of rows of the full data set, and n is a %, in this case,
+80%.
+
+
+```r
 set.seed (1)
-train_sample<-sample(dim[1],dim[1]*n)
+dim<-dim(data)
+train_sample<-sample(dim[1],dim[1]*0.8)
 
-train <- df[train_sample, ]
-test  <- df[-train_sample, ]
-set.seed (13)
-
-
-
-
-
-```
-#>     Default loan_amnt term int_rate installment grade sub_grade emp_title
-#> 773       0     13050    2    26.06      391.19     3        27        39
-#> 698       0     15000    1     9.80      482.61     2        19       533
-#> 652       0      2000    1    11.99       66.42     1         2       500
-#> 548       0     20000    1    11.48      659.33     2         9       426
-#> 872       0      5500    1    11.99      182.66     1         2       648
-#> 392       0     22600    1    15.77      791.99     6        18        39
-#>     emp_length home_ownership annual_inc verification_status purpose title
-#> 773          1              1      43500                   3       1     1
-#> 698          7              2      89000                   1       1     1
-#> 652          3              2      35000                   2       1     1
-#> 548         11              2     185000                   3       1     1
-#> 872          2              2      37000                   2       1     1
-#> 392          2              1      53867                   1       1     1
-#>       dti earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc
-#> 773 22.79              305        8       0     12799       88.3        21
-#> 698 19.50               29       11       0      6273       26.4        24
-#> 652  4.01              256        7       1      1024       17.1        16
-#> 548 25.70              242       17       0     31201       90.2        28
-#> 872 21.15               42        7       0      5914       81.0        21
-#> 392 25.31               40       33       0     23959       53.5        46
-#>     initial_list_status application_type mort_acc pub_rec_bankruptcies
-#> 773                   1                1        3                    0
-#> 698                   1                1        1                    0
-#> 652                   1                1        0                    0
-#> 548                   1                1        0                    0
-#> 872                   1                1        0                    0
-#> 392                   1                1        0                    0
+train <- data[train_sample, ]
+test  <- data[-train_sample, ]
 ```
 
+Because the function "sample" generates random numbers, we use
+"set.seed" to specify seeds to control the results; in other words, we
+will always get the same results, even when we generate random numbers.
 
-The result of running the logit model with all the variables and using the train set is:
-glm(y ~x1+x2+x3,data=,family=binomial())
+We will run the following logit model:
 
-where y is the dependent variable, and x1, x2, x3 are the independent variables in the model: 
+$$Default=\alpha_{0}\ +\beta_{1}\ term_{1}+\beta_{2}\ grade_{2}+...+\beta_{n}\ variable_{n}+e$$
+Where $e$ is the error term.
 
-$$y=\alpha_{0}\ +\beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+e$$
-and e is the error term. 
+The next code is to run the logit model using the train set:
 
-If we want to appli the model for all the variables
-glm(y ~.,data=,family=binomial())
-
-$$y=\alpha_{0}\ +\beta_{1}x_{1}+\beta_{2}x_{2}+...+\beta_{n}x_{n}+e$$
-
-In this case, y is the Default variable.
-glm(y ~x1+x2+x3,data=,family=binomial())
 
 ```r
-model<-glm(Default~. ,data=train,family=binomial())
+model<-glm(Default ~ term+grade ,data= train ,family=binomial())
+summary(model)
+#> 
+#> Call:
+#> glm(formula = Default ~ term + grade, family = binomial(), data = train)
+#> 
+#> Deviance Residuals: 
+#>     Min       1Q   Median       3Q      Max  
+#> -2.3183   0.3755   0.4647   0.5723   1.3079  
+#> 
+#> Coefficients:
+#>             Estimate Std. Error z value Pr(>|z|)    
+#> (Intercept)  3.75411    0.34435  10.902  < 2e-16 ***
+#> term        -0.69219    0.24816  -2.789  0.00528 ** 
+#> grade       -0.44522    0.09073  -4.907 9.25e-07 ***
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> (Dispersion parameter for binomial family taken to be 1)
+#> 
+#>     Null deviance: 631.12  on 697  degrees of freedom
+#> Residual deviance: 572.50  on 695  degrees of freedom
+#> AIC: 578.5
+#> 
+#> Number of Fisher Scoring iterations: 4
 ```
 
+The next code is to run the logit model with all the variables, using
+the train set is:
 
-The prediction:
-predict(model,newdata = test,type = "response")
+$$Default=\alpha_{0}\ +\beta\ X+e$$ Where $X$ represents all the
+variables inside the data bases, except "Default".
 
-the type = "response" argument is for get the transformation of the logit model into probability. Also we need  to transform the probability into c(0,1).
 
 ```r
-predict<-predict(model,newdata = test,type = "response")
-#trasnform that probability into a 0,1
-predictp<-ifelse(predict>.5,1,0)
-predictp
-#>   7  21  29  31  34  35  38  39  41  43  46  55  57  61  66  68  83  90  91  97 
-#>   0   0   0   0   0   0   0   0   1   0   0   1   0  NA   0   1   0   0   0   0 
-#> 106 107 112 113 119 124 126 141 150 152 156 160 162 167 173 174 179 196 199 200 
-#>   0   0   1   0   0  NA   1   0   0   0   0   0  NA   0   0   0   1   0   0   0 
-#> 203 207 210 211 216 218 221 230 232 235 239 240 249 254 259 264 267 268 279 281 
-#>   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1 
-#> 288 290 301 302 308 313 315 323 329 335 341 342 348 350 351 359 361 363 365 368 
-#>   0  NA   0   0   0   1   0   0   0   0   0   0   1   0   0  NA   0   0   0   0 
-#> 384 396 402 404 408 409 414 419 423 425 434 435 445 447 451 452 453 454 458 459 
-#>   0   0   0   0   0   0   0   0   0  NA   0   0   0   0   0   1   0   0   0   1 
-#> 464 467 480 491 499 501 506 511 523 525 526 530 536 537 543 544 545 546 568 569 
-#>   0   0   0   0  NA   0   0   0   0   1   1   0   0   0  NA   0   0   0   0   0 
-#> 573 585 588 595 599 600 609 622 627 632 638 655 657 661 665 687 692 699 700 706 
-#>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 
-#> 708 719 724 726 735 740 748 751 754 755 758 775 777 781 783 784 789 794 799 803 
-#>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  NA   0   0 
-#> 804 807 810 811 812 814 819 825 829 835 836 843 844 851 854 
-#>   0   0   0  NA   0   0   0   0   0   0   0   0   0   1   0
+model_all<-glm(Default ~. ,data=train ,family=binomial())
 ```
 
+The next step is to make the prediction on the test data set, based on
+the the "model_all".
 
 
-### Measuring model performance
-
-The confusion Matrix. Before that we need to transform the variables into factor.
-
-confusionMatrix(prediction,real)
-
+```r
+predict<-predict(model_all, newdata = test,type = "response")
+head(predict)
+#>           10           18           21           23           24           26 
+#> 1.000000e+00 2.220446e-16 1.000000e+00 1.000000e+00 1.000000e+00 1.000000e+00
 ```
+
+The "type = response" argument is to transform the results into
+probability.
+
+In the previous output, we see that our prediction is not of the type
+"Fully Paid" or "Charged Off," then we transform our forecast in that
+categories. We set as threshold 0.5; if our prediction is higher than
+0.5, then we transform it into "Fully Paid," and otherwise "Charged
+Off." It is a common practice if you wonder why our threshold is 0.5.
+Still, more importantly, after estimating the prediction accuracy of our
+model, we could change this threshold to improve the prediction
+performance.
+
+
+```r
+predicf_char<-ifelse(predict>.5,"Fully Paid","Charged Off")
+head(predicf_char)
+#>            10            18            21            23            24 
+#>  "Fully Paid" "Charged Off"  "Fully Paid"  "Fully Paid"  "Fully Paid" 
+#>            26 
+#>  "Fully Paid"
+```
+
+## Measuring model performance
+
+To measure the performance of our prediction, we will use the confusion
+Matrix. Before that, we need to transform our prediction into a factor.
+
+
+```r
+
+predict_factor<-factor(predicf_char)
+caret::confusionMatrix(predict_factor,test[,"Default"])$table
+#>              Reference
+#> Prediction    Charged Off Fully Paid
+#>   Charged Off          27          8
+#>   Fully Paid            1        139
+```
+
+The confusion Matrix categorizes our predictions according to whether
+they match the actual value. One of the table's dimensions indicates the
+possible categories of predicted values, while the other shows the same
+for real (reference) values.
+
+There are other measures that the "confusionMatrix" functions show. For
+this chapter, we are only concerned about Accuracy and Sensitivity.
+
+
+```r
+confusionMatrix(predict_factor,test[,"Default"])
 #> Confusion Matrix and Statistics
 #> 
-#>           Reference
-#> Prediction   1   0
-#>          1   7   8
-#>          0  16 134
+#>              Reference
+#> Prediction    Charged Off Fully Paid
+#>   Charged Off          27          8
+#>   Fully Paid            1        139
 #>                                           
-#>                Accuracy : 0.8545          
-#>                  95% CI : (0.7913, 0.9045)
-#>     No Information Rate : 0.8606          
-#>     P-Value [Acc > NIR] : 0.6409          
+#>                Accuracy : 0.9486          
+#>                  95% CI : (0.9046, 0.9762)
+#>     No Information Rate : 0.84            
+#>     P-Value [Acc > NIR] : 8.743e-06       
 #>                                           
-#>                   Kappa : 0.2903          
+#>                   Kappa : 0.8263          
 #>                                           
-#>  Mcnemar's Test P-Value : 0.1530          
+#>  Mcnemar's Test P-Value : 0.0455          
 #>                                           
-#>             Sensitivity : 0.30435         
-#>             Specificity : 0.94366         
-#>          Pos Pred Value : 0.46667         
-#>          Neg Pred Value : 0.89333         
-#>              Prevalence : 0.13939         
-#>          Detection Rate : 0.04242         
-#>    Detection Prevalence : 0.09091         
-#>       Balanced Accuracy : 0.62400         
+#>             Sensitivity : 0.9643          
+#>             Specificity : 0.9456          
+#>          Pos Pred Value : 0.7714          
+#>          Neg Pred Value : 0.9929          
+#>              Prevalence : 0.1600          
+#>          Detection Rate : 0.1543          
+#>    Detection Prevalence : 0.2000          
+#>       Balanced Accuracy : 0.9549          
 #>                                           
-#>        'Positive' Class : 1               
+#>        'Positive' Class : Charged Off     
 #> 
 ```
 
 
-Cross validation. 
 
-Resampling methods are an indispensable tool in modern statistics. They involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the model.  Such an approach may allow us to obtain information that would not be available from fitting the model only once using the original training sample.
+The accuracy is, therefore, a proportion representing the number of true
+positives and negatives divided by the total number of predictions. In
+this case, our mode Accuracy is 0.9485714
 
+The sensitivity of a model (also called the true positive rate) measures
+the proportion of positive examples correctly classified. For this
+example, at the end of the "confusionMatrix" output we see that the
+'Positive' Class is "Charged Off". Our mode Sensitivity is 0.9642857.
 
-Also, it would help us to get the best variables that improves the accuracy. First we need to transform the dependent variable into factor.
+## Prediction with Linear Discriminant Analysis (LDA)
+
+Why do we need another method when we already have the logistic model?
+There are several reasons [@statistical_lerarning]:
+
+• When the classes are well-separated, the parameter estimates for the
+logistic regression model are surprisingly unstable. The linear
+Discriminant Analysis method does not suffer from this problem.
+
+• If the number of observations is small and the distribution of the
+independent variables is approximately normal in each class, the linear
+discriminant model is again more stable than the logistic regression
+model.
+
+For this chapter, we will use the LDA model to compare its Accuracy
+against the Logit model.
+
+The next code estimates the LDA model and makes the prediction:
+
 
 ```r
-def_train_f<-factor(train$Default,levels=c(1,0))
-trainf<-train
-trainf[,"Default"]<-def_train_f
-testf<-test
-testf[,"Default"]<-real # antes una f 
+model_lda<-MASS::lda(Default~.,data=train)
+pred_lda<-predict(model_lda, newdata = test)
+```
+
+The object "pred_lda" is an R-list, which contains the prediction, but
+also many other statistics, then to apply the "confusionMatrix" we need
+to get the prediction results:
+
+
+```r
+confusionMatrix(pred_lda[["class"]],test[,"Default"])
+#> Confusion Matrix and Statistics
+#> 
+#>              Reference
+#> Prediction    Charged Off Fully Paid
+#>   Charged Off          24          4
+#>   Fully Paid            4        143
+#>                                           
+#>                Accuracy : 0.9543          
+#>                  95% CI : (0.9119, 0.9801)
+#>     No Information Rate : 0.84            
+#>     P-Value [Acc > NIR] : 2.372e-06       
+#>                                           
+#>                   Kappa : 0.8299          
+#>                                           
+#>  Mcnemar's Test P-Value : 1               
+#>                                           
+#>             Sensitivity : 0.8571          
+#>             Specificity : 0.9728          
+#>          Pos Pred Value : 0.8571          
+#>          Neg Pred Value : 0.9728          
+#>              Prevalence : 0.1600          
+#>          Detection Rate : 0.1371          
+#>    Detection Prevalence : 0.1600          
+#>       Balanced Accuracy : 0.9150          
+#>                                           
+#>        'Positive' Class : Charged Off     
+#> 
 ```
 
 
-K Fold Cross Validation
 
-This approach involves randomly k-fold CV dividing the set of observations into k groups, or folds, of approximately equal size. The first fold is treated as a validation set, and the method is fit on the remaining k − 1 folds.
+The Accuracy of the LDA model is 0.9542857, and its Sensitivity is 0.8571429.
 
-glm(Default ~ ., data = train)
+In this case, the LDA Accuracy is higher than the logit model; the
+sensitivity is the opposite. Depending on what we are interested in, the
+model better predicts performance. In "credit allocation," we are
+usually more concerned with the 'Positive' cases, in this case, "Charged
+Off," because of the default risk.
+
+### 3 Cross validation.
+
+Cross-validation is a "resampling" method. It involves repeatedly
+drawing samples from a training set and refitting a model of interest on
+each sample to obtain additional information about the model. Such an
+approach may allow us to get information that would not be available
+from fitting the model only once using the original training sample.
+
+Instead of dividing the sample only once, this approach involves
+randomly k-fold CV splits the set of observations into k groups, or
+folds, of approximately equal size.
+
+In other words, this procedure would validate it our
+Accuracy/sensitivity will be stable when we split the sample in training
+and test it several times. The Caret function "train" can optimize for
+Accuracy.
+
+We start by applying it to the logit model:
+
 
 ```r
-#set.seed(1)
-trainf<-na.omit(trainf)# delete the rows with nas or missing values
-gbmFit1 <- train(Default ~ ., data = trainf,
-                 method = "glmStepAIC", 
+# similar to the previous models
+gbmFit1 <- train(Default ~ ., data = train,
+                  
+                 method = "glm",
+                 
+# in here we have the tuning parameters, in this case we use the "cv" method for cross, which is the number of times the model split the sample.                   
                             trControl = trainControl(method = "cv", number = 10),
                         trace=0,   metric="Accuracy")
-gbmFit1 
-#> Generalized Linear Model with Stepwise Feature Selection 
+gbmFit1
+#> Generalized Linear Model 
 #> 
-#> 665 samples
-#>  24 predictor
-#>   2 classes: '1', '0' 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'Charged Off', 'Fully Paid' 
 #> 
 #> No pre-processing
 #> Resampling: Cross-Validated (10 fold) 
-#> Summary of sample sizes: 598, 598, 598, 598, 599, 599, ... 
+#> Summary of sample sizes: 627, 628, 628, 629, 628, 629, ... 
 #> Resampling results:
 #> 
-#>   Accuracy  Kappa    
-#>   0.818227  0.1285474
+#>   Accuracy   Kappa    
+#>   0.9470376  0.8144761
 ```
 
-The model glmStepAIC makes a selection of variables. In this case, to improve the Accuracy.
-
-          
-Making the prediction.
-
+And for the LDA:
 
 
 ```r
-gbmFit1$finalModel$formula
-#> .outcome ~ loan_amnt + term + int_rate + emp_length + home_ownership + 
-#>     open_acc + pub_rec + mort_acc
-#> <environment: 0x0000021d8df165c8>
+# similar to the previous models
+gbmFit1 <- train(Default ~ ., data = train,
+                  
+                 method = "lda",
+                 
+# in here we have the tuning parameters, in this case we use the "cv" method for cross, which is the number of times the model split the sample.                   
+                            trControl = trainControl(method = "cv", number = 10),
+                        trace=0,   metric="Accuracy")
+gbmFit1
+#> Linear Discriminant Analysis 
+#> 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'Charged Off', 'Fully Paid' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 628, 629, 629, 628, 628, 628, ... 
+#> Resampling results:
+#> 
+#>   Accuracy   Kappa    
+#>   0.9527329  0.8275475
 ```
 
-Suponiendo que este es mi modelo final, voy a hacer la predicción real. 
-Una persona pide crédito y tiene los siguietes datos
+Our results are consistent with the previous result; the Accuracy of the
+LDA is higher than the Logit one.
+
+To improve the accuracy, we could also apply variable selection methods,
+such as glmStepAIC.
+
+***Warning*****:** The following code takes 20 minutes to run, depending
+on the processor.
+
 
 ```r
-test[1,]
-#>   Default loan_amnt term int_rate installment grade sub_grade emp_title
-#> 7       0     20000    1     8.49      631.26     2         7         7
-#>   emp_length home_ownership annual_inc verification_status purpose title   dti
-#> 7          1              1      85000                   1       4     4 17.61
-#>   earliest_cr_line open_acc pub_rec revol_bal revol_util total_acc
-#> 7                7        8       0       826        5.7        15
-#>   initial_list_status application_type mort_acc pub_rec_bankruptcies
-#> 7                   1                1        3                    0
+gbmFit1 <- train(Default ~ ., data = train, method = "glmStepAIC",
+              
+                 trControl = trainControl(method = "cv", number = 10),
+                        trace=0,   metric="Accuracy")
+    gbmFit1
+
 ```
 
+    ## Generalized Linear Model with Stepwise Feature Selection
+    ##
+    ## 698 samples 
+    ## 70 predictor 
+    ## 2 classes: 'Charged Off', 'Fully Paid'
+    ##
+    ## No pre-processing Resampling: Cross-Validated (10 fold)
+    ## Summary of sample sizes: 628, 629, 628, 628, 628, 628, ... 
+    ## Resampling results:
+    ##
+    ## Accuracy   Kappa
+    ## 0.9599149 0.8585923
 
+The accuracy of 0.9599 is higher than the Logit model that includes all
+variables 0.9470376. To get the final model or the final variables, we
+apply the following:
 
 
 ```r
-model<-glm(Default~loan_amnt + term + int_rate + installment + grade + 
-    sub_grade + home_ownership + open_acc + pub_rec + mort_acc + 
-    pub_rec_bankruptcies ,data=train,family=binomial())
-predict<-predict(model,newdata = test[1,],type = "response")
-#trasnform that probability into a 0,1
-predictp<-ifelse(predict>.5,1,0)
-predictp
-#> 7 
-#> 0
+step_var<-rownames(data.frame(gbmFit1$finalModel$coefficients))[-1] 
+step_var
 ```
 
+
+```
+#>  [1] "term"                  "purpose"               "revol_bal"            
+#>  [4] "total_rec_int"         "recoveries"            "last_pymnt_amnt"      
+#>  [7] "last_fico_range_high"  "open_act_il"           "total_cu_tl"          
+#> [10] "num_accts_ever_120_pd" "num_sats"              "num_tl_op_past_12m"   
+#> [13] "total_bc_limit"
+```
+
+If we want to use those variables to further improving of the model:
+
+
+```r
+train_step<-cbind(train[,"Default"],train[,step_var])
+colnames(train_step)[1]<-"Default"
+test_step<-cbind(test[,"Default"],test[,step_var])
+colnames(test_step)[1]<-"Default"
+```
+
+For example, if we run again the LDA model with those variables:
+
+
+```r
+gbmFit1 <- train(Default ~ ., data = train_step,
+                  
+                 method = "lda",
+                 
+# in here we have the tuning parameters, in this case we use the "cv" method for cross, which is the number of times the model split the sample.                   
+                            trControl = trainControl(method = "cv", number = 10),
+                        trace=0,   metric="Accuracy")
+gbmFit1
+#> Linear Discriminant Analysis 
+#> 
+#> 698 samples
+#>  13 predictor
+#>   2 classes: 'Charged Off', 'Fully Paid' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 628, 628, 627, 629, 628, 628, ... 
+#> Resampling results:
+#> 
+#>   Accuracy   Kappa    
+#>   0.9612612  0.8568619
+```
+
+We got a higher accuracy.
