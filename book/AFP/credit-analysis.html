@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>6 Credit analysis | Algorithms and Financial Programming in R</title>
 <meta name="author" content="Arturo Bernal">
-<meta name="description" content="In this chapter we will use the following libraries: library(openxlsx) library(caret) library(MASS) In this chapter, we will cover Credit allocation (loan origination) by applying Big Data. The...">
+<meta name="description" content="In this chapter we will use the following libraries: library(openxlsx) library(caret) library(MASS) In this chapter, we will cover credit allocation analysis (loan origination). The database...">
 <meta name="generator" content="bookdown 0.29 with bs4_book()">
 <meta property="og:title" content="6 Credit analysis | Algorithms and Financial Programming in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/credit-analysis.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
-<meta property="og:description" content="In this chapter we will use the following libraries: library(openxlsx) library(caret) library(MASS) In this chapter, we will cover Credit allocation (loan origination) by applying Big Data. The...">
+<meta property="og:description" content="In this chapter we will use the following libraries: library(openxlsx) library(caret) library(MASS) In this chapter, we will cover credit allocation analysis (loan origination). The database...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6 Credit analysis | Algorithms and Financial Programming in R">
-<meta name="twitter:description" content="In this chapter we will use the following libraries: library(openxlsx) library(caret) library(MASS) In this chapter, we will cover Credit allocation (loan origination) by applying Big Data. The...">
+<meta name="twitter:description" content="In this chapter we will use the following libraries: library(openxlsx) library(caret) library(MASS) In this chapter, we will cover credit allocation analysis (loan origination). The database...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -104,8 +104,7 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span></code></pre></div>
-<p>In this chapter, we will cover Credit allocation (loan origination) by
-applying Big Data. The database credit.xlsx has historical information
+<p>In this chapter, we will cover credit allocation analysis (loan origination). The database credit.xlsx has historical information
 on Lendingclub, <a href="https://www.lendingclub.com/" class="uri">https://www.lendingclub.com/</a> fintech marketplace bank
 at scale. On the spreadsheets, you will find the variable description.
 The original data set has at least 2 million observations and 150
@@ -350,17 +349,11 @@ Off,” because of the default risk.</p>
 <span class="header-section-number">6.2.1</span> 3 Cross validation.<a class="anchor" aria-label="anchor" href="#cross-validation."><i class="fas fa-link"></i></a>
 </h3>
 <p>Cross-validation is a “resampling” method. It involves repeatedly
-drawing samples from a training set and refitting a model of interest on
-each sample to obtain additional information about the model. Such an
-approach may allow us to get information that would not be available
-from fitting the model only once using the original training sample.</p>
+drawing samples from a training set and refitting a model of interest on each sample to obtain additional information about the model. Such an approach may allow us to get information that would not be available from fitting the model only once using the original training sample.</p>
 <p>Instead of dividing the sample only once, this approach involves
 randomly k-fold CV splits the set of observations into k groups, or
 folds, of approximately equal size.</p>
-<p>In other words, this procedure would validate it our
-Accuracy/sensitivity will be stable when we split the sample in training
-and test it several times. The Caret function “train” can optimize for
-Accuracy.</p>
+<p>In other words, this procedure would validate it our Accuracy/sensitivity will be stable when we split the sample in training and test it several times. The Caret function “train” can optimize for Accuracy.</p>
 <p>We start by applying it to the logit model:</p>
 <div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># similar to the previous models</span></span>
@@ -433,9 +426,8 @@ on the processor.</p>
 ##
 ## Accuracy   Kappa
 ## 0.9599149 0.8585923</code></pre>
-<p>The accuracy of 0.9599 is higher than the Logit model that includes all
-variables 0.9470376. To get the final model or the final variables, we
-apply the following:</p>
+<p>The accuracy of 0.9599 is higher than the Logit model, which includes all variables 0.9470.</p>
+<p>To get the final model or the final variables, we apply the following:</p>
 <div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">step_var</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">gbmFit1</span><span class="op">$</span><span class="va">finalModel</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> </span>
 <span><span class="va">step_var</span></span></code></pre></div>
@@ -444,13 +436,13 @@ apply the following:</p>
 #&gt;  [7] "last_fico_range_high"  "open_act_il"           "total_cu_tl"          
 #&gt; [10] "num_accts_ever_120_pd" "num_sats"              "num_tl_op_past_12m"   
 #&gt; [13] "total_bc_limit"</code></pre>
-<p>If we want to use those variables to further improving of the model:</p>
+<p>If we want to use those variables to further improve the model:</p>
 <div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">train_step</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">train</span><span class="op">[</span>,<span class="st">"Default"</span><span class="op">]</span>,<span class="va">train</span><span class="op">[</span>,<span class="va">step_var</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">train_step</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="st">"Default"</span></span>
 <span><span class="va">test_step</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span>,<span class="st">"Default"</span><span class="op">]</span>,<span class="va">test</span><span class="op">[</span>,<span class="va">step_var</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">test_step</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="st">"Default"</span></span></code></pre></div>
-<p>For example, if we run again the LDA model with those variables:</p>
+<p>For example, if we run the LDA model with those variables again:</p>
 <div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gbmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train_step</span>,</span>
 <span>                  </span>

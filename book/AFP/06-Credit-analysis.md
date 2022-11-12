@@ -12,8 +12,7 @@ library(MASS)
 
 
 
-In this chapter, we will cover Credit allocation (loan origination) by
-applying Big Data. The database credit.xlsx has historical information
+In this chapter, we will cover credit allocation analysis (loan origination). The database credit.xlsx has historical information
 on Lendingclub, <https://www.lendingclub.com/> fintech marketplace bank
 at scale. On the spreadsheets, you will find the variable description.
 The original data set has at least 2 million observations and 150
@@ -317,19 +316,13 @@ Off," because of the default risk.
 ### 3 Cross validation.
 
 Cross-validation is a "resampling" method. It involves repeatedly
-drawing samples from a training set and refitting a model of interest on
-each sample to obtain additional information about the model. Such an
-approach may allow us to get information that would not be available
-from fitting the model only once using the original training sample.
+drawing samples from a training set and refitting a model of interest on each sample to obtain additional information about the model. Such an approach may allow us to get information that would not be available from fitting the model only once using the original training sample.
 
 Instead of dividing the sample only once, this approach involves
 randomly k-fold CV splits the set of observations into k groups, or
 folds, of approximately equal size.
 
-In other words, this procedure would validate it our
-Accuracy/sensitivity will be stable when we split the sample in training
-and test it several times. The Caret function "train" can optimize for
-Accuracy.
+In other words, this procedure would validate it our Accuracy/sensitivity will be stable when we split the sample in training and test it several times. The Caret function "train" can optimize for Accuracy.
 
 We start by applying it to the logit model:
 
@@ -419,9 +412,10 @@ gbmFit1 <- train(Default ~ ., data = train, method = "glmStepAIC",
     ## Accuracy   Kappa
     ## 0.9599149 0.8585923
 
-The accuracy of 0.9599 is higher than the Logit model that includes all
-variables 0.9470376. To get the final model or the final variables, we
-apply the following:
+
+The accuracy of 0.9599 is higher than the Logit model, which includes all variables 0.9470. 
+
+To get the final model or the final variables, we apply the following:
 
 
 ```r
@@ -438,7 +432,7 @@ step_var
 #> [13] "total_bc_limit"
 ```
 
-If we want to use those variables to further improving of the model:
+If we want to use those variables to further improve the model:
 
 
 ```r
@@ -448,8 +442,7 @@ test_step<-cbind(test[,"Default"],test[,step_var])
 colnames(test_step)[1]<-"Default"
 ```
 
-For example, if we run again the LDA model with those variables:
-
+For example, if we run the LDA model with those variables again:
 
 ```r
 gbmFit1 <- train(Default ~ ., data = train_step,
