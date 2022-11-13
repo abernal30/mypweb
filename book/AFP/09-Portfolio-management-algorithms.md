@@ -294,12 +294,4 @@ ret_a_f
 ```
 
 
-### Graphs of the results
-
-Pending
-
-## Bibliography
-Cervantes, M., Montoya, M. Á., & Bernal Ponce, L. A. (2016). Effect of the Business Cycle on Investment Strategies: Evidence from Mexico. Revista Mexicana de Economía y Finanzas, 11(2).
-
-Hilpisch (2019). Python for Finance, 2nd Edition. O’Reilly Media, Inc. Sebastopol, CA.
-
+# References

@@ -6,21 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>7 Rational agent and behavioral finance in investment | Algorithms and Financial Programming in R</title>
 <meta name="author" content="Arturo Bernal">
-<meta name="description" content="library(quantmod) library(FinTS) library(tseries) library(rugarch) library(dplyr) Around 1970, economists argued that an efficient market (Fama, 1970) should instantaneously reflect all the...">
-<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta name="description" content="In this chapter we will use the following libraries: library(quantmod) library(lmtest) library(openxlsx) library(dplyr) Around 1970, economists argued that an efficient market should...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
 <meta property="og:title" content="7 Rational agent and behavioral finance in investment | Algorithms and Financial Programming in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/rational-agent-and-behavioral-finance-in-investment.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
-<meta property="og:description" content="library(quantmod) library(FinTS) library(tseries) library(rugarch) library(dplyr) Around 1970, economists argued that an efficient market (Fama, 1970) should instantaneously reflect all the...">
+<meta property="og:description" content="In this chapter we will use the following libraries: library(quantmod) library(lmtest) library(openxlsx) library(dplyr) Around 1970, economists argued that an efficient market should...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7 Rational agent and behavioral finance in investment | Algorithms and Financial Programming in R">
-<meta name="twitter:description" content="library(quantmod) library(FinTS) library(tseries) library(rugarch) library(dplyr) Around 1970, economists argued that an efficient market (Fama, 1970) should instantaneously reflect all the...">
+<meta name="twitter:description" content="In this chapter we will use the following libraries: library(quantmod) library(lmtest) library(openxlsx) library(dplyr) Around 1970, economists argued that an efficient market should...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Roboto-0.4.2/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -88,6 +88,7 @@
 <li><a class="active" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
 <li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
 <li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
+<li><a class="" href="references.html"><span class="header-section-number">10</span> References</a></li>
 </ul>
 
         <div class="book-extra">
@@ -99,66 +100,47 @@
 <h1>
 <span class="header-section-number">7</span> Rational agent and behavioral finance in investment<a class="anchor" aria-label="anchor" href="#rational-agent-and-behavioral-finance-in-investment"><i class="fas fa-link"></i></a>
 </h1>
+<p>In this chapter we will use the following libraries:</p>
 <div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/fints/">FinTS</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tseries</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.unstarched.net">rugarch</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span> </span></code></pre></div>
-<p>Around 1970, economists argued that an efficient market (Fama, 1970) should instantaneously reflect all the available information of a particular financial security, Efficient market hypothesis EMH.</p>
-<p>Then, arbitrage opportunities were difficult to exist, or they used to argue that those markets were not predictable.</p>
-<p>Academics were reasonably content with the efficient market hypothesis (EMH) until sometime toward the end of the twentieth century. The year 1987 was critical in undermining faith in the EMH.</p>
-<p>U.S. stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average historic collapse.</p>
-<p>What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view.</p>
-<p>•Economists who were actively discussing and acting in financial markets seemed to believe that markets were predictable, a key tenet of modern behavioral finance.
-The test in this chapter and some of the text is based on Wooldridge (2012) with my own codes.</p>
-<p>In summary, trading strategies perform best in non-efficient markets, where abundant arbitrage opportunities exist. Perfectly efficient markets instantaneously incorporate all available market information, then no trading opportunities.</p>
-<p>•In this session, we will measure whether a market is efficient. We could build algorithms to predict the stock markets if the market is inefficient.</p>
-<div id="shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset" class="section level2" number="7.1">
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">lmtest</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<p>Around 1970, economists argued that an efficient market should instantaneously reflect all the available information of a particular financial security, called the Efficient Market Hypothesis EMH <span class="citation">(<a href="references.html#ref-FAMA" role="doc-biblioref">Fama 1970</a>)</span>. Then, arbitrage opportunities were difficult to exist, or they used to argue that those markets needed to be more predictable. Academics were reasonably content with the EMH until in1987 stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average’s historic collapse. What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view. Economists actively discussing and acting in financial markets seemed to believe that markets were predictable, a key principle of modern behavioral finance <span class="citation">(<a href="references.html#ref-BF" role="doc-biblioref">Burton and Shah 2013</a>)</span>.</p>
+<p>By designing systematic trading platforms, some traders and trading systems aim to generate trading signals that consistently produce positive outcomes over many trades. Usually, the trades test successfully of trading systems on large amounts of past historical data. A more scientific method for analyzing a particular financial security may lie in determining whether the security price changes are random or not. If the price changes are random, the probability of detecting a consistently profitable trading opportunity for that particular security is small. On the other hand, if the price changes are nonrandom, the financial security has persistent predictability and should be analyzed further. Then, it is possible to measure the relative availability of trading opportunities with the market inefficiency tests <span class="citation">(<a href="references.html#ref-HFT" role="doc-biblioref">Aldridge 2010</a>)</span>. In summary, if the tests detect that new information takes in slowly in the asset prices, arbitrage opportunities exist, and the market is inefficient.</p>
+<p>In this chapter, we apply a test proposed by <span class="citation">(<a href="references.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span> to identify arbitrage opportunities or to find inefficient markets.</p>
+<div id="emh-test-on-historical-returns-for-one-asset" class="section level2" number="7.1">
 <h2>
-<span class="header-section-number">7.1</span> Shorts samples test of efficient markets hypothesis (EMH) for one asset<a class="anchor" aria-label="anchor" href="#shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1</span> EMH test on historical returns for one asset<a class="anchor" aria-label="anchor" href="#emh-test-on-historical-returns-for-one-asset"><i class="fas fa-link"></i></a>
 </h2>
-<p>Suppose <span class="math inline">\(y_{t}\)</span> is the daily price of the S&amp;P500. A strict form of the efficient markets hypothesis establishes that the observable information to the index prior to day <em>t</em> should not help predict the index. If we use only past information on <span class="math inline">\(y_{t}\)</span>, the EMH is could be presented as:</p>
-<p><span class="math display">\[E(y_t/ y_{t-1} ,y_{t-1},.... )=E(y_t) \]</span></p>
-<p>Where the term on the right is the expected value of <span class="math inline">\(y_{t}\)</span>, given the historical information of the index <span class="math inline">\(y_{t-1} ,y_{t-1},....\)</span>. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price.</p>
-<p>The EMH presumes that such investment opportunities will be noticed and will disappear almost instantaneously.</p>
-<p>One simple way to make the EMH test is to specify the AR(1):</p>
-<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1}+u_t, \]</span></p>
-<p>A significant <span class="math inline">\(\beta_1\)</span> coefficient would reject EMH; then, we could use the information on the past to predict the current price. However, it is a common practice to make the test using more lags.</p>
-<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1},...,y_{t-n}+u_t\]</span></p>
+<p>Suppose <span class="math inline">\(y_{t}\)</span> is the daily price of the S&amp;P500. A strict form of the efficient markets hypothesis establishes that the historical information on the index before day <em>t</em> should not help predict the index. If we use only past information on <span class="math inline">\(y_{t}\)</span>, a market is efficient if the following is true:</p>
+<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t\]</span></p>
+<p>Where the term on the right is the expected value of <span class="math inline">\(y_{t}\)</span>, given the historical information of the index <span class="math inline">\(y_{t-1} ,y_{t-2},....\)</span>. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price.</p>
 <p>Suppose that we want to make the EMH test on the returns of the S&amp;P 500 index. In the next code, we download the S&amp;P 500 index from “2019-10-20” to “2022-10-20”. Remember that by yahoo finance, the ticker name is “^GSPC”.</p>
 <div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"^GSPC"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>, from<span class="op">=</span><span class="st">"2019-10-20"</span>, to<span class="op">=</span><span class="st">"2022-10-20"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "^GSPC"</span></span></code></pre></div>
-<p>As you see in the environment, the object that stores the S&amp;P information is only called GSPC. We take the close price of the index, column 4, and we apply the function <em>Delt</em> to estimate the returns.</p>
+<p>We take the close price of the index, apply the function <em>Delt</em> to estimate the returns.</p>
 <div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">all</span><span class="op">&lt;-</span><span class="va">GSPC</span></span>
-<span><span class="va">dji</span><span class="op">&lt;-</span><span class="va">all</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
-<span><span class="va">dji</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/Delt.html">Delt</a></span><span class="op">(</span><span class="va">all</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p>The historical information we download is daily, then we could start testing if we could use the information of the two previous two days to predict the current index price.</p>
-<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1},y_{t-2}+u_t\]</span></p>
-<p>To run the previous model, we need to create the variables and store them in a data frame. We apply the function <em>lag</em> to create the lagged variables and store them in the object <em>dji</em> with the close price. Remember that there are other libraries whit a function <em>lag</em>, and in writing <em>stats::lag</em> we are calling the lag function from the stats library. For convenience, we change the column names and delete missing values rows by applying the function <em>na.omit</em>.</p>
+<code class="sourceCode R"><span><span class="va">close</span><span class="op">&lt;-</span><span class="va">GSPC</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
+<span><span class="va">ret</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/Delt.html">Delt</a></span><span class="op">(</span><span class="va">close</span><span class="op">)</span></span></code></pre></div>
+<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t\]</span></p>
+<p>To run the previous model, we need to create the variables and store them in a data frame. We apply the function <em>lag</em> to create the lagged variables-</p>
 <div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">la2</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">dji</span>,<span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">la3</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">dji</span>,<span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">dji</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">dji</span>,<span class="va">la2</span>,<span class="va">la3</span><span class="op">)</span></span>
-<span><span class="va">dji</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dji</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">dji</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SP500"</span>,<span class="st">"SP500_lag1"</span>,<span class="st">"SP500_lag2"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dji</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                    SP500    SP500_lag1    SP500_lag2</span></span>
-<span><span class="co">#&gt; 2019-10-24  0.0019204462  0.0028471490 -0.0035686666</span></span>
-<span><span class="co">#&gt; 2019-10-25  0.0040727006  0.0019204462  0.0028471490</span></span>
-<span><span class="co">#&gt; 2019-10-28  0.0055813379  0.0040727006  0.0019204462</span></span>
-<span><span class="co">#&gt; 2019-10-29 -0.0008324052  0.0055813379  0.0040727006</span></span>
-<span><span class="co">#&gt; 2019-10-30  0.0032533702 -0.0008324052  0.0055813379</span></span>
-<span><span class="co">#&gt; 2019-10-31 -0.0030228606  0.0032533702 -0.0008324052</span></span></code></pre></div>
-<p>We apply an OLS regression:</p>
+<code class="sourceCode R"><span><span class="va">lag1</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">ret</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">lag2</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">ret</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">ret</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ret</span>, <span class="va">lag1</span>,<span class="va">lag2</span><span class="op">)</span></span></code></pre></div>
+<p>For convenience, we change the column names.</p>
 <div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SP500</span><span class="op">~</span><span class="va">.</span>,data <span class="op">=</span><span class="va">dji</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SP500"</span>,<span class="st">"SP500_lag1"</span>,<span class="st">"SP500_lag2"</span><span class="op">)</span></span></code></pre></div>
+<p>We apply an OLS regression:</p>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SP500</span> <span class="op">~</span><span class="va">.</span>,data <span class="op">=</span><span class="va">ret</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = SP500 ~ ., data = dji)</span></span>
+<span><span class="co">#&gt; lm(formula = SP500 ~ ., data = ret)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;       Min        1Q    Median        3Q       Max </span></span>
@@ -173,136 +155,186 @@ The test in this chapter and some of the text is based on Wooldridge (2012) with
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residual standard error: 0.01514 on 750 degrees of freedom</span></span>
+<span><span class="co">#&gt;   (3 observations deleted due to missingness)</span></span>
 <span><span class="co">#&gt; Multiple R-squared:  0.06649,    Adjusted R-squared:  0.06401 </span></span>
 <span><span class="co">#&gt; F-statistic: 26.71 on 2 and 750 DF,  p-value: 6.219e-12</span></span></code></pre></div>
-<p>Remember, a significant beta1 coefficient would reject EMH; then, in this case, it implies that we could use the previous two days to predict the current price.</p>
+<p>Remember, a significant beta1 coefficient would reject EMH.</p>
+<p>For example, we could use past information on the price or a moving average to forecast the Biance price.</p>
+<p><span class="math display">\[bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} +\beta3\ sma +\ e\]</span></p>
 </div>
-<div id="long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset" class="section level2" number="7.2">
+<div id="emh-test-for-variance-for-one-asset" class="section level2" number="7.2">
 <h2>
-<span class="header-section-number">7.2</span> Long samples test of efficient markets hypothesis (EMH) for one asset<a class="anchor" aria-label="anchor" href="#long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2</span> EMH test for variance for one asset<a class="anchor" aria-label="anchor" href="#emh-test-for-variance-for-one-asset"><i class="fas fa-link"></i></a>
 </h2>
-<p>Although the EMH states that the expected return given past observable information should be constant, it says nothing about the conditional variance. It could be tested using a
-heteroskedasticity, such as Breusch-Pagan, for example. However, this heteroskedasticity is better characterized by the ARCH model.</p>
-<p>Suppose we have the dependent variable, y(t), a contemporary exogenous variable, z(t).</p>
-<p><span class="math display">\[E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \beta_0 +\beta_1\ z_t+\beta_2\ y_{t-1}+\beta_3\ z_{t-1}. \]</span></p>
-<p>The typical approach is to assume that:</p>
-<p><span class="math display">\[Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \sigma, \]</span>
-is a constant. But this variance could follow an ARCH model:</p>
-<p><span class="math display">\[Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=Var(u_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=\\ \alpha_0 +\alpha_1\ u^2_{t-2}.\]</span>
-Where</p>
-<p><span class="math display">\[u_t=y_t-E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)\]</span></p>
-<p>We can check for ARCH effects by using the ArchTest() function from the FinTS package. Lagrange Multiplier (LM) test for autoregressive conditional heteroscedasticity (ARCH). Computes the Lagrange multiplier test for conditional heteroscedasticity. Equivalent to the test by OLS:</p>
-<p><span class="math display">\[u_t=\alpha_0 +\alpha_1\ u^2_{t-2}\]</span>
-We look to verify the significance of alpha 1. If alpha 1 significant, we reject the null hypothesis and conclude the presence of ARCH(1) effects. Then we could use past information to predict the future.
-ArchTest(object,lags=n), usually lags=1</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"^GSPC"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>,from<span class="op">=</span><span class="st">"2021-05-01"</span>,to<span class="op">=</span><span class="st">"2022-05-01"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "^GSPC"</span></span>
-<span><span class="va">dji_long</span><span class="op">&lt;-</span><span class="va">GSPC</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span></code></pre></div>
+<p>For some financial time series, such as stock returns, the expected returns do not depend on past returns (the Market is efficient), but the variance of returns does. For example, in the model:</p>
+<p><span class="math display">\[r_t= \beta_0 +\beta_1\ r_{t-1}+u_t\]</span></p>
+<p>We could apply a test to verify if the variance of returns have an effect o the returns:</p>
+<p><span class="math display">\[u^2_{t}= \delta_0 +\delta_1\ r_{t-1}+e_t\]</span></p>
+<p>The previous model is heteroskedasticity test, then we could applya Breusch-Pagan test for heteroskedasticity, using the function bptest(model)</p>
 <div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/FinTS/man/ArchTest.html">ArchTest</a></span><span class="op">(</span><span class="va">dji_long</span>,lags<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">ar</span><span class="op">$</span><span class="va">p.value</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               ar.p.value</span></span>
-<span><span class="co">#&gt; Chi-squared 9.801502e-53</span></span></code></pre></div>
-<p>If p-value is &lt;10%, in this case, we conclude the presence of ARCH(1) effects, then we could make a forecast of the time series using past information.</p>
+<code class="sourceCode R"><span><span class="fu">lmtest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  studentized Breusch-Pagan test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  model</span></span>
+<span><span class="co">#&gt; BP = 27.216, df = 2, p-value = 1.23e-06</span></span></code></pre></div>
+<p>Suppose the test is significant in the former result (p-value &lt;10%). Then there is no EMH, and we could use the variance or standard deviation to make a prediction.</p>
+<p>For example, we could use past information and a standard deviation moving average, <span class="math inline">\(sdma\)</span>, to forecast the Biance price.</p>
+<p><span class="math display">\[bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} +\beta3\ sma +\beta4\ sdma +\ e\]</span></p>
+<p>See chapter 5 of the book for an example. “Big data and machine learning”
+<a href="https://www.arturo-bernal.com/book/AFP/big-data-and-machine-learning.html" class="uri">https://www.arturo-bernal.com/book/AFP/big-data-and-machine-learning.html</a></p>
+<p>We show another example in the next section.</p>
 </div>
-<div id="long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio" class="section level2" number="7.3">
+<div id="emh-test-for-variance-for-many-asset-to-build-a-portfolio" class="section level2" number="7.3">
 <h2>
-<span class="header-section-number">7.3</span> Long samples test of efficient markets hypothesis (EMH) applyied to portfolio<a class="anchor" aria-label="anchor" href="#long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.3</span> EMH test for variance for many asset to build a portfolio<a class="anchor" aria-label="anchor" href="#emh-test-for-variance-for-many-asset-to-build-a-portfolio"><i class="fas fa-link"></i></a>
 </h2>
-<p>In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We will assume that is going to be a long-term horizon portfolio. Then, we need to apply the long samples test of the efficient markets hypothesis.</p>
+<p>In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We filter for the variance test of efficient markets hypothesis.</p>
+<p>First we read the data, and for convenience, we transform the data frame into xts.</p>
 <div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/df_dates.xlsx"</span>, detectDates <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">date</span><span class="op">&lt;-</span><span class="va">df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># important to takeout the data before transforming to xts, other wise does not transform into numeric. </span></span>
-<span><span class="va">data</span><span class="op">&lt;-</span><span class="va">df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">data</span>,</span>
-<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">dfx</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">datax</span><span class="op">)</span></span></code></pre></div>
-<p>The following code makes the long samples test of the efficient markets hypothesis (EMH) applied to many assets of the dfx object.</p>
-<p>We start by estimating the returns for each time series and deleteing missig valies.</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">return</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/Delt.html">Delt</a></span><span class="op">(</span><span class="va">dfx</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># we are going to apply the Delt function to the 100 stocks</span></span>
-<span></span>
-<span><span class="co"># function apply()</span></span>
-<span><span class="va">return_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dfx</span>, <span class="fl">2</span>, <span class="va">Delt</span><span class="op">)</span></span>
-<span><span class="co"># es 1 for rows o 2for columns</span></span></code></pre></div>
-<p>The next loops knowledge is over the level of this course contents requires, so its application could be covered in the final exam, but the topic of loops will not be covered.</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dfr</span><span class="op">&lt;-</span><span class="va">return_all</span></span>
-<span><span class="va">m</span><span class="op">&lt;-</span><span class="fl">26</span></span>
-<span><span class="co">#---de aqui es la creación del Loop for, esto rebasa el nivel de este curso</span></span>
-<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">n</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
-<span><span class="va">ar1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/FinTS/man/ArchTest.html">ArchTest</a></span><span class="op">(</span><span class="va">dfr</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,lags<span class="op">=</span><span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span></span>
-<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ar</span>,<span class="va">ar1</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#----- </span></span>
-<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">ar</span><span class="op">)</span></span>
-<span><span class="co"># it has the p value of the EMH test, if the p-value is lees than 10%, then we could make predictions </span></span>
-<span></span>
-<span><span class="co"># add the name of the ticker</span></span>
-<span><span class="va">col_name</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">return_all</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">col_name</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "AAPL.Close"  "MSFT.Close"  "GOOG.Close"  "GOOGL.Close" "AMZN.Close" </span></span>
-<span><span class="co">#&gt; [6] "TSLA.Close"</span></span>
-<span><span class="co"># add the ticker na,me</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">ar</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">col_name</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ar</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                       ar</span></span>
-<span><span class="co">#&gt; AAPL.Close  3.731438e-17</span></span>
-<span><span class="co">#&gt; MSFT.Close  6.033001e-39</span></span>
-<span><span class="co">#&gt; GOOG.Close  3.224007e-16</span></span>
-<span><span class="co">#&gt; GOOGL.Close 2.570860e-16</span></span>
-<span><span class="co">#&gt; AMZN.Close  5.093709e-04</span></span>
-<span><span class="co">#&gt; TSLA.Close  2.275599e-05</span></span></code></pre></div>
-<p>The following code counts the number of tickers that we could use to make a prediction, applyinf the ifelse function and combing it with the object that contains the EMH test.</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">ar</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0.1</span>,<span class="st">"Predict"</span>,<span class="st">"No Predict"</span><span class="op">)</span></span>
-<span><span class="co"># merge with the ar object </span></span>
-<span><span class="va">ar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ar</span>,<span class="va">pred</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ar</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                       ar    pred</span></span>
-<span><span class="co">#&gt; AAPL.Close  3.731438e-17 Predict</span></span>
-<span><span class="co">#&gt; MSFT.Close  6.033001e-39 Predict</span></span>
-<span><span class="co">#&gt; GOOG.Close  3.224007e-16 Predict</span></span>
-<span><span class="co">#&gt; GOOGL.Close 2.570860e-16 Predict</span></span>
-<span><span class="co">#&gt; AMZN.Close  5.093709e-04 Predict</span></span>
-<span><span class="co">#&gt; TSLA.Close  2.275599e-05 Predict</span></span></code></pre></div>
-<p>Finally, we could filter to get only those tickers with category predict.</p>
-<p>arf&lt;- df %&gt;%
-filter(coll== “category”)</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">arf</span><span class="op">&lt;-</span> <span class="va">ar</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pred</span> <span class="op">==</span> <span class="st">"Predict"</span><span class="op">)</span></span></code></pre></div>
-<p>Also we take the historical information of the filtered stocks</p>
+<span><span class="va">df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/df_dates.xlsx"</span>, detectDates <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">date</span><span class="op">&lt;-</span><span class="va">df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">datax</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We estimated the returns, Delt.
+apply(data, 2, func)</p>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">return_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">datax</span>, <span class="fl">2</span>, <span class="va">Delt</span><span class="op">)</span></span></code></pre></div>
+<p>Xts again: becasue we loos the xts property:</p>
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">return_all_xts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">return_all</span>,</span>
+<span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">return_all_xts</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> </span>
+<span><span class="co">#&gt;              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close</span></span>
+<span><span class="co">#&gt; 2020-01-02           NA           NA            NA           NA</span></span>
+<span><span class="co">#&gt; 2020-01-03 -0.009722044 -0.012451750 -0.0049072022 -0.005231342</span></span>
+<span><span class="co">#&gt; 2020-01-06  0.007968248  0.002584819  0.0246570974  0.026654062</span></span>
+<span><span class="co">#&gt; 2020-01-07 -0.004703042 -0.009117758 -0.0006240057 -0.001931646</span></span>
+<span><span class="co">#&gt; 2020-01-08  0.016086289  0.015928379  0.0078803309  0.007117757</span></span>
+<span><span class="co">#&gt; 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921</span></span></code></pre></div>
+<p>The following code has the same test we made for one stock on the previous second section of this chapter:</p>
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">i</span><span class="op">&lt;-</span><span class="fl">1</span></span>
+<span></span>
+<span><span class="co">#For the next chunk:</span></span>
+<span></span>
+<span><span class="co">#---------------copy from here------- </span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span><span class="va">return_all_xts</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span></span>
+<span><span class="va">lag1</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">data</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">lag2</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">data</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">ret</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">lag1</span>,<span class="va">lag2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SP500"</span>,<span class="st">"SP500_lag1"</span>,<span class="st">"SP500_lag2"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#-------------to here ------------</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SP500</span> <span class="op">~</span><span class="va">.</span>,data <span class="op">=</span><span class="va">ret</span><span class="op">)</span></span>
+<span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="va">bp</span><span class="op">[[</span><span class="st">"p.value"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">bp</span></span>
+<span><span class="co">#&gt;         BP </span></span>
+<span><span class="co">#&gt; 0.00134487</span></span></code></pre></div>
+<p>The next chunk shows a “Loop For” to show a similar procedure as the previous chunk. The knowledge it requires is over the level of this course’s contents. You could expect to develop the process for the final exam following the procedure of the previous chunk, building an R function together with the “apply” function, not creating a “Loop For.”</p>
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bp_all_Loop</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">return_all_xts</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> </span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">)</span><span class="op">{</span></span>
+<span> </span>
+<span><span class="co">#----copy here -----</span></span>
+<span></span>
+<span>  <span class="va">data</span><span class="op">&lt;-</span><span class="va">return_all_xts</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span></span>
+<span><span class="va">lag1</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">data</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">lag2</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">data</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">ret</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">lag1</span>,<span class="va">lag2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SP500"</span>,<span class="st">"SP500_lag1"</span>,<span class="st">"SP500_lag2"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ----to Here----------------</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SP500</span> <span class="op">~</span><span class="va">.</span>,data <span class="op">=</span><span class="va">ret</span><span class="op">)</span></span>
+<span>  <span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span>  <span class="va">bp</span> <span class="op">&lt;-</span> <span class="va">bp</span><span class="op">[[</span><span class="st">"p.value"</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">bp_all_Loop</span><span class="op">[</span><span class="va">i</span>,<span class="fl">1</span><span class="op">]</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">return_all_xts</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>  <span class="va">bp_all_Loop</span><span class="op">[</span><span class="va">i</span>,<span class="fl">2</span><span class="op">]</span><span class="op">&lt;-</span><span class="va">bp</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bp_all_Loop</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ticker"</span>,<span class="st">"p-value"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bp_all_Loop</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        Ticker     p-value</span></span>
+<span><span class="co">#&gt; 1  AAPL.Close 0.001344870</span></span>
+<span><span class="co">#&gt; 2  MSFT.Close 0.002359318</span></span>
+<span><span class="co">#&gt; 3  GOOG.Close 0.007415325</span></span>
+<span><span class="co">#&gt; 4 GOOGL.Close 0.009713821</span></span>
+<span><span class="co">#&gt; 5  AMZN.Close 0.542408713</span></span>
+<span><span class="co">#&gt; 6  TSLA.Close 0.086492404</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">bp_all_Loop</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          Ticker      p-value</span></span>
+<span><span class="co">#&gt; 95    TXN.Close 0.0002357208</span></span>
+<span><span class="co">#&gt; 96    CRM.Close 0.8711756478</span></span>
+<span><span class="co">#&gt; 97    BMY.Close 0.1610277136</span></span>
+<span><span class="co">#&gt; 98    UPS.Close 0.9590241181</span></span>
+<span><span class="co">#&gt; 99  RLLCF.Close 0.8083656314</span></span>
+<span><span class="co">#&gt; 100  QCOM.Close 0.0539758548</span></span></code></pre></div>
+<p>The following code helps us count the number of tickers we could use to make a prediction, applying the “ifelse” function and combing it with the object containing the EMH test.</p>
 <div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># this code takes the names of the filtered tickers</span></span>
-<span><span class="va">col_filterd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">arf</span><span class="op">)</span></span>
-<span><span class="va">dfx_2</span><span class="op">&lt;-</span><span class="va">dfx</span><span class="op">[</span>,<span class="va">col_filterd</span><span class="op">]</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">bp_all_Loop</span><span class="op">[</span>,<span class="st">"p-value"</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0.1</span>,<span class="st">"Predict"</span>,<span class="st">"No Predict"</span> <span class="op">)</span></span>
+<span></span>
+<span><span class="va">bp_all_Loop_1</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">bp_all_Loop</span>,<span class="va">pred</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bp_all_Loop_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        Ticker     p-value       pred</span></span>
+<span><span class="co">#&gt; 1  AAPL.Close 0.001344870    Predict</span></span>
+<span><span class="co">#&gt; 2  MSFT.Close 0.002359318    Predict</span></span>
+<span><span class="co">#&gt; 3  GOOG.Close 0.007415325    Predict</span></span>
+<span><span class="co">#&gt; 4 GOOGL.Close 0.009713821    Predict</span></span>
+<span><span class="co">#&gt; 5  AMZN.Close 0.542408713 No Predict</span></span>
+<span><span class="co">#&gt; 6  TSLA.Close 0.086492404    Predict</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">bp_all_Loop_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          Ticker      p-value       pred</span></span>
+<span><span class="co">#&gt; 95    TXN.Close 0.0002357208    Predict</span></span>
+<span><span class="co">#&gt; 96    CRM.Close 0.8711756478 No Predict</span></span>
+<span><span class="co">#&gt; 97    BMY.Close 0.1610277136 No Predict</span></span>
+<span><span class="co">#&gt; 98    UPS.Close 0.9590241181 No Predict</span></span>
+<span><span class="co">#&gt; 99  RLLCF.Close 0.8083656314 No Predict</span></span>
+<span><span class="co">#&gt; 100  QCOM.Close 0.0539758548    Predict</span></span></code></pre></div>
+<p>Finally, we could filter to get only those tickers with category predict.</p>
 <div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dfx_3</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">dfx_2</span><span class="op">)</span></span>
-<span><span class="va">date</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">dfx_3</span><span class="op">)</span></span>
-<span><span class="va">dfx_4</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">date</span>,<span class="va">dfx_3</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div id="bibliography-2" class="section level2" number="7.4">
-<h2>
-<span class="header-section-number">7.4</span> Bibliography<a class="anchor" aria-label="anchor" href="#bibliography-2"><i class="fas fa-link"></i></a>
-</h2>
-<p>Wooldridge, J. M. (2012). Introductory econometrics: A modern approach. Mason, OH: Thomson/South-Western.</p>
+<code class="sourceCode R"><span><span class="va">bp_all_Loop_f</span><span class="op">&lt;-</span> <span class="va">bp_all_Loop_1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pred</span> <span class="op">==</span> <span class="st">"Predict"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bp_all_Loop_f</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        Ticker      p-value    pred</span></span>
+<span><span class="co">#&gt; 1  AAPL.Close 1.344870e-03 Predict</span></span>
+<span><span class="co">#&gt; 2  MSFT.Close 2.359318e-03 Predict</span></span>
+<span><span class="co">#&gt; 3  GOOG.Close 7.415325e-03 Predict</span></span>
+<span><span class="co">#&gt; 4 GOOGL.Close 9.713821e-03 Predict</span></span>
+<span><span class="co">#&gt; 5  TSLA.Close 8.649240e-02 Predict</span></span>
+<span><span class="co">#&gt; 6 BRK.A.Close 3.950538e-06 Predict</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">bp_all_Loop_f</span><span class="op">)</span>  </span>
+<span><span class="co">#&gt;        Ticker      p-value    pred</span></span>
+<span><span class="co">#&gt; 71  WFC.Close 6.487655e-07 Predict</span></span>
+<span><span class="co">#&gt; 72 C.PJ.Close 3.292293e-07 Predict</span></span>
+<span><span class="co">#&gt; 73   PM.Close 2.047688e-07 Predict</span></span>
+<span><span class="co">#&gt; 74  LIN.Close 3.799114e-02 Predict</span></span>
+<span><span class="co">#&gt; 75  TXN.Close 2.357208e-04 Predict</span></span>
+<span><span class="co">#&gt; 76 QCOM.Close 5.397585e-02 Predict</span></span></code></pre></div>
+<p>Also we take the historical information of the filtered stocks</p>
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ticker</span><span class="op">&lt;-</span><span class="va">bp_all_Loop_f</span><span class="op">[</span>,<span class="st">"Ticker"</span><span class="op">]</span></span>
+<span><span class="va">emh</span><span class="op">&lt;-</span><span class="va">return_all_xts</span><span class="op">[</span>,<span class="va">ticker</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">emh</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close</span></span>
+<span><span class="co">#&gt; 2020-01-02           NA           NA            NA           NA</span></span>
+<span><span class="co">#&gt; 2020-01-03 -0.009722044 -0.012451750 -0.0049072022 -0.005231342</span></span>
+<span><span class="co">#&gt; 2020-01-06  0.007968248  0.002584819  0.0246570974  0.026654062</span></span>
+<span><span class="co">#&gt; 2020-01-07 -0.004703042 -0.009117758 -0.0006240057 -0.001931646</span></span>
+<span><span class="co">#&gt; 2020-01-08  0.016086289  0.015928379  0.0078803309  0.007117757</span></span>
+<span><span class="co">#&gt; 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">emh</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close</span></span>
+<span><span class="co">#&gt; 2022-05-19 -0.024641392 -0.003699634 -0.0147285646 -0.013543429</span></span>
+<span><span class="co">#&gt; 2022-05-20  0.001747288 -0.002291226 -0.0129350191 -0.013371513</span></span>
+<span><span class="co">#&gt; 2022-05-23  0.040119232  0.032031977  0.0215299497  0.023689766</span></span>
+<span><span class="co">#&gt; 2022-05-24 -0.019215988 -0.003951656 -0.0514075636 -0.049494164</span></span>
+<span><span class="co">#&gt; 2022-05-25  0.001139947  0.011170149 -0.0008165988 -0.001556952</span></span>
+<span><span class="co">#&gt; 2022-05-26  0.023199508  0.012875229  0.0232096155  0.018784556</span></span></code></pre></div>
 
 </div>
 </div>
@@ -313,10 +345,9 @@ filter(coll== “category”)</p>
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#rational-agent-and-behavioral-finance-in-investment"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
-<li><a class="nav-link" href="#shorts-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><span class="header-section-number">7.1</span> Shorts samples test of efficient markets hypothesis (EMH) for one asset</a></li>
-<li><a class="nav-link" href="#long-samples-test-of-efficient-markets-hypothesis-emh-for-one-asset"><span class="header-section-number">7.2</span> Long samples test of efficient markets hypothesis (EMH) for one asset</a></li>
-<li><a class="nav-link" href="#long-samples-test-of-efficient-markets-hypothesis-emh-applyied-to-portfolio"><span class="header-section-number">7.3</span> Long samples test of efficient markets hypothesis (EMH) applyied to portfolio</a></li>
-<li><a class="nav-link" href="#bibliography-2"><span class="header-section-number">7.4</span> Bibliography</a></li>
+<li><a class="nav-link" href="#emh-test-on-historical-returns-for-one-asset"><span class="header-section-number">7.1</span> EMH test on historical returns for one asset</a></li>
+<li><a class="nav-link" href="#emh-test-for-variance-for-one-asset"><span class="header-section-number">7.2</span> EMH test for variance for one asset</a></li>
+<li><a class="nav-link" href="#emh-test-for-variance-for-many-asset-to-build-a-portfolio"><span class="header-section-number">7.3</span> EMH test for variance for many asset to build a portfolio</a></li>
 </ul>
 
       <div class="book-extra">
@@ -334,7 +365,7 @@ filter(coll== “category”)</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Algorithms and Financial Programming in R</strong>" was written by Arturo Bernal. It was last built on 2022-11-12.</p>
+    <p>"<strong>Algorithms and Financial Programming in R</strong>" was written by Arturo Bernal. It was last built on 2022-11-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

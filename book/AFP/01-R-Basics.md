@@ -1,8 +1,3 @@
----
-output:
-  word_document: default
-  html_document: default
----
 # R Basics
 
 This section covers the topics required in the following chapters. We suggest covering this section for someone who has yet to gain previous knowledge of R programming.
@@ -306,7 +301,7 @@ df4<-df3[-2,]
 Apply again the function cbind to merge the df3 and df4
 
 ```r
-#df5<-cbind(df3,df4)
+df5<-cbind(df3,df4)
 ```
 
 It will show a debug "Error in data.frame(..., check.names = FALSE) : 

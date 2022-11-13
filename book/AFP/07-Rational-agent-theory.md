@@ -1,58 +1,32 @@
----
-output:
-  html_document: default
-  word_document: default
----
-
-
 # Rational agent and behavioral finance in investment
+
+
+In this chapter we will use the following libraries:
 
 
 ```r
 library(quantmod)
-library(FinTS)
-library(tseries)
-library(rugarch)
-library(dplyr) 
+library(lmtest)
+library(openxlsx)
+library(dplyr)
 ```
 
-Around 1970, economists argued that an efficient market (Fama, 1970) should instantaneously reflect all the available information of a particular financial security, Efficient market hypothesis EMH. 
 
-Then, arbitrage opportunities were difficult to exist, or they used to argue that those markets were not predictable.
+Around 1970, economists argued that an efficient market should instantaneously reflect all the available information of a particular financial security, called the Efficient Market Hypothesis EMH [@FAMA]. Then, arbitrage opportunities were difficult to exist, or they used to argue that those markets needed to be more predictable. Academics were reasonably content with the EMH until in1987 stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average's historic collapse. What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view. Economists actively discussing and acting in financial markets seemed to believe that markets were predictable, a key principle of modern behavioral finance [@BF].
 
-Academics were reasonably content with the efficient market hypothesis (EMH) until sometime toward the end of the twentieth century. The year 1987 was critical in undermining faith in the EMH. 
+By designing systematic trading platforms, some traders and trading systems aim to generate trading signals that consistently produce positive outcomes over many trades. Usually, the trades test successfully of trading systems on large amounts of past historical data. A more scientific method for analyzing a particular financial security may lie in determining whether the security price changes are random or not. If the price changes are random, the probability of detecting a consistently profitable trading opportunity for that particular security is small. On the other hand, if the price changes are nonrandom, the financial security has persistent predictability and should be analyzed further. Then, it is possible to measure the relative availability of trading opportunities with the market inefficiency tests [@HFT]. In summary, if the tests detect that new information takes in slowly in the asset prices, arbitrage opportunities exist, and the market is inefficient. 
 
-
-U.S. stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average historic collapse. 
-
-What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view. 
+In this chapter, we apply a test proposed by [@wooldridge] to identify arbitrage opportunities or to find inefficient markets. 
 
 
-•Economists who were actively discussing and acting in financial markets seemed to believe that markets were predictable, a key tenet of modern behavioral finance.
-The test in this chapter and some of the text is  based on Wooldridge (2012) with my own codes.
+##   EMH test on historical returns for one asset
 
-In summary, trading strategies perform best in non-efficient markets, where abundant arbitrage opportunities exist. Perfectly efficient markets instantaneously incorporate all available market information, then no trading opportunities. 
+Suppose $y_{t}$ is the daily price of the S&P500. A strict form of the efficient markets hypothesis establishes that the historical information on the index before day *t* should not help predict the index. If we use only past information on $y_{t}$, a market is efficient if the following is true:
 
-•In this session, we will measure whether a market is efficient. We could build algorithms to predict the stock markets if the market is inefficient. 
+$$y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t$$
 
-##   Shorts samples test of efficient markets hypothesis (EMH) for one asset
+Where the term on the right is the expected value of $y_{t}$, given the historical information of the index $y_{t-1} ,y_{t-2},....$. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price. 
 
-Suppose $y_{t}$ is the daily price of the S&P500. A strict form of the efficient markets hypothesis establishes that the observable information to the index prior to day *t* should not help predict the index. If we use only past information on $y_{t}$, the EMH is could be presented as:
-
-$$E(y_t/ y_{t-1} ,y_{t-1},.... )=E(y_t) $$
-
-Where the term on the right is the expected value of $y_{t}$, given the historical information of the index $y_{t-1} ,y_{t-1},....$. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price. 
-
-The EMH presumes that such investment opportunities will be noticed and will disappear almost instantaneously.
-
-One simple way to make the EMH test is to specify the AR(1): 
-
-$$y_t= \beta_0 +\beta_1\ y_{t-1}+u_t, $$
-
-
-A significant $\beta_1$ coefficient would reject EMH; then, we could use the information on the past to predict the current price. However, it is a common practice to make the test using more lags.  
-
-$$y_t= \beta_0 +\beta_1\ y_{t-1},...,y_{t-n}+u_t$$
 
 Suppose that we want to make the EMH test on the returns of the S&P 500 index.  In the next code, we download the S&P 500 index from "2019-10-20" to "2022-10-20". Remember that by yahoo finance, the ticker name is "^GSPC". 
 
@@ -62,47 +36,41 @@ getSymbols(ticker, from="2019-10-20", to="2022-10-20")
 #> [1] "^GSPC"
 ```
 
-As you see in the environment, the object that stores the S&P information is only called GSPC. We take the close price of the index, column 4, and we apply the function *Delt* to estimate the returns. 
+We take the close price of the index, apply the function *Delt* to estimate the returns. 
 
 ```r
-all<-GSPC
-dji<-all[,4]
-dji<-Delt(all[,4])
+close<-GSPC[,4]
+ret<-Delt(close)
 ```
 
-The historical information we download is daily, then we could start testing if we could use the information of the two previous two days to predict the current index price.  
 
- 
 
-$$y_t= \beta_0 +\beta_1\ y_{t-1},y_{t-2}+u_t$$
+$$y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t$$
 
-To run the previous model, we need to create the variables and store them in a data frame. We apply the function *lag* to create the lagged variables and store them in the object *dji* with the close price. Remember that there are other libraries whit a function *lag*, and in writing *stats::lag* we are calling the lag function from the stats library. For convenience, we change the column names and delete missing values rows by applying the function  *na.omit*.
+To run the previous model, we need to create the variables and store them in a data frame. We apply the function *lag* to create the lagged variables-
+
+```r
+lag1<-stats::lag(ret[,1],1)
+lag2<-stats::lag(ret[,1],2)
+ret<-cbind(ret, lag1,lag2)
+```
+
+For convenience, we change the column names.
 
 
 ```r
-la2<-stats::lag(dji,1)
-la3<-stats::lag(dji,2)
-dji<-cbind(dji,la2,la3)
-dji<-na.omit(dji)
-colnames(dji)<-c("SP500","SP500_lag1","SP500_lag2")
-head(dji)
-#>                    SP500    SP500_lag1    SP500_lag2
-#> 2019-10-24  0.0019204462  0.0028471490 -0.0035686666
-#> 2019-10-25  0.0040727006  0.0019204462  0.0028471490
-#> 2019-10-28  0.0055813379  0.0040727006  0.0019204462
-#> 2019-10-29 -0.0008324052  0.0055813379  0.0040727006
-#> 2019-10-30  0.0032533702 -0.0008324052  0.0055813379
-#> 2019-10-31 -0.0030228606  0.0032533702 -0.0008324052
+colnames(ret)<-c("SP500","SP500_lag1","SP500_lag2")
 ```
 
 
 We apply an OLS regression:
 
 ```r
-summary(lm(SP500~.,data =dji))
+model<-lm(SP500 ~.,data =ret)
+summary(model)
 #> 
 #> Call:
-#> lm(formula = SP500 ~ ., data = dji)
+#> lm(formula = SP500 ~ ., data = ret)
 #> 
 #> Residuals:
 #>       Min        1Q    Median        3Q       Max 
@@ -117,189 +85,235 @@ summary(lm(SP500~.,data =dji))
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Residual standard error: 0.01514 on 750 degrees of freedom
+#>   (3 observations deleted due to missingness)
 #> Multiple R-squared:  0.06649,	Adjusted R-squared:  0.06401 
 #> F-statistic: 26.71 on 2 and 750 DF,  p-value: 6.219e-12
 ```
 
 
-Remember, a significant beta1 coefficient would reject EMH; then, in this case, it implies that we could use the previous two days to predict the current price. 
+Remember, a significant beta1 coefficient would reject EMH. 
 
 
-## Long samples test of efficient markets hypothesis (EMH) for one asset
+For example, we could use past information on the price or a moving average to forecast the Biance price.  
+
+$$bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} +\beta3\ sma +\ e$$
+
+
+## EMH test for variance for one asset
+
+For some financial time series, such as stock returns, the expected returns do not depend on past returns (the Market is efficient), but the variance of returns does. For example, in the model:
+
+$$r_t= \beta_0 +\beta_1\ r_{t-1}+u_t$$
 
 
 
-Although the EMH states that the expected return given past observable information should be constant, it says nothing about the conditional variance. It could be tested using a 
-heteroskedasticity, such as Breusch-Pagan, for example. However, this heteroskedasticity is better characterized by the ARCH model.
 
-Suppose we have the dependent variable, y(t), a contemporary exogenous variable, z(t).
+We could apply a test to verify if the variance of returns have an effect o the returns: 
 
 
-$$E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \beta_0 +\beta_1\ z_t+\beta_2\ y_{t-1}+\beta_3\ z_{t-1}. $$
+$$u^2_{t}= \delta_0 +\delta_1\ r_{t-1}+e_t$$
 
-
-The typical approach is to assume that: 
-
-$$Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)= \sigma, $$
-is a constant. But this variance could follow an ARCH model:
-
-$$Var(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=Var(u_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)=\\ \alpha_0 +\alpha_1\ u^2_{t-2}.$$
-Where
-
-$$u_t=y_t-E(y_t/z_t,y_{t-1},z_{t-1},y_{t-2},..)$$
-
-We can check for ARCH effects by using the ArchTest() function from the FinTS package. Lagrange Multiplier (LM) test for autoregressive conditional heteroscedasticity (ARCH). Computes the Lagrange multiplier test for conditional heteroscedasticity. Equivalent to the test by OLS: 
-
-$$u_t=\alpha_0 +\alpha_1\ u^2_{t-2}$$
-We look to verify the significance of alpha 1. If alpha 1 significant, we reject the null hypothesis and conclude the presence of ARCH(1) effects. Then we could use past information to predict the future.
-ArchTest(object,lags=n), usually lags=1
-
+The previous model is heteroskedasticity test, then we could applya Breusch-Pagan test for heteroskedasticity, using the function bptest(model)
 
 ```r
-ticker<-"^GSPC"
-getSymbols(ticker,from="2021-05-01",to="2022-05-01")
-#> [1] "^GSPC"
-dji_long<-GSPC[,4]
+lmtest::bptest(model)
+#> 
+#> 	studentized Breusch-Pagan test
+#> 
+#> data:  model
+#> BP = 27.216, df = 2, p-value = 1.23e-06
 ```
 
+Suppose the test is significant in the former result (p-value <10%). Then there is no EMH, and we could use the variance or standard deviation to make a prediction. 
 
+
+For example, we could use past information and a standard deviation moving average, $sdma$,  to forecast the Biance price.
+
+$$bnb_{t}=\alpha\ +\beta1\ bnb_{t-1}+\beta2\ bnb_{t-2} +\beta3\ sma +\beta4\ sdma +\ e$$
+
+See chapter 5 of the book for an example. "Big data and machine learning"
+https://www.arturo-bernal.com/book/AFP/big-data-and-machine-learning.html
+
+
+We show another example in the next section.
+
+## EMH test for variance for many asset to build a portfolio
+
+In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We filter for the variance test of efficient markets hypothesis.
+
+First we read the data, and for convenience, we transform the data frame into xts. 
 
 
 ```r
-ar<-ArchTest(dji_long,lags=1)
-data.frame(ar$p.value)
-#>               ar.p.value
-#> Chi-squared 9.801502e-53
-```
 
-If p-value is <10%, in this case, we conclude the presence of ARCH(1) effects, then we could make a forecast of the time series using past information.
-
-
-
-
-## Long samples test of efficient markets hypothesis (EMH) applyied to portfolio 
-
-In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We will assume that is going to be a long-term horizon portfolio. Then, we need to apply the long samples test of the efficient markets hypothesis. 
-
-
-
-```r
 df<-read.xlsx("data/df_dates.xlsx", detectDates = T)
-
 date<-df[,1]
-
-dim<-dim(df)
-
-# important to takeout the data before transforming to xts, other wise does not transform into numeric. 
-data<-df[,2:dim[2]]
-
-datax<- xts(data,
+datax<- xts(df[,-1],
          order.by = as.Date(date))
-
-dfx<-na.omit(datax)
 ```
 
 
-The following code makes the long samples test of the efficient markets hypothesis (EMH) applied to many assets of the dfx object. 
-
-We start by estimating the returns for each time series and deleteing missig valies. 
+We estimated the returns, Delt. 
+apply(data, 2, func)
 
 ```r
-return<-Delt(dfx[,1])
-
-# we are going to apply the Delt function to the 100 stocks
-
-# function apply()
-return_all<-apply(dfx, 2, Delt)
-# es 1 for rows o 2for columns
+return_all<-apply(datax, 2, Delt)
 ```
 
 
-The next loops knowledge is over the level of this course contents requires, so its application could be covered in the final exam, but the topic of loops will not be covered.
 
-
-
+Xts again: becasue we loos the xts property:
 
 ```r
-dfr<-return_all
-m<-26
-#---de aqui es la creación del Loop for, esto rebasa el nivel de este curso
-ar<-c()
-n<-dim(dfr)[2]
-for (i in 1:n){
-ar1<-ArchTest(dfr[,i],lags=m)$p.value
-ar<-c(ar,ar1)
+return_all_xts<-xts(return_all,
+         order.by = as.Date(date))
+head(return_all_xts[,1:4]) 
+#>              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close
+#> 2020-01-02           NA           NA            NA           NA
+#> 2020-01-03 -0.009722044 -0.012451750 -0.0049072022 -0.005231342
+#> 2020-01-06  0.007968248  0.002584819  0.0246570974  0.026654062
+#> 2020-01-07 -0.004703042 -0.009117758 -0.0006240057 -0.001931646
+#> 2020-01-08  0.016086289  0.015928379  0.0078803309  0.007117757
+#> 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921
+```
+
+The following code has the same test we made for one stock on the previous second section of this chapter:  
+
+```r
+i<-1
+
+#For the next chunk:
+
+#---------------copy from here------- 
+data<-return_all_xts[, i]
+lag1 <- stats::lag(data,1)
+lag2 <- stats::lag(data,2)
+ret <- data.frame(cbind(data, lag1,lag2))
+colnames(ret)<-c("SP500","SP500_lag1","SP500_lag2")
+
+#-------------to here ------------
+
+model <- lm(SP500 ~.,data =ret)
+bp <- bptest(model)
+bp <- bp[["p.value"]]
+bp
+#>         BP 
+#> 0.00134487
+```
+
+
+The next chunk shows a "Loop For" to show a similar procedure as the previous chunk. The knowledge it requires is over the level of this course's contents. You could expect to develop the process for the final exam following the procedure of the previous chunk, building an R function together with the "apply" function, not creating a "Loop For."
+
+```r
+bp_all_Loop<-data.frame()
+dim<-dim(return_all_xts)[2] 
+for (i in 1:dim){
+ 
+#----copy here -----
+
+  data<-return_all_xts[, i]
+lag1 <- stats::lag(data,1)
+lag2 <- stats::lag(data,2)
+ret <- data.frame(cbind(data, lag1,lag2))
+colnames(ret)<-c("SP500","SP500_lag1","SP500_lag2")
+
+# ----to Here----------------
+
+model <- lm(SP500 ~.,data =ret)
+  bp <- bptest(model)
+  bp <- bp[["p.value"]]
+  bp_all_Loop[i,1]<-colnames(return_all_xts)[i]
+  bp_all_Loop[i,2]<-bp
 }
-#----- 
-ar<-data.frame(ar)
-# it has the p value of the EMH test, if the p-value is lees than 10%, then we could make predictions 
-
-# add the name of the ticker
-col_name<-colnames(return_all)
-head(col_name)
-#> [1] "AAPL.Close"  "MSFT.Close"  "GOOG.Close"  "GOOGL.Close" "AMZN.Close" 
-#> [6] "TSLA.Close"
-# add the ticker na,me
-rownames(ar)<-col_name
-head(ar)
-#>                       ar
-#> AAPL.Close  3.731438e-17
-#> MSFT.Close  6.033001e-39
-#> GOOG.Close  3.224007e-16
-#> GOOGL.Close 2.570860e-16
-#> AMZN.Close  5.093709e-04
-#> TSLA.Close  2.275599e-05
+colnames(bp_all_Loop)<-c("Ticker","p-value")
+head(bp_all_Loop)
+#>        Ticker     p-value
+#> 1  AAPL.Close 0.001344870
+#> 2  MSFT.Close 0.002359318
+#> 3  GOOG.Close 0.007415325
+#> 4 GOOGL.Close 0.009713821
+#> 5  AMZN.Close 0.542408713
+#> 6  TSLA.Close 0.086492404
+tail(bp_all_Loop)
+#>          Ticker      p-value
+#> 95    TXN.Close 0.0002357208
+#> 96    CRM.Close 0.8711756478
+#> 97    BMY.Close 0.1610277136
+#> 98    UPS.Close 0.9590241181
+#> 99  RLLCF.Close 0.8083656314
+#> 100  QCOM.Close 0.0539758548
 ```
 
-The following code counts the number of tickers that we could use to make a prediction, applyinf the ifelse function and combing it with the object that contains the EMH test.
+
+The following code helps us count the number of tickers we could use to make a prediction, applying the "ifelse" function and combing it with the object containing the EMH test.
+
 
 ```r
-library(dplyr)
+pred<-ifelse(bp_all_Loop[,"p-value"]<0.1,"Predict","No Predict" )
 
-pred<-ifelse(ar[,1]<0.1,"Predict","No Predict")
-# merge with the ar object 
-ar<-cbind(ar,pred)
-head(ar)
-#>                       ar    pred
-#> AAPL.Close  3.731438e-17 Predict
-#> MSFT.Close  6.033001e-39 Predict
-#> GOOG.Close  3.224007e-16 Predict
-#> GOOGL.Close 2.570860e-16 Predict
-#> AMZN.Close  5.093709e-04 Predict
-#> TSLA.Close  2.275599e-05 Predict
+bp_all_Loop_1<- cbind(bp_all_Loop,pred)
+
+head(bp_all_Loop_1)
+#>        Ticker     p-value       pred
+#> 1  AAPL.Close 0.001344870    Predict
+#> 2  MSFT.Close 0.002359318    Predict
+#> 3  GOOG.Close 0.007415325    Predict
+#> 4 GOOGL.Close 0.009713821    Predict
+#> 5  AMZN.Close 0.542408713 No Predict
+#> 6  TSLA.Close 0.086492404    Predict
+tail(bp_all_Loop_1)
+#>          Ticker      p-value       pred
+#> 95    TXN.Close 0.0002357208    Predict
+#> 96    CRM.Close 0.8711756478 No Predict
+#> 97    BMY.Close 0.1610277136 No Predict
+#> 98    UPS.Close 0.9590241181 No Predict
+#> 99  RLLCF.Close 0.8083656314 No Predict
+#> 100  QCOM.Close 0.0539758548    Predict
 ```
 
 Finally, we could filter to get only those tickers with category predict. 
 
-arf<- df %>%
-  filter(coll== "category")
-
 ```r
-
-arf<- ar %>%
-  filter(pred == "Predict")
+bp_all_Loop_f<- bp_all_Loop_1 %>%
+  dplyr::filter(pred == "Predict") 
+head(bp_all_Loop_f)
+#>        Ticker      p-value    pred
+#> 1  AAPL.Close 1.344870e-03 Predict
+#> 2  MSFT.Close 2.359318e-03 Predict
+#> 3  GOOG.Close 7.415325e-03 Predict
+#> 4 GOOGL.Close 9.713821e-03 Predict
+#> 5  TSLA.Close 8.649240e-02 Predict
+#> 6 BRK.A.Close 3.950538e-06 Predict
+tail(bp_all_Loop_f)  
+#>        Ticker      p-value    pred
+#> 71  WFC.Close 6.487655e-07 Predict
+#> 72 C.PJ.Close 3.292293e-07 Predict
+#> 73   PM.Close 2.047688e-07 Predict
+#> 74  LIN.Close 3.799114e-02 Predict
+#> 75  TXN.Close 2.357208e-04 Predict
+#> 76 QCOM.Close 5.397585e-02 Predict
 ```
 
 
 Also we take the historical information of the filtered stocks
 
 ```r
-# this code takes the names of the filtered tickers
-col_filterd<-rownames(arf)
-dfx_2<-dfx[,col_filterd]
+ticker<-bp_all_Loop_f[,"Ticker"]
+emh<-return_all_xts[,ticker]
+head(emh[,1:4])
+#>              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close
+#> 2020-01-02           NA           NA            NA           NA
+#> 2020-01-03 -0.009722044 -0.012451750 -0.0049072022 -0.005231342
+#> 2020-01-06  0.007968248  0.002584819  0.0246570974  0.026654062
+#> 2020-01-07 -0.004703042 -0.009117758 -0.0006240057 -0.001931646
+#> 2020-01-08  0.016086289  0.015928379  0.0078803309  0.007117757
+#> 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921
+tail(emh[,1:4])
+#>              AAPL.Close   MSFT.Close    GOOG.Close  GOOGL.Close
+#> 2022-05-19 -0.024641392 -0.003699634 -0.0147285646 -0.013543429
+#> 2022-05-20  0.001747288 -0.002291226 -0.0129350191 -0.013371513
+#> 2022-05-23  0.040119232  0.032031977  0.0215299497  0.023689766
+#> 2022-05-24 -0.019215988 -0.003951656 -0.0514075636 -0.049494164
+#> 2022-05-25  0.001139947  0.011170149 -0.0008165988 -0.001556952
+#> 2022-05-26  0.023199508  0.012875229  0.0232096155  0.018784556
 ```
-
-
-
-
-```r
-dfx_3<-data.frame(dfx_2)
-date<-rownames(dfx_3)
-dfx_4<-cbind(date,dfx_3)
-```
-
-
-## Bibliography
-
-Wooldridge, J. M. (2012). Introductory econometrics: A modern approach. Mason, OH: Thomson/South-Western.
-
