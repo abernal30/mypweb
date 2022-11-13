@@ -102,13 +102,13 @@
 </h1>
 <p>For this chapter, we will take the filtered stocks from “Rational agents theory and behavioral finance theories”. As you remember, in the the previous chapter we applied the momentum strategy.</p>
 <p>In the file df_merge.xlsx you will find those estimations for the in_sample and out_sample.</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_merge</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/df_merge.xlsx"</span>,rowNames<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p>As we mention in the previous chapter, If the performance on out-sample data is pretty like in-sample data, we assume the parameters and rule set have good generalization power and can be used for live trading. In this session, we filter for those stocks that have similar out-sample and in-sample data. For that purpose, we took the difference between Sharpe ratios in the in_sample and out_sample. We also need to define a threshold of tolerance for that difference. For example, we only take stocks for which the difference is less than 20% in absolute value.<br>
 df %&gt;%
 filter(Sharpe_diff &lt; n &amp; Sharpe_diff &gt; -n)
 n is the threshold</p>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">treh</span><span class="op">&lt;-</span><span class="fl">0.2</span></span>
 <span></span>
 <span>  <span class="va">df_merge2</span><span class="op">&lt;-</span> <span class="va">df_merge</span>   <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -164,11 +164,11 @@ n is the threshold</p>
 <span><span class="co">#&gt; TMUS.Close      -1.0445      0.1442</span></span></code></pre></div>
 <p>The momentum strategy consists of buying stocks when the instrument is trending up or selling when is down. For this case, we will order the sample by the in_Sharpe, and split the sample into 3 tranches. The first will be the stocks for taking long positions and the 3rd the one of shorts positions.</p>
 <p>df %&gt;% arrange(desc(col))</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_filtered</span><span class="op">&lt;-</span> <span class="va">df_merge2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">in_Sharpe</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># to gt the names of those stocks</span></span></code></pre></div>
 <p>The next code is to make the split for winners</p>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">co</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">df_filtered</span><span class="op">)</span></span>
 <span><span class="va">le</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">co</span><span class="op">)</span></span>
 <span><span class="va">n</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">le</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">0</span><span class="op">)</span>  </span>
@@ -176,13 +176,13 @@ n is the threshold</p>
 <span><span class="va">n</span></span>
 <span><span class="co">#&gt; [1] 8</span></span></code></pre></div>
 <p>The next code is to make the split for losers</p>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loss</span><span class="op">&lt;-</span><span class="va">co</span><span class="op">[</span><span class="op">(</span><span class="va">le</span><span class="op">-</span><span class="va">n</span><span class="op">)</span><span class="op">:</span><span class="va">le</span><span class="op">]</span></span>
 <span><span class="va">loss</span> <span class="co"># short positions</span></span>
 <span><span class="co">#&gt; [1] "TM.Close"    "ORCL.Close"  "TSM.Close"   "VZ.Close"    "TMUS.Close" </span></span>
 <span><span class="co">#&gt; [6] "AZN.Close"   "NSRGF.Close" "AZNCF.Close" "RHHBF.Close"</span></span></code></pre></div>
 <p>Finally, we combine the tranches 1 and 3 in one single object</p>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">co_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">win</span>,<span class="va">loss</span><span class="op">)</span></span>
 <span><span class="va">co_all</span></span>
 <span><span class="co">#&gt;  [1] "TSLA.Close"   "BAC.PK.Close" "BAC.Close"    "RYDAF.Close"  "WFC.PR.Close"</span></span>
@@ -194,7 +194,7 @@ n is the threshold</p>
 <p>Regarding the set.seed(42), because runif generate aleatory numbers. Then it is useful to take out the # before set.seed(42) and get the same result. After everyone gets the same results, insert the # again.</p>
 <p>For simplicity, we will generate one portfolio weights simulation, and late we will generate more.
 runif.</p>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">w</span><span class="op">&lt;-</span> <span class="fl">1.2</span> <span class="co"># long position weight</span></span>
 <span><span class="va">w_short</span><span class="op">&lt;-</span> <span class="fl">1</span><span class="op">-</span><span class="va">w</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
@@ -209,7 +209,7 @@ runif.</p>
 <span><span class="co"># row names from win</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">we_win</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">win</span></span></code></pre></div>
 <p>For the short position the weights must be negative. Then, for the 3rd tranche:</p>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ru</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">loss</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">su</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">ru</span><span class="op">)</span></span>
@@ -233,7 +233,7 @@ runif.</p>
 <span><span class="co">#&gt; AZNCF.Close -0.03077199</span></span>
 <span><span class="co">#&gt; RHHBF.Close -0.03202288</span></span></code></pre></div>
 <p>Finally, we combine both weights.</p>
-<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">we_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">we_win</span>,<span class="va">we_loss</span><span class="op">)</span></span>
 <span><span class="va">we_all</span></span>
 <span><span class="co">#&gt;                       we</span></span>
@@ -257,7 +257,7 @@ runif.</p>
 <p>The portfolio standard deviation is the result of the covariance multiplied by the portfolio weights.</p>
 <p>We estimate the covariance matrix, only for the tickers in tranches 1 and 3. For that covariance we need the returs of that tickers only.</p>
 <p>Once we have the filtered stocks, get the returns of those stocks, taking the returns that we estimated the last session, from:</p>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/dfx_2.xlsx"</span><span class="op">)</span></span>
 <span><span class="va">date</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">data</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
@@ -277,15 +277,15 @@ runif.</p>
 <span><span class="co">#&gt; 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921  0.004799272</span></span>
 <span><span class="co">#&gt; 2020-01-10  0.002260711 -0.004627059  0.0069726829  0.006458647 -0.009410597</span></span></code></pre></div>
 <p>Also, we filter to get only the filtered stocks, from co_all</p>
-<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">retx_all</span><span class="op">&lt;-</span><span class="va">retx</span><span class="op">[</span>,<span class="va">co_all</span><span class="op">]</span></span></code></pre></div>
 <p>portfolio covariance
 cov(df,use=“complete.obs”)</p>
-<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">covar</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span><span class="op">(</span><span class="va">retx_all</span>,use<span class="op">=</span><span class="st">"complete.obs"</span><span class="op">)</span></span></code></pre></div>
 <p>portfolio_std =cov%<em>% weigths
 %</em>% para multiplicar matrices</p>
-<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">portfolio_std</span> <span class="op">=</span><span class="va">covar</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">we_all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">portfolio_std</span></span>
 <span><span class="co">#&gt;                      [,1]</span></span>
@@ -309,11 +309,11 @@ cov(df,use=“complete.obs”)</p>
 <p>But we need annualized the portfolio_std
 twe&lt;-t(weigths)
 portfolio_std_1=(twe%<em>%portfolio_std</em>252)^.5</p>
-<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">twe</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">we_all</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">portfolio_std_1</span><span class="op">=</span><span class="op">(</span><span class="va">twe</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">portfolio_std</span><span class="op">*</span><span class="fl">252</span><span class="op">)</span><span class="op">^</span><span class="fl">.5</span></span></code></pre></div>
 <p>The following code has the annualized returns of the in_sample data, only for the momentum portfolio.</p>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ret_a</span><span class="op">&lt;-</span><span class="va">df_merge2</span><span class="op">[</span><span class="va">co_all</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">ret_a_f</span><span class="op">&lt;-</span><span class="va">twe</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">ret_a</span> </span>

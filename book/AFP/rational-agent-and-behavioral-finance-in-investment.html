@@ -101,7 +101,7 @@
 <span class="header-section-number">7</span> Rational agent and behavioral finance in investment<a class="anchor" aria-label="anchor" href="#rational-agent-and-behavioral-finance-in-investment"><i class="fas fa-link"></i></a>
 </h1>
 <p>In this chapter we will use the following libraries:</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">lmtest</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
@@ -117,25 +117,25 @@
 <p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t\]</span></p>
 <p>Where the term on the right is the expected value of <span class="math inline">\(y_{t}\)</span>, given the historical information of the index <span class="math inline">\(y_{t-1} ,y_{t-2},....\)</span>. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price.</p>
 <p>Suppose that we want to make the EMH test on the returns of the S&amp;P 500 index. In the next code, we download the S&amp;P 500 index from “2019-10-20” to “2022-10-20”. Remember that by yahoo finance, the ticker name is “^GSPC”.</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ticker</span><span class="op">&lt;-</span><span class="st">"^GSPC"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">ticker</span>, from<span class="op">=</span><span class="st">"2019-10-20"</span>, to<span class="op">=</span><span class="st">"2022-10-20"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "^GSPC"</span></span></code></pre></div>
 <p>We take the close price of the index, apply the function <em>Delt</em> to estimate the returns.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">close</span><span class="op">&lt;-</span><span class="va">GSPC</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span>
 <span><span class="va">ret</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/Delt.html">Delt</a></span><span class="op">(</span><span class="va">close</span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t\]</span></p>
 <p>To run the previous model, we need to create the variables and store them in a data frame. We apply the function <em>lag</em> to create the lagged variables-</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lag1</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">ret</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">lag2</span><span class="op">&lt;-</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">ret</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">ret</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ret</span>, <span class="va">lag1</span>,<span class="va">lag2</span><span class="op">)</span></span></code></pre></div>
 <p>For convenience, we change the column names.</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SP500"</span>,<span class="st">"SP500_lag1"</span>,<span class="st">"SP500_lag2"</span><span class="op">)</span></span></code></pre></div>
 <p>We apply an OLS regression:</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SP500</span> <span class="op">~</span><span class="va">.</span>,data <span class="op">=</span><span class="va">ret</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -171,7 +171,7 @@
 <p>We could apply a test to verify if the variance of returns have an effect o the returns:</p>
 <p><span class="math display">\[u^2_{t}= \delta_0 +\delta_1\ r_{t-1}+e_t\]</span></p>
 <p>The previous model is heteroskedasticity test, then we could applya Breusch-Pagan test for heteroskedasticity, using the function bptest(model)</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lmtest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  studentized Breusch-Pagan test</span></span>
@@ -191,7 +191,7 @@
 </h2>
 <p>In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We filter for the variance test of efficient markets hypothesis.</p>
 <p>First we read the data, and for convenience, we transform the data frame into xts.</p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"data/df_dates.xlsx"</span>, detectDates <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">date</span><span class="op">&lt;-</span><span class="va">df</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
@@ -199,10 +199,10 @@
 <span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We estimated the returns, Delt.
 apply(data, 2, func)</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">return_all</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">datax</span>, <span class="fl">2</span>, <span class="va">Delt</span><span class="op">)</span></span></code></pre></div>
 <p>Xts again: becasue we loos the xts property:</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">return_all_xts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html">xts</a></span><span class="op">(</span><span class="va">return_all</span>,</span>
 <span>         order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">return_all_xts</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> </span>
@@ -214,7 +214,7 @@ apply(data, 2, func)</p>
 <span><span class="co">#&gt; 2020-01-08  0.016086289  0.015928379  0.0078803309  0.007117757</span></span>
 <span><span class="co">#&gt; 2020-01-09  0.021240806  0.012492973  0.0110444988  0.010497921</span></span></code></pre></div>
 <p>The following code has the same test we made for one stock on the previous second section of this chapter:</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span><span class="op">&lt;-</span><span class="fl">1</span></span>
 <span></span>
 <span><span class="co">#For the next chunk:</span></span>
@@ -235,7 +235,7 @@ apply(data, 2, func)</p>
 <span><span class="co">#&gt;         BP </span></span>
 <span><span class="co">#&gt; 0.00134487</span></span></code></pre></div>
 <p>The next chunk shows a “Loop For” to show a similar procedure as the previous chunk. The knowledge it requires is over the level of this course’s contents. You could expect to develop the process for the final exam following the procedure of the previous chunk, building an R function together with the “apply” function, not creating a “Loop For.”</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bp_all_Loop</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">return_all_xts</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> </span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">dim</span><span class="op">)</span><span class="op">{</span></span>
@@ -274,7 +274,7 @@ apply(data, 2, func)</p>
 <span><span class="co">#&gt; 99  RLLCF.Close 0.8083656314</span></span>
 <span><span class="co">#&gt; 100  QCOM.Close 0.0539758548</span></span></code></pre></div>
 <p>The following code helps us count the number of tickers we could use to make a prediction, applying the “ifelse” function and combing it with the object containing the EMH test.</p>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pred</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">bp_all_Loop</span><span class="op">[</span>,<span class="st">"p-value"</span><span class="op">]</span><span class="op">&lt;</span><span class="fl">0.1</span>,<span class="st">"Predict"</span>,<span class="st">"No Predict"</span> <span class="op">)</span></span>
 <span></span>
 <span><span class="va">bp_all_Loop_1</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">bp_all_Loop</span>,<span class="va">pred</span><span class="op">)</span></span>
@@ -296,7 +296,7 @@ apply(data, 2, func)</p>
 <span><span class="co">#&gt; 99  RLLCF.Close 0.8083656314 No Predict</span></span>
 <span><span class="co">#&gt; 100  QCOM.Close 0.0539758548    Predict</span></span></code></pre></div>
 <p>Finally, we could filter to get only those tickers with category predict.</p>
-<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bp_all_Loop_f</span><span class="op">&lt;-</span> <span class="va">bp_all_Loop_1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pred</span> <span class="op">==</span> <span class="st">"Predict"</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bp_all_Loop_f</span><span class="op">)</span></span>
@@ -316,7 +316,7 @@ apply(data, 2, func)</p>
 <span><span class="co">#&gt; 75  TXN.Close 2.357208e-04 Predict</span></span>
 <span><span class="co">#&gt; 76 QCOM.Close 5.397585e-02 Predict</span></span></code></pre></div>
 <p>Also we take the historical information of the filtered stocks</p>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ticker</span><span class="op">&lt;-</span><span class="va">bp_all_Loop_f</span><span class="op">[</span>,<span class="st">"Ticker"</span><span class="op">]</span></span>
 <span><span class="va">emh</span><span class="op">&lt;-</span><span class="va">return_all_xts</span><span class="op">[</span>,<span class="va">ticker</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">emh</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>

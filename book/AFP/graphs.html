@@ -112,7 +112,7 @@
 <p>The [quantmod] package for R was designed to assist the quantitative trader in developing, testing, and deploying statistically based trading models.</p>
 <p>The function getSymbols is a wrapper to load data from various sources, local or remote. One of the more popular and the default is <a href="https://finance.yahoo.com/" target="_blank">yahoo fiance</a>,<br>
 getSymbols(“Symbol”):</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.quantmod.com">quantmod</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span>
@@ -123,32 +123,32 @@ getSymbols(“Symbol”):</p>
 <p>Getting the data from an specific date:</p>
 <p>getSymbols(“symbol”, from=“YY/m/d”,to=“YY/m/d”)</p>
 <p>Where: YY= is 4 digit year, m= 2 digit month, d= 2 digit day.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AMZN"</span>, from<span class="op">=</span><span class="st">"2020/04/01"</span>,to<span class="op">=</span><span class="st">"2022/04/04"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AMZN"</span></span></code></pre></div>
 <p>The previous way to download the data store the information in an object on the environment, and by default assign a name to that object, in the previous example would be “AMZN”.</p>
 <p>Another way to do it or to store with a different name, form example with the name “data”, is the following:</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">apple2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span>, env<span class="op">=</span><span class="va">apple2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">apple2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "environment"</span></span></code></pre></div>
 <p>The object class is a list. To get the information we have to apply the following code.</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">apple3</span><span class="op">&lt;-</span><span class="va">apple2</span><span class="op">[[</span><span class="st">"AAPL"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p>The previous method is useful when we have tickers like Bitcoin:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"BTC-USD"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "BTC-USD"</span></span></code></pre></div>
 <p>Because apparently the name of that object in the environment is “BTC-USD”, but if we want to modify it with that name, it would show a debug like: “object ‘BTC’ not found”</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bit</span><span class="op">&lt;-</span><span class="va">BTC</span><span class="op">-</span><span class="va">USD</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span></span></code></pre></div>
 <p>This is because even when looks “BTC-USD” the name has these kind of brackets:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># `BTC-USD`</span></span></code></pre></div>
 <p>Another alternative, which is helpful when we apply loops to get the information from the environment is:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bit</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="st">"BTC-USD"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bit</span><span class="op">)</span></span>
 <span><span class="co">#&gt;            BTC-USD.Open BTC-USD.High BTC-USD.Low BTC-USD.Close BTC-USD.Volume</span></span>
@@ -166,12 +166,12 @@ getSymbols(“Symbol”):</p>
 <span><span class="co">#&gt; 2014-09-21          398.821</span></span>
 <span><span class="co">#&gt; 2014-09-22          402.152</span></span></code></pre></div>
 <p>If we would like to download intra-day data, we could get the data from <a href="https://www.alphavantage.co/" target="_blank">Alphavantage</a>, applying the same function getSymbols.</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span>, src<span class="op">=</span><span class="st">"av"</span>, api.key<span class="op">=</span><span class="st">"yourKey"</span>, output.size<span class="op">=</span><span class="st">"full"</span>,</span>
 <span>periodicity<span class="op">=</span><span class="st">"intraday"</span>,interval<span class="op">=</span><span class="st">"5min"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span></code></pre></div>
 <p>To get dividends, the xts object with the ticker name, needs to be in the R environment, in this case “AAPL”:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ap_div</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getDividends.html">getDividends</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="nasdaq-data-link-api" class="section level3" number="3.1.2">
@@ -188,7 +188,7 @@ getSymbols(“Symbol”):</p>
 #&gt; 1999-01-06 8.37
 #&gt; 1999-01-07 8.43
 #&gt; 1999-01-08 8.40</code></pre>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quandl/quandl-r">Quandl</a></span><span class="op">)</span></span>
 <span><span class="va">eurex</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/Quandl/man/Quandl.html">Quandl</a></span><span class="op">(</span><span class="st">"ML/EMHGY"</span>, api_key<span class="op">=</span><span class="st">"type your own api_key here"</span>,type<span class="op">=</span><span class="st">"xts"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">eurex</span><span class="op">)</span></span></code></pre></div>
@@ -198,11 +198,11 @@ getSymbols(“Symbol”):</p>
 <span class="header-section-number">3.1.3</span> In-house Api<a class="anchor" aria-label="anchor" href="#in-house-api"><i class="fas fa-link"></i></a>
 </h3>
 <p>Harvesting the web with rvest (to get tickers).</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://xml2.r-lib.org/">xml2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvest.tidyverse.org/">rvest</a></span><span class="op">)</span></span></code></pre></div>
 <p>This code is to read characters from web pages. In this case, to get the tickers from yahoo finance.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the page of of the criptocurrencies</span></span>
 <span><span class="co">#yf &lt;- "https://finance.yahoo.com/cryptocurrencies/"</span></span>
 <span></span>
@@ -232,7 +232,7 @@ getSymbols(“Symbol”):</p>
 <span><span class="co">#&gt; [21] "LABB.MX"       "GCC.MX"        "CEMEXCPO.MX"   "GMEXICOB.MX"  </span></span>
 <span><span class="co">#&gt; [25] "TLEVISACPO.MX" "LIVEPOLC1.MX"  "MEXCHEM.MX"    "KOFL.MX"      </span></span>
 <span><span class="co">#&gt; [29] "PEOLES.MX"     "SITESB1.MX"</span></span></code></pre></div>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; [1] "IENOVA.MX"  "GENTERA.MX"</span></span></code></pre></div>
 </div>
@@ -243,21 +243,21 @@ getSymbols(“Symbol”):</p>
 </h2>
 <p>The basic function for creating a graph is: plot(x, type = “h”, col = “red”, lwd = 10, “xlab”,“ylab”).</p>
 <p>For this example we use 100 rows of the “AAPL” ticker.</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="st">"AAPL"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "AAPL"</span></span>
 <span><span class="va">app</span><span class="op">&lt;-</span><span class="va">AAPL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="fl">4</span><span class="op">]</span></span></code></pre></div>
 <p>In the help of tue function “plot.xy” and “plot.default” we can see the arguments.
 Plot the HSI close price</p>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">app</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"green"</span>, main <span class="op">=</span> <span class="st">"APPL"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-17-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>To add anhother time series, for example: apple*1.1</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">app</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"green"</span>, main <span class="op">=</span> <span class="st">"APPL"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-18-1.png" width="90%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">app</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">1.1</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="03-APIS-and-graphs_files/figure-html/unnamed-chunk-18-2.png" width="90%" style="display: block; margin: auto;"></div>
@@ -265,7 +265,7 @@ Plot the HSI close price</p>
 <p>To adding leggends, the function legends only work with data frames, not xts., then we transform it in dataframe
 as.data.frame(object).</p>
 <p>To add a legend, but it only works for data frames objects, not in xts. Then we need to transform it into data frame.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">appdf</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">app</span><span class="op">)</span></span>
 <span><span class="va">app_1df</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">app</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">1.1</span><span class="op">)</span></span>
 <span></span>

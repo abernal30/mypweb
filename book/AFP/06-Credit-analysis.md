@@ -16,8 +16,8 @@ In this chapter, we will cover credit allocation analysis (loan origination). Th
 on Lendingclub, <https://www.lendingclub.com/> fintech marketplace bank
 at scale. On the spreadsheets, you will find the variable description.
 The original data set has at least 2 million observations and 150
-variables. Inside the file "credit.xlsx," you will find only 1000
-observations (rows) and 26 columns. Each row represents a
+variables. Inside the file "credit.xlsx," you will find only 873
+observations (rows) and 71 columns. Each row represents a
 Lendingclub client. We previously made the data cleaning (missing
 values, correlated variables, Zero- and Near Zero-Variance Predictors).
 To know more about data cleaning, see the 2nd chapter of this book.
