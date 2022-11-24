@@ -1,7 +1,7 @@
 --- 
 title: "Algorithms and Financial Programming in R"
 author: "Arturo Bernal"
-date: "2022-11-13"
+date: "2022-11-24"
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book

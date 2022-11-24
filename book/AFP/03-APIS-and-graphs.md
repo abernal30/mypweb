@@ -7,7 +7,7 @@
 ### Quantmod API
 Quantitative Financial Modelling Framework
 
-The [quantmod] package for R was designed to assist the quantitative trader in developing, testing, and deploying statistically based trading models.
+The [@quantmod] package for R was designed to assist the quantitative trader in developing, testing, and deploying statistically based trading models.
 
 The function getSymbols is a wrapper to load data from various sources, local or remote. One of the more popular and the default is <a href="https://finance.yahoo.com/" target="_blank">yahoo fiance</a>,  
 getSymbols("Symbol"):
@@ -182,12 +182,12 @@ tickers<-grep(pattern = ".MX", x = node, value = TRUE)
 
 tickers1<-tickers
 tickers1
-#>  [1] "IENOVA.MX"     "GENTERA.MX"    "GRUMAB.MX"     "BOLSAA.MX"    
-#>  [5] "AC.MX"         "BBAJIOO.MX"    "MEGACPO.MX"    "BIMBOA.MX"    
-#>  [9] "OMAB.MX"       "ALPEKA.MX"     "AMXL.MX"       "ALSEA.MX"     
-#> [13] "FEMSAUBD.MX"   "GFNORTEO.MX"   "KIMBERA.MX"    "ASURB.MX"     
-#> [17] "GCARSOA1.MX"   "PINFRA.MX"     "GAPB.MX"       "CUERVO.MX"    
-#> [21] "LABB.MX"       "GCC.MX"        "CEMEXCPO.MX"   "GMEXICOB.MX"  
+#>  [1] "IENOVA.MX"     "ALPEKA.MX"     "GENTERA.MX"    "KIMBERA.MX"   
+#>  [5] "ALSEA.MX"      "FEMSAUBD.MX"   "GFNORTEO.MX"   "BOLSAA.MX"    
+#>  [9] "BBAJIOO.MX"    "CEMEXCPO.MX"   "BIMBOA.MX"     "PINFRA.MX"    
+#> [13] "AMXL.MX"       "MEGACPO.MX"    "GRUMAB.MX"     "GAPB.MX"      
+#> [17] "ASURB.MX"      "LABB.MX"       "OMAB.MX"       "AC.MX"        
+#> [21] "GCC.MX"        "GCARSOA1.MX"   "GMEXICOB.MX"   "CUERVO.MX"    
 #> [25] "TLEVISACPO.MX" "LIVEPOLC1.MX"  "MEXCHEM.MX"    "KOFL.MX"      
 #> [29] "PEOLES.MX"     "SITESB1.MX"
 ```
@@ -195,7 +195,7 @@ tickers1
 
 ```r
 getSymbols(tickers1[1:2]) 
-#> [1] "IENOVA.MX"  "GENTERA.MX"
+#> [1] "IENOVA.MX" "ALPEKA.MX"
 ```
 
 

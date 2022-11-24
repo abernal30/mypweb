@@ -137,7 +137,7 @@ https://www.arturo-bernal.com/book/AFP/big-data-and-machine-learning.html
 
 We show another example in the next section.
 
-## EMH test for variance for many asset to build a portfolio
+## EMH tests for the variance for many assets to build a portfolio
 
 In the next session, we will cover the subject of market anomalies. We will cover the momentum anomalies. However, that strategy is for constructing a portfolio of stocks. However, first, we need to filter those stocks for which we can make a prediction. We filter for the variance test of efficient markets hypothesis.
 

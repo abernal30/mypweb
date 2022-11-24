@@ -1,3 +1,5 @@
+fig:unnamed-chunk-2
+fig:unnamed-chunk-10
 r-basics
 r-markdown
 coding-basics
@@ -39,7 +41,15 @@ cross-validation.
 rational-agent-and-behavioral-finance-in-investment
 emh-test-on-historical-returns-for-one-asset
 emh-test-for-variance-for-one-asset
-emh-test-for-variance-for-many-asset-to-build-a-portfolio
+emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio
+applied-market-anomalies.-momentum-market-anomalies
+overview-of-the-momentum-market-anomalies
+data-preparation-2
+signal-creation-for-one-stock
+back-testing
+appendix-1
+the-macd-and-signals-from-investopedia.
+the-bollinger-bands-from-investopedia
 momentum-or-directional-trading
 bibliography-2
 portfolio-management-algorithms

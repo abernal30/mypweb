@@ -129,7 +129,7 @@ signal <- ifelse(in_datax[,1]> bb[,'up'] & macd[,'macd'] >macd[,'signal'],1,ifel
 plot(signal[,1])
 ```
 
-<img src="08-Momentum-strategy_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;" />
+<img src="08-Momentum-or-directional-trading_files/figure-html/unnamed-chunk-5-1.png" width="90%" style="display: block; margin: auto;" />
 
 
 We can modify this signal generation mechanism and use any other criterion. We haven't included any transaction cost and slippage cost to calculate its performance as none of the strategies are directly for trading. 

@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>3 APIS and R graphs | Algorithms and Financial Programming in R</title>
 <meta name="author" content="Arturo Bernal">
-<meta name="description" content="3.1 API´s (Application Programming Interface)  3.1.1 Quantmod API Quantitative Financial Modelling Framework The [quantmod] package for R was designed to assist the quantitative trader in...">
+<meta name="description" content="3.1 API´s (Application Programming Interface)  3.1.1 Quantmod API Quantitative Financial Modelling Framework The (Wickham and Francois 2016) package for R was designed to assist the quantitative...">
 <meta name="generator" content="bookdown 0.30 with bs4_book()">
 <meta property="og:title" content="3 APIS and R graphs | Algorithms and Financial Programming in R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/graphs.html">
 <meta property="og:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
-<meta property="og:description" content="3.1 API´s (Application Programming Interface)  3.1.1 Quantmod API Quantitative Financial Modelling Framework The [quantmod] package for R was designed to assist the quantitative trader in...">
+<meta property="og:description" content="3.1 API´s (Application Programming Interface)  3.1.1 Quantmod API Quantitative Financial Modelling Framework The (Wickham and Francois 2016) package for R was designed to assist the quantitative...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3 APIS and R graphs | Algorithms and Financial Programming in R">
-<meta name="twitter:description" content="3.1 API´s (Application Programming Interface)  3.1.1 Quantmod API Quantitative Financial Modelling Framework The [quantmod] package for R was designed to assist the quantitative trader in...">
+<meta name="twitter:description" content="3.1 API´s (Application Programming Interface)  3.1.1 Quantmod API Quantitative Financial Modelling Framework The (Wickham and Francois 2016) package for R was designed to assist the quantitative...">
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/coverf.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -86,9 +86,10 @@
 <li><a class="" href="big-data-and-machine-learning.html"><span class="header-section-number">5</span> Big data and machine learning</a></li>
 <li><a class="" href="credit-analysis.html"><span class="header-section-number">6</span> Credit analysis</a></li>
 <li><a class="" href="rational-agent-and-behavioral-finance-in-investment.html"><span class="header-section-number">7</span> Rational agent and behavioral finance in investment</a></li>
-<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">8</span> Momentum or directional trading</a></li>
-<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">9</span> Portfolio management algorithms</a></li>
-<li><a class="" href="references.html"><span class="header-section-number">10</span> References</a></li>
+<li><a class="" href="applied-market-anomalies.-momentum-market-anomalies.html"><span class="header-section-number">8</span> Applied market anomalies. Momentum market anomalies</a></li>
+<li><a class="" href="momentum-or-directional-trading.html"><span class="header-section-number">9</span> Momentum or directional trading</a></li>
+<li><a class="" href="portfolio-management-algorithms.html"><span class="header-section-number">10</span> Portfolio management algorithms</a></li>
+<li><a class="" href="references.html"><span class="header-section-number">11</span> References</a></li>
 </ul>
 
         <div class="book-extra">
@@ -109,7 +110,7 @@
 <span class="header-section-number">3.1.1</span> Quantmod API<a class="anchor" aria-label="anchor" href="#quantmod-api"><i class="fas fa-link"></i></a>
 </h3>
 <p>Quantitative Financial Modelling Framework</p>
-<p>The [quantmod] package for R was designed to assist the quantitative trader in developing, testing, and deploying statistically based trading models.</p>
+<p>The <span class="citation">(<a href="references.html#ref-quantmod" role="doc-biblioref">Wickham and Francois 2016</a>)</span> package for R was designed to assist the quantitative trader in developing, testing, and deploying statistically based trading models.</p>
 <p>The function getSymbols is a wrapper to load data from various sources, local or remote. One of the more popular and the default is <a href="https://finance.yahoo.com/" target="_blank">yahoo fiance</a>,<br>
 getSymbols(“Symbol”):</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
@@ -224,17 +225,17 @@ getSymbols(“Symbol”):</p>
 <span></span>
 <span><span class="va">tickers1</span><span class="op">&lt;-</span><span class="va">tickers</span></span>
 <span><span class="va">tickers1</span></span>
-<span><span class="co">#&gt;  [1] "IENOVA.MX"     "GENTERA.MX"    "GRUMAB.MX"     "BOLSAA.MX"    </span></span>
-<span><span class="co">#&gt;  [5] "AC.MX"         "BBAJIOO.MX"    "MEGACPO.MX"    "BIMBOA.MX"    </span></span>
-<span><span class="co">#&gt;  [9] "OMAB.MX"       "ALPEKA.MX"     "AMXL.MX"       "ALSEA.MX"     </span></span>
-<span><span class="co">#&gt; [13] "FEMSAUBD.MX"   "GFNORTEO.MX"   "KIMBERA.MX"    "ASURB.MX"     </span></span>
-<span><span class="co">#&gt; [17] "GCARSOA1.MX"   "PINFRA.MX"     "GAPB.MX"       "CUERVO.MX"    </span></span>
-<span><span class="co">#&gt; [21] "LABB.MX"       "GCC.MX"        "CEMEXCPO.MX"   "GMEXICOB.MX"  </span></span>
+<span><span class="co">#&gt;  [1] "IENOVA.MX"     "ALPEKA.MX"     "GENTERA.MX"    "KIMBERA.MX"   </span></span>
+<span><span class="co">#&gt;  [5] "ALSEA.MX"      "FEMSAUBD.MX"   "GFNORTEO.MX"   "BOLSAA.MX"    </span></span>
+<span><span class="co">#&gt;  [9] "BBAJIOO.MX"    "CEMEXCPO.MX"   "BIMBOA.MX"     "PINFRA.MX"    </span></span>
+<span><span class="co">#&gt; [13] "AMXL.MX"       "MEGACPO.MX"    "GRUMAB.MX"     "GAPB.MX"      </span></span>
+<span><span class="co">#&gt; [17] "ASURB.MX"      "LABB.MX"       "OMAB.MX"       "AC.MX"        </span></span>
+<span><span class="co">#&gt; [21] "GCC.MX"        "GCARSOA1.MX"   "GMEXICOB.MX"   "CUERVO.MX"    </span></span>
 <span><span class="co">#&gt; [25] "TLEVISACPO.MX" "LIVEPOLC1.MX"  "MEXCHEM.MX"    "KOFL.MX"      </span></span>
 <span><span class="co">#&gt; [29] "PEOLES.MX"     "SITESB1.MX"</span></span></code></pre></div>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quantmod/man/getSymbols.html">getSymbols</a></span><span class="op">(</span><span class="va">tickers1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; [1] "IENOVA.MX"  "GENTERA.MX"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "IENOVA.MX" "ALPEKA.MX"</span></span></code></pre></div>
 </div>
 </div>
 <div id="basic-r-graphs" class="section level2" number="3.2">
@@ -308,7 +309,7 @@ as.data.frame(object).</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Algorithms and Financial Programming in R</strong>" was written by Arturo Bernal. It was last built on 2022-11-13.</p>
+    <p>"<strong>Algorithms and Financial Programming in R</strong>" was written by Arturo Bernal. It was last built on 2022-11-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
