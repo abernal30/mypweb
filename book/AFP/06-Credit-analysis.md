@@ -29,7 +29,7 @@ when she got the loan.
 
 
 ```r
-data<-openxlsx::read.xlsx("data/credit.xlsx")
+data<-read.csv("https://raw.githubusercontent.com/abernal30/BookAFP/main/data/credit.csv")
 str(data[,1:10])
 #> 'data.frame':	873 obs. of  10 variables:
 #>  $ Default            : chr  "Fully Paid" "Fully Paid" "Fully Paid" "Fully Paid" ...
