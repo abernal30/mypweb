@@ -1,0 +1,320 @@
+# R Basics
+
+This section covers the topics required in the following chapters. We suggest covering this section for someone who has yet to gain previous knowledge of R programming.
+
+
+## 1 R Markdown
+
+In this book, we will work on R Markdowns, a document format to embed code chunks (of R or other languages) in documents. Most importantly, it allows printing (knitr) in other authoring languages, including LaTeX, HTML, and Text.
+
+See more about markdown content in [@R-Markdown]. 
+
+
+## 2 Coding basics
+
+The entities that we can create and manipulate in R are called objects. These may include variables, arrays of numbers, character strings, functions, or general structures. We could create those objects by applying the assignment operator (‘<-’). It consists of the two characters ‘<’ (“less than”) and ‘-’ (“minus”) occurring strictly side-by-side, and it ‘points’ to the object receiving the value of the expression [@introduction-R].  
+
+We also could apply the operator ‘=’; however, in our experience, some functions use the "=" operator inside, and the programming language can interpret the "=" operator with a variable creation.
+
+For example, we create the object "a"; winch has assigned the value 4. 
+```{r}
+a<- 4 
+```
+
+
+To delete an object from the environment. We can also use the function rm(). However, we suggest using R-studio. For an introduction to RStudio, we suggest reviewing chapter 1 of the book [@rstudio]
+```{r}
+rm(a)
+```
+
+## Atomic structures
+
+The objects frequently used in finance are numeric, character, vectors and logical. These are known as "atomic" structures since their components are identical. The rest of the objects, like matrix and Data frames, are built on these atomic objects.
+
+We could type the character (or strings) objects using either matching double (") or single (') quotes. For example:
+
+```{r}
+ticker<-"APPL" 
+```
+
+We use the function "print" to print the object or write the object name.
+
+```{r}
+ticker
+# or 
+print(ticker)
+```
+
+
+To review the object class, we use the function "class":
+```{r}
+class(ticker)
+```
+
+
+The following is an example of numeric objects. 
+```{r}
+num<-4
+print(num)
+
+# To print the class of the object
+print(class(num))
+```
+## Vectors
+
+In R, vectors consist of an ordered collection of numbers or characters. i-n other programming languages, this would be a list. In R, a list is another kind of object. 
+
+In some finance applications, we use vectors to store the ticker names (character vectors) or to store a stock price (numeric vector). We built vectors by applying the function concatenate "c()". For example:
+
+```{r}
+v1<-c(160,165,167,145,145)
+
+print(v1)
+class(v1)
+```
+
+
+As we can see, the object class is numeric because the vector is taking the class of the atomic objects, in this case, numeric. An example of a character vector: 
+
+```{r}
+v2<-c("Apple","Meta","Amazon")
+print(v2)
+class(v2)
+```
+
+**Selecting an element of a vector.**
+
+To select an element, we use brackets: "[]". For example, to select the first element of vector "v2":
+```{r}
+v2[1]
+```
+
+
+Also, we could select a sub-sample:
+```{r}
+v2[1:2]
+```
+
+
+In the former example, we just select a sub-sample, but the object "v2" hasn't changed (If you see the environment, we didn´t create an object). If we want to change the object, we need to create a new one. 
+
+For example, if we want to delete an element, we use the minus sign "-".  For example the 2nd element of "v2":
+```{r}
+v2<-v2[-2]
+v2
+```
+
+In this case, the object “v2” has changed. Also, the object “v2” is now in the environment. Vectors are mutable; winch means that we could change an element of the vector, for example, changing the element “Amazon” by “Meta”:
+
+```{r}
+v2[2]<-"Meta"
+v2
+```
+
+
+If we would like to add a new element, for example "Amazon_new", we need to apply again the "c" function:
+```{r}
+v2<-c(v2,"Amazon_new")
+v2
+```
+
+## Data frames
+
+In Finance is common to use Data Frames, which are tabular-form data objects where each column can be of different form, that is, numeric or character. 
+
+For this example we will use an data frame created in the  library Wooldridge to do some manipulations. 
+
+
+Get the data frame k401k from the library Wooldridge 
+
+Remember that a library is a set of functions that someone created. The Wooldridge library has many data sets from the econometrics book of the author [@wooldridge]. 
+
+To import the library, apply the function library()
+```{r warning=FALSE} 
+library(wooldridge) 
+```
+To import a databases from the library, the library must be imported, and just calling the data set name, in this case "k401k". 
+
+```{r}
+k4<-k401k
+class(k4)
+```
+
+As we can see, the object class is Data Frame. 
+
+
+The function "colnames" shows the names of each column of the data frame. in this case, it is a character vector:
+
+```{r}
+colnames(k4)
+```
+
+Sometimes is convenient to change the column or row names of a data frame; for example, change the name of the first column to “prate_1”. In this case, we use the function “colnames” and select, in brackets, the column number we want to change. Because we are changing the column names vector, we need to establish it with the assignment operator “<-”.
+
+```{r}
+colnames(k4)[1]<-"prate_1" 
+colnames(k4)
+```
+
+To show or change a row name, we use the "rownames" function. For convenience, we select the first five rows.
+```{r}
+rownames(k4)[1:5]
+```
+We could apply the same procedure we made in the "colnames" function to modify a row of a data frame. 
+
+
+Selecting rows or columns
+
+There are many ways to select a column or a row of a data frame. 
+
+
+Selecting rows or columns by position, for example, selecting the first row, column 5. A data frame has two dimensions, rows and columns, for selecting we also use brackets, separating the rows and columns by a 
+```{r}
+k4[1,5]
+
+```
+
+Selecting columns by $ symbol
+```{r}
+k4$age[1:10]
+```
+
+
+Merging two data frames by their columns.
+
+Suppose you have the following Data Frame:
+```{r}
+df1<-k4[1:6,c("prate_1","totpart","age")]
+df2<-k4[1:6,c("age","totemp")]
+
+df3<-cbind(df1,df2)
+head(df3,10) 
+```
+
+
+Print the dimension of each data frame, applying the function paste, print and dim:
+
+```{r}
+dim<-dim(df3) 
+dim
+```
+
+Applying the function cbind to merge the two data frames and call the object df3
+```{r}
+df1<-k4[1:6,c("prate_1","totpart","age")]
+df2<-k4[1:6,c("age","totemp")]
+df3<-cbind(df1,df2)
+df3
+```
+
+Note that the method duplicates the column age.
+
+To takeoff one of the columns, select by number position adding minus symbol
+```{r}
+df3<-df3[,-3]
+df3
+```
+
+
+Create a new variable, tot_part_age (totpart/age) and a variable that is the row names or index, call it index, of the data frame.  Insert both into the object df3.
+
+```{r}
+df3[" tot_part_age"]<-(df3[,"totpart"]/df3[,"age"])
+df3["index"]<-rownames(df3)
+
+```
+
+Eliminate the 2nd row of object df3 and call it df4. 
+```{r}
+df4<-df3[-2,]
+```
+
+
+Apply again the function cbind to merge the df3 and df4
+```{r eval=FALSE}
+df5<-cbind(df3,df4)
+```
+
+It will show a debug "Error in data.frame(..., check.names = FALSE) : 
+arguments imply differing number of rows: 6, 5", which means that the number of rows is not the same. 
+
+Careful: if the number of rows of a data frame is a multiple of another, by coincidence, the "cbind" function will do the merge. However, R is going to fill the missing values by repeating the values of a data frame. 
+
+Try now with the function merge(x,y,by.x=,by.y=,all=T or F, all.x=T or F, all.y=T or F)
+
+The merge function needs a pivot or a reference variable to make the merge. In this case, the column index or identification id (both share the same variable). That id must be a unique value for each row and must be present in both data frames.  Also, we need to specify if we want to keep all the data in data frame x or y. 
+
+```{r}
+df5<-merge(df3,df4,by.x="age",by.y="age")
+df5
+```
+
+
+## xts objects
+
+An xts class of object provides for uniform handling of R’s different time-based data classes. Also, some APIs, such as “quantmod”, download the data in xts format. For example, from the library “xts” I write into xlsx file the data set “sample_matrix.”
+
+```{r}
+#data(sample_matrix)
+#sm<-get("sample_matrix")
+#data_df<-data.frame(sample_matrix)
+#date<-rownames(data_df)
+#data_df<-cbind(date,data_df)
+#write.xlsx(data_df,"data/data_df.xlsx")
+```
+
+In the next section I covered how to read an "xlsx" file. 
+```{r}
+library(openxlsx)
+data_df<-read.xlsx("data/data_df.xlsx")
+```
+
+By default, the object class is a data frame. A feature of the “xts” objects is that the row names are date objects. Then first, we replace the numerical row names with the dates inside the object. 
+```{r}
+date<-data_df[,1]
+rownames(data_df)<-date
+# Also I eliminate the dates in row one. 
+data_df_2<-data_df[,-1]
+```
+
+
+```{r}
+library(xts)
+data_xts<- as.xts(data_df_2)
+
+```
+
+There are some useful functions that we can use with “xts” objects, for example, transforming into weekly, monthly, quarterly, yearly, etc.
+```{r}
+data_xt_m<-apply.monthly(data_xts,mean)
+
+```
+
+Making a sub sample:
+```{r}
+sub_set<-subset(data_xts,
+  +index(data_xts)>="2007-05-01" &
+  +index(data_xts)<="2007-06-30")
+```
+
+
+Note that in these two examples, we could use the “apply.monthly” function to an object like data_df_2, and it will work because it has as rownames the dates, but we can´t apply the subset function to that object; it would generate an empty object.
+
+
+## Reading and writing CSV and xlsx
+
+There are some libraries to write and open an xlsx or CSV file. We suggest using “openxlsx”.
+```{r}
+write.xlsx(df5,"data/df5.xlsx")
+write.csv(df5,"data/df5.csv")
+```
+
+To open a file use, the File must be in the same directory or we need to specify the directory location; otherwise, it would be an error:
+```{r}
+library(openxlsx)
+fdf5_x<-read.xlsx("data/df5.xlsx")
+fdf5_c<-read.csv("data/df5.csv")
+```
+
+
+
