@@ -21,11 +21,16 @@ In this chapter, we apply a test proposed by [@wooldridge] to identify arbitrage
 
 ##   EMH test on historical returns for one asset
 
-Suppose $y_{t}$ is the daily price of the S&P500. A strict form of the efficient markets hypothesis establishes that the historical information on the index before day *t* should not help predict the index. If we use only past information on $y_{t}$, a market is efficient if the following is true:
+Suppose $y_{t}$ is the daily price of the S&P500. A strict form of the efficient markets hypothesis establishes that the historical information on the index before day *t* should not help predict the index. If we use only past information on $y_{t}$: 
 
-$$y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t$$
+$$y_t=\beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t, $$
 
-Where the term on the right is the expected value of $y_{t}$, given the historical information of the index $y_{t-1} ,y_{t-2},....$. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price. 
+
+a market is efficient if the following is true:
+
+$$E(\beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t )= E(y_t)$$
+
+Where the term on the left is the expected value of $y_{t}$, given the historical information of the index $y_{t-1} ,y_{t-2},....$. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price. 
 
 
 Suppose that we want to make the EMH test on the returns of the S&P 500 index.  In the next code, we download the S&P 500 index from "2019-10-20" to "2022-10-20". Remember that by yahoo finance, the ticker name is "^GSPC". 
