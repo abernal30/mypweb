@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>5 Tuning parameters for improving performance | Machine learning introductory guide</title>
+<meta name="author" content="L. Arturo Bernal">
+<meta name="description" content="5.1 Parameter Hyperparameters are model parameters that are specified before training a model – i.e., parameters that are different from model parameters – or weights that an AI/ML model learns...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="5 Tuning parameters for improving performance | Machine learning introductory guide">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/tuning-parameters-for-improving-performance.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<meta property="og:description" content="5.1 Parameter Hyperparameters are model parameters that are specified before training a model – i.e., parameters that are different from model parameters – or weights that an AI/ML model learns...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5 Tuning parameters for improving performance | Machine learning introductory guide">
+<meta name="twitter:description" content="5.1 Parameter Hyperparameters are model parameters that are specified before training a model – i.e., parameters that are different from model parameters – or weights that an AI/ML model learns...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Machine learning introductory guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Machine learning introductory guide</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="ml-in-the-bussines-lascape-and-data-collection.html"><span class="header-section-number">1</span> ML in the bussines lascape and data collection</a></li>
+<li><a class="" href="training-and-evaluating-regression-models.html"><span class="header-section-number">2</span> Training and evaluating regression models</a></li>
+<li><a class="" href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></li>
+<li><a class="" href="cross-validation.html"><span class="header-section-number">4</span> Cross Validation</a></li>
+<li><a class="active" href="tuning-parameters-for-improving-performance.html"><span class="header-section-number">5</span> Tuning parameters for improving performance</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="tuning-parameters-for-improving-performance" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Tuning parameters for improving performance<a class="anchor" aria-label="anchor" href="#tuning-parameters-for-improving-performance"><i class="fas fa-link"></i></a>
+</h1>
+<div id="parameter" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Parameter<a class="anchor" aria-label="anchor" href="#parameter"><i class="fas fa-link"></i></a>
+</h2>
+<p>Hyperparameters are model parameters that are specified before training a model – i.e., parameters that are different from model parameters – or weights that an AI/ML model learns during model training.</p>
+<p>For many machine learning problems, finding the best hyperparameters is an iterative and potentially time-intensive process called “hyperparameter optimization.</p>
+<p>Hyperparameters directly impact the performance of a trained machine-learning model. Choosing the right hyperparameters can dramatically improve prediction accuracy. However, they can be challenging to optimize because there is often a large combination of possible hyperparameter values.</p>
+<p>Tuning a machine learning model is an iterative process. Data scientists typically run numerous experiments to train and evaluate models, trying out different features, different loss functions, different AI/ML models, and adjusting model parameters and hyperparameters. Examples of steps involved in tuning and training a machine learning model include feature engineering, loss function formulation, model testing and selection, regularization, and selection of hyperparameters Krishnan (2022).</p>
+<p>Let’s assume that you now have a shortlist of promising models. It would help if you now fine-tuned them. Let’s look at a few ways you can do that.</p>
+<p>Once we have retrieved optimum values of individual model parameters, we can use grid search to obtain a combination of hyperparameter (The parameters are also known as hyperparameters) values of a model that can give us the highest accuracy.</p>
+<p>Grid Search evaluates all possible combinations of the parameter values.</p>
+<p>Grid Search is exhaustive and uses brute force to evaluate the most accurate values. Therefore it is a computationally intensive task.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">house</span><span class="op">)</span></span>
+<span><span class="va">train_sample</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">.8</span><span class="op">)</span></span>
+<span><span class="va">house_train</span> <span class="op">&lt;-</span> <span class="va">house</span><span class="op">[</span><span class="va">train_sample</span>, <span class="op">]</span></span>
+<span><span class="va">house_test</span>  <span class="op">&lt;-</span> <span class="va">house</span><span class="op">[</span><span class="op">-</span><span class="va">train_sample</span>, <span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">fitControl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gbmFit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"gbm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span>, </span>
+<span>                 verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">gbmFit</span></span>
+<span><span class="co">#&gt; Stochastic Gradient Boosting </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results across tuning parameters:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   interaction.depth  n.trees  RMSE      Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   1                   50      47239.17  0.7444321  30600.93</span></span>
+<span><span class="co">#&gt;   1                  100      46147.22  0.7537532  29225.96</span></span>
+<span><span class="co">#&gt;   1                  150      45741.85  0.7555015  28969.01</span></span>
+<span><span class="co">#&gt;   2                   50      45232.87  0.7570658  28665.82</span></span>
+<span><span class="co">#&gt;   2                  100      44866.17  0.7601488  27908.81</span></span>
+<span><span class="co">#&gt;   2                  150      45748.88  0.7554831  27734.49</span></span>
+<span><span class="co">#&gt;   3                   50      44032.44  0.7708265  27661.85</span></span>
+<span><span class="co">#&gt;   3                  100      43706.40  0.7775313  26762.67</span></span>
+<span><span class="co">#&gt;   3                  150      44620.73  0.7733739  27046.71</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'shrinkage' was held constant at a value of 0.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'n.minobsinnode' was held constant at a value of 10</span></span>
+<span><span class="co">#&gt; RMSE was used to select the optimal model using the smallest value.</span></span>
+<span><span class="co">#&gt; The final values used for the model were n.trees = 100, interaction.depth =</span></span>
+<span><span class="co">#&gt;  3, shrinkage = 0.1 and n.minobsinnode = 10.</span></span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gbmFit</span><span class="op">$</span><span class="va">results</span><span class="op">[</span>,<span class="st">"RMSE"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 43706.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.08</span>,<span class="fl">0.2</span>,<span class="fl">.01</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 0.08 0.09 0.10 0.11 0.12 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.20</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">fitControl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gbmGrid</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>interaction.depth <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>                        n.trees <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>                        shrinkage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.08</span>,<span class="fl">0.2</span>,<span class="fl">.01</span><span class="op">)</span>,</span>
+<span>                        n.minobsinnode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
+<span>                        </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">gbmGrid</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 39</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gbmFit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"gbm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span>, </span>
+<span>                 verbose <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                 <span class="co">## Now specify the exact models </span></span>
+<span>                 <span class="co">## to evaluate:</span></span>
+<span>                 tuneGrid <span class="op">=</span> <span class="va">gbmGrid</span><span class="op">)</span></span>
+<span><span class="va">gbmFit2</span></span>
+<span><span class="co">#&gt; Stochastic Gradient Boosting </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results across tuning parameters:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   shrinkage  n.minobsinnode  RMSE      Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   0.08       10              43689.38  0.7757923  26414.49</span></span>
+<span><span class="co">#&gt;   0.08       20              43439.41  0.7762678  26253.74</span></span>
+<span><span class="co">#&gt;   0.08       30              43718.02  0.7740018  27043.45</span></span>
+<span><span class="co">#&gt;   0.09       10              44482.73  0.7657377  26932.51</span></span>
+<span><span class="co">#&gt;   0.09       20              44471.18  0.7694100  26930.13</span></span>
+<span><span class="co">#&gt;   0.09       30              42765.74  0.7850388  26107.17</span></span>
+<span><span class="co">#&gt;   0.10       10              45797.81  0.7565011  27752.53</span></span>
+<span><span class="co">#&gt;   0.10       20              43305.74  0.7752004  26133.99</span></span>
+<span><span class="co">#&gt;   0.10       30              44014.90  0.7733803  27155.20</span></span>
+<span><span class="co">#&gt;   0.11       10              44489.95  0.7656922  26866.05</span></span>
+<span><span class="co">#&gt;   0.11       20              44102.22  0.7772802  26763.98</span></span>
+<span><span class="co">#&gt;   0.11       30              43173.50  0.7852119  26475.20</span></span>
+<span><span class="co">#&gt;   0.12       10              45685.92  0.7560192  27278.29</span></span>
+<span><span class="co">#&gt;   0.12       20              43837.29  0.7733656  26780.05</span></span>
+<span><span class="co">#&gt;   0.12       30              43632.73  0.7731039  27097.95</span></span>
+<span><span class="co">#&gt;   0.13       10              45015.04  0.7633598  27339.32</span></span>
+<span><span class="co">#&gt;   0.13       20              44378.70  0.7733293  26922.59</span></span>
+<span><span class="co">#&gt;   0.13       30              43729.28  0.7738287  26848.09</span></span>
+<span><span class="co">#&gt;   0.14       10              45847.55  0.7616066  26985.59</span></span>
+<span><span class="co">#&gt;   0.14       20              43476.83  0.7753577  27154.57</span></span>
+<span><span class="co">#&gt;   0.14       30              44204.43  0.7733527  27236.38</span></span>
+<span><span class="co">#&gt;   0.15       10              46597.58  0.7505296  27959.85</span></span>
+<span><span class="co">#&gt;   0.15       20              45481.20  0.7606624  27931.86</span></span>
+<span><span class="co">#&gt;   0.15       30              44495.46  0.7689698  27904.48</span></span>
+<span><span class="co">#&gt;   0.16       10              46312.23  0.7551459  28093.47</span></span>
+<span><span class="co">#&gt;   0.16       20              44609.52  0.7720711  26788.57</span></span>
+<span><span class="co">#&gt;   0.16       30              44293.15  0.7709916  27231.55</span></span>
+<span><span class="co">#&gt;   0.17       10              47092.71  0.7503482  27909.55</span></span>
+<span><span class="co">#&gt;   0.17       20              45266.73  0.7597926  27838.44</span></span>
+<span><span class="co">#&gt;   0.17       30              44495.99  0.7682215  27612.17</span></span>
+<span><span class="co">#&gt;   0.18       10              46187.08  0.7560767  27455.96</span></span>
+<span><span class="co">#&gt;   0.18       20              45563.69  0.7615617  28022.82</span></span>
+<span><span class="co">#&gt;   0.18       30              44019.18  0.7697064  28476.80</span></span>
+<span><span class="co">#&gt;   0.19       10              49851.20  0.7284168  29410.44</span></span>
+<span><span class="co">#&gt;   0.19       20              46902.27  0.7505154  28841.09</span></span>
+<span><span class="co">#&gt;   0.19       30              44854.58  0.7651957  28353.89</span></span>
+<span><span class="co">#&gt;   0.20       10              48231.76  0.7329092  29188.07</span></span>
+<span><span class="co">#&gt;   0.20       20              44947.66  0.7651168  27865.51</span></span>
+<span><span class="co">#&gt;   0.20       30              44618.00  0.7586902  27987.05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'n.trees' was held constant at a value of 100</span></span>
+<span><span class="co">#&gt; Tuning</span></span>
+<span><span class="co">#&gt;  parameter 'interaction.depth' was held constant at a value of 3</span></span>
+<span><span class="co">#&gt; RMSE was used to select the optimal model using the smallest value.</span></span>
+<span><span class="co">#&gt; The final values used for the model were n.trees = 100, interaction.depth =</span></span>
+<span><span class="co">#&gt;  3, shrinkage = 0.09 and n.minobsinnode = 30.</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/trellis.par.get.html">trellis.par.set</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/caret-internal.html">caretTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gbmFit2</span><span class="op">)</span> </span></code></pre></div>
+<div class="inline-figure"><img src="05-tuning_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gbmFit2</span><span class="op">$</span><span class="va">bestTune</span></span>
+<span><span class="co">#&gt;   n.trees interaction.depth shrinkage n.minobsinnode</span></span>
+<span><span class="co">#&gt; 6     100                 3      0.09             30</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">fitControl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gbmGrid</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>interaction.depth <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>                        n.trees <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>                        shrinkage <span class="op">=</span> <span class="fl">0.09</span>,</span>
+<span>                        n.minobsinnode <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span>                        </span>
+<span></span>
+<span><span class="va">gbmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"gbm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span>,</span>
+<span>                 verbose <span class="op">=</span> <span class="cn">FALSE</span>,tuneGrid <span class="op">=</span> <span class="va">gbmGrid</span><span class="op">)</span></span>
+<span><span class="va">gbmFit1</span></span>
+<span><span class="co">#&gt; Stochastic Gradient Boosting </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE      Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   43538.88  0.7755887  27051.03</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'n.trees' was held constant at a value of 100</span></span>
+<span><span class="co">#&gt; Tuning</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'shrinkage' was held constant at a value of 0.09</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'n.minobsinnode' was held constant at a value of 30</span></span></code></pre></div>
+</div>
+<div id="analyze-the-best-models-and-their-errors" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Analyze the Best Models and Their Errors<a class="anchor" aria-label="anchor" href="#analyze-the-best-models-and-their-errors"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lmFit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"lm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span><span class="op">)</span></span>
+<span><span class="va">lmFit</span></span>
+<span><span class="co">#&gt; Linear Regression </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE     Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   53829.9  0.7130432  32074.47</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'intercept' was held constant at a value of TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">k2</span><span class="op">&lt;-</span><span class="fl">10</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">fitControl3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="va">k2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">step</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"lmStepAIC"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl3</span>, trace<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
+<span><span class="va">step</span></span>
+<span><span class="co">#&gt; Linear Regression with Stepwise Selection </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE     Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   53183.1  0.7218324  31441.74</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">resamps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/resamples.html">resamples</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>GBM <span class="op">=</span> <span class="va">gbmFit1</span>,</span>
+<span>                          lm<span class="op">=</span> <span class="va">lmFit</span>,</span>
+<span>                          step <span class="op">=</span> <span class="va">step</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">resamps</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; summary.resamples(object = resamps)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Models: GBM, lm, step </span></span>
+<span><span class="co">#&gt; Number of resamples: 10 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; MAE </span></span>
+<span><span class="co">#&gt;          Min.  1st Qu.   Median     Mean  3rd Qu.     Max. NA's</span></span>
+<span><span class="co">#&gt; GBM  16916.01 22683.84 26802.82 27051.03 33250.31 34700.58    0</span></span>
+<span><span class="co">#&gt; lm   24099.97 27569.17 32581.94 32074.47 33796.23 46936.58    0</span></span>
+<span><span class="co">#&gt; step 23457.60 27519.35 31131.39 31441.74 33246.95 47069.12    0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; RMSE </span></span>
+<span><span class="co">#&gt;          Min.  1st Qu.   Median     Mean  3rd Qu.      Max. NA's</span></span>
+<span><span class="co">#&gt; GBM  21042.28 29863.83 42580.60 43538.88 53434.67  68983.63    0</span></span>
+<span><span class="co">#&gt; lm   29902.95 38797.25 46407.32 53829.90 50676.37 142708.97    0</span></span>
+<span><span class="co">#&gt; step 29473.14 38261.54 45661.85 53183.10 49510.85 142365.64    0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Rsquared </span></span>
+<span><span class="co">#&gt;           Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's</span></span>
+<span><span class="co">#&gt; GBM  0.4466954 0.7499098 0.7749271 0.7755887 0.8692610 0.9222225    0</span></span>
+<span><span class="co">#&gt; lm   0.1182236 0.7380041 0.7705471 0.7130432 0.7989847 0.8440776    0</span></span>
+<span><span class="co">#&gt; step 0.1201389 0.7623466 0.7765474 0.7218324 0.7931811 0.8461111    0</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">theme1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/trellis.par.get.html">trellis.par.get</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">theme1</span><span class="op">$</span><span class="va">plot.symbol</span><span class="op">$</span><span class="va">col</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html">rgb</a></span><span class="op">(</span><span class="fl">.2</span>, <span class="fl">.2</span>, <span class="fl">.2</span>, <span class="fl">.4</span><span class="op">)</span></span>
+<span><span class="va">theme1</span><span class="op">$</span><span class="va">plot.symbol</span><span class="op">$</span><span class="va">pch</span> <span class="op">=</span> <span class="fl">16</span></span>
+<span><span class="va">theme1</span><span class="op">$</span><span class="va">plot.line</span><span class="op">$</span><span class="va">col</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html">rgb</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">.7</span><span class="op">)</span></span>
+<span><span class="va">theme1</span><span class="op">$</span><span class="va">plot.line</span><span class="op">$</span><span class="va">lwd</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/trellis.par.get.html">trellis.par.set</a></span><span class="op">(</span><span class="va">theme1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html">bwplot</a></span><span class="op">(</span><span class="va">resamps</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="05-tuning_files/figure-html/unnamed-chunk-12-1.png" width="90%" style="display: block; margin: auto;"></div>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-AFP" class="csl-entry">
+Bernal, Arturo. 2023. <em>Algorithms and Financial Programming in r</em>. <a href="https://www.arturo-bernal.com/book/AFP/index.html">https://www.arturo-bernal.com/book/AFP/index.html</a>.
+</div>
+<div id="ref-BF" class="csl-entry">
+Burton, Edwin T., and Sunit N. Shah. 2013. <em>Behavioral Finance</em>. Hoboken, New Jersey: John Wiley &amp; Sons.
+</div>
+<div id="ref-Geron" class="csl-entry">
+Géron, Aurélien. 2023. <em>Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow</em>. Sebastopol, CA: O’Reilly Media, Inc.
+</div>
+<div id="ref-statistical_lerarning" class="csl-entry">
+James, G., D. Witten, T. Hastie, and R. Tibshirani. 2017. <em>An Introduction to Statistical Learning with Applications in r</em>. Springer. <a href="https://www.springer.com/series/417">https://www.springer.com/series/417</a>.
+</div>
+<div id="ref-R-caret" class="csl-entry">
+Kuhn, Max. 2019. <em>The Caret Package</em>. <a href="https://topepo.github.io/caret/index.html">https://topepo.github.io/caret/index.html</a>.
+</div>
+<div id="ref-Lantz" class="csl-entry">
+Lantz, Brett. 2019. <em>Machine Learning with r Second Edition</em>. Birmingham, UK: Packt Publishing.
+</div>
+<div id="ref-Suzuky" class="csl-entry">
+Suzuky, Joe. 2022. <em>Statistical Learning with Math and Python</em>. Singapore, Singapore: Springer Nature Singapore.
+</div>
+<div id="ref-wooldridge" class="csl-entry">
+Wooldridge, Jeffrey M. 2020. <em>Introductory Econometrics: A Modern Approach</em>. South-Western Cengage Learning.
+</div>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="cross-validation.html"><span class="header-section-number">4</span> Cross Validation</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tuning-parameters-for-improving-performance"><span class="header-section-number">5</span> Tuning parameters for improving performance</a></li>
+<li><a class="nav-link" href="#parameter"><span class="header-section-number">5.1</span> Parameter</a></li>
+<li><a class="nav-link" href="#analyze-the-best-models-and-their-errors"><span class="header-section-number">5.2</span> Analyze the Best Models and Their Errors</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Machine learning introductory guide</strong>" was written by L. Arturo Bernal. It was last built on 2023-03-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

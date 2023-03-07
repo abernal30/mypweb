@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>4 Cross Validation | Machine learning introductory guide</title>
+<meta name="author" content="L. Arturo Bernal">
+<meta name="description" content="In the previous chapter, we split the sample into training and testing. But what if that partition is different from all the samples? Remember that in the last chapter, we got an RMSE on the...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="4 Cross Validation | Machine learning introductory guide">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/cross-validation.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<meta property="og:description" content="In the previous chapter, we split the sample into training and testing. But what if that partition is different from all the samples? Remember that in the last chapter, we got an RMSE on the...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4 Cross Validation | Machine learning introductory guide">
+<meta name="twitter:description" content="In the previous chapter, we split the sample into training and testing. But what if that partition is different from all the samples? Remember that in the last chapter, we got an RMSE on the...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Machine learning introductory guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Machine learning introductory guide</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="ml-in-the-bussines-lascape-and-data-collection.html"><span class="header-section-number">1</span> ML in the bussines lascape and data collection</a></li>
+<li><a class="" href="training-and-evaluating-regression-models.html"><span class="header-section-number">2</span> Training and evaluating regression models</a></li>
+<li><a class="" href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></li>
+<li><a class="active" href="cross-validation.html"><span class="header-section-number">4</span> Cross Validation</a></li>
+<li><a class="" href="tuning-parameters-for-improving-performance.html"><span class="header-section-number">5</span> Tuning parameters for improving performance</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="cross-validation" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Cross Validation<a class="anchor" aria-label="anchor" href="#cross-validation"><i class="fas fa-link"></i></a>
+</h1>
+<p>In the previous chapter, we split the sample into training and testing. But what if that partition is different from all the samples? Remember that in the last chapter, we got an RMSE on the house_test data set of 4.7889106^{4}. But what if we would be used another seed for the partition and we got lower, or worse, a higher RMSE? Don´t you think it would be better if we make many partitions and estimate each time the RMSE and verify how consistent our RMSE is? That is cross-validation. Instead of dividing the sample only once, cross-validation involves splitting the sample several times and estimating the RMSE, MAE or R-squared each. There are several cross validations methods. The most common are Leave-One-Out Cross-Validation (LOOCV) and k-Fold Cross-Validation (k-fold).</p>
+<div id="leave-one-out-cross-validation-loocv" class="section level3" number="4.0.1">
+<h3>
+<span class="header-section-number">4.0.1</span> Leave-One-Out Cross-Validation (LOOCV)<a class="anchor" aria-label="anchor" href="#leave-one-out-cross-validation-loocv"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>#&gt;      Id SalePrice MSSubClass MSZoning
+#&gt; 64   64    163000         20        4
+#&gt; 540 540    170000         80        4
+#&gt; 200 200    155000         70        5
+#&gt; 171 171    142000         20        4
+#&gt; 41   41    250000         60        2
+#&gt; 268 268    155000         60        4
+#&gt;      Id SalePrice MSSubClass MSZoning
+#&gt; 77   77    274900         20        4
+#&gt; 480 480    186700         20        4
+#&gt; 452 452    135000         50        4
+#&gt; 580 580    240000         60        4
+#&gt; 139 139    207000        120        5
+#&gt; 162 162    245500        120        4</code></pre>
+<p>Understanding question. Why is the “id” in the previous output not in order (i.e., 1,2,3,…,n)?</p>
+<p>Continuing with the housing example, we split the sample into “n” parts. “n” is the number of rows in the data set. The Cross-validation is in the training dataset; in our case, <span class="math inline">\(n\)</span> is 584.</p>
+<p>The first fold is a partition taking out the first observation. As we see in the previous output, the 1rst observation is the one with the id=77.</p>
+<p>The first fold is a partition taking out the first observation. As we see in the previous output, the 1rst observation is the one with the id=77.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fold1</span><span class="op">&lt;-</span> <span class="va">house_train</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="op">]</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fold1</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Id SalePrice MSSubClass MSZoning</span></span>
+<span><span class="co">#&gt; 540 540    170000         80        4</span></span>
+<span><span class="co">#&gt; 200 200    155000         70        5</span></span>
+<span><span class="co">#&gt; 171 171    142000         20        4</span></span>
+<span><span class="co">#&gt; 41   41    250000         60        2</span></span>
+<span><span class="co">#&gt; 268 268    155000         60        4</span></span>
+<span><span class="co">#&gt; 566 566    175900        120        4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">fold1</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Id SalePrice MSSubClass MSZoning</span></span>
+<span><span class="co">#&gt; 77   77    274900         20        4</span></span>
+<span><span class="co">#&gt; 480 480    186700         20        4</span></span>
+<span><span class="co">#&gt; 452 452    135000         50        4</span></span>
+<span><span class="co">#&gt; 580 580    240000         60        4</span></span>
+<span><span class="co">#&gt; 139 139    207000        120        5</span></span>
+<span><span class="co">#&gt; 162 162    245500        120        4</span></span></code></pre></div>
+<p>The second fold is taking out the second, the one with id=480</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fold2</span><span class="op">&lt;-</span> <span class="va">house_train</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">:</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,<span class="op">]</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">fold2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Id SalePrice MSSubClass MSZoning</span></span>
+<span><span class="co">#&gt; 64   64    163000         20        4</span></span>
+<span><span class="co">#&gt; 200 200    155000         70        5</span></span>
+<span><span class="co">#&gt; 171 171    142000         20        4</span></span>
+<span><span class="co">#&gt; 41   41    250000         60        2</span></span>
+<span><span class="co">#&gt; 268 268    155000         60        4</span></span>
+<span><span class="co">#&gt; 566 566    175900        120        4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">fold2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Id SalePrice MSSubClass MSZoning</span></span>
+<span><span class="co">#&gt; 77   77    274900         20        4</span></span>
+<span><span class="co">#&gt; 480 480    186700         20        4</span></span>
+<span><span class="co">#&gt; 452 452    135000         50        4</span></span>
+<span><span class="co">#&gt; 580 580    240000         60        4</span></span>
+<span><span class="co">#&gt; 139 139    207000        120        5</span></span>
+<span><span class="co">#&gt; 162 162    245500        120        4</span></span></code></pre></div>
+<p>And so on, until we get <span class="math inline">\(n\)</span> folds, in this case, 467. One of the folds, usually the first, will be the validation set (like the test data set). With the other <span class="math inline">\(n−1\)</span> the model must be trained and tested, making the prediction on the fold1 and estimating the performance metric, such as the RMSE. For example:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">house_model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SalePrice</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">fold2</span><span class="op">)</span></span>
+<span><span class="va">house_predict</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">house_model</span>,<span class="va">fold1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">fold1</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span><span class="op">-</span><span class="va">house_predict</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> ,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 41984.83</span></span></code></pre></div>
+<p>The processes repeat for the other n-2 folds, training the fold3 and testing it with fold1. In the end, we will get n-1 performance measures. The average of those RMSEs would be the LOOCV.</p>
+<p><span class="math display">\[LOOCV =\frac{1}{n}\ \sum_{i=1}^{n} RMSE_{i} \]</span></p>
+<p>In the last formula, we use RMSE, but it could be any other metric, such as MAE or Rsquared.</p>
+<p>Fortunately, the function “train” from the library “caret” do the formerly described processes <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-R-caret" role="doc-biblioref">Kuhn 2019</a>)</span>.</p>
+<p>The train function has a similar structure as the “lm” function.</p>
+<p>train(SalePrice ~ ., data = house_train,
+method = “lm”,
+trControl = )</p>
+<p>The first argument is the equation, and the second is the database. For the cross-validation, we use the train data set and need to specify which model, in this case, “lm”. That function allows for 238 when we were writing the book, “lm” is one of them. As the name says, the argument “trControl” is to control the cross-validation parameters.</p>
+<p>For convenience, the library developers suggest separating the “trControl” argument because that argument is ruled by another function, “trainControl”, which has many other parameters. We start by creating an object with that function, which argument is the method, in this case, “LOOCV”.</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fitControl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"LOOCV"</span><span class="op">)</span>                   </span></code></pre></div>
+<p>Then we use the function train, specifying the model “lm”, and as a trControl we use the object fitControl.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gbmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"lm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span><span class="op">)</span></span>
+<span><span class="va">gbmFit1</span></span>
+<span><span class="co">#&gt; Linear Regression </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Leave-One-Out Cross-Validation </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 466, 466, 466, 466, 466, 466, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE      Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   54486.35  0.6468026  31103.23</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'intercept' was held constant at a value of TRUE</span></span></code></pre></div>
+<p>In the previous result, we got an RMSE of 5.4486353^{4}, the average of the n-1 RMSE. To see the implication of the previous result, remember that in the previous chapter, we got an RMSE on the house_test data set of 4.7889106^{4}, which is the result of one partition. The last result, cross-validation, tells us, in this case, that by taking the RMSE of 4.7889106^{4} we would be over-estimating (thinking we have a good model when do not) (thinking we have a good model when doing not) the model performance.</p>
+<p>Some arguments in the “trainControl” function, such as preprocessing, indicate if we want to process the data, for example, to center or scale.</p>
+<p>The “No preprocessing” message in the previous output indicates that we didn´t select that option. The preprocess option is to improve the model performance. For example, adding the “nzv”, Zero- and Near Zero-Variance Predictors, and BoxCox is a transforming Predictors preprocess. For a further explanation of the preprocess alternatives, see the library Caret <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-R-caret" role="doc-biblioref">Kuhn 2019</a>)</span>.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">gbmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"lm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span>, preProcess<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"BoxCox"</span>,<span class="st">"nzv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gbmFit1</span></span>
+<span><span class="co">#&gt; Linear Regression </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Pre-processing: Box-Cox transformation (36), remove (4) </span></span>
+<span><span class="co">#&gt; Resampling: Leave-One-Out Cross-Validation </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 466, 466, 466, 466, 466, 466, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE      Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   50277.51  0.6939262  29454.77</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'intercept' was held constant at a value of TRUE</span></span></code></pre></div>
+<p>Another alternative for preProcess=c(“center”, “scale”,“YeoJohnson”)
+“center”, and “scale” are centering and scaling methods. “YeoJohnson” is another transforming Predictors preprocess option.</p>
+<p>As we see in the previous output, the “Preprocessing” indicates that four variables were removed, which suggests that we improve the model performance by removing those four variables. To get those remaining variables, we use the code:</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gbmFit1</span><span class="op">$</span><span class="va">finalModel</span><span class="op">$</span><span class="va">xNames</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Id"          "MSSubClass"  "MSZoning"    "LotFrontage" "LotArea"    </span></span>
+<span><span class="co">#&gt; [6] "LotShape"</span></span></code></pre></div>
+<p>Regarding the re-sampling: cross-validation is the name of the method. The summary of sample sizes is always <span class="math inline">\(n−1\)</span>, in this case in this case 466. The RMSE of 466 is the average of the <span class="math inline">\(n−1\)</span> test predictions. Finally, the message “tuning parameter ‘intercept’ was…”, is because the “trControl” argument of the “train” function accepts other arguments to do the parameter tuning process, which we will cover in the next chapter.</p>
+<p>Finally, the message “Tuning parameter ‘intercept’ was held constant at a value of TRUE” is an argument that could be changed as tuning parameters, and we will cover this in the next chapter.</p>
+</div>
+<div id="k-fold-cross-validation-k-foldcv" class="section level3" number="4.0.2">
+<h3>
+<span class="header-section-number">4.0.2</span> k-fold Cross Validation (k-FoldCV)<a class="anchor" aria-label="anchor" href="#k-fold-cross-validation-k-foldcv"><i class="fas fa-link"></i></a>
+</h3>
+<p>The k-FoldCV is similar to the LOOCV, except that instead of making <span class="math inline">\(n\)</span> partitions, it just requires <span class="math inline">\(k\)</span>. A difference with the LOOCV is that usually, <span class="math inline">\(k\)</span> is less than <span class="math inline">\(n\)</span>; for example, <span class="math inline">\(k=10\)</span>. Another difference is that the <span class="math inline">\(k\)</span> partitions are randomly selected. For example, the first partition is called Fold1. It takes the database, for example, the house_train, and randomly splits into 80% the training and 20% the validation data set. The model is estimated with the training, and the prediction is validated with the validation set and estimating the metrics. The process is repeated <span class="math inline">\(k\)</span> times.</p>
+<p>As we will see below, the “train” function has the rule to determine the % of the training and validation sets. The following formula summarizes the procedure for the RMSE.</p>
+<p><span class="math display">\[k-FoldCV =\frac{1}{k}\ \sum_{i=1}^{k} RMSE_{i} \]</span></p>
+<p>We use the “train” function for this example as we did with the LOOCV method. We apply ten folds or <span class="math inline">\(k=10\)</span></p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">k</span><span class="op">&lt;-</span><span class="fl">10</span></span>
+<span><span class="va">fitControl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="va">k</span><span class="op">)</span></span></code></pre></div>
+<p>In this case, the k-FoldCV method is only “cv.” The argument “number” indicates the number of folds or <span class="math inline">\(k\)</span></p>
+<p>The arguments of the “train” function are similar to the LOOCV method.</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"lm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span><span class="op">)</span></span>
+<span><span class="va">lmFit1</span></span>
+<span><span class="co">#&gt; Linear Regression </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE     Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   53829.9  0.7130432  32074.47</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'intercept' was held constant at a value of TRUE</span></span></code></pre></div>
+<pre><code>#&gt; [1] "420 467 90"</code></pre>
+<p>In the previous output, the “Summary of sample sizes” shows, for each fold, the number of observations of the training set, which in this case is 90% of the sample size, which in this case is 467. The Resampling results, RMSE, Rsquared and MAE are the average of the 10 folds. In the next plot, we show the 10 results.</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">lmFit1</span><span class="op">$</span><span class="va">resample</span><span class="op">)</span><span class="op">[</span>,<span class="st">"RMSE"</span><span class="op">]</span> <span class="co"># this data frame has the RMSE results </span></span>
+<span><span class="va">p1</span><span class="op">&lt;-</span><span class="va">lmFit1</span><span class="op">$</span><span class="va">results</span><span class="op">[</span>,<span class="st">"RMSE"</span><span class="op">]</span> <span class="co"># this object has the average RMSE </span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">y</span>, ylab<span class="op">=</span><span class="st">"RMSE"</span>, xlab<span class="op">=</span><span class="st">"k-Folds"</span>, pch <span class="op">=</span> <span class="fl">16</span>, main<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"k-FoldsCV results for k="</span>,<span class="va">k</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">p1</span>,<span class="fl">0</span>,col<span class="op">=</span><span class="st">"black"</span>,lwd<span class="op">=</span><span class="fl">2</span>,lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>x<span class="op">=</span> <span class="st">"topright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"average RMSE"</span>,<span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,lty <span class="op">=</span> <span class="fl">2</span>,lwd<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span>x <span class="op">=</span><span class="fl">3</span>, y <span class="op">=</span> <span class="va">p1</span><span class="op">*</span><span class="fl">1.1</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">p1</span>,<span class="fl">0</span><span class="op">)</span>,pos <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="04-resampling_files/figure-html/unnamed-chunk-18-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>The “train” function is programmed to have different partitions for the number of k-folds. For example, for k=5 the partition would be 80. The more the <span class="math inline">\(k\)</span>, the more the % of the partition.</p>
+<p>Authors such as <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>, consider that k-FoldCV has the advantage of being less computationally intensive than a method like LOOCV. Also, he exemplifies how the results of a k-Fol=10 and LOOV are very similar regarding the bias-variance trade-off.</p>
+<p>The “train” function allows for the repetition of each fold. For example, if we want to repeat each fold two times, we need to add the arguments, method = “repeatedcv”, and the number of repeats, in this case, 2. As a result, we end with 20 results.</p>
+<pre><code>#&gt; Linear Regression 
+#&gt; 
+#&gt; 467 samples
+#&gt;  51 predictor
+#&gt; 
+#&gt; No pre-processing
+#&gt; Resampling: Cross-Validated (10 fold, repeated 2 times) 
+#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... 
+#&gt; Resampling results:
+#&gt; 
+#&gt;   RMSE      Rsquared   MAE     
+#&gt;   52572.29  0.7112406  31826.41
+#&gt; 
+#&gt; Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
+<p>Because of how the algorithm of the “train” function was developed, we would get different results if we use k=20 than k=10 repeated 2 times.</p>
+<p>For example, in the following plots, upper side, we show different examples of the “repeatedcv”. At the bottom, we show different examples of similar, in number, of the “cv” méthod. In all cases for the same seed.</p>
+<div class="inline-figure"><img src="04-resampling_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>The results of the cv method are concentrated at the bottom. Meanwhile, the repeated-cv dispersion is higher. As a result, the RMSE average is lower in the “cv”.</p>
+<p>A valid question here is, which is a better method? We need to evaluate the model with the test data set (not the validation) to answer this. For now, we answer that those results tell us that, depending on the resampling method, we are getting quite different results, which implies that we probably need to do something else to get more stable results in both methods.</p>
+<p>For example, we can make the cross-validation for variable selection.</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">k2</span><span class="op">&lt;-</span><span class="fl">10</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">fitControl3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="va">k2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">step</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"lmStepAIC"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl3</span>, trace<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
+<span><span class="va">step</span></span>
+<span><span class="co">#&gt; Linear Regression with Stepwise Selection </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   RMSE     Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   53183.1  0.7218324  31441.74</span></span></code></pre></div>
+<p>Remember that the RMSE with all the variables was 5.3829898^{4}. To get the variables of the final model:</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mo</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">step</span><span class="op">$</span><span class="va">finalModel</span><span class="op">$</span><span class="va">model</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">mo</span></span>
+<span><span class="co">#&gt;  [1] "MSSubClass"    "LotFrontage"   "LotArea"       "LotShape"     </span></span>
+<span><span class="co">#&gt;  [5] "HouseStyle"    "OverallQual"   "OverallCond"   "Exterior1st"  </span></span>
+<span><span class="co">#&gt;  [9] "MasVnrArea"    "ExterQual"     "Foundation"    "BsmtQual"     </span></span>
+<span><span class="co">#&gt; [13] "BsmtExposure"  "BsmtFinType1"  "BsmtFinSF1"    "BsmtUnfSF"    </span></span>
+<span><span class="co">#&gt; [17] "X1stFlrSF"     "X2ndFlrSF"     "BsmtFullBath"  "FullBath"     </span></span>
+<span><span class="co">#&gt; [21] "HalfBath"      "KitchenQual"   "TotRmsAbvGrd"  "Fireplaces"   </span></span>
+<span><span class="co">#&gt; [25] "FireplaceQu"   "GarageArea"    "SaleCondition"</span></span></code></pre></div>
+</div>
+<div id="stochastic-gradient-boosting" class="section level3" number="4.0.3">
+<h3>
+<span class="header-section-number">4.0.3</span> Stochastic Gradient Boosting<a class="anchor" aria-label="anchor" href="#stochastic-gradient-boosting"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="https://cran.r-project.org/web/packages/gbm/vignettes/gbm.pdf" class="uri">https://cran.r-project.org/web/packages/gbm/vignettes/gbm.pdf</a></p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">fitControl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"cv"</span>,</span>
+<span>                           number <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gbmFit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span><span class="va">SalePrice</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">house_train</span>, </span>
+<span>                 method <span class="op">=</span> <span class="st">"gbm"</span>, </span>
+<span>                 trControl <span class="op">=</span> <span class="va">fitControl</span>,</span>
+<span>                 <span class="co">## This last option is actually one</span></span>
+<span>                 <span class="co">## for gbm() that passes through</span></span>
+<span>                 verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">gbmFit1</span></span>
+<span><span class="co">#&gt; Stochastic Gradient Boosting </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 467 samples</span></span>
+<span><span class="co">#&gt;  51 predictor</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; No pre-processing</span></span>
+<span><span class="co">#&gt; Resampling: Cross-Validated (10 fold) </span></span>
+<span><span class="co">#&gt; Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... </span></span>
+<span><span class="co">#&gt; Resampling results across tuning parameters:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   interaction.depth  n.trees  RMSE      Rsquared   MAE     </span></span>
+<span><span class="co">#&gt;   1                   50      47239.17  0.7444321  30600.93</span></span>
+<span><span class="co">#&gt;   1                  100      46147.22  0.7537532  29225.96</span></span>
+<span><span class="co">#&gt;   1                  150      45741.85  0.7555015  28969.01</span></span>
+<span><span class="co">#&gt;   2                   50      45232.87  0.7570658  28665.82</span></span>
+<span><span class="co">#&gt;   2                  100      44866.17  0.7601488  27908.81</span></span>
+<span><span class="co">#&gt;   2                  150      45748.88  0.7554831  27734.49</span></span>
+<span><span class="co">#&gt;   3                   50      44032.44  0.7708265  27661.85</span></span>
+<span><span class="co">#&gt;   3                  100      43706.40  0.7775313  26762.67</span></span>
+<span><span class="co">#&gt;   3                  150      44620.73  0.7733739  27046.71</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'shrinkage' was held constant at a value of 0.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tuning parameter 'n.minobsinnode' was held constant at a value of 10</span></span>
+<span><span class="co">#&gt; RMSE was used to select the optimal model using the smallest value.</span></span>
+<span><span class="co">#&gt; The final values used for the model were n.trees = 100, interaction.depth =</span></span>
+<span><span class="co">#&gt;  3, shrinkage = 0.1 and n.minobsinnode = 10.</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gbmFit1</span><span class="op">$</span><span class="va">results</span><span class="op">[</span>,<span class="st">"RMSE"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 43706.4</span></span></code></pre></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></div>
+<div class="next"><a href="tuning-parameters-for-improving-performance.html"><span class="header-section-number">5</span> Tuning parameters for improving performance</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#cross-validation"><span class="header-section-number">4</span> Cross Validation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#leave-one-out-cross-validation-loocv"><span class="header-section-number">4.0.1</span> Leave-One-Out Cross-Validation (LOOCV)</a></li>
+<li><a class="nav-link" href="#k-fold-cross-validation-k-foldcv"><span class="header-section-number">4.0.2</span> k-fold Cross Validation (k-FoldCV)</a></li>
+<li><a class="nav-link" href="#stochastic-gradient-boosting"><span class="header-section-number">4.0.3</span> Stochastic Gradient Boosting</a></li>
+</ul>
+</li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Machine learning introductory guide</strong>" was written by L. Arturo Bernal. It was last built on 2023-03-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

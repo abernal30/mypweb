@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 Training and evaluating regression models | Machine learning introductory guide</title>
+<meta name="author" content="L. Arturo Bernal">
+<meta name="description" content="2.1 Model training The goal of machine learning models such as regression is to predict the dependent variable, \(y\). For example, in the house pricing data set described in chapter 1, we defined...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="2 Training and evaluating regression models | Machine learning introductory guide">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/training-and-evaluating-regression-models.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<meta property="og:description" content="2.1 Model training The goal of machine learning models such as regression is to predict the dependent variable, \(y\). For example, in the house pricing data set described in chapter 1, we defined...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 Training and evaluating regression models | Machine learning introductory guide">
+<meta name="twitter:description" content="2.1 Model training The goal of machine learning models such as regression is to predict the dependent variable, \(y\). For example, in the house pricing data set described in chapter 1, we defined...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Machine learning introductory guide</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Machine learning introductory guide</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="ml-in-the-bussines-lascape-and-data-collection.html"><span class="header-section-number">1</span> ML in the bussines lascape and data collection</a></li>
+<li><a class="active" href="training-and-evaluating-regression-models.html"><span class="header-section-number">2</span> Training and evaluating regression models</a></li>
+<li><a class="" href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></li>
+<li><a class="" href="cross-validation.html"><span class="header-section-number">4</span> Cross Validation</a></li>
+<li><a class="" href="tuning-parameters-for-improving-performance.html"><span class="header-section-number">5</span> Tuning parameters for improving performance</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="training-and-evaluating-regression-models" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Training and evaluating regression models<a class="anchor" aria-label="anchor" href="#training-and-evaluating-regression-models"><i class="fas fa-link"></i></a>
+</h1>
+<div id="model-training" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Model training<a class="anchor" aria-label="anchor" href="#model-training"><i class="fas fa-link"></i></a>
+</h2>
+<p>The goal of machine learning models such as regression is to predict the dependent variable, <span class="math inline">\(y\)</span>. For example, in the house pricing data set described in chapter 1, we defined as the dependent variable “SalePrice”, and as independent variables MSSubClass, MSZoning and the others in the data set.</p>
+<p><span class="math display">\[SalePrice=\beta_{0}+\beta_{1}\ MSSubClass + \beta_{2}\ MSZoning+ ....+x_{n}+ e\]</span></p>
+<p>where <span class="math inline">\(e\)</span> is the error term. The regression model aims to estimate the parameters <span class="math inline">\(\beta_{1}, \beta_{2},...,\beta_{n}\)</span>, to predict SalePrice. The following would be the predicted model. We call that the training.</p>
+<p><span class="math display">\[\hat{SalePrice}=\hat{\beta_{0}}+\hat{\beta_{1}}MSSubClass+\hat{\beta_{2}}MSZoning+....+\hat{\beta_{n}}x_{n} \]</span></p>
+<p>The hat on the parameters indicates that these are estimated parameters.
+<strong>Note</strong>: When we are learning ML, it is convenient to understand what the models are doing step by step. If you are familiar with estimating the regression and prediction, you can skip the following steps until the Training and test set (Back testing).</p>
+<p>To exemplify how ML in regression models works, we first estimate two independent variables: MSSubClass and MSZoning.</p>
+<p><span class="math display">\[SalePrice=\beta_{0}+\beta_{1}\ MSSubClass + \beta_{2}\ MSZoning + \epsilon \]</span></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>In R, we use the “lm” function to run the regression model by Ordinary Least squares</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">house_model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SalePrice</span><span class="op">~</span><span class="va">MSSubClass</span><span class="op">+</span><span class="va">MSZoning</span>,data<span class="op">=</span><span class="va">house</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">house_model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = SalePrice ~ MSSubClass + MSZoning, data = house)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -169125  -58658  -26555   43751  532828 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept) 354837.1    30654.8  11.575  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; MSSubClass    -233.4      102.0  -2.289   0.0224 *  </span></span>
+<span><span class="co">#&gt; MSZoning    -29665.2     7528.4  -3.940 9.12e-05 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 90790 on 581 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.03625,    Adjusted R-squared:  0.03294 </span></span>
+<span><span class="co">#&gt; F-statistic: 10.93 on 2 and 581 DF,  p-value: 2.194e-05</span></span></code></pre></div>
+<p>As a result, we get the following estimated model:</p>
+<p><span class="math display">\[`\hat{r con[2]`}= 354837.1+-233.4\ MSSubClass + -29665.2\ MSZoning\]</span></p>
+<p>In Machine Learning (ML), we are not concerned about the coefficient significance; in chapter one, we explain the differences between Machine Learning models and the causality approach ones where we explain that. In ML models, we predict the dependent variable, in this case, SalePrice, given certain features or independent variables.</p>
+<p>Suppose we want to predict SalePrice for the values of the variables MSSubClass and MSZoning of 20 and 4, respectively. The following formula predicts SalePrice by taking the parameters of the OLS regression:</p>
+<p>SalePrice=354837.1+354837.1 * 20+-29665.2*4 = 231508.1</p>
+<p>The result 231508.1 predicts SalePrice when variables MSSubClass and MSZoning take the values of 20 and 4, respectively.</p>
+<p>Remember that the previous result is for exposition proposes. We could use the “predict” function, which gives us the same result. We must add the arguments for the OLS model object and a data frame with the features we want to predict.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">house_model</span>,<span class="va">house_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        1 </span></span>
+<span><span class="co">#&gt; 231508.1</span></span></code></pre></div>
+<p>We are still determining if the previous prediction is good. For the moment, we can compare with an observation in the “house” data set, for example, the first one:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">house</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   SalePrice MSSubClass MSZoning</span></span>
+<span><span class="co">#&gt; 1    181500         20        4</span></span></code></pre></div>
+<p>Our prediction is far from the SalePrice observation in the “house” data set. Of course, we need to add more independent variables and do some other procedures, which we will cover in subsequent sections.</p>
+<div id="training-and-test-set-back-testing" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> Training and test set (Back testing)<a class="anchor" aria-label="anchor" href="#training-and-test-set-back-testing"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the previous section, we only made one prediction and compared it with a given observation. In the machine learning literature is common to apply that testing procedure for several observations. In this book, we call this back-testing, which divides the data set into training and testing, often called in_sample and out_sample. As in the previous example, the house_test must be a data frame. However, instead of having only one observation and two independent variables, it will contain many other observations and independent variables.</p>
+<p>To answer why we need a back-testing, think that if we want to validate the prediction performance, we have at least two alternatives:</p>
+<p>Alternative 1: Estimate a ML model, make a prediction and wait in time, for example, 30 days, to verify if the prediction is good or not; if the forecast is not good (it is not close to the real value), then we have to train and test it again, let’s say other 30 days and so on.</p>
+<p>Alternative 2 (The one we will apply): Take aside some observations, assuming those are observations we don’t know and store them in a data frame called “test.” Train and test the ML model. If we are not making a good prediction, we train and test the model again until we get a good prediction performance.</p>
+<p>It is a common practice to divide the data set into training (80% of the observations) and testing (the other 20%). However, other authors suggest splitting it into Training Set, Validation Set and a Test Set <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-Lantz" role="doc-biblioref">Lantz 2019</a>)</span>. In the latter case, the proposal is to train the model on the training set (for example, 60% of the data), do the cross-validation (a procedure we will cover below) on the validation set (for example, 20% of the data), and once the model has a good prediction performance, test it in the test set (20% of the data).</p>
+<p>In this book, we will use both methods. We start in this chapter with the first one, and in the cross-validation chapter, we will cover the second one.</p>
+<p>For the housing prices data set, we split randomly into 80%, applying the function sample.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">house</span><span class="op">)</span></span>
+<span><span class="va">train_sample</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">.8</span><span class="op">)</span></span>
+<span><span class="va">house_train</span> <span class="op">&lt;-</span> <span class="va">house</span><span class="op">[</span><span class="va">train_sample</span>, <span class="op">]</span></span>
+<span><span class="va">house_test</span>  <span class="op">&lt;-</span> <span class="va">house</span><span class="op">[</span><span class="op">-</span><span class="va">train_sample</span>, <span class="op">]</span></span></code></pre></div>
+<p>The “set.seed” function helps us to control the results by getting the same aleatory partition in the data; otherwise, we would get a different result every time we run the R chunk. The spirit of this book is to compare various methods and methodologies without concern about the possible differences in the models or processes that result from the random partition.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Id SalePrice MSSubClass MSZoning LotFrontage</span></span>
+<span><span class="co">#&gt; 64   64    163000         20        4          80</span></span>
+<span><span class="co">#&gt; 540 540    170000         80        4         102</span></span>
+<span><span class="co">#&gt; 200 200    155000         70        5          50</span></span>
+<span><span class="co">#&gt; 171 171    142000         20        4          65</span></span>
+<span><span class="co">#&gt; 41   41    250000         60        2          75</span></span>
+<span><span class="co">#&gt; 268 268    155000         60        4          70</span></span></code></pre></div>
+<p>If we compare the original house data set with the previous output, the “rownames” (or ID) are different and are not in order because they were selected randomly. Another important distinction is that the observations in the house_test data set complement the house_train. In other words, the observations (IDs) in the training set aren’t in the test, and vice versa.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">house_test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Id SalePrice MSSubClass MSZoning LotFrontage</span></span>
+<span><span class="co">#&gt; 17 17    165500         20        4          70</span></span>
+<span><span class="co">#&gt; 20 20    153000         20        4          74</span></span>
+<span><span class="co">#&gt; 26 26    385000         20        4          68</span></span>
+<span><span class="co">#&gt; 31 31    317000         60        4          76</span></span>
+<span><span class="co">#&gt; 42 42    190000         20        4         105</span></span>
+<span><span class="co">#&gt; 43 43    383970         60        4          77</span></span></code></pre></div>
+</div>
+<div id="performance-measure" class="section level3" number="2.1.2">
+<h3>
+<span class="header-section-number">2.1.2</span> Performance Measure<a class="anchor" aria-label="anchor" href="#performance-measure"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="rmse" class="section level3" number="2.1.3">
+<h3>
+<span class="header-section-number">2.1.3</span> RMSE<a class="anchor" aria-label="anchor" href="#rmse"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the previous section, we discussed whether the prediction was good (the prediction performance). This section formally defines the metrics for the prediction performance.</p>
+<p>The first metric is the Root Mean Square Error (RMSE). The mathematical formula to compute the RMSE is:</p>
+<p><span class="math display">\[RMSE =\sqrt{\frac{1}{n}\ \sum_{i=1}^{n} (y_{i}-\hat{y_{i}})^{2}} \]</span></p>
+<p>where <span class="math inline">\(\hat{y_{i}}\)</span> is the prediction for the ith observation, <span class="math inline">\(y_{i}\)</span> is the ith observation of the independent variable we store in the test set, and n is the number of observations.</p>
+<p><span class="math display">\[\hat{y_{i}}=\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n}\]</span></p>
+<p>We can estimate the RMSE using the training data set. But generally, we do not care how well the model works on the training set. Rather, we are interested in the model performance tested on unseen data; then, we try the RMSE on the test data set or the validation set for cross-validation. The lower the test RMSE, the better the prediction.</p>
+<p>We estimate the RMSE for the housing example. This time we use all the variables in the data set. To train the model, we use the training data set. The “lm” function requires adding a dot after the symbol “~.”</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">house_model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SalePrice</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">house_train</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">house_model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = SalePrice ~ ., data = house_train)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -311484  -19921   -1159   18474  219630 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)    1.535e+06  3.384e+06   0.454  0.65040    </span></span>
+<span><span class="co">#&gt; Id            -1.208e+01  1.268e+01  -0.953  0.34119    </span></span>
+<span><span class="co">#&gt; MSSubClass    -2.860e+02  1.367e+02  -2.092  0.03706 *  </span></span>
+<span><span class="co">#&gt; MSZoning      -1.286e+03  4.747e+03  -0.271  0.78667    </span></span>
+<span><span class="co">#&gt; LotFrontage   -3.126e+02  1.021e+02  -3.061  0.00235 ** </span></span>
+<span><span class="co">#&gt; LotArea        5.531e-01  2.113e-01   2.618  0.00918 ** </span></span>
+<span><span class="co">#&gt; LotShape      -2.770e+03  1.680e+03  -1.649  0.09984 .  </span></span>
+<span><span class="co">#&gt; LotConfig     -1.144e+03  1.422e+03  -0.805  0.42134    </span></span>
+<span><span class="co">#&gt; Neighborhood   3.287e+02  4.110e+02   0.800  0.42439    </span></span>
+<span><span class="co">#&gt; Condition1    -1.679e+03  2.579e+03  -0.651  0.51547    </span></span>
+<span><span class="co">#&gt; BldgType       1.202e+03  4.281e+03   0.281  0.77909    </span></span>
+<span><span class="co">#&gt; HouseStyle    -2.336e+03  1.830e+03  -1.276  0.20267    </span></span>
+<span><span class="co">#&gt; OverallQual    1.797e+04  3.096e+03   5.806 1.28e-08 ***</span></span>
+<span><span class="co">#&gt; OverallCond    9.543e+03  2.960e+03   3.224  0.00136 ** </span></span>
+<span><span class="co">#&gt; YearRemodAdd  -1.525e+01  2.074e+02  -0.074  0.94142    </span></span>
+<span><span class="co">#&gt; RoofStyle      3.244e+03  2.784e+03   1.165  0.24465    </span></span>
+<span><span class="co">#&gt; Exterior1st   -1.142e+03  7.714e+02  -1.481  0.13937    </span></span>
+<span><span class="co">#&gt; MasVnrType     1.049e+03  3.500e+03   0.300  0.76450    </span></span>
+<span><span class="co">#&gt; MasVnrArea     5.071e+01  1.210e+01   4.189 3.42e-05 ***</span></span>
+<span><span class="co">#&gt; ExterQual     -8.256e+03  4.918e+03  -1.679  0.09400 .  </span></span>
+<span><span class="co">#&gt; ExterCond      6.708e+02  3.758e+03   0.178  0.85842    </span></span>
+<span><span class="co">#&gt; Foundation     7.901e+03  5.232e+03   1.510  0.13179    </span></span>
+<span><span class="co">#&gt; BsmtQual      -1.073e+04  3.331e+03  -3.222  0.00137 ** </span></span>
+<span><span class="co">#&gt; BsmtExposure  -5.919e+03  2.114e+03  -2.801  0.00534 ** </span></span>
+<span><span class="co">#&gt; BsmtFinType1  -3.214e+03  1.588e+03  -2.024  0.04361 *  </span></span>
+<span><span class="co">#&gt; BsmtFinSF1    -2.507e+01  9.435e+00  -2.657  0.00819 ** </span></span>
+<span><span class="co">#&gt; BsmtUnfSF     -1.827e+01  9.992e+00  -1.828  0.06825 .  </span></span>
+<span><span class="co">#&gt; HeatingQC     -6.688e+02  1.636e+03  -0.409  0.68287    </span></span>
+<span><span class="co">#&gt; CentralAir     4.803e+03  2.020e+04   0.238  0.81217    </span></span>
+<span><span class="co">#&gt; Electrical     7.323e+02  3.113e+03   0.235  0.81414    </span></span>
+<span><span class="co">#&gt; X1stFlrSF      3.447e+01  1.291e+01   2.671  0.00786 ** </span></span>
+<span><span class="co">#&gt; X2ndFlrSF      2.999e+01  1.101e+01   2.724  0.00672 ** </span></span>
+<span><span class="co">#&gt; BsmtFullBath   1.070e+04  6.443e+03   1.661  0.09749 .  </span></span>
+<span><span class="co">#&gt; BsmtHalfBath   4.813e+03  8.795e+03   0.547  0.58453    </span></span>
+<span><span class="co">#&gt; FullBath       1.772e+04  6.958e+03   2.547  0.01123 *  </span></span>
+<span><span class="co">#&gt; HalfBath       1.030e+04  6.666e+03   1.545  0.12303    </span></span>
+<span><span class="co">#&gt; BedroomAbvGr  -5.016e+03  4.631e+03  -1.083  0.27937    </span></span>
+<span><span class="co">#&gt; KitchenQual   -7.330e+03  3.546e+03  -2.067  0.03936 *  </span></span>
+<span><span class="co">#&gt; TotRmsAbvGrd   5.196e+03  2.754e+03   1.887  0.05987 .  </span></span>
+<span><span class="co">#&gt; Fireplaces     1.291e+04  6.274e+03   2.057  0.04029 *  </span></span>
+<span><span class="co">#&gt; FireplaceQu   -3.753e+03  2.213e+03  -1.696  0.09072 .  </span></span>
+<span><span class="co">#&gt; GarageType    -4.360e+02  1.880e+03  -0.232  0.81674    </span></span>
+<span><span class="co">#&gt; GarageYrBlt   -1.237e+02  1.902e+02  -0.650  0.51576    </span></span>
+<span><span class="co">#&gt; GarageFinish  -2.065e+03  3.550e+03  -0.582  0.56114    </span></span>
+<span><span class="co">#&gt; GarageArea     4.217e+01  1.718e+01   2.454  0.01453 *  </span></span>
+<span><span class="co">#&gt; PavedDrive     3.140e+03  8.320e+03   0.377  0.70602    </span></span>
+<span><span class="co">#&gt; WoodDeckSF     1.127e+01  1.993e+01   0.566  0.57191    </span></span>
+<span><span class="co">#&gt; OpenPorchSF   -1.189e+01  3.404e+01  -0.349  0.72699    </span></span>
+<span><span class="co">#&gt; MoSold        -4.744e+02  7.750e+02  -0.612  0.54080    </span></span>
+<span><span class="co">#&gt; YrSold        -6.036e+02  1.682e+03  -0.359  0.71984    </span></span>
+<span><span class="co">#&gt; SaleType      -1.475e+03  1.799e+03  -0.820  0.41280    </span></span>
+<span><span class="co">#&gt; SaleCondition  4.838e+03  2.319e+03   2.087  0.03752 *  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 44510 on 415 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.7822, Adjusted R-squared:  0.7554 </span></span>
+<span><span class="co">#&gt; F-statistic: 29.22 on 51 and 415 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>To make the prediction, we use the test data set.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">house_predict</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">house_model</span>,<span class="va">house_test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">house_predict</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       17       20       26       31       42       43 </span></span>
+<span><span class="co">#&gt; 152651.6 135846.9 321903.0 312590.4 219878.9 331208.6</span></span></code></pre></div>
+<p>In the previous output, the numbers above the prediction (17,20,26,31, etc.) are the row number of the test data frame that our model predicted. We are calling it the RMSE test because we test it in the test data set. The code to estimate the RMSE is:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">chp3_swr</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">house_test</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span><span class="op">-</span><span class="va">house_predict</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> ,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">chp3_swr</span></span>
+<span><span class="co">#&gt; [1] 47889.11</span></span></code></pre></div>
+<p>ML’s main idea is to minimize the RMSE test as possible. In subsequent sections, we will show how to accomplish this.</p>
+</div>
+<div id="mean-absolute-error-mae" class="section level3" number="2.1.4">
+<h3>
+<span class="header-section-number">2.1.4</span> Mean absolute error (MAE)<a class="anchor" aria-label="anchor" href="#mean-absolute-error-mae"><i class="fas fa-link"></i></a>
+</h3>
+<p>The RMSE is generally the preferred performance measure for regression models. However, measuring the model performance with the MAE is useful when the data has some outliers.</p>
+<p><span class="math display">\[MAE =\frac{1}{n}\ \sum_{i=1}^{n} |y_{i}-\hat{y_{i}}|\]</span>
+In our example, the Mean absolute error test (MAE) is:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">house_test</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span><span class="op">-</span><span class="va">house_predict</span><span class="op">)</span>,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 28038.65</span></span></code></pre></div>
+</div>
+<div id="r-squared" class="section level3" number="2.1.5">
+<h3>
+<span class="header-section-number">2.1.5</span> R-squared<a class="anchor" aria-label="anchor" href="#r-squared"><i class="fas fa-link"></i></a>
+</h3>
+<p>It is called a Goodness-of-Fit measure. We define the R-squared as follows:
+<span class="math display">\[R^2=SSE/SST\]</span></p>
+<p>We interpret it as the fraction of the sample variation in the dependent variable <span class="math inline">\(y\)</span>, explained by the independent variable <span class="math inline">\(X\)</span>. Where <span class="math inline">\(SST\)</span> is the total sum of squares,</p>
+<p><span class="math display">\[SST=\frac{1}{n}\ \sum_{i=1}^{n}(y_{i}-\overline{y})^{2},\]</span></p>
+<p>and <span class="math inline">\(\overline{y}\)</span> is the sample average of <span class="math inline">\(y_{i}\)</span>. The indicator SST measures the total sample variation in the <span class="math inline">\(y_{i}\)</span>. The measure SSE is the explained sum of squares,</p>
+<p><span class="math display">\[SSE=\frac{1}{n}\ \sum_{i=1}^{n}(\hat{y_{i}}-\overline{y})^{2}.\]</span>
+SSE measures the sample variation in the <span class="math inline">\(\hat{y_{i}}\)</span> <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span>.</p>
+</div>
+<div id="model-selection" class="section level3" number="2.1.6">
+<h3>
+<span class="header-section-number">2.1.6</span> Model Selection<a class="anchor" aria-label="anchor" href="#model-selection"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can improve the RMSE in several ways. The first one is by applying other ML methodologies. This section starts with subset selection, Regularization and dimension Reduction.</p>
+<p>The subset selection consists of independent variables selection among all available independent variables, which helps improve the model’s predictability performance. The housing example has 51 independent variables, including the ID. We must be careful when choosing among the variables. To see why we define the train_RMSE:</p>
+<p><span class="math display">\[train\_RMSE =\sqrt{\frac{1}{n}\ \sum_{i=1}^{n} (y_{i}-\hat{y_{i}})^{2}}=\sqrt{\frac{1}{n}\ train\_RSS}\]</span></p>
+<p>where:</p>
+<p><span class="math display">\[train\_RSS = \sum_{i=1}^{n} (y_{i}-\hat{y_{i}})^{2}=e_{1}^2+e_{2}^2+,..+e_{n}^2 \]</span>
+The <span class="math inline">\(train\_RSS\)</span> is the explained sum of squares or residual sum of squares on the training data set. As a consequence, the RMSE would decrease as the <span class="math inline">\(train\_RSS\)</span> decrease. According to <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>, the <span class="math inline">\(train\_RSS\)</span> would decrease as the number of independent variables included in the models increases, even if those variables are unrelated to the independent variable (not significant). Therefore, if we use these statistics to select the best model on the training data set, we will always end up with a model involving all variables. The problem is that a low <span class="math inline">\(RSS\)</span> indicates a model with a low training error, whereas we wish to choose a model with a low test error <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>. The other problem is the overfitting of the data, which is a term we explain further <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-Suzuky" role="doc-biblioref">Suzuky 2022</a>)</span>.</p>
+<p>To solve this, some indicators looks to minimize the RSS but penalize for the inclusion of more independent variables, for example, the Akaike Information Criterion AIC:</p>
+<p>To solve the problem, we use some other indicators that aim to minimize the RSS, penalizing for the inclusion of more independent variables, for example, the Akaike Information Criterion AIC:</p>
+<p><span class="math display">\[AIC=\frac{1}{n \hat{\sigma^2}}(RSS+2d\hat{\sigma^2})\]</span></p>
+<p>where <span class="math inline">\(\hat{\sigma^2}\)</span> is an estimate of the variance of the error term, <span class="math inline">\(d\)</span> is the number of predictors, and <span class="math inline">\(n\)</span> is the number of observations. AIC adds a penalty of <span class="math inline">\(2d\hat{\sigma^2}\)</span> to the training RSS to adjust because the training error tends to underestimate the test error. The penalty increases as the number of predictors in the model increases; this is intended to adjust for the corresponding decrease in training RSS <span class="citation">(<a href="#ref-statistical_learning" role="doc-biblioref"><strong>statistical_learning?</strong></a>)</span>. The decision criteria are the model with the lower AIC.</p>
+<p>We use the function step, which chooses variables according to AIC.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">step_house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/step.html">step</a></span><span class="op">(</span><span class="va">house_model</span>,<span class="va">house_test</span>,trace <span class="op">=</span> <span class="cn">F</span>,direction<span class="op">=</span><span class="st">"both"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">step_house</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = SalePrice ~ MSSubClass + LotFrontage + LotArea + </span></span>
+<span><span class="co">#&gt;     LotShape + HouseStyle + OverallQual + OverallCond + Exterior1st + </span></span>
+<span><span class="co">#&gt;     MasVnrArea + ExterQual + Foundation + BsmtQual + BsmtExposure + </span></span>
+<span><span class="co">#&gt;     BsmtFinType1 + BsmtFinSF1 + BsmtUnfSF + X1stFlrSF + X2ndFlrSF + </span></span>
+<span><span class="co">#&gt;     BsmtFullBath + FullBath + HalfBath + KitchenQual + TotRmsAbvGrd + </span></span>
+<span><span class="co">#&gt;     Fireplaces + FireplaceQu + GarageArea + SaleCondition, data = house_train)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -320194  -19377   -1434   17833  220366 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)    4.120e+04  4.318e+04   0.954 0.340604    </span></span>
+<span><span class="co">#&gt; MSSubClass    -2.299e+02  6.787e+01  -3.388 0.000768 ***</span></span>
+<span><span class="co">#&gt; LotFrontage   -3.216e+02  9.392e+01  -3.424 0.000674 ***</span></span>
+<span><span class="co">#&gt; LotArea        5.828e-01  2.036e-01   2.862 0.004411 ** </span></span>
+<span><span class="co">#&gt; LotShape      -2.812e+03  1.537e+03  -1.829 0.068033 .  </span></span>
+<span><span class="co">#&gt; HouseStyle    -2.889e+03  1.553e+03  -1.860 0.063500 .  </span></span>
+<span><span class="co">#&gt; OverallQual    1.893e+04  2.922e+03   6.478 2.49e-10 ***</span></span>
+<span><span class="co">#&gt; OverallCond    9.620e+03  2.386e+03   4.032 6.53e-05 ***</span></span>
+<span><span class="co">#&gt; Exterior1st   -1.302e+03  7.056e+02  -1.845 0.065677 .  </span></span>
+<span><span class="co">#&gt; MasVnrArea     5.605e+01  1.050e+01   5.338 1.51e-07 ***</span></span>
+<span><span class="co">#&gt; ExterQual     -8.628e+03  4.554e+03  -1.894 0.058823 .  </span></span>
+<span><span class="co">#&gt; Foundation     8.200e+03  4.347e+03   1.886 0.059902 .  </span></span>
+<span><span class="co">#&gt; BsmtQual      -1.178e+04  3.121e+03  -3.774 0.000182 ***</span></span>
+<span><span class="co">#&gt; BsmtExposure  -5.687e+03  2.000e+03  -2.844 0.004665 ** </span></span>
+<span><span class="co">#&gt; BsmtFinType1  -3.146e+03  1.507e+03  -2.088 0.037393 *  </span></span>
+<span><span class="co">#&gt; BsmtFinSF1    -2.498e+01  8.965e+00  -2.786 0.005571 ** </span></span>
+<span><span class="co">#&gt; BsmtUnfSF     -2.111e+01  9.549e+00  -2.211 0.027582 *  </span></span>
+<span><span class="co">#&gt; X1stFlrSF      3.817e+01  1.159e+01   3.292 0.001074 ** </span></span>
+<span><span class="co">#&gt; X2ndFlrSF      2.565e+01  9.388e+00   2.732 0.006540 ** </span></span>
+<span><span class="co">#&gt; BsmtFullBath   9.998e+03  5.832e+03   1.714 0.087191 .  </span></span>
+<span><span class="co">#&gt; FullBath       1.689e+04  5.966e+03   2.831 0.004847 ** </span></span>
+<span><span class="co">#&gt; HalfBath       1.139e+04  6.012e+03   1.895 0.058711 .  </span></span>
+<span><span class="co">#&gt; KitchenQual   -7.131e+03  3.345e+03  -2.132 0.033563 *  </span></span>
+<span><span class="co">#&gt; TotRmsAbvGrd   4.149e+03  2.422e+03   1.713 0.087404 .  </span></span>
+<span><span class="co">#&gt; Fireplaces     1.359e+04  6.017e+03   2.259 0.024362 *  </span></span>
+<span><span class="co">#&gt; FireplaceQu   -4.135e+03  2.073e+03  -1.995 0.046680 *  </span></span>
+<span><span class="co">#&gt; GarageArea     4.338e+01  1.484e+01   2.923 0.003649 ** </span></span>
+<span><span class="co">#&gt; SaleCondition  4.348e+03  2.211e+03   1.967 0.049854 *  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 43750 on 439 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.7774, Adjusted R-squared:  0.7637 </span></span>
+<span><span class="co">#&gt; F-statistic: 56.79 on 27 and 439 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<p>The trace=F argument is for not printing all the models the algorithm evaluates. The direction=“both,” is because there are selection methods. Forward selection begins with a model containing no independent variables and then adds predictors to the model one at a time until all of the predictors are in the model; it finally selects the model (combination of variables) with the lowest AIC. It is important to notice that the algorithm is not selected among all possible combinations. For example, in our case we have 51 vaiiravles, then it imply <span class="math inline">\(2^{51}=2.2518e+15\)</span>. instead, it only evaluate <span class="math inline">\(RSS = \sum_{k=o}^{p-1} (p-k)=1+p(p+1)/2=1+50(50+1)/2=1327\)</span> models <span class="citation">(<a href="#ref-statistical_learning" role="doc-biblioref"><strong>statistical_learning?</strong></a>)</span>.</p>
+<p>On the other hand, the backward begins with the full least squares model containing all <span class="math inline">\(p\)</span> predictors and then interactively removes the least useful predictor, one at a time. The “both” argument implies that it applies both procedures, forward and backward.</p>
+<p>For exposition purposes, we print the AIC criterion of the two models, the one with the 51 variables and the one with the variable selection based on AIC.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/extractAIC.html">extractAIC</a></span><span class="op">(</span><span class="va">step_house</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10008.02</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/extractAIC.html">extractAIC</a></span><span class="op">(</span><span class="va">house_model</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10045.9</span></span></code></pre></div>
+<p>As expected, the model using the step function has the lowest AIC. Also, if we estimate the RMSE on the test data set and step model, we get:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">step_house_predict</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">step_house</span>,<span class="va">house_test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">house_test</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span><span class="op">-</span><span class="va">step_house_predict</span><span class="op">)</span>,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 28117.64</span></span></code></pre></div>
+<p>Which is lower than the one of the full variables model.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">house_test</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span><span class="op">-</span><span class="va">house_predict</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> ,na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 47889.11</span></span></code></pre></div>
+</div>
+<div id="overfittingunderfitting" class="section level3" number="2.1.7">
+<h3>
+<span class="header-section-number">2.1.7</span> Overfitting/Underfitting<a class="anchor" aria-label="anchor" href="#overfittingunderfitting"><i class="fas fa-link"></i></a>
+</h3>
+<p>Overfitting occurs when a ML model is trained to learn the noise (i.e., non-representative data as a result of chance) rather than the patterns or trends in the data. The following text is from <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>:</p>
+<p>“As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. In that case, as we increase the flexibility, the bias tends to initially decrease faster than the variance increases.Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance.When this happens the test MSE increases” .</p>
+<p>TTo explain better, we use the MSE decomposition. The expected MSE could be decomposed into the following.</p>
+<p><span class="math display">\[E(MSE) =E(\frac{1}{n}\ \sum_{i=1}^{n} (y-\hat{y})^2)= E(\epsilon^2)+E ((y-\hat{y})^2)=Var(e)+Var(\hat{y})+[Bias(\hat{y})]^2\]</span>
+where</p>
+<p><span class="math display">\[Bias(\hat{y})=y-E(\hat{y})\]</span></p>
+<p><span class="math display">\[Var(\hat{y})=E((y-E(\hat{y}))^2)\]</span></p>
+<p>See the proof in the Appendix of this chapter.</p>
+<p>The idea of evaluating other methodologies is based on the notion of the Bias-Variance Trade-Off:</p>
+<p><span class="math inline">\(Var[e]\)</span> is the variance of the error term, and it is call the irreducible part.</p>
+<p><span class="math inline">\(E (y_{0}-\hat{y})^{2}\)</span> is the average of the MSE test</p>
+</div>
+</div>
+<div id="appendix" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Appendix<a class="anchor" aria-label="anchor" href="#appendix"><i class="fas fa-link"></i></a>
+</h2>
+<div id="proof-of-emse-varepsilonvarhatybiashaty2" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> Proof of <span class="math inline">\(E(MSE) =Var(\epsilon)+Var(\hat{y})+[Bias(\hat{y})]^2\)</span><a class="anchor" aria-label="anchor" href="#proof-of-emse-varepsilonvarhatybiashaty2"><i class="fas fa-link"></i></a>
+</h3>
+<p><span class="math display">\[E ((y-\hat{y})^2)=E((y-E(\hat{y})+E(\hat{y})-\hat{y})^2)=(y-E(\hat{y}))^2+E((E(\hat{y})-y)^2)+2E(y-E(\hat{y}))\ E(E(\hat{y})-\hat{y})\]</span></p>
+<p>where</p>
+<p><span class="math display">\[2E(y-E(\hat{y}))\ E(E(\hat{y})-\hat{y})=2E(y-E(\hat{y}))\ (E(\hat{y})-E(\hat{y}))=0\]</span></p>
+<p><span class="math display">\[2E(y-E(\hat{y}))\ E(E(\hat{y})-\hat{y})=2E(y-E(\hat{y}))\ (E(\hat{y})-E(\hat{y}))=0\]</span></p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="ml-in-the-bussines-lascape-and-data-collection.html"><span class="header-section-number">1</span> ML in the bussines lascape and data collection</a></div>
+<div class="next"><a href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#training-and-evaluating-regression-models"><span class="header-section-number">2</span> Training and evaluating regression models</a></li>
+<li>
+<a class="nav-link" href="#model-training"><span class="header-section-number">2.1</span> Model training</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#training-and-test-set-back-testing"><span class="header-section-number">2.1.1</span> Training and test set (Back testing)</a></li>
+<li><a class="nav-link" href="#performance-measure"><span class="header-section-number">2.1.2</span> Performance Measure</a></li>
+<li><a class="nav-link" href="#rmse"><span class="header-section-number">2.1.3</span> RMSE</a></li>
+<li><a class="nav-link" href="#mean-absolute-error-mae"><span class="header-section-number">2.1.4</span> Mean absolute error (MAE)</a></li>
+<li><a class="nav-link" href="#r-squared"><span class="header-section-number">2.1.5</span> R-squared</a></li>
+<li><a class="nav-link" href="#model-selection"><span class="header-section-number">2.1.6</span> Model Selection</a></li>
+<li><a class="nav-link" href="#overfittingunderfitting"><span class="header-section-number">2.1.7</span> Overfitting/Underfitting</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#appendix"><span class="header-section-number">2.2</span> Appendix</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#proof-of-emse-varepsilonvarhatybiashaty2"><span class="header-section-number">2.2.1</span> Proof of \(E(MSE) =Var(\epsilon)+Var(\hat{y})+[Bias(\hat{y})]^2\)</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Machine learning introductory guide</strong>" was written by L. Arturo Bernal. It was last built on 2023-03-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
