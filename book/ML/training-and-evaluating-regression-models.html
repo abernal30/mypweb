@@ -7,7 +7,7 @@
 <title>2 Training and evaluating regression models | Machine learning introductory guide</title>
 <meta name="author" content="L. Arturo Bernal">
 <meta name="description" content="2.1 Model training The goal of machine learning models such as regression is to predict the dependent variable, \(y\). For example, in the house pricing data set described in chapter 1, we defined...">
-<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
 <meta property="og:title" content="2 Training and evaluating regression models | Machine learning introductory guide">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://www.arturo-bernal.com/book/training-and-evaluating-regression-models.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -71,9 +71,10 @@
 <li><a class="" href="preface.html">Preface</a></li>
 <li><a class="" href="ml-in-the-bussines-lascape-and-data-collection.html"><span class="header-section-number">1</span> ML in the bussines lascape and data collection</a></li>
 <li><a class="active" href="training-and-evaluating-regression-models.html"><span class="header-section-number">2</span> Training and evaluating regression models</a></li>
-<li><a class="" href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></li>
+<li><a class="" href="training-and-evaluating-classification-models.html"><span class="header-section-number">3</span> Training and evaluating classification models</a></li>
 <li><a class="" href="cross-validation.html"><span class="header-section-number">4</span> Cross Validation</a></li>
-<li><a class="" href="tuning-parameters-for-improving-performance.html"><span class="header-section-number">5</span> Tuning parameters for improving performance</a></li>
+<li><a class="" href="improving-performance.html"><span class="header-section-number">5</span> Improving Performance</a></li>
+<li><a class="" href="clustering.html"><span class="header-section-number">6</span> Clustering</a></li>
 </ul>
 
         <div class="book-extra">
@@ -98,10 +99,12 @@
 <p>To exemplify how ML in regression models works, we first estimate two independent variables: MSSubClass and MSZoning.</p>
 <p><span class="math display">\[SalePrice=\beta_{0}+\beta_{1}\ MSSubClass + \beta_{2}\ MSZoning + \epsilon \]</span></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/house_clean.csv"</span><span class="op">)</span></span>
+<span><span class="co">#house&lt;-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv")</span></span></code></pre></div>
 <p>In R, we use the “lm” function to run the regression model by Ordinary Least squares</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">house_model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SalePrice</span><span class="op">~</span><span class="va">MSSubClass</span><span class="op">+</span><span class="va">MSZoning</span>,data<span class="op">=</span><span class="va">house</span><span class="op">)</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">house_model</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">SalePrice</span><span class="op">~</span><span class="va">MSSubClass</span><span class="op">+</span><span class="va">MSZoning</span>,data<span class="op">=</span><span class="va">house</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">house_model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
@@ -147,7 +150,7 @@
 <p>To answer why we need a back-testing, think that if we want to validate the prediction performance, we have at least two alternatives:</p>
 <p>Alternative 1: Estimate a ML model, make a prediction and wait in time, for example, 30 days, to verify if the prediction is good or not; if the forecast is not good (it is not close to the real value), then we have to train and test it again, let’s say other 30 days and so on.</p>
 <p>Alternative 2 (The one we will apply): Take aside some observations, assuming those are observations we don’t know and store them in a data frame called “test.” Train and test the ML model. If we are not making a good prediction, we train and test the model again until we get a good prediction performance.</p>
-<p>It is a common practice to divide the data set into training (80% of the observations) and testing (the other 20%). However, other authors suggest splitting it into Training Set, Validation Set and a Test Set <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-Lantz" role="doc-biblioref">Lantz 2019</a>)</span>. In the latter case, the proposal is to train the model on the training set (for example, 60% of the data), do the cross-validation (a procedure we will cover below) on the validation set (for example, 20% of the data), and once the model has a good prediction performance, test it in the test set (20% of the data).</p>
+<p>It is a common practice to divide the data set into training (80% of the observations) and testing (the other 20%). However, other authors suggest splitting it into Training Set, Validation Set and a Test Set <span class="citation">(<a href="clustering.html#ref-Lantz" role="doc-biblioref">Lantz 2019</a>)</span>. In the latter case, the proposal is to train the model on the training set (for example, 60% of the data), do the cross-validation (a procedure we will cover below) on the validation set (for example, 20% of the data), and once the model has a good prediction performance, test it in the test set (20% of the data).</p>
 <p>In this book, we will use both methods. We start in this chapter with the first one, and in the cross-validation chapter, we will cover the second one.</p>
 <p>For the housing prices data set, we split randomly into 80%, applying the function sample.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -298,7 +301,7 @@ In our example, the Mean absolute error test (MAE) is:</p>
 <p><span class="math display">\[SST=\frac{1}{n}\ \sum_{i=1}^{n}(y_{i}-\overline{y})^{2},\]</span></p>
 <p>and <span class="math inline">\(\overline{y}\)</span> is the sample average of <span class="math inline">\(y_{i}\)</span>. The indicator SST measures the total sample variation in the <span class="math inline">\(y_{i}\)</span>. The measure SSE is the explained sum of squares,</p>
 <p><span class="math display">\[SSE=\frac{1}{n}\ \sum_{i=1}^{n}(\hat{y_{i}}-\overline{y})^{2}.\]</span>
-SSE measures the sample variation in the <span class="math inline">\(\hat{y_{i}}\)</span> <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span>.</p>
+SSE measures the sample variation in the <span class="math inline">\(\hat{y_{i}}\)</span> <span class="citation">(<a href="clustering.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span>.</p>
 </div>
 <div id="model-selection" class="section level3" number="2.1.6">
 <h3>
@@ -309,14 +312,14 @@ SSE measures the sample variation in the <span class="math inline">\(\hat{y_{i}}
 <p><span class="math display">\[train\_RMSE =\sqrt{\frac{1}{n}\ \sum_{i=1}^{n} (y_{i}-\hat{y_{i}})^{2}}=\sqrt{\frac{1}{n}\ train\_RSS}\]</span></p>
 <p>where:</p>
 <p><span class="math display">\[train\_RSS = \sum_{i=1}^{n} (y_{i}-\hat{y_{i}})^{2}=e_{1}^2+e_{2}^2+,..+e_{n}^2 \]</span>
-The <span class="math inline">\(train\_RSS\)</span> is the explained sum of squares or residual sum of squares on the training data set. As a consequence, the RMSE would decrease as the <span class="math inline">\(train\_RSS\)</span> decrease. According to <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>, the <span class="math inline">\(train\_RSS\)</span> would decrease as the number of independent variables included in the models increases, even if those variables are unrelated to the independent variable (not significant). Therefore, if we use these statistics to select the best model on the training data set, we will always end up with a model involving all variables. The problem is that a low <span class="math inline">\(RSS\)</span> indicates a model with a low training error, whereas we wish to choose a model with a low test error <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>. The other problem is the overfitting of the data, which is a term we explain further <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-Suzuky" role="doc-biblioref">Suzuky 2022</a>)</span>.</p>
+The <span class="math inline">\(train\_RSS\)</span> is the explained sum of squares or residual sum of squares on the training data set. As a consequence, the RMSE would decrease as the <span class="math inline">\(train\_RSS\)</span> decrease. According to <span class="citation">(<a href="clustering.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>, the <span class="math inline">\(train\_RSS\)</span> would decrease as the number of independent variables included in the models increases, even if those variables are unrelated to the independent variable (not significant). Therefore, if we use these statistics to select the best model on the training data set, we will always end up with a model involving all variables. The problem is that a low <span class="math inline">\(RSS\)</span> indicates a model with a low training error, whereas we wish to choose a model with a low test error <span class="citation">(<a href="clustering.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>. The other problem is the overfitting of the data, which is a term we explain further <span class="citation">(<a href="clustering.html#ref-Suzuky" role="doc-biblioref">Suzuky 2022</a>)</span>.</p>
 <p>To solve this, some indicators looks to minimize the RSS but penalize for the inclusion of more independent variables, for example, the Akaike Information Criterion AIC:</p>
 <p>To solve the problem, we use some other indicators that aim to minimize the RSS, penalizing for the inclusion of more independent variables, for example, the Akaike Information Criterion AIC:</p>
 <p><span class="math display">\[AIC=\frac{1}{n \hat{\sigma^2}}(RSS+2d\hat{\sigma^2})\]</span></p>
 <p>where <span class="math inline">\(\hat{\sigma^2}\)</span> is an estimate of the variance of the error term, <span class="math inline">\(d\)</span> is the number of predictors, and <span class="math inline">\(n\)</span> is the number of observations. AIC adds a penalty of <span class="math inline">\(2d\hat{\sigma^2}\)</span> to the training RSS to adjust because the training error tends to underestimate the test error. The penalty increases as the number of predictors in the model increases; this is intended to adjust for the corresponding decrease in training RSS <span class="citation">(<a href="#ref-statistical_learning" role="doc-biblioref"><strong>statistical_learning?</strong></a>)</span>. The decision criteria are the model with the lower AIC.</p>
 <p>We use the function step, which chooses variables according to AIC.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">step_house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/step.html">step</a></span><span class="op">(</span><span class="va">house_model</span>,<span class="va">house_test</span>,trace <span class="op">=</span> <span class="cn">F</span>,direction<span class="op">=</span><span class="st">"both"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">step_house</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/step.html">step</a></span><span class="op">(</span><span class="va">house_model</span>,<span class="va">house_train</span>,trace <span class="op">=</span> <span class="cn">F</span>,direction<span class="op">=</span><span class="st">"both"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">step_house</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
@@ -389,7 +392,7 @@ The <span class="math inline">\(train\_RSS\)</span> is the explained sum of squa
 <h3>
 <span class="header-section-number">2.1.7</span> Overfitting/Underfitting<a class="anchor" aria-label="anchor" href="#overfittingunderfitting"><i class="fas fa-link"></i></a>
 </h3>
-<p>Overfitting occurs when a ML model is trained to learn the noise (i.e., non-representative data as a result of chance) rather than the patterns or trends in the data. The following text is from <span class="citation">(<a href="tuning-parameters-for-improving-performance.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>:</p>
+<p>Overfitting occurs when a ML model is trained to learn the noise (i.e., non-representative data as a result of chance) rather than the patterns or trends in the data. The following text is from <span class="citation">(<a href="clustering.html#ref-statistical_lerarning" role="doc-biblioref">James et al. 2017</a>)</span>:</p>
 <p>“As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. In that case, as we increase the flexibility, the bias tends to initially decrease faster than the variance increases.Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance.When this happens the test MSE increases” .</p>
 <p>TTo explain better, we use the MSE decomposition. The expected MSE could be decomposed into the following.</p>
 <p><span class="math display">\[E(MSE) =E(\frac{1}{n}\ \sum_{i=1}^{n} (y-\hat{y})^2)= E(\epsilon^2)+E ((y-\hat{y})^2)=Var(e)+Var(\hat{y})+[Bias(\hat{y})]^2\]</span>
@@ -400,6 +403,84 @@ where</p>
 <p>The idea of evaluating other methodologies is based on the notion of the Bias-Variance Trade-Off:</p>
 <p><span class="math inline">\(Var[e]\)</span> is the variance of the error term, and it is call the irreducible part.</p>
 <p><span class="math inline">\(E (y_{0}-\hat{y})^{2}\)</span> is the average of the MSE test</p>
+<p>—————esto no———</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span> <span class="op">(</span><span class="fl">26</span><span class="op">)</span></span>
+<span><span class="va">dim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">house</span><span class="op">)</span></span>
+<span><span class="va">train_sample</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">dim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="fl">.8</span><span class="op">)</span></span>
+<span><span class="va">house_train</span> <span class="op">&lt;-</span> <span class="va">house</span><span class="op">[</span><span class="va">train_sample</span>, <span class="op">]</span></span>
+<span><span class="va">house_test</span>  <span class="op">&lt;-</span> <span class="va">house</span><span class="op">[</span><span class="op">-</span><span class="va">train_sample</span>, <span class="op">]</span></span>
+<span><span class="co">#indes&lt;-"OverallQual"</span></span>
+<span><span class="co">#indes&lt;-"YearRemodAdd"</span></span>
+<span><span class="co">#indes&lt;-"X2ndFlrSF"</span></span>
+<span><span class="va">indes</span><span class="op">&lt;-</span><span class="st">"GarageArea"</span></span>
+<span><span class="va">form</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html">as.formula</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"SalePrice"</span>, <span class="st">"~"</span>, <span class="va">indes</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">house_train</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mod2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">house_test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> ,<span class="va">house_test</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">91000</span>,<span class="fl">350000</span><span class="op">)</span>,xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">200</span>,<span class="fl">900</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02-train_regression_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#plot(form, data = ,house_train)</span></span>
+<span><span class="va">mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">house_train</span><span class="op">)</span></span>
+<span><span class="co">#abline(mod)</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">house_test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> ,<span class="va">house_test</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02-train_regression_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#indes&lt;-"OverallQual"</span></span>
+<span><span class="co">#indes&lt;-"YearRemodAdd"</span></span>
+<span><span class="va">indes</span><span class="op">&lt;-</span><span class="st">"X2ndFlrSF"</span></span>
+<span><span class="co">#indes&lt;-"GarageArea"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span>,<span class="va">house_train</span><span class="op">[</span>,<span class="va">indes</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">500</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02-train_regression_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">house_test</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span>,<span class="va">house_test</span><span class="op">[</span>,<span class="va">indes</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02-train_regression_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">h_vars</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SalePrice"</span>,<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span><span class="fl">45</span><span class="op">:</span><span class="fl">49</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">panel.cor</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">digits</span> <span class="op">=</span> <span class="fl">2</span>, <span class="va">prefix</span> <span class="op">=</span> <span class="st">""</span>, <span class="va">cex.cor</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>    <span class="va">usr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="st">"usr"</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/on.exit.html">on.exit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="va">usr</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>usr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>,use<span class="op">=</span><span class="st">"pairwise.complete.obs"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">r</span>, <span class="fl">0.123456789</span><span class="op">)</span>, digits <span class="op">=</span> <span class="va">digits</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">prefix</span>, <span class="va">txt</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">cex.cor</span><span class="op">)</span><span class="op">)</span> <span class="va">cex.cor</span> <span class="op">&lt;-</span> <span class="fl">0.8</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/graphics/strwidth.html">strwidth</a></span><span class="op">(</span><span class="va">txt</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="va">txt</span>, cex <span class="op">=</span> <span class="va">cex.cor</span> <span class="op">*</span> <span class="va">r</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">house_train</span><span class="op">[</span>,<span class="va">h_vars</span><span class="op">]</span><span class="op">)</span>,upper.panel<span class="op">=</span><span class="va">panel.cor</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="02-train_regression_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>Models are frequently overfit when there are a small number of training samples relative to the flexibility or complexity of the model. Such a model is considered to have high variance or low bias.</p>
+<p>A supervised model that is overfit will typically perform well on data the model was trained on, but perform poorly on data the model has not seen before <span class="citation">(<a href="clustering.html#ref-c3" role="doc-biblioref">Krishnan 2020</a>)</span>.</p>
+<p>Underfitting occurs when the machine learning model does not capture variations in the data – where the variations in data are not caused by noise. Such a model is considered to have high bias, or low variance.
+A supervised model that is underfit will typically perform poorly on both data the model was trained on, and on data the model has not seen before. Examples of overfitting, underfitting, and a good balanced model <span class="citation">(<a href="clustering.html#ref-c3" role="doc-biblioref">Krishnan 2020</a>)</span>.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#knitr::include_graphics('images/overfit.jpg')</span></span></code></pre></div>
+</div>
+<div id="regularization-models" class="section level3" number="2.1.8">
+<h3>
+<span class="header-section-number">2.1.8</span> Regularization models<a class="anchor" aria-label="anchor" href="#regularization-models"><i class="fas fa-link"></i></a>
+</h3>
+<p>Regularization is a method to balance overfitting and underfitting a model during training. Both overfitting
+and underfitting are problems that ultimately cause poor predictions on new data.</p>
+<p>Regularization is a technique to adjust how closely a model is trained to fit historical data. One way to apply
+regularization is by adding a parameter that penalizes the loss function when the tuned model is overfit.</p>
+<p>This allows use of regularization as a parameter that affects how closely the model is trained to fit historical
+data. More regularization prevents overfitting, while less regularization prevents underfitting. Balancing the
+regularization parameter helps find a good tradeoff between bias and variance.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">house</span><span class="op">[</span>,<span class="st">"SalePrice"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">#&gt;   62383  159988  193690  222864  266625  755000</span></span></code></pre></div>
 </div>
 </div>
 <div id="appendix" class="section level2" number="2.2">
@@ -420,7 +501,7 @@ where</p>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="ml-in-the-bussines-lascape-and-data-collection.html"><span class="header-section-number">1</span> ML in the bussines lascape and data collection</a></div>
-<div class="next"><a href="training-and-evaluating-clasification-models.html"><span class="header-section-number">3</span> Training and evaluating clasification models</a></div>
+<div class="next"><a href="training-and-evaluating-classification-models.html"><span class="header-section-number">3</span> Training and evaluating classification models</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -434,6 +515,7 @@ where</p>
 <li><a class="nav-link" href="#r-squared"><span class="header-section-number">2.1.5</span> R-squared</a></li>
 <li><a class="nav-link" href="#model-selection"><span class="header-section-number">2.1.6</span> Model Selection</a></li>
 <li><a class="nav-link" href="#overfittingunderfitting"><span class="header-section-number">2.1.7</span> Overfitting/Underfitting</a></li>
+<li><a class="nav-link" href="#regularization-models"><span class="header-section-number">2.1.8</span> Regularization models</a></li>
 </ul>
 </li>
 <li>
@@ -455,7 +537,7 @@ where</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Machine learning introductory guide</strong>" was written by L. Arturo Bernal. It was last built on 2023-03-07.</p>
+    <p>"<strong>Machine learning introductory guide</strong>" was written by L. Arturo Bernal. It was last built on 2023-03-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

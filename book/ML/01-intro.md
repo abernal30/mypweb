@@ -15,6 +15,11 @@ On the other hand, in the same housing prices example, if we already have the in
 In conclusion, before handling data and running algorithms, we suggest establishing a business goal, detecting if it is an ML problem, and if it would benefit the company (or client). 
 
 
+## Diferrence between Machine Leagning and causality approach
+
+
+
+
 ## Business objectives and data sources
 
 In this book, we will use a cross-sectional data set consisting of a sample of houses and bank clients taken at a given time: i) house pricing; ii) credit analysis. For time series objectives that consist of observations on a variable or several variables over time, see chapters four and five of the book  [@AFP]. 

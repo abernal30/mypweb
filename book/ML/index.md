@@ -1,7 +1,7 @@
 --- 
 title: "Machine learning introductory guide"
 author: "L. Arturo Bernal"
-date: "2023-03-07"
+date: "2023-03-27"
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
@@ -25,7 +25,6 @@ description: "A guide Machine learning introductory"
 # Machine learning introductory guide {-}
 
 <a href=""><img src="images/Picture1.jpg" width="350" height="460" alt="Buy from Amazon" class="cover" /></a>
-
 
 This is the for the book *Machine learning introductory guide*! 
 
@@ -51,7 +50,6 @@ This text and examples aim to generate a basic guide for the Machine Learning (M
 This document follows a practical example: i) for the continuous variables of the California Housing Prices data set presented in [@Geron]; ii) for the categorical variables, we will follow the Lending Club fintech data set from Kaggle to analyze a credit default, which is a financial institution that grants personal loans.
 
 The following steps may differ from other books, data scientists, or experts because there are many ways to deal whit machine learning. But that is precisely the richness of this area of expertise. If there existed only one way to apply machine learning, everybody could use it!!
-
 
 
 The R and other files are stored in the [GitHub repository for this site](https://github.com/abernal30/ml_book). 

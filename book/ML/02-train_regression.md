@@ -24,7 +24,8 @@ $$SalePrice=\beta_{0}+\beta_{1}\ MSSubClass + \beta_{2}\ MSZoning + \epsilon $$
 
 
 ```r
-house<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv")
+house<-read.csv("data/house_clean.csv")
+#house<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv")
 ```
 
 
@@ -34,6 +35,7 @@ house<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/housin
 In R, we use the "lm" function to run the regression model by Ordinary Least squares
 
 ```r
+
 house_model<-lm(SalePrice~MSSubClass+MSZoning,data=house)
 summary(house_model)
 #> 
@@ -328,7 +330,7 @@ where $\hat{\sigma^2}$ is an estimate of the variance of the error term, $d$ is 
 We use the function step, which chooses variables according to AIC.  
 
 ```r
-step_house<-step(house_model,house_test,trace = F,direction="both")
+step_house<-step(house_model,house_train,trace = F,direction="both")
 summary(step_house)
 #> 
 #> Call:
@@ -436,6 +438,128 @@ The idea of evaluating other methodologies is based on the notion of the Bias-Va
 $Var[e]$ is the variance of the error term, and it is call the irreducible part. 
 
 $E (y_{0}-\hat{y})^{2}$ is the average of the MSE test 
+
+
+---------------esto no---------
+
+
+```r
+set.seed (26)
+dim<-dim(house)
+train_sample<-sample(dim[1],dim[1]*.8)
+house_train <- house[train_sample, ]
+house_test  <- house[-train_sample, ]
+#indes<-"OverallQual"
+#indes<-"YearRemodAdd"
+#indes<-"X2ndFlrSF"
+indes<-"GarageArea"
+form<-as.formula(paste("SalePrice", "~", indes))
+mod<-lm(form, data = house_train)
+
+mod2<-lm(form, data = house_test)
+plot(form, data = ,house_test,ylim=c(91000,350000),xlim=c(200,900))
+abline(mod)
+abline(mod2)
+```
+
+<img src="02-train_regression_files/figure-html/unnamed-chunk-23-1.png" width="90%" style="display: block; margin: auto;" />
+
+```r
+
+#plot(form, data = ,house_train)
+mod<-lm(form, data = house_train)
+#abline(mod)
+```
+
+
+```r
+mod2<-lm(form, data = house_test)
+plot(form, data = ,house_test)
+abline(mod)
+abline(mod2)
+```
+
+<img src="02-train_regression_files/figure-html/unnamed-chunk-24-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+
+```r
+#indes<-"OverallQual"
+#indes<-"YearRemodAdd"
+indes<-"X2ndFlrSF"
+#indes<-"GarageArea"
+plot(house_train[,"SalePrice"],house_train[,indes])
+abline(a = 500, b = 1)
+```
+
+<img src="02-train_regression_files/figure-html/unnamed-chunk-25-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+
+```r
+plot(house_test[,"SalePrice"],house_test[,indes])
+```
+
+<img src="02-train_regression_files/figure-html/unnamed-chunk-26-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+
+```r
+h_vars<-c("SalePrice",colnames(house_train[45:49]))
+
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y,use="pairwise.complete.obs"))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+pairs(na.omit(house_train[,h_vars]),upper.panel=panel.cor)
+```
+
+<img src="02-train_regression_files/figure-html/unnamed-chunk-27-1.png" width="90%" style="display: block; margin: auto;" />
+
+Models are frequently overfit when there are a small number of training samples relative to the flexibility or complexity of the model. Such a model is considered to have high variance or low bias.
+
+A supervised model that is overfit will typically perform well on data the model was trained on, but perform poorly on data the model has not seen before [@c3].
+
+
+
+Underfitting occurs when the machine learning model does not capture variations in the data – where the variations in data are not caused by noise. Such a model is considered to have high bias, or low variance.
+A supervised model that is underfit will typically perform poorly on both data the model was trained on, and on data the model has not seen before. Examples of overfitting, underfitting, and a good balanced model [@c3].
+
+
+
+
+```r
+#knitr::include_graphics('images/overfit.jpg')
+```
+
+
+
+
+### Regularization models
+
+Regularization is a method to balance overfitting and underfitting a model during training. Both overfitting
+and underfitting are problems that ultimately cause poor predictions on new data.
+
+Regularization is a technique to adjust how closely a model is trained to fit historical data. One way to apply
+regularization is by adding a parameter that penalizes the loss function when the tuned model is overfit.
+
+This allows use of regularization as a parameter that affects how closely the model is trained to fit historical
+data. More regularization prevents overfitting, while less regularization prevents underfitting. Balancing the
+regularization parameter helps find a good tradeoff between bias and variance.
+
+```r
+summary(house[,"SalePrice"])
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   62383  159988  193690  222864  266625  755000
+```
+
+
 
 
 ## Appendix

@@ -1,0 +1,2003 @@
+# Clustering
+
+Unsupervised learning - Clustering
+
+
+Clustering is a technique that aims to group similar data points so that the points in the same group have similar features to those in the other groups. The group of similar data points is called a Cluster.
+
+For example, suppose we have the following data frame, with hypothetical data of students ages and grades in course:
+
+```r
+set.seed(1100)
+x <- round(rnorm(12, 20, 3),0)
+y <- round(rnorm(12, 95, 4),0)
+y<-ifelse(y>100,100,y)
+df<- data.frame(Age=x, Grade=y)
+rownames(df)<-paste("Ind",rownames(df))
+df
+#>        Age Grade
+#> Ind 1   21   100
+#> Ind 2   19    98
+#> Ind 3   20    95
+#> Ind 4   17    97
+#> Ind 5   17    95
+#> Ind 6   21    97
+#> Ind 7   19    96
+#> Ind 8   19    97
+#> Ind 9   16    87
+#> Ind 10  25    95
+#> Ind 11  23    97
+#> Ind 12  22   100
+```
+
+For a betther undestandng of what is a plot, the following plot shows how each person is similar to other in terms of age and grade.  
+
+```r
+plot(df[,"Age"], df[,"Grade"], col = "blue", pch = 1, cex = 1.5,ylab="Grade",xlab="Age",ylim=c(88,101),xlim=c(16,26))
+text(df[,"Age"] + .3, df[,"Grade"] + 0.9, labels = rownames(df))
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-2-1.png" width="90%" style="display: block; margin: auto;" />
+
+One one to identify if a person or a group of persons are similar in terms of age and grade to other, which is equivalent to say that are in the same cluster, is using the Euclidean Distance (ED):
+
+$$d_{euc}(p,q)= \sqrt{ \sum_{i=1}^{n} (p_{i}-q_{i}})^{2}$$
+
+where $p_{i}$, $p_{i}$ are two points in the euclidean space. In our example, are two different persons of the data set. $n$ is the number of features, in our example are two, age anf grade. For example, the Euclidean Distance for person 1 and 2 is:
+
+
+```r
+sqrt((df["Ind 1","Age"]-df["Ind 2","Age"])^2+(df["Ind 1","Grade"]-df["Ind 2","Grade"])^2)
+#> [1] 2.828427
+```
+The lower (higher) the ED between two persons, the more similars (different) they are, and is porbably that are grouped (not grouped) in the same cluster.
+
+To estimate the Euclidean Distance for all the persons in the data set, we use the funciton "get_dist", from the library  "factoextra":
+
+
+```r
+library(factoextra) #
+distance<-get_dist(df, method = "euclidean")
+distance
+#>            Ind 1     Ind 2     Ind 3     Ind 4     Ind 5     Ind 6     Ind 7
+#> Ind 2   2.828427                                                            
+#> Ind 3   5.099020  3.162278                                                  
+#> Ind 4   5.000000  2.236068  3.605551                                        
+#> Ind 5   6.403124  3.605551  3.000000  2.000000                              
+#> Ind 6   3.000000  2.236068  2.236068  4.000000  4.472136                    
+#> Ind 7   4.472136  2.000000  1.414214  2.236068  2.236068  2.236068          
+#> Ind 8   3.605551  1.000000  2.236068  2.000000  2.828427  2.000000  1.000000
+#> Ind 9  13.928388 11.401754  8.944272 10.049876  8.062258 11.180340  9.486833
+#> Ind 10  6.403124  6.708204  5.000000  8.246211  8.000000  4.472136  6.082763
+#> Ind 11  3.605551  4.123106  3.605551  6.000000  6.324555  2.000000  4.123106
+#> Ind 12  1.000000  3.605551  5.385165  5.830952  7.071068  3.162278  5.000000
+#>            Ind 8     Ind 9    Ind 10    Ind 11
+#> Ind 2                                         
+#> Ind 3                                         
+#> Ind 4                                         
+#> Ind 5                                         
+#> Ind 6                                         
+#> Ind 7                                         
+#> Ind 8                                         
+#> Ind 9  10.440307                              
+#> Ind 10  6.324555 12.041595                    
+#> Ind 11  4.000000 12.206556  2.828427          
+#> Ind 12  4.242641 14.317821  5.830952  3.162278
+```
+
+As we see in the output, the result shows the ED between each person. Is important to notice that the output is not a data frame, is a "dist" object:
+
+```r
+class(distance)
+#> [1] "dist"
+```
+The previous outpt is not giving us infromation about how people are grouped in clusters, but the following plot does, using the function "fviz_dist", wich has as first argument the "dist" object we made in the last "chunk": 
+
+```r
+fviz_dist(distance,  gradient = list(low = "#00AFBB", mid = "white", high = "#FC4E07"))
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+In the previous plot, the red color squares are persons with a higher ED and the blue ones lower ones. 
+
+
+In terms of the scatter plot we made before, if we take the individual pairs that has a ED less than 2, for example, we get the following results:
+
+
+
+
+
+```r
+plot(df[,"Age"], df[,"Grade"], col = "blue", pch = 1, cex = 1.5,ylab="Grade",xlab="Age",ylim=c(86,101),xlim=c(16,26))
+text(df[,"Age"] + .3, df[,"Grade"] + 0.6, labels = rownames(df))
+points(df[ind[1, ],"Age"], df[ind[1, ],"Grade"], col = "orange", pch = 19, cex = 2)
+points(df[ind[2, ],"Age"], df[ind[2, ],"Grade"], col = "red", pch = 19, cex = 2)
+points(df[ind[3, ],"Age"], df[ind[3, ],"Grade"], col = "red", pch = 19, cex = 2)
+points(df[ind[4, ],"Age"], df[ind[4, ],"Grade"], col = "red", pch = 19, cex = 2)
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-8-1.png" width="90%" style="display: block; margin: auto;" />
+
+```r
+#segments(x0 = 19, y0 = 96,x1=20,y1=95) 
+
+```
+
+We see that the red dots are kind  of grouped between them, and also the yellow ones. In this sense, we could say that the individuals in red dots could be a cluster, and the individuals in yellow other cluster. We  could repeat the procees for the no-color individuales, but for the moment we waned to explian how clusters are formed.   
+
+
+## Agglomerative hierarchical clustering
+
+
+As we prove in the last method, we need a partition to define the similarity beetween two individuals, to be in th sale cluster.  Hierarchical clustering algorithms doesn´t need a predefined  partition to generate the clusters.  
+
+First, using a particular proximity measure a dissimilarity matrix is constructed and all the data points are visually represented at the bottom of the dendrogram. The closest sets of clusters are merged at each level and then the dissimilarity matrix is updated correspondingly. This process of agglomerative merging is carried on until the final maximal cluster (that contains all the data objects in a single cluster) is obtained. This would represent the apex of our dendrogram and mark the completion of the merging process. We will now discuss the different kinds of proximity measures which can be used in agglomerative hierarchical clustering. Subsequently, we will also provide a complete version of the agglomerative hierarchical clustering algorithm in
+
+
+
+The most popular agglomerative clustering methods are single link and complete link clusterings. In single link clustering [36, 46], the similarity of two clusters is the similarity between their most similar (nearest neighbor) members. This method intuitively gives more importance to the regions where clusters are closest, neglecting the overall structure of the cluster. Hence, this method falls under the category of a local similarity-based clustering method. Because of its local behavior, single linkage is capable of effectively clustering nonelliptical, elongated shaped groups of data objects. However, one of the main drawbacks of this method is its sensitivity to noise and outliers in the data.
+
+Complete link clustering [27] measures the similarity of two clusters as the similarity of their most dissimilar members. This is equivalent to choosing the cluster pair whose merge has the smallest diameter. As this method takes the cluster structure into consideration it is nonlocal in behavior and generally obtains compact shaped clusters. However, similar to single link clustering, this method is also sensitive to outliers. Both single link and complete link clustering have their graph-theoretic interpretations [16], where the clusters obtained after single link clustering would correspond to the connected components of a graph and those obtained through complete link would correspond to the maximal cliques of the graph.
+
+
+
+The Lance and Williams recurrence formula gives the distance between a group k and a group (ij) formed by the fusion of two groups (i and j) as :
+
+$$ d_{k(ij)}= \alpha\ d_{ki}+\beta\ d_{ij}+\gamma\ |d_{ki}-d_{kj}|, $$
+
+where $d_{ij}$ is s the distance between groups i and j. Lance and Williams used the formula to define a new ‘flexible’ scheme, with parameter values αi + αj + β = 1, αi = αj, β < 1, γ = 0. By allowing β to vary, clustering schemes with various characteristics can be obtained. They suggest small negative values for β, such as −0.25, although Scheibler and Schneider (1985) suggest −0.50 [@Everitt].
+
+hClustering <-  hclust(distance object,method)
+method=c(ward.D", "ward.D2", "single", "complete", "average", "mcquitty" , "median" or "centroid" )
+
+plot(hClustering object)
+
+```r
+hClustering <-  hclust(distance ,method="single") # cuidado por que le pusimos distance también al de teens
+plot(hClustering)
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-9-1.png" width="90%" style="display: block; margin: auto;" />
+
+This chart can be used to visually inspect the number of clusters that would be created for a selected distance threshold . The number of vertical lines a hypothetical straight, horizontal line will pass through is the number of clusters created for that distance threshold value.  All  data points (leaves) from that branch would be labeled as that cluster that the horizontal line passed through.
+
+members of each cluster
+memb <-cutree(hClustering object, k = )
+
+ k= número de clusters que se desean
+ 
+ h= cut number of the dendrogram
+
+```r
+memb <-cutree(hClustering, k = 3)
+head(memb)
+#> Ind 1 Ind 2 Ind 3 Ind 4 Ind 5 Ind 6 
+#>     1     1     1     1     1     1
+tail(memb)
+#>  Ind 7  Ind 8  Ind 9 Ind 10 Ind 11 Ind 12 
+#>      1      1      2      3      1      1
+```
+
+
+
+```r
+cent <- NULL
+for(k in 1:10){
+  cent <- rbind(cent, colMeans(df[memb == k, , drop = FALSE]))
+}
+```
+
+
+
+
+## K-Means Clustering
+
+K-means clustering is the most commonly used unsupervised machine learning algorithm for partitioning a given data set into a set of k groups (i.e. k clusters), where k represents the number of groups pre-specified by the analyst. It classifies objects in multiple groups (i.e., clusters), such that objects within the same cluster are as similar as possible (i.e., high intra-class similarity), whereas objects from different clusters are as dissimilar as possible (i.e., low inter-class similarity). In k-means clustering, each cluster is represented by its center (i.e, centroid) which corresponds to the mean of points assigned to the cluster.
+
+The Basic Idea
+
+The basic idea behind k-means clustering consists of defining clusters so that the total intra-cluster variation (known as total within-cluster variation) is minimized. There are several k-means algorithms available. The standard algorithm is the Hartigan-Wong algorithm (1979), which defines the total within-cluster variation as the sum of squared distances Euclidean distances between items and the corresponding centroid:
+
+$$ W(C_{k})=\sum_{x_{i}\in C_{k}}(x_{i}- \mu_{k})^2$$
+
+$x_{i}$ is a data point belonging to the cluster Ck.
+
+\mu_{k} is the mean value of the points assigned to the cluster Ck
+
+
+Each observation (xi) is assigned to a given cluster such that the sum of squares (SS) distance of the observation to their assigned cluster centers (μk) is minimized.
+
+
+We define the total within-cluster variation as follows:
+$$ tot.withiness=\sum_{k=1}^k W(C_{k})=\sum_{k=1}^k \sum_{x_{i}\in C_{k}}(x_{i}- \mu_{k})^2$$
+
+
+The total within-cluster sum of square measures the compactness (i.e goodness) of the clustering and we want it to be as small as possible.
+
+
+kmeans(df object, centers = )
+centers is number of clusters
+
+nstart, Select randomly k objects from the data set as the initial cluster centers or means
+
+```r
+set.seed(1234)
+# regresamos a df con dos variables
+teens<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/teens_clean.csv")
+
+set.seed(200)
+teens_na<-na.omit(teens)
+#dim arroja el npumero de renglones y columas de un data frame
+dim<-dim(teens_na)
+# genera números del 1 al 27,276(dim[1]) pero solo arrojame 1,000. 
+samp<-sample(dim[1],10000)
+# Del objeto teens_na, toma solo las observaciones que hay en samp
+teens_2<-teens_na[samp,]
+teens_2[,"gender"]<-ifelse(teens_2[,"gender"]=="F",1,0)
+
+km<-kmeans(teens_2, centers = 3) # centers es el número de clusters
+km
+#> K-means clustering with 3 clusters of sizes 6462, 3032, 506
+#> 
+#> Cluster means:
+#>   gradyear    gender      age   friends basketball  football    soccer
+#> 1 2007.457 0.7923244 17.29125  10.92990  0.2407923 0.2541009 0.2086041
+#> 2 2007.572 0.8393799 17.16449  54.81596  0.2720976 0.2697889 0.2407652
+#> 3 2007.684 0.8833992 17.04626 139.93281  0.4150198 0.2924901 0.2766798
+#>    softball volleyball  swimming cheerleading   baseball     tennis    sports
+#> 1 0.1301455  0.1245744 0.1267409   0.09826679 0.09640978 0.08851749 0.1355617
+#> 2 0.2272427  0.1662269 0.1625989   0.10125330 0.10850923 0.09762533 0.1513852
+#> 3 0.2114625  0.2213439 0.1739130   0.18972332 0.16996047 0.13241107 0.1403162
+#>        cute       sex      sexy       hot    kissed     dance      band
+#> 1 0.2960384 0.2113897 0.1371093 0.1112659 0.1066233 0.3760446 0.3009904
+#> 2 0.3700528 0.1903034 0.1444591 0.1408311 0.1240106 0.4584433 0.3509235
+#> 3 0.4940711 0.2272727 0.1916996 0.2055336 0.1047431 0.5968379 0.3300395
+#>     marching     music      rock       god    church     jesus      bible
+#> 1 0.04008047 0.7420303 0.2429588 0.4281956 0.2233055 0.1004333 0.01980811
+#> 2 0.05178100 0.7958443 0.2500000 0.5484828 0.3182718 0.1319261 0.02638522
+#> 3 0.05533597 0.8063241 0.2984190 0.5968379 0.3181818 0.1719368 0.02766798
+#>        hair      dress     blonde      mall  shopping   clothes  hollister
+#> 1 0.3977097 0.09702878 0.07985144 0.2375426 0.3156917 0.1429898 0.05880532
+#> 2 0.4383245 0.12368074 0.09795515 0.2935356 0.4317282 0.1711741 0.08806069
+#> 3 0.5000000 0.12648221 0.11660079 0.4090909 0.5158103 0.1897233 0.13833992
+#>   abercrombie       die     death      drunk      drugs    female no_gender
+#> 1  0.04750851 0.1838440 0.1055401 0.08511297 0.06128134 0.7923244         0
+#> 2  0.05969657 0.1830475 0.1236807 0.09333773 0.05969657 0.8393799         0
+#> 3  0.08893281 0.2233202 0.1561265 0.11660079 0.03754941 0.8833992         0
+#> 
+#> Clustering vector:
+#>  2431  6066  6502 13824 12117 24475 15312  7001  1708 17003 10804 11121 10807 
+#>     1     1     1     1     1     2     2     1     1     2     1     2     3 
+#> 27619 22195  4847  9538 10596  7164 14959 23056 19150 15720 27411  2195  1532 
+#>     1     2     1     2     1     1     1     1     1     2     2     2     1 
+#> 19037 12023 23498  4391 12923  6294 15949 13870 12746 13674 11424  5520 11089 
+#>     2     2     2     1     1     1     2     1     1     2     2     1     3 
+#> 24004  4878  8597 28272  4194  1074  9703 29990 11684  4429 12434 10670  5125 
+#>     1     1     1     1     1     1     1     1     1     1     1     1     1 
+#> 18648  4775 19896 12840 15785 20303  6855  6750 25616 11094 19854 28672 22484 
+#>     2     1     1     1     2     1     1     1     1     2     2     1     1 
+#>  6252 10909 10445   463 22876 17491 11160 20665 26771 15920  2233 16588  7930 
+#>     1     2     1     1     2     2     2     2     1     1     1     1     1 
+#> 26723 22185 11417 13243 13497 23942  8199  4104 13908  3511  9869   208   145 
+#>     1     1     1     3     2     1     2     1     1     1     1     1     1 
+#> 29146  5537 12425  7125 23257 27736 14147   553  8920  9618 22619 19899 18157 
+#>     1     2     1     1     2     2     1     1     1     1     1     1     2 
+#>   922  6882  7852 15438   822 11075 13034  6845  4800 21070  8818 16906 18063 
+#>     2     1     1     2     1     1     1     1     1     1     2     1     1 
+#> 16306  1334 25513  2649 23638 21569  8784 11222  1697 29265 22466 14172 28942 
+#>     1     1     1     1     3     1     2     1     1     2     1     1     2 
+#>   197   414 10749 22547  2109 15494  3906  6320  3748 11103  6229  1541 12705 
+#>     1     2     1     2     1     3     1     2     1     2     1     1     2 
+#>  6023 12008  2016 27373 21315  4850 26635  8060 23516  8164  9982 16107  6400 
+#>     2     2     2     1     1     1     1     1     1     1     1     1     2 
+#> 14948 19632  1472 19975 20862 22456  5912 14552  2853   810  7547  6472 10697 
+#>     1     1     2     3     1     2     1     2     1     1     1     1     1 
+#>  6377 16337 23018 27842  8432 24856 18155  8638  7059   921 13500 20281 14469 
+#>     1     1     3     2     1     2     1     1     1     1     1     2     1 
+#> 21128  5063 16714 10665  9715  3943 25712 21264    33 19714 25508   416 21623 
+#>     1     1     1     2     1     2     1     2     2     1     1     2     2 
+#>   633 17138  9836 24871 25636 20227 29478  6745 15497 25204 17933 12251 24385 
+#>     1     1     1     1     2     2     1     2     1     1     1     2     1 
+#> 16382 13507  7456 16286 12276 15910 20238  4559 28088 21141 21377 20013 17557 
+#>     1     2     1     1     2     1     2     1     1     2     2     1     1 
+#> 18449 12817  7624 28994  2916 15834  5875  3657 27934 11694  1721  2847 23380 
+#>     1     1     1     1     3     1     1     1     1     1     1     1     3 
+#> 25512 17224  6806 26437 17819 16398 17127 10977 11063  7330 11199  8033  7660 
+#>     1     1     1     1     2     2     1     2     1     2     2     1     1 
+#> 29727  5497 10700 27900 26282  7601 21204 18390 22577 24695 16779 22394 19966 
+#>     1     3     2     2     2     1     2     2     1     1     2     2     2 
+#> 27998 11891 27408  1938  6336 14844 10707 21381  7720 10705  7997 26026 26752 
+#>     1     1     1     1     1     1     2     1     1     1     2     1     1 
+#>  8321  3299  7944 26505  4544 19503 28642 14947 15667 23198 13692  8605   419 
+#>     1     1     2     2     1     1     1     1     2     2     2     1     1 
+#>  8229 16102   895 21345 26103 12579 13625 19065 29887 11452  6693 23211  4218 
+#>     1     1     2     1     1     1     1     2     2     1     1     1     1 
+#> 15730  9481 11202 16879 12333 25525 27369  3214  2753 18837  9718 10427 26482 
+#>     2     1     1     1     2     1     1     1     1     2     1     2     2 
+#>   468 12944  8463 27174 16776 19901 20810   894 29788  7811 26331 12955 22701 
+#>     2     1     1     1     1     2     2     2     1     1     2     1     1 
+#> 24726 17031  2859 14816 11480  7305 25305 12499 29516  2397 15677 10586 19312 
+#>     2     1     1     2     1     1     2     2     1     1     1     2     1 
+#> 11106 20574 20230 15923  7135  7909 26345 24905 28107 27384   738  3897 20500 
+#>     1     1     3     1     1     1     1     1     1     1     1     2     1 
+#>  1480  7700 27960 27462  3680 17107 16852 29032 23859 10200 27226  9873 22941 
+#>     1     1     2     1     2     1     1     2     1     2     1     1     2 
+#>   723 22626 11092 22624  2723 15251 17481 22898 22234 25501  7940 28372 25668 
+#>     2     1     1     2     1     1     2     3     1     1     1     1     1 
+#>  3863  5935 13018  5147 26150  4818 16113 12244 22147 25935 10952 22800  9197 
+#>     3     1     2     1     2     1     2     2     1     3     2     1     1 
+#> 26738  2947 25757 23775 11774  1580 10790 23682 17106 23807   783 21188  5918 
+#>     1     1     1     1     2     1     1     1     2     1     1     1     2 
+#> 15715  5828  4678 23576 10892 10530 22092  7172 20107  2698  1800 10100 16320 
+#>     1     1     1     2     1     1     2     1     2     1     1     1     3 
+#> 26104 23849 14733  8107 12154 12514 15824 13933  7680 11329 10820 26792 26648 
+#>     1     1     2     2     2     1     1     1     1     1     1     1     2 
+#> 12018 24481 25323  3439  5737 10650 16294  1979   241 12207 18612 20004  9383 
+#>     2     1     2     2     1     1     1     2     2     1     2     1     2 
+#>  3889 24790  3042  3174 20479  2255 13394 23667 21779  9911 19627  3220 10935 
+#>     1     1     1     3     2     1     2     1     2     3     2     1     1 
+#> 22740 17090 20326 13390 20923 17102  2641  2682 18040 10823 23980 24647 10486 
+#>     1     2     2     1     2     1     1     1     1     1     1     3     1 
+#> 20422 25456 20741  1061 27957 20713  6396  8271  5982  9945 26275 26891 21477 
+#>     1     1     1     1     1     1     1     1     2     1     2     1     1 
+#> 15860 26622 20287 10246 27056 17586 18581 20249  8155 19461 16824 21912 18357 
+#>     2     2     2     2     1     2     1     2     1     2     2     2     2 
+#> 14626 14779 29485 10648  2294 11158 19939 27034  8240 13139 12255 24389  4859 
+#>     1     1     2     2     2     1     1     1     2     1     1     1     2 
+#> 21887 26043 25967  5233 25369 16971  9692  3298 17000 10462  5105   587 11017 
+#>     3     1     1     1     3     1     2     1     1     2     1     1     3 
+#> 13521 21548  6299   261 28534 24933 18631 28363 12917 19490 11143 26765 24931 
+#>     1     2     1     1     1     2     1     2     1     1     2     1     1 
+#>  7990  3547 28783  3300  1308 27035 17861 14293 27244 26588 13894  8876  3449 
+#>     1     1     2     1     1     2     1     1     2     1     3     1     1 
+#> 20794 25057 20530 18629  8044  4630  9874 26569 21446 22227  6440 18409 20062 
+#>     2     1     1     2     1     1     2     2     1     1     1     2     1 
+#> 12906  7470 10677  4944 12106  9527 27151 23166  5008 19752 26189 19010 12939 
+#>     1     2     1     2     1     1     1     2     1     1     1     1     1 
+#> 27999 15976 27353 14341  3125 12298 10720 27941 20957 24951  5284  4858  9653 
+#>     1     2     1     1     1     1     1     3     2     2     1     1     2 
+#>  2235 21876  4173  4827 26203 17498 28552 12329  9554  7953 13315 20170  9033 
+#>     1     2     2     1     2     3     2     1     1     2     3     1     1 
+#> 19644  8950  8914 19401 15589 12974 16531  9458  9544  2107 24245  6575  2578 
+#>     1     2     1     2     1     2     1     1     2     1     1     1     2 
+#> 20419 25662 17163 11536 18759 13288 15623 16523 17987 10455 12576 13111 14728 
+#>     1     1     2     1     1     1     1     3     1     1     2     1     2 
+#> 21403  2062  6580  2730 10794 11821 18224 16607 16790 21237 23561   769 28480 
+#>     2     2     2     1     1     1     2     1     2     1     1     2     1 
+#> 22252 14842 29275 24151  3197 16400  3925 10866 14856 23903 16343  1594 10838 
+#>     2     2     3     1     2     1     1     1     1     1     1     1     1 
+#> 29255  5143 27469 28950  9381 11184  1879 15222 25246  6674 19829 25524 23004 
+#>     2     1     1     3     1     1     1     1     1     1     2     1     1 
+#> 19733  6793 23513 11857 28396  9942  6018  9434  1474 29746   491  7254   128 
+#>     1     1     2     1     1     1     1     1     1     1     1     2     1 
+#> 12286  6862 22111 15728 20912 16372 27367  4270  2639   349  9268 10659 12422 
+#>     1     1     1     1     1     2     1     2     1     1     2     1     1 
+#>  4497 15337  8433 27572  3444 21850 25707 19391   239 27393 10859  6819 24275 
+#>     2     2     2     2     1     1     2     2     2     3     1     1     1 
+#>  7790 27242 12501 23628 29219  5060  6951 25256 26010 20703 20245 19709  6981 
+#>     1     1     1     1     1     2     2     2     2     1     1     1     1 
+#> 21275 28973 22987 13181 24918 25296 13817 22564 20643 21905 26907 26335 23252 
+#>     1     2     1     2     1     2     2     2     2     1     1     1     2 
+#> 24346 22821 10397 10396  9349 23302 25003 29683 27573  8330   859  3145 11448 
+#>     1     1     1     1     1     1     1     2     2     1     1     1     1 
+#> 17570   806  6579 25301 29787 16869 21480  7820 20219 20190 25322  6423   601 
+#>     2     1     1     1     1     2     1     1     3     1     1     3     1 
+#> 17720 26689  4239 25385   630 13544  3501 10131 28636 16873 15190 26913  6567 
+#>     1     1     1     2     1     2     2     2     1     1     1     2     1 
+#> 11852 12088 11347 27622 22774 18107 16048  5629  6195 15499 18385 12951 20453 
+#>     1     1     1     1     1     2     1     3     1     1     1     1     1 
+#> 20617 23364  1919 15950 12123 21349  4066 13121 10900 16934 26094  9079 22669 
+#>     1     1     1     1     1     1     1     2     1     1     1     2     2 
+#>  2509  4199  8505  6498 22703 24107 10619 13784  6045  5847 26633  9625 11679 
+#>     1     1     2     2     1     1     1     3     2     3     2     1     3 
+#> 25956 26506 26685 15320 12248  8401 16315 18233  9606 16387 27097 18874  9454 
+#>     1     1     2     2     1     2     2     1     1     1     1     2     1 
+#>  2432  3987  3702  3380  3354 16569   772  7739 29236 23482  4215 26095 29118 
+#>     1     1     1     1     1     1     1     1     2     1     2     1     3 
+#>  1789 16155 11733  1385 21254 10793 12230  8441 25263  1205 27339 12678 25013 
+#>     2     1     1     1     2     1     1     1     1     2     1     1     1 
+#>   770 23200  6706  1383  1139  4262 10587  5313 22554  7507 28795 14613 22783 
+#>     1     2     1     2     1     1     3     3     1     1     2     1     1 
+#>  6817 18736   945  3836  6205 21360 21937  5411 21499  8247 23962 12727 19594 
+#>     1     2     1     1     2     1     1     1     1     2     1     2     1 
+#>  1305  3934 20580 23676  7627  8600 12272 17790 25294 20869  8446  7908 21355 
+#>     1     1     2     1     1     1     1     1     1     1     3     1     2 
+#>  7878 14485  6756 19676 18304    12  5419  1891  5512 28513  5243 17284  6285 
+#>     1     2     1     2     2     1     2     1     1     1     1     1     1 
+#>  7063 15593 26573 19725  5571 27727 11392 22024 29055 27915 19044  7352  7492 
+#>     1     1     1     1     2     3     1     2     2     1     1     1     1 
+#>  7086 22684 17293 20341 16448 29460 19194 24167 10436 20031   870  1113 29240 
+#>     1     2     1     3     1     1     3     1     2     2     1     1     1 
+#> 27525 26922 17993  9345 24669 28315 12735  2092 23858 22062 26868 18843 28594 
+#>     1     1     2     1     1     1     2     2     2     1     1     2     1 
+#> 28256 10625  1613  2017 26538  9461 15632 22599   741  9331 27712 22379  1243 
+#>     1     2     1     1     2     1     1     3     2     2     1     1     1 
+#> 10184 28181 24800 24995  1376   215 20117 27809 24442  6249 10324  6291   856 
+#>     1     2     1     1     2     2     2     1     2     2     1     1     2 
+#> 20835  9482  9993 10157 18970 13190   341 17234 10208  2224  2677 28635 26194 
+#>     2     3     1     1     3     2     2     1     2     1     2     2     1 
+#> 24954  5861 24152  9970 19595 18813  4675 24517 16858 13249 12090 21608  9013 
+#>     1     1     2     1     2     1     1     2     1     2     2     1     1 
+#>  6138 23564 10782 12924   958 11909 24242   609 22080 23293  9521 18899 11552 
+#>     2     1     2     2     1     2     1     1     1     1     2     1     1 
+#> 14047 12263 12850  8046 11980 26647 15913  9591 12332   729 18210 11945  4705 
+#>     1     3     1     2     1     1     2     1     2     1     3     1     2 
+#>  8642 23749 20378 29270 29711 25254 26578  9276  2900  6917 23025  7163 23494 
+#>     1     2     1     1     1     2     1     2     2     1     1     2     1 
+#>  7270  7211 25776 24308 16027 11855  4801   326 26110  1694 10515 26974  2775 
+#>     2     2     2     3     1     2     1     1     2     1     1     1     1 
+#> 18610 15261 15831 20146  8714  9735 10970  4629 26180  1013  1915 11084 16052 
+#>     1     2     1     2     2     1     1     2     1     1     2     1     1 
+#> 11078    63   717 17027 26328 29411  4346 18215 27861  4281 19976 21037 11491 
+#>     2     1     1     1     2     1     1     1     2     1     1     2     1 
+#>   106 15237 23416  3217  6667  2177  7979  4489  7397 17840  1873    27 25165 
+#>     1     1     2     1     1     2     2     2     1     1     2     1     1 
+#>  5963 11673 10321 14340 24586 24205 12844  8280 12967  4529 17394 12910 27277 
+#>     2     1     3     1     1     2     2     1     1     1     1     1     1 
+#>  8324 25868 17171 21219  4969 26540 18262 21307 16530   759  2211 24176  8298 
+#>     2     2     1     2     1     1     1     1     2     1     1     1     1 
+#>  8367 17059 27782  2803 23523 20256 20972 21191 11682 15065  2193 13635  1159 
+#>     1     1     1     1     1     2     2     1     1     1     1     2     1 
+#>  7343  8482 20887  2818   929 13626 20687 18725  5871 28453  6452  8087 11316 
+#>     1     1     3     1     1     1     1     1     1     1     1     1     1 
+#>  3276 14250 12754 17033  3175 22403   955 11474 29899 13573  5296 17485 12634 
+#>     1     1     2     2     1     1     1     1     2     1     3     1     1 
+#> 26533 13912  7042 13296  3572 17730 27454 12048 27602 18536   162 11784 24860 
+#>     1     2     1     2     2     1     1     2     1     1     2     2     1 
+#> 25219 21420 10779  5282 27503  1835  3673 28869 20919 16210 13185 29168 24030 
+#>     2     1     1     2     1     1     1     2     2     1     1     1     1 
+#> 20609 29657 10913 12890 28953  3065 23986 20570 12726  9800 23437 10981 21862 
+#>     1     1     1     1     1     1     2     1     1     2     1     1     1 
+#> 19615 19792  3163 21883 16366 11535 12391 25068 11800 13356 18670 12737 15521 
+#>     2     1     1     1     3     2     2     1     1     2     1     2     2 
+#>  2740 13490 26188 14279 28748  9599  6405 12282 29623 25269 11836 28680 13891 
+#>     1     1     2     1     1     1     1     1     1     1     1     2     2 
+#>  2896 23040 14328 21331   497 22428 26446  8454 29001  4487 13319 25255 18451 
+#>     1     1     1     1     2     1     2     1     1     1     1     3     1 
+#> 14663  5958  9271 27690 21202 23420 16727 20795 15815 20856  8901  8552 28024 
+#>     2     2     1     1     2     3     1     2     1     1     1     3     1 
+#>  9894  7222  5170 10966 28483  2180 14197 26247 15435 24093 15198 24674 27894 
+#>     1     1     2     1     1     1     2     1     2     1     2     2     1 
+#> 29125 17531   290 24867 19717  7524 17203 22541 28611  1709 18415 22381 13514 
+#>     2     1     2     1     1     1     1     1     1     2     2     2     2 
+#> 23879 27773 11163 29743 21178 12829 17245 13608 15500 22455  5665 15101 15112 
+#>     1     2     1     2     1     1     1     1     1     1     1     1     1 
+#> 11203 28920  5793  1806 20685  1140  2749  8242  1081 15899 27489 22445 14037 
+#>     1     1     1     1     2     2     1     1     1     2     2     2     1 
+#>   679 23850 26438 12854  9500  5801 27776  9255 24462 12209 20738  8527 21493 
+#>     1     1     1     1     2     1     1     1     1     1     1     2     2 
+#> 25186   828 15209 15930 27863 23270 19285  8934 22336 24132  6612  1258 13737 
+#>     1     1     1     1     1     3     2     1     1     1     1     1     2 
+#>  2237 18687  6261  3014  9120  2827 24453 13864 10372 14934  5252 25193 16983 
+#>     1     1     1     2     1     2     1     2     1     1     2     1     1 
+#> 27047 20735  4989 24460 26572  3590 12960  2270 28727   965 29213 14825 28965 
+#>     1     1     2     1     1     1     1     1     1     2     2     1     1 
+#>  4913 21979   805 23171  6391 12469 12443 16882 27312 26674 14843  9470  8416 
+#>     1     1     1     2     2     1     1     1     1     2     2     1     2 
+#> 16023   460 19320 12509  9092 16031 10284 12704 11273 15331 11438 24640 16860 
+#>     2     2     2     1     1     1     2     1     1     2     1     3     2 
+#>  4337  8261  7390 24948 25044 15394 12374 13035 25596  3785 13585  2253  5975 
+#>     1     2     2     1     1     1     2     1     1     1     1     1     2 
+#> 19884 28859 17600 13244 27308  5931  9021  7463 21422  8322  4368 19403 18009 
+#>     1     2     3     2     2     1     1     1     2     1     1     1     1 
+#>  5762  9686 28645 18710  5301  7327 15086 13247 22414 29805 11921 11753  8484 
+#>     2     1     3     1     1     1     1     2     1     2     2     2     1 
+#> 11946 13670 18130 18934  8054 12182 11657 25511 29878 20017 23457  2633 12530 
+#>     1     1     2     1     1     1     2     1     1     2     2     1     1 
+#>  9329  3922  2462 19354 18669  8163 28246 14682  3935 24268 12114 22523  5779 
+#>     2     1     1     1     1     1     1     3     1     2     1     1     2 
+#> 18980 14343 23631  5675  5767 19187 10400 11819 22488 13688 15678 28696 10243 
+#>     1     1     2     1     1     3     2     2     1     1     2     1     2 
+#>  1902 26304  2118  7401  6352 24897  9093 27996 11542  7648  9212  5615 11966 
+#>     1     1     2     1     1     1     1     2     1     1     2     1     3 
+#>   494  5714  3307 21573 18329 11835 17456  3811  2209  6663  6428 18657  3618 
+#>     1     2     1     1     1     2     1     3     1     2     2     2     1 
+#> 15258 23987 19887  1778  5892   233 14941 13733  8718  5449 17856  1804 13108 
+#>     2     2     1     2     1     1     2     1     1     1     1     1     1 
+#> 16671  9801  8450 27456 19040 16674  5477 25239  2580  4985 22679 26236  6275 
+#>     1     1     2     1     1     1     1     2     1     1     1     3     1 
+#>  5374 27399 21524  1582  3569 15392 29750 16505 18800 27555  2523 20867  9140 
+#>     2     1     1     1     2     1     2     1     2     2     2     1     2 
+#> 23247 20996 11805 15002 28425  8940  3010   112 27790 12575 28579  8459 27777 
+#>     1     1     1     1     1     2     1     1     1     1     2     2     1 
+#>  2502 15553 28422  8143 18436   787  7602 13008 18542  3105  7647 27588 20988 
+#>     2     1     1     2     2     1     2     1     1     3     3     1     2 
+#>  5215 25423 19148 25117 14676  7591 27216 23058 11259 13612  4646  9196  9674 
+#>     1     1     1     1     1     1     3     2     1     1     1     1     1 
+#> 27963  3856 28943 18293 27434  9831  6713 29051  6274 26599 13547  3417 19914 
+#>     2     1     2     1     1     3     1     1     1     1     2     2     1 
+#> 12822  5029 17359  5942  5515 17605 18522 12442  9638 25688 26831 12523 29237 
+#>     1     1     1     1     2     2     1     2     1     1     1     1     1 
+#> 15054 26687  8913 19246 25846  8371 18719 19198 22596   188  2592 19472  8766 
+#>     3     1     1     1     1     1     1     1     3     1     1     2     2 
+#>  9900 12412 17415 27500   890 26368  4784  1174   424 17900 14479 25670 27362 
+#>     1     1     1     3     1     1     2     1     2     1     2     2     1 
+#> 19583  2989 27698 17676 28384 20162 22593  9886  1514  7710  5334 14365 15900 
+#>     1     1     2     2     3     1     1     2     2     3     2     1     2 
+#> 18463 10635 20619 22995 22530  3438 22122  7576 14275 13647  4459  1315  6798 
+#>     1     1     1     1     1     3     1     2     1     1     2     1     1 
+#>  4561  3462  3810  4309  5424 18367 10500   887 20288 27496 10673 11572 23808 
+#>     2     2     1     1     1     1     1     1     1     2     1     3     2 
+#> 14493 28737 24519 23852 27601  3245  9681 11904  1198 17741 23487  2352 22608 
+#>     1     2     1     3     1     1     1     1     1     1     1     2     1 
+#>  2031 23191 15469 14061 19242 15287 18091 11860  6392  5934  7755  7686 27058 
+#>     2     2     1     1     1     2     1     1     1     1     1     2     1 
+#> 24545  2408  3496 16473 25361 11678  9822  9016 27873 26862 18411 19410  7501 
+#>     2     2     1     2     1     2     1     3     3     1     1     1     2 
+#> 21735 17431 29763  6475 20271  2752 10244 13808   648 26680 25387 19267 28955 
+#>     1     1     1     1     2     1     1     1     1     1     1     1     1 
+#>  4072 26185  6137 22587 11853 21981 16868  1836  6737  3896  3433 26019 18595 
+#>     2     2     2     1     1     1     2     1     1     1     1     1     2 
+#> 16896 15141 18549  6358  5800  7900  1248  4250  9811 29349 27488  4033 12455 
+#>     1     1     1     1     3     1     1     1     1     1     1     1     1 
+#> 24270 21818 20656 29758  6592 25789 17058  8486  7692  6482  3334  3746 29079 
+#>     2     1     1     1     2     1     1     1     1     1     3     1     1 
+#>  6527 14357 18330 10287 21852 20338 10266  4927  7233 17330 27735 20948  4607 
+#>     1     1     1     2     1     2     1     1     2     2     1     1     2 
+#> 21028 17816 19497   152 24229 11520  7931  7262 28527  7518 18399 24907 29003 
+#>     2     2     1     1     1     1     2     1     1     1     1     3     1 
+#> 25444 15176 26827 28144 17403 20589  5974  3204  1513  6803 21738 10446  8726 
+#>     1     1     1     1     1     2     1     2     1     1     3     1     1 
+#>  6544 25540  3827 13054  4355  5738 21666  4321   363 14149  7350 27591   136 
+#>     1     1     1     1     2     1     3     1     1     1     1     2     1 
+#> 13089  4090  5380 10948 24361 21107 27211   766 11425  7219  3720 13058  5628 
+#>     1     1     1     2     1     1     2     1     2     1     1     1     1 
+#> 29993 28553 22750  1864  6259  8051 18911  9243  7255  2004 20120  5495 15734 
+#>     1     1     1     1     1     2     2     1     1     1     2     1     1 
+#> 25225  8725  5418  8620 20025  9028  3166 27129 13628 13566 10638 11306 27967 
+#>     1     2     3     3     1     2     1     2     2     1     2     1     2 
+#>  7709 19166  5322 23225 15166 24347 11125 26276 27502 18651  5134   127   562 
+#>     2     1     1     1     1     1     1     1     1     2     1     1     3 
+#>  5697 18730  5678 15516 26519 13208 10485 25224  1336  6559 13657 24532 11147 
+#>     2     2     1     1     1     1     1     1     2     1     1     2     1 
+#>  2600 24662 11845   910 15791 15757 10828 27223 23560 25393  5152  2174 19484 
+#>     1     2     3     1     1     1     3     1     1     1     1     1     1 
+#> 22015 26916 10273 13331 25278 16517 17360  9842 12376 16661 27933  2484 26390 
+#>     1     2     1     3     2     1     1     3     2     2     1     1     1 
+#> 19801 17197 15295 16369 21218  9412  2934 12894 24491 13506 21807 25424  3541 
+#>     1     1     1     1     2     2     1     2     2     1     1     1     1 
+#>  9414 23648  1119 24928 11404 22476  2568  5533 29318 29065    47 11991  9172 
+#>     1     1     1     1     1     2     1     1     3     2     1     2     1 
+#> 17175 15224 25962 22576   199 14595  6147 20766 12660 10250  4286   181 24712 
+#>     1     1     1     2     1     1     1     1     2     1     1     1     1 
+#> 20019  4186  6576  2481 14155  1632 28151  3686 14617 27961 16341 15038 20676 
+#>     1     1     2     2     1     1     1     1     1     1     1     1     1 
+#>  3258 13977 12900 12742  6185 27512  6624 28234 14809  7026 19311 26951 21990 
+#>     1     2     1     1     2     2     1     2     3     2     1     1     2 
+#>  3073  1273 24454  1414  8938  4116  6879  8048  4301  8962  4921  8857 16486 
+#>     1     2     2     1     1     2     1     1     1     1     1     2     1 
+#> 11653 14057  4679 26112 17839    18  6015 16392  3390 26587  9623 10468  8437 
+#>     3     1     2     1     3     1     1     1     1     2     2     1     3 
+#> 14738  8615 21013 29414 10367 24924   672  4531 10392 15074  9462 10378 27593 
+#>     1     2     2     1     2     1     1     1     2     1     2     1     2 
+#> 10980  3136 18774 29961 18230 21729  7273  4251 12294  3052 25253 19797 10224 
+#>     1     1     1     1     1     1     1     1     1     1     1     1     1 
+#> 20728  7426 12121 16447  6330 12615 12313 21995 16942 28019 16700  6894 26313 
+#>     1     1     1     1     2     1     2     2     1     1     1     1     2 
+#>  5539  5263 13501  3732 17467 10976  5165 25172 23336  8819 16985 17972  1551 
+#>     1     1     1     2     1     2     1     1     1     2     1     2     1 
+#> 15813 12681 25139 16745 19207  9526 29370  9732  7708 19208   352 21412  9540 
+#>     2     1     2     2     2     2     1     1     1     1     1     2     2 
+#>  3760 25258 12761 15889  1786 27965 19381 23170 17731 18179   559 22954 29088 
+#>     1     1     2     1     1     1     1     2     2     1     1     1     2 
+#>    45  9018 21947  5353 22861 15670 18423  5054 15133 26334 17042  3321 27179 
+#>     1     2     2     2     2     2     2     2     1     2     1     1     2 
+#> 26797  4267 11058 20343 13731  1017 29453 26594 21709 17357  8387 11119 29986 
+#>     3     2     1     2     1     2     2     1     1     1     1     1     1 
+#> 10503  1809 16846 13140 14383  1340 15703  6090 23865  7958 28196 28889 28430 
+#>     1     1     1     1     1     1     2     1     1     1     1     1     1 
+#> 17647 27505 13005 10870  6679 17348   589 22387  9479  4037  7428  3003   360 
+#>     1     1     1     3     1     2     1     1     1     1     1     1     2 
+#> 27117 22749 12188  8727  6807 15997  7117 28124  2379 15574  5455 20922  3434 
+#>     1     1     1     1     3     2     2     1     2     1     1     3     1 
+#> 20495 24298 23179  9350 15965 22467  2033 10023  7147 17063 12157 29361   611 
+#>     1     1     2     1     2     1     2     1     2     3     2     1     2 
+#> 13064   449 14004  2812 27518 19694 15051 15160 28039 18526  3587  3350 15036 
+#>     2     1     1     1     1     1     1     1     1     1     1     1     1 
+#> 28661 15083 18061 14580 10787 16766 25171 20193 22235 22929  6814  3060 25166 
+#>     2     1     1     2     1     1     1     1     1     2     2     1     1 
+#>  4053  3712 13006 11706  2451  9011 12857 17111  1860  7787 14769 10604 12773 
+#>     1     1     1     1     1     2     1     1     3     1     2     1     2 
+#> 25340 23203 22803  9551 13207 16175 23992  3397  6136 24613 12625 21374 17721 
+#>     1     1     1     1     1     2     2     1     2     1     1     1     2 
+#> 16427 18848  1882 14576 28659 20755 11605 17644 22826 19730 23423 22986  3737 
+#>     1     1     1     3     2     1     1     1     1     2     1     1     2 
+#> 27115 15540  7599 15729 20426 13277 15556  2835 26906 25823 15170 10115 19345 
+#>     2     3     2     2     2     1     2     2     3     3     2     2     1 
+#> 29633   568 16069  5395 24063 18852 21231 13444 15161  2937  9400  5606 16057 
+#>     1     1     1     2     1     1     1     2     1     1     1     1     3 
+#>  8748 21495 23929 13509 13609  1209 19321   984  1617 12833 19522 14895 16591 
+#>     1     1     2     2     2     1     1     1     1     2     2     1     3 
+#> 25871 26683  1212 12223 10093 15102 16450 24604 18271  5042 27450 10191  7928 
+#>     1     1     2     1     2     1     3     1     1     2     2     2     2 
+#> 25570 28056 19520  5685 22388 27862  7760  9755 15753 11277 20540 21452 14544 
+#>     1     2     2     2     1     1     1     3     2     1     1     1     3 
+#> 14794 20783 19618 24896 25072 26748  6554 13916  6972  5670 21580  9225  9838 
+#>     1     1     1     3     2     2     1     1     2     1     1     1     1 
+#> 28585  2376  3148 13723 20840  9672 26338  3362 10932 23290  6578 19685 25969 
+#>     2     1     2     1     1     1     1     1     1     1     1     2     1 
+#>  7353 29732 28966 11216 19856 15805 16596 22210 27529  1442 15787  4326 11914 
+#>     1     2     1     1     3     3     1     2     2     1     1     2     2 
+#> 22893  6859 13238  3972 13227 26629 21142 23818 19175  1097  2935   799 19014 
+#>     1     1     1     2     1     1     1     2     1     2     2     1     1 
+#> 23313 14696 18012 17323  7445 14639 26291   667 16014  1795 13312  6042 13632 
+#>     1     2     1     2     1     1     1     1     2     1     1     2     1 
+#> 16202 17590   440 13373  6868 28010 19665 11447  8730  7641  4626  6820 19782 
+#>     2     2     1     1     2     2     2     1     1     1     1     1     1 
+#>  3219  9325 28574 10836 22347 26884 27916  6101 19088  8921 20011 14358  5508 
+#>     1     1     2     1     1     1     1     1     2     1     1     1     1 
+#> 17183 18517   382 21000 22163  4415  7657  5064 21344 11584 16277  5703  5745 
+#>     1     1     1     2     2     2     1     2     1     2     1     2     1 
+#>  3668 18895 25228 10808 25314  3339 19344 23069 19237 22776 10654 22130 15622 
+#>     1     2     1     1     1     1     1     1     3     1     1     2     1 
+#> 18746 24084 20549  2103 13943 10598  1021 22434 25131  5473 15779 27598 22889 
+#>     1     1     2     1     1     1     2     2     2     1     1     1     1 
+#> 27891  3617 21720  7506 14655  3094 29121 17212 29057 25405 27876 13666  9292 
+#>     2     1     2     2     2     1     1     3     1     2     1     1     1 
+#> 16759 21932  1918  9744 14752 23255 19558 20979 10265 29949  4857  5228   947 
+#>     1     2     1     1     1     1     1     2     1     1     1     2     2 
+#>  6772 29651 25192  9159 13576 14570 14308  4293 26118 29269 13548 27247 19055 
+#>     2     1     1     1     1     1     1     1     1     2     1     1     1 
+#> 15460 25273  6003  9558 16722  2567   517  6076 23601  7821 28079  8461 12580 
+#>     1     1     3     1     1     1     1     2     1     1     1     2     1 
+#> 19436 29512 24745 23090  9957  1394  8581 15482 13061  6515 22330 18319 18916 
+#>     1     2     1     1     2     1     1     1     2     2     1     2     2 
+#> 14276 20773 21222 21194 23373 21858 10411 20429 20666 11301  1872 20528  1854 
+#>     2     2     1     1     1     1     1     2     1     1     3     1     2 
+#> 23261 26980  9915  6786  3127 22027  5548    85 19701 15379 17105 12536 28464 
+#>     2     1     1     2     2     1     3     2     1     1     1     1     1 
+#> 21551 21125 13570  2354  1232 21956 27486 10202  7198 26486  9072  2991 16808 
+#>     1     1     3     1     2     1     1     2     1     1     1     1     2 
+#> 18545  1080  1166  1525 29945 29338  7582 10295  7549 22633 21205 13400  4670 
+#>     2     1     2     2     1     2     1     2     1     1     3     1     2 
+#> 26080 11988  9743 26764 15852 16597 24430  6910 18718  2538 16731 16818 22714 
+#>     1     1     1     1     1     2     1     1     2     1     2     2     2 
+#> 15545 17581  3892 29112  8705 13342 11716  1965 21098 29047 27546 17682  8378 
+#>     2     2     1     1     1     2     2     1     2     1     2     1     1 
+#> 23571 13071 17656 20469 22218 29777 29131 20934 26579 14528  1379 14912 16168 
+#>     2     3     1     3     1     1     2     1     2     1     2     1     2 
+#> 13389 20886 12723  5366   784 12702   245 25112 21166 10376  6533 15538 24609 
+#>     1     2     2     2     1     1     2     2     1     1     1     1     1 
+#> 24814 28941  1609 15833 21639 13890 24042 17893 22785   656 14521 29765  8031 
+#>     1     1     1     1     1     2     1     1     1     1     1     1     1 
+#> 19180 23773 28153 27826 14023  1628 20040 26805 12564  8022  3059 22869 17263 
+#>     1     2     2     1     1     2     1     1     1     1     2     1     1 
+#> 18021  8334  8200 29700 15303 28711 26857 17722 26888 10907 19985 20454 11969 
+#>     3     1     1     2     2     1     1     2     1     2     1     1     2 
+#>  8989 12300 18539  1807 22441 25537 25761 21033  3642 11193 19514  8724 13396 
+#>     2     1     2     1     1     1     1     1     2     1     1     2     2 
+#> 11761   597 13734 28185 13845 29227 10032 13876 20888 18527 26217 22868 23133 
+#>     3     2     3     1     1     1     2     2     1     1     2     2     1 
+#> 18438 25760   223 21461 25888 17630  5227 23767 20615 11321 23592 16883 19956 
+#>     1     1     1     2     2     1     1     1     1     2     1     2     1 
+#> 29004  6692 27506 11686 26251 21392 21026  9676 14887 26009  4255 18822 23829 
+#>     1     2     2     1     1     2     1     2     2     1     1     1     1 
+#> 26241   621 19365 10264 29230 26149  8941   743 10692 16831 23121 22814 11979 
+#>     1     1     1     1     3     1     1     1     2     1     1     3     2 
+#> 13062  4165   946 29831 25076  3266  1463   285  8254 12280 29935 16209 15216 
+#>     2     3     1     1     2     1     1     1     1     2     1     1     1 
+#> 25497 10833 19586 18904  7427  2467 23274 17445  7082 19963  4010 24379 15332 
+#>     2     1     1     1     1     2     2     1     1     1     1     2     2 
+#>  9741 20970 20101 29246  4323 14487 11292 17080 20285 28622 20987 15347  2190 
+#>     1     1     1     2     1     1     1     1     1     2     1     1     1 
+#> 19259 15851 29390  8915  4898 27279  3850  2778  4313 16990 10152 14350 16787 
+#>     1     1     2     1     1     2     1     1     1     2     1     1     1 
+#>  9790 23324 24739 15207 29640  8080 22631 20654 12546 26776 20428 18278  6118 
+#>     2     1     2     1     1     1     2     2     1     2     1     1     1 
+#>  4507  1663 28444  9826 28697  2207 28254 19377  9933 16603 29559 25818 18248 
+#>     2     1     1     2     1     2     2     1     2     2     2     1     1 
+#>  1855 20933 26728 14372 13837 19890 26401 23545 29014  3110  9895  4669  1521 
+#>     1     2     1     1     1     3     2     2     1     2     1     1     1 
+#>  6199 16438 23567  6323  8575 20317 16295 25837 22935 16039 18205 22307 16440 
+#>     1     1     1     1     3     3     1     2     2     3     3     1     1 
+#>  8923  2867 12926 29041 11829  9533  7925 13676 28797 19641  6203 22569 28677 
+#>     1     1     2     2     1     1     2     2     2     1     2     2     1 
+#> 24170  8728 25451 24162  2873 23228  8664 18085  9014 23197 21314 10774 28582 
+#>     2     2     1     2     1     3     1     1     1     2     1     1     2 
+#>  3646 15837 17969 29144 10495  1764 26854  7963 17453  8847 22314 10972 16303 
+#>     2     2     1     2     1     1     1     1     2     1     1     1     1 
+#> 16967  4603  2576 18067 28852 15284 15411 19427  4684 17274  8361 12035  5306 
+#>     1     2     2     1     2     2     1     1     1     1     1     1     1 
+#> 16195 11197 25486 26736 18540  9216 23553 12428 29981  3610 24568 16878 12608 
+#>     1     1     1     2     3     1     1     1     1     2     2     1     1 
+#> 14669 26098 29458  8716  5391 15463  5971 20266 22926  1300 14438 10691    84 
+#>     1     1     2     2     1     1     1     1     1     1     1     2     1 
+#> 14195 11355  6288 28523 23357 29793  5636  6213 19405 29483 19724 13660 18821 
+#>     2     1     2     1     1     2     1     1     1     3     1     2     2 
+#> 15029 27758   596 14803 28360   372  1298 28497 22300 12558 14471 24866 27795 
+#>     1     1     1     2     2     1     1     1     2     1     1     1     1 
+#> 28047 13820  9614 29836 16592 19058 11918 10565 16582  6776 23292 21872 12485 
+#>     1     1     1     3     1     2     1     1     1     1     1     2     1 
+#> 15966 12647 16469 13406 26264 18950 10470  3489 15462 12161  5119 21122 27901 
+#>     2     2     1     1     1     1     1     2     2     2     1     3     2 
+#> 20358  1774  2684  2068 17401 18472 19631 21402 16997 11511  1732 28447 26066 
+#>     1     1     1     1     1     1     1     2     1     2     3     1     1 
+#> 26491 24947  6179  8574  1574 22582 13910 20217 19872 16379  7526 23906  5117 
+#>     1     1     1     1     1     1     2     2     1     1     1     1     1 
+#> 20137 13325 26959 16515  8835 24244 28278 24763 15619  1265 25119  5527 27726 
+#>     1     1     1     1     1     2     1     1     1     1     1     2     1 
+#>  8786  8659 16920 19240 11237 24488  3651 22579 20073 16964 27885 28271 25200 
+#>     1     1     2     3     1     1     1     1     1     1     1     1     2 
+#> 24677 19417  7864 28778 24394 18405 20564 14808 12673  6904 18291  7589 11848 
+#>     2     1     3     2     1     1     1     1     1     1     2     1     1 
+#> 29954 27422 21023 14603 24505 16669 22046  6757  3490  8695 20024 28743   373 
+#>     1     1     1     2     3     1     1     1     2     1     2     1     1 
+#> 24893  9392 13189 21841 22973 24456 17215 10837 19169 21702  3239 12888  3424 
+#>     2     1     1     1     2     1     2     1     2     1     1     1     1 
+#> 28221 10709  6011 22260 26454 22392 28257 15247 16215  4493  4208 15838   830 
+#>     2     1     2     3     1     3     1     1     3     1     1     3     1 
+#> 13287   653  2277 19952  1827  6061 24232  9142 11027 22707 13264  4439  9667 
+#>     2     1     1     2     2     1     1     1     1     1     1     1     1 
+#>  1256 23085  7206 23839  6309 16730  3189 28738  3515  4432  2229 14392  5324 
+#>     1     2     2     3     1     2     2     1     1     2     1     1     1 
+#>   396   366 15907 24395  6886 24335 22487  3436 26778  5691 10824 10769  6634 
+#>     2     1     1     1     1     1     2     1     1     2     1     2     2 
+#>  5656 28526  4824 15072   747  2678 23703 13323 20776 29254 23991 24314   684 
+#>     1     1     2     1     1     1     1     1     1     1     1     1     2 
+#>  4920 24413  5315 19696 21338 15925 23534 11457   664 29273  1616  9804 19587 
+#>     1     1     1     2     1     2     2     1     1     2     3     2     3 
+#> 10434  4242 16986  4099 26842  2604 19273 21613 28479 29511 10559   877 19657 
+#>     1     1     1     1     1     1     1     1     1     1     1     2     2 
+#> 23699  9940 20994 14533 21834 21833  1843  2736  3237  2268  6521 29639 19286 
+#>     1     1     2     1     2     1     1     1     2     1     3     2     2 
+#> 16203 11330 29241  1787 24117 24962 23335 13349 27363 10056 25226  6883 18943 
+#>     2     2     1     1     2     1     1     3     2     1     1     1     1 
+#> 15148  8608 19195 11977  2537  9824  2877 29680  4149 12065 24179 22545 22325 
+#>     1     2     1     1     1     1     1     2     1     1     1     2     2 
+#> 17495 21190 15220 24415  3958 18229 21147 17259 25349  2022  9371 27018 11144 
+#>     1     1     2     1     1     1     1     1     2     1     1     1     2 
+#>  7477 27046 22422  6660  9321 29029 29056  8162   255 12348  1603  4074 15146 
+#>     2     2     2     2     1     1     1     2     1     1     2     1     1 
+#> 16623 15123 29324 17377  6754 25401 23136 19274 10597  1155 25614 24734 12387 
+#>     1     1     1     2     2     2     2     1     2     2     2     2     2 
+#> 13772 12477  3353  6774   336 10299  2837 26843 12670  8644  6354 17587 23704 
+#>     2     1     1     1     1     1     1     3     3     2     1     1     1 
+#> 12983 18199 27064 14196 29322 23219  9424  8027  4260 25646  9650 22020 18715 
+#>     2     3     1     1     3     1     1     1     2     2     1     1     1 
+#> 18494   332 27090 29341 23277 11672  2048 18042 16511 13196 29714  1204 13694 
+#>     3     2     3     1     1     1     2     1     3     2     2     2     2 
+#>  9289  8075  4360 11718 15627 13627 25111 24203 12302 28977 27240 18316 20791 
+#>     1     1     1     1     1     1     1     1     1     2     2     1     1 
+#>  3926 25388  1338 20124 27695 24841 13941 15273 12884 18976 12862  4696 23922 
+#>     1     2     1     2     1     1     3     3     1     1     1     1     3 
+#> 15927 18387 10544 19402    75 19308 18065 26883   821  5091  1531  7489 24140 
+#>     1     1     2     1     1     1     1     2     1     1     1     1     2 
+#> 22371 17608 13013  6250 20165 12603  2446  5826 25964 19144   838  9049  5414 
+#>     1     2     2     1     1     2     1     1     1     1     2     1     1 
+#> 23428 16529 16144 12658  3084  8618  5420  9515 23517 20772 28995 24632 29596 
+#>     2     2     2     2     1     2     1     2     1     1     2     3     3 
+#> 22906 14667 26920  3023 13893 14900 20494   407 17977  1107 21669   358 11363 
+#>     1     1     1     2     1     1     1     1     1     1     2     1     2 
+#>  6808 19774  3652 24060 17952 27850 24929 24542 27297 27803 29499 12986 13214 
+#>     2     1     2     1     2     1     1     2     1     2     1     1     1 
+#> 16225 12179 14592  8827 25023 26405 13683 11165 25951   329  3367  8751   320 
+#>     2     1     2     2     2     1     1     1     1     2     1     2     1 
+#> 19755 16401  5281 17684 18300 20478 20616 19699 29378  1906 19625 15700 13328 
+#>     1     2     2     1     1     1     1     2     1     1     1     2     2 
+#> 12169  9081 11935 12995  5217 15342 20127 20705 14893 25128  6891 21343 12646 
+#>     2     1     1     3     2     1     1     1     1     1     3     2     1 
+#> 10073  1172   541  9082 21220   319 15727 22236 19017  6002 14417 12177  3325 
+#>     1     1     3     1     2     1     1     1     2     3     1     1     1 
+#> 19336  6449 24357 20628 16526 23329 11884 13000 24293 18138 19953 16090  6300 
+#>     1     2     1     1     3     2     1     1     1     1     1     1     1 
+#> 11423 26106 17711 14439  4831  4134 12550 29964   235  4971  3275 21881 22233 
+#>     1     1     3     1     1     1     2     2     1     1     1     1     1 
+#>  4207 12993  9386 22050 18990  5305  5605 20946 10967 19758 27633 21319 28385 
+#>     1     1     1     2     1     1     1     2     1     1     1     1     3 
+#>  9335 29189 21149 17015  3600  9176  1889 19469 20503   898 28306  6260 26022 
+#>     1     1     2     1     3     2     1     1     1     1     1     1     2 
+#> 15616 18195  7561   370 17757 27765 26856 27272 27621 15436 29348  8008 24027 
+#>     1     2     1     1     2     1     2     1     1     2     2     2     3 
+#>   392   668 14090 23361 10537 25289  2394 21487  3950  1863 27032 12016 16962 
+#>     1     1     1     1     1     2     2     1     1     1     2     2     1 
+#>  2465 29517  7644 16359  7165 20389    48 12806 19261 25406 27092 22212 19649 
+#>     1     3     1     1     1     1     1     2     1     1     1     2     1 
+#> 18870 29860 16677 27922 13897 22448  4783  2244  1615 23933 21685 29059 22657 
+#>     2     1     2     1     1     1     1     1     1     2     2     2     2 
+#>   785 11110 25686 27585  2329 27879  7490 13138  8126 29610  5235    79  9245 
+#>     1     1     1     1     1     1     1     1     2     2     1     2     3 
+#> 12895 25560  6362 26560 18812 22634  8360 22788   771  1331 24660 25450  5081 
+#>     2     1     3     2     1     1     1     1     1     1     1     1     2 
+#> 27397 15234  9420  7590 18769 21788  8596 11693 14868 24987 11744 18198 17551 
+#>     1     1     2     1     2     2     1     2     1     1     3     3     2 
+#>  8957 13947 10412 18386 25718 22815 16000  5021 28963 28787   694 26330 11974 
+#>     2     2     2     1     2     1     1     1     2     1     1     1     1 
+#> 29999 25624 25589 22078  4002 18005  9746 22978 17580 14423  1665  7318  2296 
+#>     1     2     2     1     2     2     1     1     2     1     2     1     1 
+#>  9958 13127 26652  7810 20414 25779 19357  8918 28210 21055  2768 24758 18510 
+#>     1     1     1     3     1     2     1     3     2     1     1     2     1 
+#> 14971 16249 18672 14478 21531 14903 14835 21410 23696  5171 10649 20524  2623 
+#>     2     1     1     1     2     1     2     1     2     1     1     1     3 
+#> 12364 26580 25739 23736  3769  6124 23104 23759 10710 29210 10432 23433 23488 
+#>     1     1     2     2     1     1     1     1     1     1     2     2     2 
+#>  9390 22258 23071  5943 16820 26983  3531 14754 23234 24797 19034  1130  8285 
+#>     1     1     2     2     1     2     1     1     2     2     1     1     1 
+#> 19803   275  8781 12077 11215 12769 27567  4441  5015 17800 10341  4577  3466 
+#>     2     1     1     1     1     2     1     2     1     1     1     1     1 
+#> 14872 14238 10011 23312  6889 10173 14092  6036 13786 17476 18071  7461 13333 
+#>     2     1     1     2     1     1     2     2     1     2     1     1     1 
+#> 27186 16520  3999  4566 14898 14650 17998 19456  7616  6846 21155 19617  7567 
+#>     2     1     2     1     2     1     2     1     2     1     1     1     1 
+#>  9983 12237 26487 11018 14481 10476 26206 27380  5869  5609 13483 29938  3013 
+#>     1     1     1     1     1     1     2     1     1     3     1     1     1 
+#> 14184 29733  6093  1323 12270  4876  7345 11053 18238 16482  5062 17133 17997 
+#>     1     1     2     1     1     1     2     1     2     2     2     2     1 
+#>   725 12913 15847 28862 14734   753 23847 15265 23073 13449  7752 25155 19516 
+#>     1     1     2     1     1     2     1     2     1     1     2     1     1 
+#> 15121  7748 15759 13131  7575 23694  5299 28624 27173 29325 29904  4734 17013 
+#>     2     1     1     1     1     2     1     2     1     1     1     1     1 
+#> 24809 28007 14601 29737 25835  8297 24435 28511 29852 23514  4457  2488 20826 
+#>     2     1     1     2     1     1     1     1     1     2     1     1     2 
+#> 11020  8177 29975 19447  5751 24473  4979 13117 26077 15929 17156 29139  3270 
+#>     1     2     1     2     2     1     2     1     2     3     1     1     1 
+#> 19297 28563 25724 25338  9387 16877  3173 22630 17039  4064 27084 24019 24443 
+#>     1     2     1     1     1     1     1     1     1     1     1     1     1 
+#> 29089  6063 14905 14865 14518 26526  8624  6933   123 26603  1302 11823 29647 
+#>     2     1     1     1     1     1     1     1     1     1     1     1     2 
+#> 13126 21940   654 16675 27383 29123 28812 26494 13206  9139 28880  2391 22946 
+#>     3     1     1     2     1     1     1     1     1     1     2     1     1 
+#> 13354  1677  6778  5855 27011 20362 19485  2911  6753 23054  9684 27847  9706 
+#>     1     2     1     1     1     1     1     2     1     1     2     1     1 
+#> 19284 21035 26931 10180 10124 29253  2504 24108  7717 14007 17962 27222 17196 
+#>     2     1     1     1     1     1     1     1     2     1     2     1     2 
+#>  9871  5079  3312  5108 18841 14283  8358 20891  2026 23833 12440  5172  7860 
+#>     3     1     2     1     2     2     3     2     2     1     3     2     3 
+#> 27517   308  7423 12786 25569  8113 23798 16854 13819   974 13952 19143  2764 
+#>     1     1     1     1     2     1     1     1     2     1     1     1     1 
+#> 24249  2389 17780   227 25709  6158  8062 27907 28602 16838 29994 22507  1060 
+#>     1     1     1     1     1     1     2     2     1     1     1     1     2 
+#> 28400 22473  9810 26576 13552 20081  2612  8590   635 19495 28247 26766 14958 
+#>     2     2     1     2     2     1     2     3     3     1     2     2     2 
+#> 23658 25158 14220  1910 28789 13658 22961  7292  6282 15692 24990 16112 21761 
+#>     1     1     1     2     1     3     1     2     1     2     1     1     2 
+#> 27419 25466 18483 19353  1452 25899  8312 24148 14393  7176 22772 10300 19386 
+#>     2     1     3     2     1     2     1     1     1     1     2     2     2 
+#> 17193  4102  5136 14182 22036  2530 22888 28374  1529  2606  3700 15174 29022 
+#>     1     2     1     2     1     1     2     2     1     1     1     2     1 
+#> 17473 10274 14353  9064 23570 20125 16570 15735 10267 19592 22585  9184  3920 
+#>     1     1     2     2     2     1     2     1     1     1     1     1     1 
+#> 27843 25559  6230 12849  8808 16801 24579 11596     6 12879 11263 19019  1260 
+#>     1     1     1     2     2     1     2     1     3     1     1     1     1 
+#> 27984 14190 22366  9043   855  2941  7030 29547 29917 13697 29837 24862 23001 
+#>     1     1     1     1     1     1     2     1     2     2     1     3     1 
+#>  6726 18862 17345  7888  1464 12997 19212  1325 19954  6954  8773  3757 18845 
+#>     2     2     1     2     1     1     1     1     1     1     1     3     1 
+#> 17571 22698   146 16414 18694 25266 15554 12718 13330  6084 27121  5219  8910 
+#>     2     1     1     1     2     2     1     1     1     2     2     1     1 
+#> 21100 26380  3160 13267 29662 19865 28986 21386 23265 21575 13168 18677 17411 
+#>     2     1     1     1     3     2     3     2     2     1     2     3     1 
+#>  5486 20977 25416 26917  3182 10105  1466 17789 28496 14873 11591 19493 21596 
+#>     1     1     2     1     1     1     1     1     1     3     3     1     1 
+#>  1769 20057 28242 24498 14992  9645 25059  9077 14342 20361 28471 12116  1278 
+#>     1     1     2     1     1     2     2     1     1     1     1     2     1 
+#> 10919 16840  1039  4310  8627  9301 12741 19886 26151 14374 26357 18421 22188 
+#>     1     1     1     1     1     1     1     1     1     2     1     2     2 
+#>   220 12596 22511  8053  3813 14609  8498   576 14068 25162 27524 17553 26933 
+#>     1     1     1     1     2     2     2     2     1     2     1     1     1 
+#> 10479 28468 16941 11862  4397  1698 17700 26248 18476  3997  6208 22844   432 
+#>     1     1     1     1     1     1     1     2     2     2     2     2     1 
+#>    60 12080  4984  4188 27804  4097 11547  9450 23801 13163 26800 26159 21496 
+#>     1     1     1     1     2     1     1     2     1     1     1     1     3 
+#> 29704 21139 25509  2828 12100 16803 26312 16084 16035  5185 17378 28032  6057 
+#>     1     1     3     1     3     1     1     2     2     2     2     2     3 
+#> 25923 10004 20210 23907  9004 27586 14826     1 21504 24332 24373  4948 18992 
+#>     1     1     1     1     1     2     2     1     1     1     1     1     2 
+#> 17121  9926 21408  6702 21929  4330 17885  1746 15799  8622  9368  6387  2813 
+#>     2     1     2     1     1     1     1     2     1     2     1     1     1 
+#> 16129  4388  2503  1667 16106 18573 26434 21354  9005 11866 28205  7571   776 
+#>     1     1     2     2     3     1     2     1     1     3     2     1     1 
+#> 12242 13903  8927 15617  8925  5817 21550  1526 19450 15906 15975  8348 18721 
+#>     1     1     1     2     1     2     2     1     1     2     1     2     2 
+#> 10771 16443 13758  9518  1689 24296   849 16289 10763 16562 19206  4047 16758 
+#>     1     1     1     2     1     1     2     2     1     2     2     1     1 
+#>  2720 29281 23623 17065 15859 20670 14730 14377 11315 17863 13675 12968 18162 
+#>     1     2     2     1     2     1     2     2     1     1     2     1     2 
+#> 18290 26393 19817 13416 19763 26388  5135   804 10852 22828 23969  2366  2950 
+#>     1     2     1     3     2     1     2     1     1     3     3     1     2 
+#> 17459 24427 23689 20511  7626 21063  5717 11808 16460 25910  6864 11722  8341 
+#>     1     1     1     1     2     1     1     1     1     2     1     2     2 
+#>  6418  2072 17379 27780  4673 17493 22949  8939 23743 18873 22245 28627   163 
+#>     1     1     1     1     1     2     1     1     1     1     1     1     1 
+#> 25330 10059  9909  1419  9541  2586 21598 11007  2061 17281  5690 14720 26939 
+#>     2     1     2     1     2     1     2     1     1     2     1     2     1 
+#>  1341   354  5259 22508  9698 26139 10356 21830 10914  2436  4443  4111  6435 
+#>     2     2     2     1     2     1     1     2     1     1     1     1     1 
+#>  6148  1650 29883  1314   711 21683 17417 25794 17627 21973  8219  3984 18833 
+#>     1     1     1     1     1     2     3     2     2     2     2     1     1 
+#>  2962 20257 24510 23111 13920  9295 15808 18461 26132 13518 16721 19828  8427 
+#>     1     1     1     1     2     3     1     3     1     1     1     2     3 
+#>  7149 18310 12623  1851 22132 15475  3109 10277 19494 28115 27659  6797   595 
+#>     1     2     1     1     1     1     2     2     1     2     1     1     1 
+#> 23411 10893 18954 25182  7244  4445 28358  4318 24966 26179  8466 16599 14913 
+#>     1     1     2     2     1     1     1     1     1     2     1     1     1 
+#> 24560 29362 23985  5699  5565 26977 25576   124 20393    39  6531 21736 22836 
+#>     2     3     3     1     1     3     2     2     2     1     2     1     2 
+#>  2741  5807 24202   437 10574  8300 29277 21367  1690 11174 13624   253 11319 
+#>     2     1     1     3     1     1     2     2     1     1     2     1     2 
+#> 17149  8428 19289 18197 14021 28543 22671 10027 18406 28674 26646 15509  4511 
+#>     1     1     1     1     2     1     2     1     1     1     1     2     1 
+#>  3293  4690 19663 16981 25372  2755  2722 15308  8770 29153 23189 26824 20845 
+#>     2     1     1     1     2     1     1     1     1     3     2     2     2 
+#> 13607 16327 17776 10077 23814 17949 28643 10703 24139 23555 25786  4707 26202 
+#>     1     1     1     1     1     2     1     1     1     2     1     2     1 
+#>  9507  1884 17344 10921  2227 15706 21628 10974  6317 21003 13946 27157 21071 
+#>     2     1     2     3     1     1     1     1     1     1     1     1     1 
+#> 17562 28603 14647 21271  3533  5399 15672  2662 14282 27834 29655 27844   279 
+#>     1     2     2     2     2     1     1     1     1     1     1     2     2 
+#>  4610 15081 26273   439 14019 27048 19690  9008  6340 18315  3002 17984 17925 
+#>     1     2     1     1     1     1     1     2     2     2     2     1     1 
+#>  8687 18495 20161 13578 10137 21431  2357  1688 15487  8293 11115  1171 14121 
+#>     1     1     1     1     1     1     2     2     1     2     2     2     1 
+#>  9323  7671   629  4059  7842 25550 24776  2642  1540  7859 24220  8151 18636 
+#>     2     1     3     1     1     1     1     1     1     2     2     1     1 
+#> 17057 13860 18340  2239 22423 16778 13073 15080 15972 14083   224 11926 22172 
+#>     2     1     2     2     1     1     1     3     2     1     2     1     2 
+#> 16020 16499 13689 21515 26557 18857 14648 26213 21283  7771 25310 11500 14846 
+#>     1     1     1     3     1     1     2     1     1     1     2     2     2 
+#>  7654 14235  3047 25500  5946  7785   374 22552 21521 19057  6164 22852  2290 
+#>     1     3     3     1     1     2     3     1     1     2     3     1     1 
+#> 28195 12111 22951 23635 20991 20160 10843 24119  8120 21289 29675 26163 14313 
+#>     2     1     1     1     1     1     1     2     1     2     2     1     2 
+#> 20489   503 19085 26101   359 27068 15424 21195 16843 24101  7705  9784 24360 
+#>     2     1     1     1     1     1     3     1     2     1     2     1     3 
+#> 21612 22031   524 12640 27105  9126  7633 18265 23500 11171 24994 24731 29810 
+#>     1     1     3     2     1     3     1     1     1     1     3     1     1 
+#>  6262  9287 22759  4792 22693 25212 29825 18706  3957  3654 12253 17077 15113 
+#>     1     1     3     1     1     2     1     1     1     1     1     1     1 
+#> 25759  8351 26008 14419 19205  3743  1631 20577  4650 19159 20194  8295 17247 
+#>     3     3     2     2     1     2     1     1     1     1     1     1     2 
+#>  2439  9785 27475 27859  7216 25299 26661 11886  3504  2176 25430 22884 25093 
+#>     1     1     1     1     1     1     2     1     1     1     2     1     1 
+#> 21951 13701  2005 26459 22016   693 16638 27387 11399  4609  9532  6548 10217 
+#>     3     1     1     1     1     2     1     1     2     1     2     1     1 
+#> 14274 21358  9485 29099 19072   520  6110 19525 16407 28745 10903  1231  3296 
+#>     1     1     2     2     1     1     3     1     2     2     1     2     1 
+#>  5907 26057  5585   347 12346 16254 24358 29570  3624  2287  9205 11164  5661 
+#>     1     1     1     3     2     3     1     1     1     1     1     1     1 
+#> 26138 27747  1524 18788 25816   532 22661 25475 15104 16900  9190  3363 17333 
+#>     2     1     1     2     1     1     2     1     1     1     1     2     1 
+#> 12228  4799 16813 18281 26503 15971 28371 14098 24945 18209 21546    54 20787 
+#>     1     1     1     1     2     1     2     1     2     1     1     1     1 
+#>  3672 14305 25542  9528 29886 26421 21482 17828 20491 15555 15422  9228 26965 
+#>     1     1     2     1     3     1     2     1     2     1     1     1     1 
+#> 12059 13337 19399 18240  9002 26142  4622 22830 22087 19568  2010 16822  3304 
+#>     1     1     2     2     1     2     1     2     1     2     2     1     1 
+#>  3518  8746  3862 13634 15452 27265  7606    86  9688 17062  7360 15345 22193 
+#>     2     1     1     1     1     1     1     1     1     1     2     2     2 
+#> 19853   925 24516 25517 12748 11898 27845 17593 11545 23358   342 29039 24412 
+#>     1     2     1     2     1     1     1     2     1     3     1     1     3 
+#>  8017 10145 16855 11439 10949   960 18263 16503  2204 23110 12619 27661  5321 
+#>     1     1     2     1     1     1     1     2     1     1     2     1     1 
+#> 10002 23659 25784 14990 27014 20051 20104  8507  7818 11400  4503 28111 27568 
+#>     1     2     1     3     2     1     1     1     1     1     1     1     2 
+#> 18846 25731  4567 17165 24070 29661 21880 23772 19385 19538 11112 12326 16332 
+#>     1     2     3     1     1     1     1     1     2     2     1     1     1 
+#>  6368  1257 10715  1742 14795 25807 23143 27822 25473 29527 17727 12003 10780 
+#>     2     1     2     1     1     2     2     1     1     1     1     1     1 
+#> 24287 26170 27487  9226 12932 22645  6918 12996  8787 13924 27012 17332 20587 
+#>     2     1     2     1     2     2     1     1     1     3     1     1     1 
+#> 18059 12720 10413 27148 23326 25318 17674 20598 29319 10193 24046  2028 24812 
+#>     1     1     1     1     2     2     1     2     2     2     1     2     1 
+#> 20714 14230  3878 29612  9401 28105  8951 29495 28012  9177 28823  8851 15050 
+#>     1     1     1     2     1     2     1     2     2     1     1     1     1 
+#>  4893 27392 26478 17540 13900  8208  8897  7566  3249  4058  1844 19812 10232 
+#>     1     1     1     1     1     1     2     1     1     2     1     1     1 
+#>  5841  9980 18243 23984 16660 18836  3343   236 19569 16542   623 12081 26571 
+#>     1     1     1     1     1     1     2     2     1     2     1     2     2 
+#> 15820  5293  7529 26665 17598 24305 17774  5883 29221 15169 19605 25181 24952 
+#>     2     1     2     1     2     1     3     1     1     1     1     2     2 
+#> 26679  9131 15354 29608 22426 21183  2206 16708  9510 13922 17879 17352 28967 
+#>     2     2     3     1     2     1     1     1     2     1     1     1     2 
+#> 28803  4157 27334 20284 27100 11738  8426 15316 15056  5342 16109 17597 20282 
+#>     2     1     1     2     1     1     2     1     1     2     1     2     2 
+#> 11507 10066 11611 12056  6180 29446 25141  7448  5382 28120 19941 10349  3540 
+#>     1     1     2     1     2     1     1     1     1     2     1     1     1 
+#>  8878 10236 15576  5651 23089  5356  2960 28192  2146 15811  6130 10141 19962 
+#>     2     1     2     1     2     2     1     1     1     1     1     1     1 
+#> 24597 17272 28460 11086 14556  8958 16067  8937  7675 17488  7236 18625  1447 
+#>     1     1     1     2     1     2     1     3     1     2     1     2     1 
+#> 15263 26198  5603 28785 27438 19994 23307 15647 13487 14619 14297 13816  8118 
+#>     1     2     1     2     2     1     1     2     1     1     2     2     1 
+#> 28799  5704 23999 18766 24377  8963  5446 19266 22184 28710  6721 19609  7786 
+#>     1     1     1     1     1     2     1     3     1     1     1     1     1 
+#> 26995  5162 15150  4179  9907  6658  2939 10667 29717 26250 27636 28289 14972 
+#>     1     2     1     2     1     1     1     1     2     1     1     1     1 
+#> 21985  1502  1233 22581  3236  9094 11564 24997  9124 12563   324 21828  6468 
+#>     1     2     2     1     1     1     2     2     1     1     1     2     2 
+#>  8757  4699 28431 27720  7187 21595  4132 18881 29858 24303  5034  3903  4790 
+#>     1     1     1     1     1     1     1     2     2     2     1     1     2 
+#> 23276  7425   813 17779  6270  2298  1929 20830 23412 22341  2011  7504 21611 
+#>     1     2     2     2     2     2     1     1     1     1     1     2     1 
+#> 11856 27231 12138 15007 13092 26461 11772 12338 17240   529  4585  2356 20377 
+#>     2     2     1     1     1     2     2     2     1     3     3     1     1 
+#>  9201  1020 28780 17185 18126  5297 29891 12464 18591 24088 28664  9075 21290 
+#>     1     2     2     1     1     1     2     2     2     1     1     1     1 
+#> 12426 23082 15489  7371  6583 29748 15089 28589  8561  9720  2189 21304   538 
+#>     1     3     1     2     1     1     1     3     1     1     2     1     1 
+#> 23142 14924 22640 17067 23448 19467 29812 14080 16740 14965  7542  7406 20375 
+#>     1     1     2     1     1     1     1     1     1     1     2     1     1 
+#> 19626 25689 17529  3601  1759 10912 23619 20320  4765 22710 23356  3620 18381 
+#>     1     2     1     2     1     1     1     1     1     3     3     2     1 
+#> 16657 21473 22100 27350 18791 24091   592 14652  2276 23860 13832 23070 22768 
+#>     1     1     1     2     2     2     1     1     1     2     2     2     3 
+#> 22478  6100 11377 18396  9157 12872  1816  4719 13703 25847  9385 21899 28670 
+#>     2     1     2     1     1     1     1     2     1     1     2     2     2 
+#> 12869 13165 29359  8036 13472 15409 29874 10615 19468  6499  5483   691 22930 
+#>     1     1     1     2     2     1     1     1     1     1     2     2     3 
+#>  2617 12038 17615  5613  5689 24047 23937 13417  9751 13799 11817 13114 27107 
+#>     1     2     1     1     1     1     1     1     1     1     3     1     1 
+#> 24531 16865 19693 23831  9757   206  2857 21236  2760 16181 28031 25496 28516 
+#>     1     2     1     2     1     3     1     1     1     1     1     1     1 
+#>  8478   247 16058 24354 12826 18776 19599 15676  7303 10543  6473 25815 13489 
+#>     3     1     1     1     1     2     2     1     1     1     1     1     1 
+#> 17423 12377  7076  2817  7338  2855  6225  2908  1596  5792 17649 28630 29679 
+#>     1     1     2     1     1     1     1     1     2     2     1     1     2 
+#> 10050 23724 26423 27618 24437 15317 13049 20898  3879 28913 17500 14926 27685 
+#>     1     3     1     2     1     2     1     1     2     1     1     2     2 
+#> 15613  1814  8101  3500  2747  1390  6257 15450 12336  4178 27284 29670  3608 
+#>     1     1     2     1     1     1     1     2     1     1     2     1     1 
+#> 22228  6662 19864  8828  2734 14213 22833 18433 29087  5157  6913 18965 28713 
+#>     1     1     1     1     2     2     1     1     3     1     1     2     2 
+#> 25011 20485 21434 28101 16976 23541 15645 16432 28314 14171  2669 19754  5541 
+#>     2     1     2     1     1     1     1     1     1     1     1     2     2 
+#> 26262  4161 10405  4836  2208  7240 13230  6083 20044 14059  6197 23144   505 
+#>     1     2     1     1     1     1     1     2     1     1     1     1     1 
+#> 15620  5386 18520 25053 22988 10876  8672 27485  7405  2344 19008 10098 26084 
+#>     1     2     3     1     2     1     2     1     1     1     2     3     1 
+#> 10641 27840 15471 24555   746 14706 25153 12614 20058 11735 12448  2982   198 
+#>     1     2     1     1     1     1     2     1     2     2     2     2     1 
+#> 12819 29351 12128 10111  7215 28199 25143 23753 22290 22430 28292  6987  9636 
+#>     3     1     2     1     1     1     1     2     2     1     1     1     1 
+#>  3616 29387 20529  2944 10247 22525  4590 10042 11258 29413  3729  8203 16040 
+#>     1     2     1     1     2     1     1     2     2     2     1     1     2 
+#> 23164  3259 13937 16604  8268 18900 19378 21509 10057 11527  2826  4232 23212 
+#>     2     2     1     1     1     1     2     3     1     1     1     1     3 
+#>  7419 15644  9447  2179 25467 23360 12321 24594 13175 11004  9904 16082 13273 
+#>     1     1     1     1     1     1     2     2     2     2     1     2     1 
+#>  5318   490 12962 20191 23877   967 25189 27772  3156 23819 17260 20550 11890 
+#>     1     1     2     2     1     1     2     1     1     1     1     1     1 
+#> 22361 19006 21712 28822 24830  8563 26490 23074  3991 20627 21913 28390 28435 
+#>     2     1     3     2     1     1     1     1     1     2     3     1     2 
+#> 29921   846 15558 26032  8399 21162  3041 25135 16686 21485 21594 13367     9 
+#>     1     1     1     3     1     1     2     1     1     1     2     1     2 
+#> 17458 15105 18383 18203 26168  4794  4886 10889 25802 10114 11055 25462  5158 
+#>     2     3     1     2     2     2     2     2     2     1     2     2     2 
+#> 16188 17583 21802  1652 21691 22178 22832 14228  7665 19873  2152  5210 16251 
+#>     2     2     1     1     1     1     3     2     3     2     1     1     1 
+#> 20696  2621  6880   484  1535 23374 12307 10463  4583 27533 15897 15747 25267 
+#>     2     1     1     1     2     1     1     1     1     1     2     1     1 
+#>  2613 14586  7793 15082 17669  7560 20716 16809  7759  5936 28397 12484 18301 
+#>     1     1     1     1     1     1     1     1     1     1     1     1     1 
+#> 29827 14324  8799 13265 17147  8134 15129 20136   878 15227 10046 23426 23897 
+#>     1     2     1     1     2     1     3     1     1     1     1     2     2 
+#> 16751  5810  3828 14952 23161  9939 14191  1494 12262  6500 11832 16666 21946 
+#>     3     1     2     2     1     1     1     2     1     1     1     2     1 
+#> 26127 10102  3141  6970  5077 12954 11844 13388 27248  3061 14799 19363   888 
+#>     1     1     1     1     1     1     2     1     1     1     2     2     2 
+#> 25623 18801 14890 29415 25747 11344 19283  8509 11649 28149 17986 11585 21076 
+#>     2     1     1     3     1     2     1     1     2     3     1     2     1 
+#> 13442 16937 14583 21522   115 27170 17983 11254  5842  3877 12191 27458  5413 
+#>     1     1     1     1     2     1     3     2     2     1     2     2     1 
+#>  7978 27969 13896  3038 19852 18847 17566 11265 10454 21539 14453  2094 20765 
+#>     1     1     1     1     1     2     1     2     1     1     1     1     1 
+#> 24478 16621 27493 19776 26619 16643  2040    77 22575 19732 22927  2627 28127 
+#>     2     1     1     1     3     2     1     1     1     2     2     2     2 
+#> 25403 28403 17457 29681  6231 10234 21857 15304  9923   244 21512 28933 26049 
+#>     2     2     1     1     1     2     2     1     1     1     2     1     1 
+#> 11369 15420  2933 20910 29526  7939  8619 21179 10831 21061 13441 19832  5168 
+#>     2     1     1     1     1     1     1     1     1     3     1     1     2 
+#>  1848 25109  7629   418  8007 23527  1822 23769  3710 23384  9230 18364 19282 
+#>     1     1     1     1     2     1     2     1     2     2     1     2     1 
+#> 15768 19155 20855 25778 22158  6895  9137 13844 13452 18996 10018 24996  6631 
+#>     1     1     2     2     2     2     2     2     2     2     1     1     1 
+#> 16919  7256 10221  7010  5702 13579 22764 13119 12864 10501 10917  6491 27914 
+#>     1     1     1     1     1     1     2     1     2     1     1     1     3 
+#> 15486 23451 18397 29355 16408  8476  9303 28776 11517 20935 21095 12763 13721 
+#>     2     3     1     1     2     2     2     1     2     3     2     1     3 
+#>  2547 22734 16672 17943 21201 17253  7388 19623  8732 29925   527 14615  4744 
+#>     2     1     1     1     2     1     2     1     2     2     3     1     3 
+#> 28616  7797 20706 17370  8567 27740  7515 11838 19851 27753 26426 12931 12283 
+#>     1     1     1     1     2     1     1     1     1     1     1     1     1 
+#> 22352  3464  5493 18726 28881 23355  6890 11305 19081   763 29238 19154 25687 
+#>     1     1     1     3     2     1     1     1     2     1     1     2     2 
+#>   661   564  4057 20684 28028  5957  8839 20404  2112 26354  4352 24553 28160 
+#>     2     2     1     1     1     1     2     1     1     2     2     1     1 
+#> 13294 16719  4523 10696 18575 16402 23739 20725 20602  2075 10086 19778 19077 
+#>     1     1     1     1     2     1     1     1     2     1     1     1     2 
+#>  1478 19541  9032  2021  3262  4258 14641   953 19895  8519  4189 20476  6590 
+#>     1     3     2     2     1     1     1     2     1     2     1     1     1 
+#> 22056 21667  9491  9279  2225 10506 25977  8693  9057 15503 24116 22959  1862 
+#>     1     1     2     2     1     1     1     2     1     1     1     2     1 
+#> 25060 23902  9758  8706 21488  7328  9213 13596 21394 12098 27763 19396  5682 
+#>     3     2     2     1     1     1     2     1     1     2     2     1     1 
+#> 28715 13752  4542 14017 29713  5014 22538 23259 23077 27792  8815 26969 13930 
+#>     1     1     1     2     1     1     1     1     1     1     1     2     1 
+#>  3842  3140 21610  6657 23476 19565 17328 18761 11270 18853 15649 15528 17765 
+#>     1     1     1     1     1     2     1     2     1     1     2     1     2 
+#> 26781  7977 16173  9127 16085 27077  6135  2820   475 15885  6929  6226  9444 
+#>     1     2     2     2     1     1     1     1     1     1     1     1     2 
+#> 14932  2466 25869 11335 12124 12637 11030 24842 16071 13979 29768 10822  1621 
+#>     1     1     1     1     1     1     1     1     1     2     2     1     2 
+#> 15914   765 21679  1948 22612 26584 25086 20067 16132 23190 19624 19244  1782 
+#>     2     1     1     1     2     3     2     2     1     1     1     2     2 
+#>  1599  7258 12385  8100  2948 13002 24653 29557 19255 14408 24887 10313  1396 
+#>     1     2     1     1     1     3     3     1     1     2     1     2     1 
+#> 12102  1153  1191  3585 28927  3523  8195  3514 17729 24925 28628  8016   756 
+#>     2     1     2     2     1     2     2     1     2     2     2     2     2 
+#> 10841  7332 10719 24593  3044 10328  3747  6439  9622  1927 21234 22666 28379 
+#>     1     2     2     1     1     2     1     2     2     2     2     1     1 
+#> 23107  4506  2607  6341 13226 12661  6359 21291 25926 22505 22060 13192  9300 
+#>     2     1     1     2     1     1     1     1     2     1     2     2     1 
+#>   522 19049 16489 15513 11568  2250 24750  5020 25828 14702 28489 20276 17299 
+#>     2     1     1     1     2     2     2     1     3     1     1     1     1 
+#> 16430 24034 24200  1904  6219 19654 13179 12715  6985 24307 11205  8788 20196 
+#>     1     3     1     2     1     1     1     1     1     1     2     1     1 
+#> 10441 12664 29309 26512 26998 19551 29353  2805 25661  2814 14128 14644 11285 
+#>     1     1     1     1     3     2     2     2     1     1     1     1     2 
+#> 12717  1368 26144 27033 23671   862 16370 21112  6652  6539 23145 16264 28671 
+#>     1     1     2     1     2     1     1     2     3     2     1     1     1 
+#> 11670  8381  1679 19387 26336 21189 13791  6558  4896  1583 29122 22720 16259 
+#>     1     2     2     1     2     2     2     2     2     1     1     1     2 
+#> 28605 27716 29467 23223 25292 17300 22600 10584 21801 10953 20746 15339 10371 
+#>     2     2     3     2     2     2     3     1     1     1     1     3     2 
+#> 24551 19932 24096 13433  1820  4644 17169 23874 15181 25002  8175  3406 14796 
+#>     1     2     1     2     1     1     1     1     2     1     1     2     1 
+#> 13076 15520  8670 17020  4474 12471 20183  7718 29832 24145 23297 11054 23958 
+#>     1     3     1     1     1     1     1     1     1     1     1     1     2 
+#>  5843 19540  1218 12372 21428  5140  3602 25728  1642  9431 28076 13987 22916 
+#>     1     2     1     2     2     1     1     1     1     1     2     1     1 
+#> 22442 20819 16573 24759 19200  9426 14473 19946 26190 27947 26258 20812 21942 
+#>     2     1     2     1     1     1     1     1     2     2     2     1     2 
+#>  9661  3358 14509   423 25356 25581  7749 10125 24934 24396  9630 14062 20010 
+#>     2     3     1     2     1     1     2     1     2     1     1     1     1 
+#> 26837  9828 24208  5040 20241 24408 27142 28521 10512 16312  2426  7788  2515 
+#>     1     3     2     1     1     1     1     1     1     1     2     1     1 
+#> 28296 11759 28657 25355 29402  1926  1832  9370 20809 10580  4221  7822 13605 
+#>     1     1     2     3     1     1     2     1     1     1     3     1     1 
+#> 19564 16386  5312  7091  7021 14008 11687  6633  1618 25125 27544 26207  2806 
+#>     1     3     2     1     1     1     2     1     2     1     1     1     1 
+#>  2337  7552  6888   164 16753 10190 22838 19660 12414 20651   513 18981  1790 
+#>     2     1     2     1     2     1     2     2     1     2     2     2     2 
+#> 21136 16333  4793 13359 13962 29020 17276  7655  8014 10672 22077 15377 19808 
+#>     1     2     1     3     2     2     1     1     1     2     2     1     1 
+#>  2168 28245 18802 25737 12491 15041   791   789  5397 19420 24474  9747 17691 
+#>     1     1     2     1     2     2     1     1     1     1     1     1     2 
+#> 24741  6385  9038 21085 29400 22198 24490 16525 25176 16230  5554 27027 14701 
+#>     2     2     2     1     1     1     2     2     2     3     1     2     1 
+#> 27372  2761 24831 14634 26192  3494 26905 29776 20595 20327 14475 11283 23051 
+#>     1     1     2     3     2     1     1     1     1     1     1     1     1 
+#>  2251  4030  8656 23284  4631 25811 16595 26071 17320 17064  7838 16455 15132 
+#>     1     2     1     1     1     1     1     1     1     3     1     3     1 
+#> 28542 21597  1604 28919  9361 14578 10196 25993  8389 11470 25202  7872 16512 
+#>     3     1     2     2     1     1     2     2     1     2     2     3     1 
+#>  6488 22550   483 25300 27123  9257 26339  3725 23537 19741 16032 10722 11418 
+#>     1     1     2     1     1     1     2     1     1     1     1     1     1 
+#> 13167 26152  8000 23707 22086 12034   896 29147 22674  3194 16978 28815  3917 
+#>     1     1     1     1     1     1     2     1     1     1     3     3     1 
+#> 10354 25790 28173 22560 14567 27214 29069 20671  7731  6947 10402 16475 11444 
+#>     1     2     2     1     1     1     2     2     1     2     2     3     2 
+#> 23693 25544 10630 26290 14031  2498  6338 21129 16213 24076  7094 10695 13622 
+#>     1     2     2     1     1     1     2     1     1     2     1     2     1 
+#>  5598 22457  1834 19416 15621 28251 27375  3420 16165 12030  1658  3389 20825 
+#>     1     1     1     1     2     1     2     1     1     1     1     2     1 
+#> 10235 25412   179   169 16205 22665  4546 27172  1406 16936  4095 26306 16689 
+#>     2     2     1     1     2     1     1     1     2     1     1     1     2 
+#> 14953  1432  9455  9219 17667 26452  3640   457  4530 27296  6171 17830   908 
+#>     1     2     1     1     2     1     1     1     1     1     2     1     2 
+#>  9121 19343 29923  2381  7070 25723 12040  7974 19326   554 14989 22982  8865 
+#>     3     1     2     2     2     1     2     1     1     1     2     1     1 
+#> 18027  6269  8684 24315 11124 26567 27625 21115  6887 11343 26408 29174  9009 
+#>     1     1     3     1     1     1     2     1     1     1     1     1     1 
+#> 13511 11206 13462 12140 25660  6885  6586 26003 19704 10309 25595 15403  7474 
+#>     2     1     2     1     2     1     1     1     1     2     2     2     2 
+#> 22248 13369  5285  1347  3898 24943 23961  5951  6426 20721 28131 28232  6348 
+#>     2     1     1     1     1     1     1     1     1     2     1     1     2 
+#>  1601 14241 29762  5522  3532 22793 15013 29902 27052 11924 21262 20049 25232 
+#>     2     1     1     1     1     2     1     3     1     1     1     2     1 
+#> 15548 16420  5595 29617 14598 10064 14334  1456 24850  2083 19779 17273 29363 
+#>     1     1     1     1     2     1     2     2     1     1     1     1     2 
+#> 27881 13863 24791 18861 13867  6188 13194 14183 26878 19947 28485 17198 22778 
+#>     2     1     2     1     1     1     2     1     1     1     1     1     2 
+#> 22881 12449  7146 19136  3825  1237 15136 15071 15221 10170 16442 16567 16584 
+#>     2     1     1     2     1     1     2     1     1     1     3     1     1 
+#> 18691 22464 16248 11879 26303 10049 28992 24304  9395  8150 27719  2169 18239 
+#>     2     1     3     1     2     1     2     2     1     1     1     2     2 
+#>  5192 14554  3645 14758 17955 16747  6773 18302 29802 22068 27114 15809 21715 
+#>     2     1     1     2     1     1     1     1     1     2     1     1     1 
+#> 20816 18577 20758 13858 18737 18780  8492 12662 19226 25705  6198 19667 28013 
+#>     1     2     2     2     1     2     2     3     2     1     1     2     3 
+#>     4  9163 14807  7964 22963 27713 18206 19163  4183 24598 13255 14333  1187 
+#>     1     1     3     2     1     2     1     1     1     2     1     2     1 
+#>  3781 23406  8578 19122  8055 24639 21980 22897  6710   187 19325 18851 27218 
+#>     1     2     1     1     2     2     3     3     1     1     1     1     3 
+#> 27539  4238 17841 19408 22767 10547  4841 23963  5499  2571 10475  4712  3805 
+#>     1     2     1     2     1     1     1     1     1     1     1     1     1 
+#> 27245  9719  3067  9145   445 17353  2054 18604  8167  3108 12475  3317  9841 
+#>     1     2     1     1     1     3     1     2     1     2     1     2     2 
+#>  4176  7869 16676 24201 27073 14074   706 10271  1500 19771 24052 19104 24302 
+#>     1     2     1     2     2     2     1     2     2     2     1     1     1 
+#> 13254 28005  8328 11227  1981 11938 21316  2049  9399  2070  9914 12325  3355 
+#>     1     1     2     1     2     2     1     1     1     1     1     1     1 
+#>  1296 25027 10388 20978 16946  5258 20132 21813  9679  9191  9083 13829  5562 
+#>     2     1     1     2     1     2     2     1     1     1     1     1     1 
+#> 16250  7411 20264 10167 26210  3453 15835  9313 12146 25103  6047 21079  1152 
+#>     1     1     1     1     1     1     1     2     1     1     1     1     1 
+#>  3632 28128 23029 17447 23720 13617 20340 21810  1845   362 26268 21418 12089 
+#>     1     1     2     1     1     1     1     1     1     2     1     2     2 
+#> 14715 21849   237 28285 17479  8759 23172 10087 23311 29721 23651 23289 11913 
+#>     1     1     1     2     1     2     2     2     1     1     1     1     3 
+#> 14418  7241  7989  2437  1894 27728  6327 26935   556 23655 21140 12292  5451 
+#>     1     1     2     1     3     2     2     1     1     1     2     1     1 
+#> 25449 18402 22917 27080 15267 19655  4943  8743 18050 25157 12617  4821 27327 
+#>     1     1     2     2     3     1     1     2     2     1     2     1     1 
+#>  7609 17834  4958  5720 20525 27110 12052 16391 19668 14187 12533  7800 10329 
+#>     1     1     1     2     1     1     1     2     1     2     1     1     1 
+#> 26667  8430 13289 17709  8282 25272  9411 21321 21878 15539 27212 29451 24606 
+#>     1     1     1     1     2     1     1     3     2     1     1     1     1 
+#> 22773 12488  4499  7208 24447 19413 15934  6547 26470  9927 27153  3469  6955 
+#>     2     1     1     3     1     2     1     1     1     2     1     2     1 
+#> 23828   401  6780 20842  9132 16576 12446 23242    51 21168 22270 22921  3678 
+#>     2     1     1     1     1     1     1     1     2     1     1     2     2 
+#> 28791  7913  5742  1951  6048 25633 21407 28155  4031   549  7866  4578 12005 
+#>     1     1     1     1     1     2     1     2     1     1     1     1     1 
+#> 16837 18896 12026 27865  2217 21557 18602 19290 12875 20159 15563  5205 10118 
+#>     1     1     2     1     1     1     2     1     1     2     1     1     2 
+#> 28162 27788 24865  6480 17202 15827 17708 23267 18811  5723  9275 21795  3096 
+#>     2     1     2     1     1     2     1     1     1     2     1     2     1 
+#>  9789  4839 18200 14294 24859  3068 15416 17009 24699 21817 16266 21768 15414 
+#>     2     1     1     2     1     1     2     1     1     1     2     2     1 
+#>  5555  8955 28227 25058 15987  5474  4752 20942 10160 16577  8686 19407 14451 
+#>     1     1     2     1     1     1     1     1     1     1     2     1     1 
+#>  1707 27135 19938 28969  1735 10637 26960 20551 12747 14488 10825  1771 19179 
+#>     1     1     2     1     2     2     1     1     2     1     1     1     1 
+#>  6731 21843  4154 16636 19971   641 13339 11864  4339  5164 23236 29287 20151 
+#>     1     2     1     1     1     1     2     1     1     2     1     1     3 
+#> 28150 11968 22349 23490  8800  2690 20405  5587 13042 11936 19000  6528  6536 
+#>     1     1     1     1     2     1     1     1     2     2     2     1     1 
+#> 21688  5954 19059 27642  9782  2386 21954 22033  8320  4863 17269  9816  9440 
+#>     3     2     2     2     2     2     1     1     1     1     2     2     1 
+#> 14205  8752 12028 24006 26795 10136  5877 25927 19871 22700 26442 21243 27583 
+#>     1     1     1     2     1     1     1     1     1     2     3     2     1 
+#> 19230  5812 26182  3347 10015 21774 12097 28239  2191 19117 25885   987  9862 
+#>     1     1     1     1     1     1     1     2     1     1     1     1     1 
+#>  4702 28827 17187 14963  5644 25394 20233 29135 20969  6645  3613 21433 15437 
+#>     1     1     1     1     2     1     1     1     1     1     1     1     1 
+#> 16557 21318 14240 12342  1111 10942 16026 18225 23439  6402 29598  3942 22895 
+#>     1     1     1     1     3     1     2     2     2     1     1     1     1 
+#> 27473 28441 25919 12539 26256 13633 21777 17913 12288 15309  1736 28959 19905 
+#>     1     1     2     1     2     1     1     2     1     1     1     1     1 
+#> 15845 29060 26321 26691  5988 16535 10860 26542 14798  5151 14122 14054  8255 
+#>     2     1     1     1     2     2     1     1     1     1     1     2     1 
+#>  4939 19263 24276 18799 20316  4633 19491 16782  6601 11169 10150  7324 20683 
+#>     1     2     2     1     1     2     1     3     1     1     3     1     3 
+#>  6594 20565  3386  8869 20069  1372 14727 27614  4079  5818 21208  8889 28556 
+#>     1     1     3     2     1     1     1     2     1     1     1     2     1 
+#> 26789 18212 26650 14165 29027 12306 22156 28687  8081 11887 28649 13440 25858 
+#>     2     1     1     1     1     2     1     1     3     1     2     1     2 
+#>  4425 21552 19893 27042  4652 28997 24796  6638 10706  7004 23442   879 22117 
+#>     1     2     1     2     1     1     1     1     2     2     2     1     2 
+#> 20244 16352 28608 26613 21425 11013 20928  2881 28932 22808 27630 14177 25884 
+#>     1     1     2     1     3     1     3     1     2     1     1     1     1 
+#> 16263  1124 24767  3120 17624  9779  3589 13564 25681 14889  2874  4879 11185 
+#>     1     1     1     1     2     1     3     2     1     1     2     1     2 
+#> 13078 25554 17108 10629  2311  1476 13517  8654 21959 24961 10947 29033  4129 
+#>     1     1     1     3     1     1     1     2     1     1     1     2     1 
+#>  3126 22526  9742 24880 29791 14757  6421 23625  8244  1637  9427 19364 25386 
+#>     1     2     2     1     2     1     1     1     1     3     1     1     2 
+#> 14426  7699  7912 27302 25639 13411 16376  5142 27617 20727 29824 16059 25834 
+#>     3     1     2     1     1     2     1     2     1     1     1     1     1 
+#> 10618 27444 24590  5713 26456  3301 10148 23314 10307 18051 14604 26065   289 
+#>     2     1     3     1     1     1     1     1     1     1     1     2     2 
+#>  9726 26249 20566  2130  8357 17070 28792 14311 19575  9524 19276 14988   869 
+#>     1     2     1     2     2     2     1     2     1     1     1     1     2 
+#> 17400 10620 25218  5990 23624 24309  8767 26121 19745 16797 28432  8837 26122 
+#>     1     1     2     1     1     1     2     2     2     2     1     1     3 
+#> 15534  5968 17026 26195 27227  2038  5710 11863  6923 23093  5916  2256  6005 
+#>     2     1     1     3     1     1     1     1     1     2     1     1     1 
+#>  2006 15961  1657 26045 22440 23366 15979 15981  1201 20513  6388  3584 29443 
+#>     1     2     1     1     1     3     1     2     1     1     1     1     2 
+#> 24390  6777 23726 14800 23853  5845 17737  5145 26407 14908 12785 27855 12988 
+#>     1     2     1     1     2     2     2     2     2     1     2     1     1 
+#>  6043  1168 20373 17257  5173  1391 28132 24326 26641 16899  4040 27290  7768 
+#>     1     1     1     1     1     1     1     1     1     1     1     2     2 
+#> 11756  6239 14277 23349 25603  9195 17484 18834  2566  1326 25374 18036 17516 
+#>     1     1     1     1     2     1     1     1     1     2     1     1     1 
+#>  3733  3933 13248 29968 11902 23295 10666 13682 11574 18959 10902 13147  1015 
+#>     2     1     1     1     2     1     3     1     1     2     3     2     1 
+#> 10929 11354 10767  9990 15156 27615 16174  4463 23036 12846  1283 19543 14060 
+#>     1     2     2     2     3     1     2     2     1     1     1     1     1 
+#> 27463 15517 16902 27587 20555 10074  8045 28119  9170  5910 18984  3179  4304 
+#>     2     1     1     1     1     1     2     1     2     2     2     1     1 
+#> 17490  7137    62 20409 21391 29214  6445 21056  2283  5124 17773 29705 22883 
+#>     1     2     2     1     1     1     2     1     1     3     1     1     1 
+#> 24253 27924 15725  2348  2041 29117 24039 26411 29111 11333  9393  5543 28924 
+#>     2     1     2     1     2     1     1     2     3     1     1     1     1 
+#>  7195 10849 29555 11372 21486 16232 21322  9421  9181 17588 12482 28754 17869 
+#>     1     2     1     2     2     1     1     2     1     1     2     1     1 
+#> 20893  4894 25722  7379 26382   708 12231 18373  7738 20223  4249  8453 28081 
+#>     1     1     1     1     1     1     1     1     1     1     2     1     1 
+#> 29448 29574 12357  5396 21629 27813  9236 12745  4732 27062 12543 20581  1382 
+#>     1     1     2     2     2     1     2     2     1     1     1     2     1 
+#>  5955 29915  1240 20526  2800 21572 22991 18600 18668 20055  2696  4556 28004 
+#>     1     1     3     2     1     1     2     1     1     1     2     1     1 
+#>  8717  3995 11840 10024  8288 16539 17766 15802 13336 29049 18413  5178  6673 
+#>     2     2     2     2     1     2     2     1     2     1     1     1     2 
+#> 11051 15515 24417 12494 16133 20250 29641 11930  6958  5074  3482 18080 29289 
+#>     1     3     1     1     3     1     2     1     1     1     1     2     2 
+#>  9937  3247 18858 19131 17679 17939   345  7694  8400 20533  1890    68 14684 
+#>     2     1     2     1     2     3     1     1     2     1     1     2     2 
+#> 22697 20903 28917  2284 29569 27323 25836 21583  5141 24195 14135 26756 28073 
+#>     1     1     3     2     2     2     2     1     1     2     1     1     2 
+#>  1141 20477 14840  3776  9896 15697 11801  3203 24017 19350  6378  6321 12667 
+#>     1     1     2     1     2     2     1     1     1     2     1     1     1 
+#>  4086  6238 26324 13341 13766 24723 29581  7932  2424 15661 28868 25331 29509 
+#>     1     1     2     1     1     3     1     1     1     1     1     1     2 
+#>   496 14124 22656 25608  5471 23345  4828  7111  4698  2167 18309 20407 13353 
+#>     1     1     2     3     1     2     2     1     2     1     1     2     3 
+#> 18716  7976 27490 22105 11168  8534 23642 10520  8964 28405 15693  3809  5369 
+#>     2     1     1     1     2     2     1     1     3     1     2     1     2 
+#> 21292 13842 14472 25436  1468 10330  2572  5273 13297 28709 26085  3338  3264 
+#>     1     1     1     1     1     1     3     1     1     2     2     1     2 
+#> 15044 13101 11681 11432 26021 24648  8345 24523 14698 22072 20009 16579 20297 
+#>     1     1     1     1     1     2     2     1     2     2     2     1     2 
+#> 21111   266 13351 11650 13522 12246  2203 21742 14618  5772 27410  7471 23908 
+#>     3     1     2     1     1     1     1     2     1     1     1     1     1 
+#> 25307 27070  9624 28096  9364 19949 23159    61 18835   940   474 17442 20582 
+#>     1     1     1     1     1     1     1     1     2     2     1     2     1 
+#>  6654  4319 26761  3328  2888 22672 20929  8833 22257  2721 10171 19573 29186 
+#>     1     1     1     1     1     2     1     1     2     2     2     1     2 
+#> 14133 17412  5517  8233  6517 11802 19702 12382  9418 20164 20416 14153 18568 
+#>     1     1     1     2     2     3     1     2     3     1     1     1     1 
+#> 13466 10509 21036 11379   736 19880 10139 22820 20177 18241  7357 18928    66 
+#>     1     2     2     2     1     1     1     1     2     1     1     1     1 
+#>  2745 16147  9432 25780  5658  6102 24174 26908  7103 18417 18153 21279 12120 
+#>     1     2     1     1     1     1     1     3     1     3     2     2     1 
+#> 29407   989 26551  8775 16693 29615 23232 27696  9675   688  1788  7683 28230 
+#>     1     1     1     2     1     1     2     2     1     1     1     2     2 
+#> 24818 10548 17271 18679 19220  4782   297  8809 21134 12109 22359  6168 27404 
+#>     1     1     1     1     1     1     2     3     2     1     1     2     1 
+#> 11200 21836  1193  1917  2380 11721  3213 13347  4635 13907 23650   615 28359 
+#>     2     3     1     1     1     1     2     1     2     1     1     1     2 
+#> 16494 26694 22069 16814 19834 29956 26941 16743 13519 27425 22014 23522  6027 
+#>     2     2     1     1     2     2     2     3     1     1     2     1     1 
+#> 16781 29183 28506   954  2963 26807 23402 22753 16777 24414 24721 19201  4651 
+#>     1     1     2     1     2     1     1     3     1     1     1     1     1 
+#> 11915 23430 14157  4191  8933 28062 13997  1977  2748 26639 19643 15281  2802 
+#>     1     2     2     2     1     1     1     1     1     1     1     2     1 
+#>  8148 23251 18789 16242  6004 12163  1705  5780  8109 16696 20263 18181 20611 
+#>     1     1     1     1     1     1     1     1     2     1     1     1     2 
+#>  9791 24083 28203  5600  1196 10480  5821 27977 12508 26109 19874 16908 10713 
+#>     2     1     1     1     2     1     1     1     1     1     1     1     2 
+#> 18393  4563 28510 25179  5739 24644  6296 24566  1206  4995  6874 28189  9327 
+#>     3     1     1     1     1     1     1     2     2     1     2     2     1 
+#> 14125  7729 20815 29563  7651 22041 15602 20796 17915 14027  3763  9378 20005 
+#>     1     1     2     2     1     2     1     1     1     2     2     2     1 
+#> 25432  3937 25352  3553 15957 17717 14002 18731  5240 28614 29197 29629 29678 
+#>     1     2     1     2     1     1     1     2     2     2     2     1     2 
+#> 15093 29653 18886  3352   259 15243  2039 13364 26232 23020 25217  4637 19669 
+#>     2     1     1     1     1     1     1     1     1     1     2     1     1 
+#> 13849 21287   600 17205   637  1024  4383 27205 15453 24985 27648  1436 21019 
+#>     1     1     1     2     2     1     1     1     1     1     2     1     1 
+#> 20012  5102  6174  8994 26064 11242   744  1117 21207 20750  5201 22537 21682 
+#>     2     1     2     1     1     1     2     1     1     1     1     1     1 
+#> 24378 17524 26129    40 16253  1461  8856 26228 11236 21094 12714 18689 11454 
+#>     2     1     2     1     2     2     1     1     2     1     1     1     1 
+#> 28954 27427 18338 27551  9291 21471  4604  8832  7987  1738  2319  8127 16176 
+#>     1     1     1     2     1     2     2     1     1     1     1     3     1 
+#> 15701 11944 16271 13885 26035 25917 19156  1741 23760 19726 15288 10653 16886 
+#>     1     2     1     1     2     1     1     1     1     1     3     1     1 
+#> 24781 14336 25150 16975  4938  7828  4888  9150  7152 26444   685 24263 24978 
+#>     2     1     1     2     1     1     2     1     1     1     1     1     2 
+#> 14086   340 11217 23182 18555 20880  5251  5672 10701 27995 18781 19770  3676 
+#>     3     2     2     2     1     1     1     1     2     1     1     2     1 
+#> 29534 24547  6504 27318 12210 15055  8402  4837 29753 12655 20920  9561 27286 
+#>     2     1     1     1     1     1     2     2     1     1     1     2     1 
+#> 20736 17066 17678  5256  4026 27732 25495 10975 10698 26004  7610 25791 12170 
+#>     1     1     2     1     1     2     2     2     2     2     2     2     2 
+#>  3557 20037  9469 22588  2124 12940  2018 27474 13014  1572 14786 23024 25792 
+#>     1     1     2     1     1     2     1     1     2     1     2     1     2 
+#> 28309 14709  8810  9905   176 18311  2751 17406 13532 11351 21873  5619  4731 
+#>     1     1     2     1     1     1     1     1     1     1     2     1     1 
+#> 23550  2879  4008  5997 13161 15103 19911 18624  4287 22384  5453  2880  5798 
+#>     2     1     1     2     1     1     1     2     2     1     1     1     1 
+#>  4726 24986  1439 21909 12361  3915  8661  7544 27626 17444 16358  5816 26126 
+#>     1     1     1     2     1     2     1     2     1     3     2     1     2 
+#>  9557 12544 13142 20947  5727 27668  6617 14391 11394 25429 29607 16422  1983 
+#>     2     1     1     1     1     2     2     2     2     1     1     1     2 
+#> 18275   111  5130 17947 23278 27293 25987 16287 18553 15328 14864   976 24869 
+#>     2     1     1     1     1     1     1     1     1     2     1     2     1 
+#> 24768 11385 19474 23248  6159  5890  9389 13021 21601 26204 10514   734   941 
+#>     1     1     1     1     1     1     1     2     1     1     1     3     2 
+#> 11541 23389 27198  5538 24173  3171 12771  4117 10803  2624  5549 10631  7467 
+#>     1     2     1     1     1     2     1     1     3     2     3     1     1 
+#> 11190 18473 27412 24628  6154  1847  2199 19790  5237 21783   159 29530  2770 
+#>     1     2     1     2     2     1     1     2     1     2     1     2     1 
+#> 29398 20908 17948  6166   330  4592  1593 10280  7260 24685 25754 20751 25045 
+#>     1     1     2     1     1     2     1     1     1     2     1     1     1 
+#>  9750 27893  9880   393 20052 18744  9585  3985  5568 16707 28921 26532  4378 
+#>     2     1     2     2     2     1     3     1     2     2     1     2     1 
+#> 13423 23580 23730 17460 15026 25333 28508 23348 22045 21368  1923  1492 18249 
+#>     1     1     1     2     1     3     1     1     1     1     1     2     2 
+#> 27592 15525  8547 19747 26863 17733 27646  5066 28329 10858 19379 17238 26777 
+#>     2     1     2     1     1     1     3     1     1     1     1     1     1 
+#>  1012 14560 28590 28213 24223 18859 20486 26018 13631  2037 19596 15628  8021 
+#>     1     1     1     2     2     1     2     2     1     1     1     1     1 
+#> 25561 28452 14498  8648 17887 10560 20596 15126 19238 29023 16810 17548 15683 
+#>     1     1     2     1     1     1     1     1     1     1     1     2     1 
+#>  8365 19005 22040 27359 22958 10789 13326 10156 21814 19675  9164 14629 15189 
+#>     1     1     3     1     1     1     1     3     1     3     1     3     1 
+#> 11475  5545 19768  1712 22382 29756 14272  5332  4545  1251 10992 12441 16729 
+#>     1     1     2     1     3     1     1     1     1     1     1     1     2 
+#> 13263 20817  5044  5863 12594 10108    55  5163  1375 27537 28250 26731 15195 
+#>     1     1     1     1     1     3     1     1     2     1     1     2     1 
+#>   462 25348 15564 13007 12912 10800 19126  8059 23288 20548  6946 10194 23053 
+#>     2     1     2     1     1     1     1     1     3     1     1     1     1 
+#> 26751 12566 14821 12403 22639 17046  6967  2673 27706 17254 21032  7095  4263 
+#>     2     1     1     1     1     1     2     1     2     2     1     1     2 
+#> 24092 19105 17881  7127 16309  3297 23079 24651 20396 13134 24138 16114  8373 
+#>     1     1     1     1     2     1     1     1     2     1     2     2     1 
+#> 10001 24037 19223  9932 29708 11999  6881 25488 11943 14386  9151 13223 10552 
+#>     1     1     1     1     1     2     2     2     1     2     2     2     1 
+#> 21042  9130  4450 27770 19645 24484  7554 28320 12358  8930 17811 11523 20286 
+#>     1     1     1     1     2     2     2     2     2     1     1     2     1 
+#> 20764  6265 20324  4141 23746  8582 29344 28338 12789 11116 29979 19507  6587 
+#>     1     1     2     2     1     1     1     1     2     2     1     1     1 
+#>  7203 15052  9240 18121 20838  6826 28434  7294 18202  3970  5330  9102 17362 
+#>     2     1     1     1     1     1     1     1     1     1     1     2     1 
+#> 29940 23529  6988 23864  5653 22801  3675 25438 29097  3361 28015 17999  9010 
+#>     1     1     2     2     2     1     1     2     3     2     2     2     1 
+#> 23106 19710 15246   901 20082 23900  8902 28873 11152 20763  2392 22816 15293 
+#>     1     2     1     1     2     1     1     1     1     2     3     2     1 
+#>  8145 18920   142 17372  5283 27433  2992 15259  2330 11615  6319  9270 13144 
+#>     2     2     2     1     1     1     2     2     2     3     2     1     1 
+#> 12284 17155 24959 27779  1103  6370 22481   511  6111 13584  2695  8677 16926 
+#>     2     1     1     2     2     1     1     1     1     1     1     1     1 
+#> 14381 10075 12493  4729  8202 21383 15217 16909 11248 25264 14645  3929  5402 
+#>     1     1     1     1     2     1     2     1     1     2     1     1     2 
+#>  3031 13911 11971  8858 18518  2473  9666 19805  8758  5200  9536 25376 26654 
+#>     1     1     1     1     1     1     1     1     2     1     2     1     2 
+#> 19367 23965 22128 15801  9166  1353 23119 10853 29895    67   296 12521  8136 
+#>     2     1     1     1     1     2     2     1     2     1     1     2     3 
+#> 22730   230 17306 12192   660 15896  3644  7715  5337 28044 29976  7320  1675 
+#>     1     2     1     2     2     2     3     2     2     2     1     1     1 
+#> 15610 16278  9285 28700 28902  6965  7798  2341  5031 16083 25144   569  2173 
+#>     1     2     1     1     1     1     1     1     1     1     3     2     1 
+#> 25198 27756 18582 16615 21643   480  1980 20623  3292  2383  3223  1272  1562 
+#>     2     1     1     2     2     1     1     1     1     1     2     1     1 
+#> 12886 23118  8269  9113 15236  7089  1610 24113 19457  8647 28437 13409 17742 
+#>     1     1     1     1     2     2     1     1     2     1     2     2     1 
+#> 16586  7281 13932 27065 16799 16419 21106 16371 12578  4411 29396  4275 17472 
+#>     1     2     1     3     2     1     1     1     1     1     1     1     1 
+#> 16220 23034  4845 10671 10362 23997 26281 17665 26793 16585 25619 27962 29256 
+#>     2     1     1     1     1     2     2     1     1     2     2     1     1 
+#> 15407 21448 22873  8948 14285 21933 16437 19742  6743 16037  9830  4892 17209 
+#>     2     1     1     2     3     1     2     1     1     1     2     1     1 
+#> 23338 18088  3835 20854  4187  8363  6073 10740  7725  7832 12764  3199 10404 
+#>     2     1     1     1     1     2     1     1     1     1     1     1     3 
+#> 29082 24552 18642 11932 27943 22915  2205 13172 28240 25612   933 29813  5468 
+#>     1     3     2     3     3     1     1     2     2     2     1     2     1 
+#>  3597  8018 28898 14723 11794  7973 28940  2289  3331 11434 13488 27707 17322 
+#>     1     1     1     1     1     1     3     1     3     1     1     1     1 
+#> 23028  6588 27613 23923 26329 16340 17148 20283 22287 29329 15142 15069  9646 
+#>     2     1     1     1     2     1     2     2     1     2     2     1     1 
+#> 21058 14412 13102  8623  5379  1448 21093  3231  3764 15943 14186 21615  4269 
+#>     1     2     1     1     1     1     1     1     1     1     1     1     1 
+#>  7120 17461  5530  4147 13961 12303 10293  4444 17391  6095 27931 20022 20042 
+#>     1     1     1     2     1     1     2     3     2     1     2     1     1 
+#> 29846 24190  2983 17622 22620 14011  7295 15978  6563 15968 24737 18335  7098 
+#>     2     1     1     2     3     1     1     1     2     2     1     1     1 
+#>  8768  6800 15185 15068 18464 18662 22944 18486 14497 18649 19814   876 17815 
+#>     2     1     2     1     2     1     2     2     2     1     1     1     1 
+#> 10887 27088  1704  2129 18767 24819   795 21730 11324  3459 24983  4887  2056 
+#>     2     1     1     1     1     1     1     1     1     1     1     2     2 
+#> 19689  1053 15800 14009  6125 29720 12538 26319 16552 29912 14070 15817  8236 
+#>     2     2     2     1     2     2     1     1     2     1     3     1     1 
+#> 23369 28083 28393 18878  2562 23404 10399 10325 11044  9486 15144 26896 23099 
+#>     1     2     3     1     2     3     1     1     1     1     1     3     1 
+#> 23698 25038 28773 10594 19199  4302 25758 11367  6928 18462 17036 21281  7044 
+#>     2     1     1     1     1     1     1     2     1     2     1     2     1 
+#> 25167  3867  8673  7296  5695  3981 15758 12853 26067  3576 23147 15526 17430 
+#>     1     1     1     2     1     1     1     2     1     1     1     3     1 
+#> 14596  4754 17934 14982  3830 14605 16815 15582 10257 28229  2197  2295 26539 
+#>     2     2     1     1     1     1     2     2     1     1     1     1     1 
+#> 25939 26958 10646 12340 27689 11626 29148 22914 22763 15662  9088 26544 12998 
+#>     2     1     1     1     1     1     1     2     2     3     1     1     1 
+#> 10600 23094 12433  3419 24078 12838   343 23246 29948 29649  9702 27089 28922 
+#>     2     1     1     1     1     2     1     1     3     2     1     1     1 
+#>  4237 15264  3097 21726 24230  7457 29316 23097  8867  7697 18521 23887  1360 
+#>     2     1     2     1     1     2     1     1     2     1     1     3     1 
+#> 17694 10826  3936 13529 29909  7868 15391  3310   512 24702  5443 14888 19572 
+#>     3     2     1     2     1     2     2     1     1     1     1     1     1 
+#> 23450 27224 13146 14232  2657 23453 13436 28537 11893 18354 20356 16179  8102 
+#>     2     1     2     1     1     2     1     1     1     1     2     2     2 
+#> 29092 28878 17898 10617 17094  6286  5622 22858    32 24744  8776 12560 15168 
+#>     1     1     2     2     1     1     1     1     2     1     1     2     1 
+#>  6041  5973 24538   866 24847 22918  6333  2505 17872 14588   506  9754 29452 
+#>     1     1     2     1     1     1     1     2     2     2     1     1     3 
+#> 10459 26520 11129 15046 20441 11566 12722 10370 28998 21170  8658 13789 27920 
+#>     2     1     2     1     1     2     1     1     3     1     1     1     1 
+#> 25691 25979  8853 13043  8110 26243   519 20301 14834  3057 19248 19513  5049 
+#>     1     1     1     1     2     1     1     1     2     1     1     2     1 
+#> 19269 14102 19224 21167  5445 16434  8715 10983  9991  5725 23911 23146 21404 
+#>     1     2     1     1     1     2     1     1     1     2     1     2     2 
+#> 13012 24878 13332 18805 14486  3834 13927 19437 10481 17883 14538 25005  1813 
+#>     2     1     1     1     2     1     1     1     1     2     1     1     2 
+#> 22107  4426  2969 11903 21525 23562 20836 24697 19217 29188  9851  6572 20446 
+#>     1     1     1     1     1     2     1     1     1     3     1     1     1 
+#> 14683 26041  3777 21241 23843 21675 20313  5470 12978  9936  8418  4596 21790 
+#>     1     2     1     1     2     1     2     1     2     3     1     1     1 
+#>  4017 12261 27394 17340  3475  9211 10567 12643 21747  6811 29416 26387 15853 
+#>     1     1     1     1     1     1     2     1     1     1     2     1     2 
+#> 27699  6365 11415 22513 21224 11798 29175  2824 20507  4393  5983 23319  7735 
+#>     2     1     3     1     1     2     1     1     1     1     1     1     1 
+#> 26340 24824 22912 25788 11642 13554 26293 10460 16128 16012  5572 10368 25599 
+#>     1     2     1     3     1     1     1     2     2     2     1     1     2 
+#>   300 11235  2500 20673  2382   276 22096 20895 21308 19149 21780  6009 24286 
+#>     1     1     1     1     1     2     1     1     2     2     2     1     2 
+#> 15775 25034 10052 25022 17265 22071 25463 21317 22408 23123 28428 27159 24939 
+#>     1     2     1     1     1     2     1     1     1     1     1     2     3 
+#>  9978   101 23194 28843 27749 14416 18880 17410 29475  8568  4549 10359 11522 
+#>     2     1     1     1     1     2     1     2     2     1     2     1     1 
+#> 25319  9344 23552 25243 14114  4589 13902 18938  4222 24087 27978 16518 22732 
+#>     1     2     1     2     2     1     1     3     1     2     2     2     1 
+#> 18855 17022 22000 16888 24237  9854 22337  4272  3784 17514 29667  6244  4570 
+#>     1     1     2     2     2     2     2     1     1     1     2     1     1 
+#>  6030 14379  2570 14930  1042 19138 16836 17118  1811 23644 11588 18097 16546 
+#>     1     3     1     2     1     2     2     2     1     1     1     1     1 
+#> 28182  2234 10856 26015 29504 29710 20344  9616 29438 22875  9238 21500  4532 
+#>     1     1     2     3     1     3     1     2     1     1     2     1     2 
+#> 26116 29519 18863 15353 10419 25242  7573  6307 27944  5472 26418  5662  2419 
+#>     1     2     2     1     2     1     1     2     2     1     1     2     1 
+#> 25035  8356 19785 17492 12758 17616  5575 15492  3711 20248 10189 21698 20831 
+#>     1     2     1     1     1     1     1     2     1     1     1     1     1 
+#>  2192 24718  4903 19885  7065 20212 21520 27746 20916  2162  4290 15042  3824 
+#>     1     2     2     1     2     2     2     1     1     1     1     1     2 
+#> 27576 20866  9846 28771 27364 15008 12344  6740  2241  8289 27254 22682  2579 
+#>     2     1     1     1     3     1     2     1     1     1     1     2     1 
+#> 26174 12680 21130 16685 13525  3677   415 29871   640 13317 29306  9070 23745 
+#>     1     1     1     1     1     2     2     1     1     1     1     2     1 
+#>  1781  2444 17842  4345 24135 27386 12462 27167 21918 24535 20648 11873 10946 
+#>     1     2     1     1     1     1     1     1     1     1     1     1     1 
+#>  7006  9111  5388 26415 14735 17480 26020  3629 24711 25026 12134  6446 12072 
+#>     1     1     1     1     1     1     2     1     1     1     1     1     1 
+#> 26630 15918 27899 25563 24988  3510  5835  6804 16811 22494 19306 21984 13516 
+#>     2     2     2     2     2     2     1     3     1     1     1     2     2 
+#> 14660 19432 19957 11950 16602  4011 16468 13132 12429 21086 13583 11042 22407 
+#>     1     1     1     1     2     1     1     2     1     1     2     1     2 
+#>  3107  9946 11779  2998 16281  1462 15537 25422 17433 18082   277 24870 19421 
+#>     1     2     2     1     1     2     2     3     3     1     1     1     2 
+#>  7584 20105  4113 22894 20726 10008 27717 11210 24571 14784  9265 23568 14087 
+#>     1     2     1     1     1     2     1     2     2     1     1     1     1 
+#> 10850 10714   906 19813 28288 29518 25238 13398 16103  4981 18515 18532 20966 
+#>     1     2     2     1     2     1     1     1     2     1     2     2     1 
+#>  3405  7766 21769 22804 27009 11602 12401  8861 15625 21579 15012 17310 27143 
+#>     1     1     1     2     2     1     1     2     1     1     1     2     2 
+#> 29162 15153 27911 26927 22249 29707   724  7016 22410  4482 21215   325  4278 
+#>     2     2     2     2     3     2     1     1     2     2     1     1     2 
+#> 21693 11711  2599 29373 25107 13996  5454  6495 16316  7365 29159 14032 24053 
+#>     2     2     1     1     2     1     1     1     2     2     1     1     1 
+#> 21910 11796 11953 17470 22155 22796 14445  1457 25303   780 12490 19035  5669 
+#>     1     1     1     2     1     1     1     1     1     1     1     1     1 
+#>  2674 21272 29138 26527  2096   778 25937 16310 15596 18254  7834 20461  8290 
+#>     1     1     1     2     1     1     2     1     1     2     1     2     3 
+#> 20592 13515 24104 10081 15591  4741 20174  8489  3567 16662 19160 28899  5482 
+#>     1     1     1     2     1     1     1     1     1     1     2     1     1 
+#> 22298  5027  3679 21185 26158 14582 13413 19628  3201 23989 15165 14363  7758 
+#>     1     2     1     1     1     1     2     1     3     2     2     2     2 
+#> 23294  2200 23975  8703 25851  2469  1089 12528 12650 20168 26162 15440  2693 
+#>     1     2     2     1     2     2     1     2     1     1     2     1     1 
+#>  2279 21653 13104 13953 19253  7938 25971  6406  2187  5365  6008 24288 29613 
+#>     1     1     1     2     1     1     1     1     2     2     2     2     1 
+#>  3228 10204  8900 11083 22076  9248 22133  8133 17385 15077  6830 11570 28742 
+#>     2     1     1     2     2     1     1     2     1     1     1     1     1 
+#> 17807  4155 18337 24468  7815  6263 11872  9738 21313 21592 26289 10776 13856 
+#>     1     2     1     1     2     2     1     1     1     1     2     2     1 
+#> 22668 12070  5463 20309 18453 25472 26023 12820 26739 27251  1264 10681 16785 
+#>     2     2     2     3     3     2     2     1     1     1     1     2     1 
+#> 23291 16600 11498 23627 15498 18471 20885 17650  3924  8090  9198  3054 21099 
+#>     1     1     3     1     1     1     2     2     1     1     1     2     2 
+#> 14638 22211 18116  5850 27260 25065  8538  9312   467 22769 13563 19314 22342 
+#>     3     2     2     1     1     2     2     1     1     1     2     1     2 
+#>  5100  6763 12909 25881 25170 13972 13024 17030 12139 28904 18635 18075  3401 
+#>     1     1     1     2     1     2     1     1     2     1     2     1     2 
+#>  1459  7512 21438 18942 12874 20805 28281  3508  8580 21645 28979  1339  4386 
+#>     2     2     1     2     3     1     2     2     2     2     1     1     1 
+#> 17041 24289 28581 16300  6902 27769  1262 22660 26246 19716 16347 28525 23970 
+#>     2     2     1     2     1     3     1     2     2     1     2     1     1 
+#>  3235 13520  1605 29260  9658  6064  1479 10606  8227 24642 21478 13785 23044 
+#>     1     1     2     3     2     1     1     2     2     2     1     2     1 
+#> 26404  7668 17368 29311  5432  2683 14104 11688 12037 27606  4554 19666 24845 
+#>     1     1     2     1     2     2     1     1     1     1     1     2     1 
+#> 10758 11151 11870  5248 21148  2864 18401 29284 13150 20418  9227 10203 12467 
+#>     1     2     1     2     1     1     1     1     1     1     2     1     1 
+#>  4283 14169 18444 10275  3229  4342 19352  3516 23643 10201 14437  7495 11494 
+#>     1     2     1     1     2     2     1     1     1     2     2     1     1 
+#>  5639  3224 27295 17190 18267 27904 16645 23507  7926  9996 17206 22322 22851 
+#>     1     1     1     3     1     1     2     2     2     1     3     2     1 
+#> 23895 12873   270 29644 13022  8606  8761 13777 14257 21681  6905  5032 16864 
+#>     1     2     1     2     1     2     1     1     1     2     1     2     1 
+#> 11064 12160  6315 11996  1154 12989 26987 26285 19557 14637 26355  7493 26114 
+#>     1     2     1     1     2     1     1     1     1     1     1     3     1 
+#> 22486 15376  8287 26678 20860 15282 11789 18617 21844  6700 25227  6212   956 
+#>     1     1     1     3     1     2     2     1     2     3     2     1     2 
+#> 19868 19262  5121 17095  7803 22253 14401  1739 27815 28735 24732 15624 11708 
+#>     2     2     2     3     1     1     1     1     1     2     1     2     1 
+#> 29192  8483  3754 14790   978 28263 20374 13202 12415  6534  4009 23572 10279 
+#>     2     2     1     1     1     2     1     1     1     1     1     2     2 
+#>  1861  4029  5191 17085 28912 21172 20664  9053  9581 12671 15877 18485 11046 
+#>     1     3     1     2     1     1     2     2     1     1     1     3     1 
+#> 27349 29298 21261 24629  5351 11153 13094  8556 16283  3595 19369  5576  5750 
+#>     1     1     2     1     1     1     1     1     2     1     1     3     1 
+#>  9006 25306 23935  3546 21963  8326 19711 20588 20330 16670 13470   412  2423 
+#>     1     1     1     1     2     1     1     2     2     2     1     1     1 
+#> 19846  8153 24670 19553  5193 19190 25373 21646 16267 14785 15212   580 29658 
+#>     3     1     1     2     3     1     2     1     3     1     1     2     1 
+#> 10842 28333 13798 29548  8550 12029 10333  7002 13986 18786 13716 18864  4722 
+#>     1     1     2     2     1     3     1     2     1     2     2     2     2 
+#> 26558 11314  2454 18025   502 28212  7914  5090 28377 17506  3671  6010 24154 
+#>     2     2     1     1     2     2     2     1     1     1     1     2     2 
+#>  9041  1266 23854  7449 12411 25795  1455 17535 28571  4022 22536  2595  7432 
+#>     2     1     1     1     1     1     1     1     1     1     1     1     3 
+#> 16857  5899 10624 11739 18044 11581 15855 20352  1519  5809  5269  7685  4357 
+#>     1     1     1     1     1     1     1     2     2     2     2     1     1 
+#> 14697 17760 17418 29372  9925 10440 17635 23081 15681 12066 19614 27407 10154 
+#>     1     2     2     2     3     1     3     1     1     2     1     1     2 
+#>  4148 29916 22641 28365 27643 21957  9456  3869 29761 14685 20185 29996  6714 
+#>     1     2     2     2     1     2     1     1     2     1     2     1     1 
+#>  4080  7349 19746 13645 22532 12815  1651 25277 18101  6094 24228 12043   508 
+#>     2     2     1     2     2     2     1     1     1     1     1     2     2 
+#>  3723  7986  1454  5422  5995 29203  1460 16282  8439 23271 14176 29736 28651 
+#>     1     1     1     1     2     1     1     2     2     3     1     2     1 
+#> 13614 16233 19574  1817  2363 13744 23046 10012  9272 16556  1010  1357  2910 
+#>     2     1     1     2     1     1     1     1     1     2     1     3     1 
+#> 10745 25865  7322  4917 20944 18912 13680  1378 18194 17210 22910  1673 16633 
+#>     1     1     2     2     1     2     1     1     1     1     1     2     1 
+#> 12711  4496  5072   652 27811 11267 23709  6718  4951 11985 27023 22180  8814 
+#>     3     1     1     1     2     2     2     1     2     1     1     1     1 
+#>  5404 25860 17117 28058 18831 26286 29011 25282 24601  9306 21695  1086 11556 
+#>     1     1     1     2     1     1     1     1     2     3     2     1     1 
+#> 23558 12305 16966 17871 11587 20465 10344  6836 23027  2553  3559 23204  2175 
+#>     1     2     1     2     1     1     1     1     1     3     1     1     1 
+#>  3739  4088  8681 10013  2676  8040  7106   833 19993 10589 26686 12148 24637 
+#>     1     2     1     2     1     1     1     2     1     2     2     2     1 
+#> 23378  6430  2493  3000 10756   720 17802  8475  6755 29157 15705  8508 13463 
+#>     1     1     1     1     1     2     1     2     1     2     1     1     1 
+#> 18341 18707 23479  4586 27385 14345 15953 17901 23734 14413 15434  9511  7291 
+#>     1     2     1     2     2     1     1     1     1     1     1     1     1 
+#> 13603 12400 25469 16678 16999  5323  6416 15140 17517 20269 27484 10316  5371 
+#>     1     1     1     2     1     1     2     1     2     1     1     1     1 
+#> 27303 26897 15883 22367 28597  9576 21789  8464  5743 12079 23064 12254 22353 
+#>     1     1     1     2     3     2     2     1     3     1     2     1     1 
+#> 20442  7523 28640 21075 16481  6438 17642 29461 16184 28158 16062 29723 25404 
+#>     1     1     1     1     1     2     1     3     1     2     1     1     1 
+#> 24362 11250  3063  7488 19012 12613  9298 14344 21311 13840  9799 24788 29549 
+#>     2     1     1     2     1     1     2     2     2     1     1     2     1 
+#> 28099 13709  8189 13759  4392  9262 24635 18729 25943  8852  6815 11561 24164 
+#>     1     1     1     2     1     1     1     1     1     1     1     1     2 
+#> 16788 26720 24603  1515  7980 16086 19775 19889 24339 23244  1733  9474 24371 
+#>     1     1     2     2     1     1     1     2     1     1     1     1     2 
+#>  3089 25190  4588  6268  1498 18119 22615  8024  5161 16101  8801 22289  9207 
+#>     2     2     2     1     1     1     2     1     1     1     1     3     1 
+#> 19347 18865 18192 25941 12099 19906   518 20591  5909   526  8372 18646 22571 
+#>     2     2     1     3     2     1     1     2     2     1     2     1     2 
+#> 10578  3029  9084  1638 18246 10347 25083 16361 22465  5390 12551  5440  8701 
+#>     2     1     1     1     1     2     2     1     3     1     1     1     1 
+#> 15368 17701 15858 11371 22548 15254 20675  6684 12977  2789 15731  5224 10786 
+#>     1     1     3     1     1     2     2     1     2     2     1     2     1 
+#> 12032  4916  6903  8137 21138  3081  6460   450 15186  5076 14033 15225 15396 
+#>     2     1     1     1     1     1     3     2     1     2     1     1     1 
+#> 21249 15211  6686 13942   914  2388 17846 10072  2927 27897 17380  9670 22934 
+#>     2     2     2     1     2     2     1     2     1     1     3     1     1 
+#>  6345  3641 12436 18284 23556 14643  4110 13821  1182 21326 29766 17505 11625 
+#>     1     1     1     1     1     2     1     1     1     3     3     1     1 
+#> 11466  4185  4316 10084 27684 11338 20336 20085  5364 26909 10406 18724  2924 
+#>     1     2     2     1     2     1     1     2     1     1     2     1     2 
+#> 14670  3294 26301 23408 27975 15390 12690 28593 24700 25981 22061 18151  9062 
+#>     2     1     1     2     1     1     1     2     2     3     1     3     2 
+#> 16433  7513  7597  6255 27664 28053 16368  6649  8072 13384 15633  2713 14289 
+#>     1     2     2     1     1     2     2     1     1     1     1     1     1 
+#>  8146 16100  7450  9210 17249 16555 27418   644  8172  7398  4483  8790 29043 
+#>     1     1     1     1     2     1     1     2     1     1     1     1     1 
+#> 28175 21010  9296  8294 18734 19882  9763  4170  3472  1744 21641 20803 22613 
+#>     1     1     1     1     1     2     2     1     1     2     1     1     2 
+#> 24715 17817 28350  1912 11416 16197  6632 21554 14690  8772  1643 24057 20380 
+#>     2     3     1     1     1     1     1     1     1     2     1     1     1 
+#>  9952 24805 24097 26371 14841 24192  1619 14201 27366 11736 29719 21443 17402 
+#>     1     1     1     1     2     1     2     2     1     1     1     1     1 
+#>  3211  5501  4906 10304  1446  7325 27139  1518  9319 29242 18398  6865  1301 
+#>     1     3     1     1     2     2     1     2     1     1     1     2     1 
+#> 20982 21087 17738  8396  8500  7483  8699  4611  2009  5976 17164 21782  2651 
+#>     1     2     1     2     1     2     1     1     1     2     1     1     1 
+#>  2650 25250 29829 11449 19984 26257  3696  1925 23169 20023  2012  5902 19860 
+#>     2     1     3     2     1     1     1     1     1     1     1     1     1 
+#> 21756 20410 12159  3168 16383 11061 23207  5128  4796 26744   315 26788 22321 
+#>     1     2     1     1     3     1     2     2     2     2     1     1     1 
+#>  4092 19793 27750 13125 22614 16757 11813 10519 20173  7796 14464  1393 18447 
+#>     2     1     1     2     2     1     1     2     1     2     1     1     1 
+#> 22055 10047 17852 14724 13512 11781 28021 20229 15147 20118 24688 18946 19943 
+#>     1     2     1     1     1     2     2     2     2     1     1     1     1 
+#> 25399 25685 15033   103 28215  2172 14178 11619 23162 13374 26566  6948 21274 
+#>     1     2     1     1     2     1     2     2     1     2     1     1     2 
+#>  7279 16847 11751 11085  6960 17632  6360 28355 14747 21886 14465 20774  7982 
+#>     1     2     1     1     2     1     1     1     2     2     1     1     2 
+#> 14091 29243 22952 17382 28848 22267  6386 14517 27511 10269 13741 15039 22738 
+#>     2     1     3     1     1     1     1     1     1     1     1     1     2 
+#> 17648 26432   477 19804 20216 14668 19235 13988  9215 23080  2487  8457 16697 
+#>     1     2     2     1     1     2     1     2     2     2     2     2     1 
+#>  2609  7733 21481  8560 18953 10128  6568 18505 15599 16804  1129  3859  2895 
+#>     2     2     3     1     2     1     1     2     2     1     2     1     1 
+#> 16795 25271 21466 20152 28201 11982 23328 15322  5998 21046 12217 24318 27611 
+#>     1     1     1     2     2     1     3     1     2     2     1     1     2 
+#>  6526 18975 17748  1957 17426  6921 13065 29928  4534 17921 27759 26433  5069 
+#>     1     1     1     1     2     3     2     1     2     2     1     1     1 
+#> 14514 13186 20983  1290  1869 29471 29442 16457 16646 11141 11139 20593 16850 
+#>     1     1     1     2     1     1     1     1     1     3     1     2     2 
+#>  9023  2409  5092 21964 17574 28209 20204 15313  2883 27982 22678  8830  7625 
+#>     2     1     1     2     2     2     2     1     1     2     1     2     2 
+#> 25389 20517 25863 21305 17844 10987  6356 22993 16767  7196 17788 26904 28461 
+#>     2     2     2     1     1     2     1     1     1     1     2     1     1 
+#> 15774  4494  1763 25854 13391 15413 25124  2008 29017 22802  9835 14015 10730 
+#>     1     1     1     1     1     2     1     1     1     1     2     1     1 
+#> 25702 27177 18722 11459 19349  8108  1627  3366 24839 10834 13269 28280 27215 
+#>     1     1     1     1     1     1     1     1     1     1     1     1     1 
+#> 25579 12813 14222 24595  4003 29350 26024  3885  7674  4416  3185 29843 27491 
+#>     1     1     2     1     1     2     2     1     2     1     1     1     1 
+#> 16049 27565 21043 28193  3556  6334 21444 26961 13372 21618 23405  8626 25973 
+#>     2     2     1     1     1     1     1     2     2     1     2     3     1 
+#>  7667  3427 17584 20630  6850  8621 12925 13213 29061 26413  3409 12799 16613 
+#>     2     1     3     2     1     1     2     1     1     1     1     1     2 
+#> 18968 11009 19783 18543  7773  6279  1267  1003 16682 15432  9984 18018 12648 
+#>     1     2     1     2     2     1     1     1     1     1     2     2     1 
+#> 27954  3648  6316 25142 16681 17926  4068   105 11166 12390 17754 16377 18956 
+#>     3     1     1     1     1     1     2     3     1     1     2     3     1 
+#>  9086 29160   803 15865 16025 18941  4193 28440 12830  4825 25295 14688 25169 
+#>     2     2     2     1     2     1     1     1     1     1     1     1     1 
+#> 16314  9917 27106 17088 10426 21242 28770 21585 26653 28790 24835 20197  2640 
+#>     1     1     1     1     2     1     1     1     2     1     1     1     1 
+#>  1297 17866 28421  4460 10746  9253 26971  7308 14501 12211  1622  5771 16768 
+#>     1     1     1     3     2     2     1     1     1     1     1     1     1 
+#>  3582 22562  3873  2331  4216 10945 28809 29158  7564 20395 28923  5607 20692 
+#>     1     2     3     1     2     1     1     1     2     2     2     3     2 
+#> 23392  4124 19920  4120 18439 13965 27973 15229 26808  8711 23151 18650  6281 
+#>     3     1     1     1     2     1     1     1     2     1     3     2     2 
+#> 22601   857 27229  1175 15826  9778 27132 12495  4779 12299 25719 29604 24569 
+#>     3     1     2     1     1     1     1     1     1     2     2     1     1 
+#> 15134 23320 19879 25588 18757 11496 28018  8467 14815 16380 23231 18534 15490 
+#>     2     1     2     1     1     2     1     1     3     2     1     1     1 
+#>  1333   583 21759  3519 15163  8831 24266  6637 28126 20087 11849 27283  1754 
+#>     1     1     2     1     1     2     2     1     1     1     2     1     1 
+#> 14899  9403  5476 23663 19054 19067 12800  2511  1725  4680 20655 22945 12024 
+#>     3     2     1     1     1     3     1     1     1     1     1     1     1 
+#>  7110 29224  6314 26383 18070 11345  1905 14189 16390  1818 17567 27820  8513 
+#>     2     1     1     1     1     1     2     1     1     2     1     1     1 
+#> 23776 26886 19910 13586  1984 24261 21978 26314   262  6123 20896  4576 11346 
+#>     1     1     1     1     1     1     2     1     2     2     1     2     1 
+#>  6214 11181 17241  2615 12062 13693  6039  2645 13968 26359 23863  7780 26730 
+#>     2     1     1     2     1     1     1     1     2     1     1     1     2 
+#>  7052 23543 11882 18156 15270 10718  4932  4264 23415 13282 14132 25396  1646 
+#>     1     2     1     2     1     1     1     1     1     2     3     1     1 
+#> 25283 16663  3260  4875 27099 18875 16418 24283 28804 25606 17806 24687 15810 
+#>     1     1     2     1     2     1     2     1     1     1     1     1     2 
+#>  3845 14978 22137  7881 17478 24349  4582  1881   406   823   157 28724  2440 
+#>     1     1     1     1     1     1     1     1     1     1     1     1     2 
+#> 19376 15541 21007  9423   835 19933  7966  2892 13145 11180 19582  6380   178 
+#>     1     2     1     2     2     1     1     1     1     1     1     1     2 
+#> 13725 22791 20333 22221 29840 21089 11460 23615 17653  5872 21553 22468 21503 
+#>     1     1     1     1     1     1     2     2     2     3     1     1     1 
+#> 20167 14483 14881 23875 25655 28172 18382 21786  7199  7130 21717   219  1976 
+#>     1     1     2     2     2     2     1     2     1     1     3     1     2 
+#>   671  2373  1629 14405  7508 14076 20659  4961   911 10910 26757  9592  5680 
+#>     3     1     1     2     1     2     1     1     2     1     1     1     1 
+#>  6459 11411 15032 21413 22546  1749  2132 22652 20360 21609  8419 24457 19512 
+#>     2     2     1     2     1     1     1     2     2     1     2     1     1 
+#>  5375 26963 11810 25315  5465  4648 26504 26642 26000 25411 22243  9095  7067 
+#>     1     1     1     1     3     2     1     1     2     1     2     3     1 
+#> 27464 17592 28259 20015 19264 26849  2978 29665 29356  5854 29352  2970   171 
+#>     2     1     1     1     1     1     3     1     1     1     1     1     2 
+#>  8592 14776 29888  6006 18442   650 14876 21401 19411  6144  3337 23078 29437 
+#>     1     2     1     1     1     2     1     1     1     1     1     2     2 
+#>  1987 18727 19151 26295 18816 27066  4203  3636 19140 27146  5503 25080  1229 
+#>     2     2     1     1     1     1     1     2     1     1     1     1     3 
+#> 11846  5674 26518  6898  4911  4430  1953 15750 11146 25407   548 15023 11717 
+#>     2     1     2     2     2     1     1     1     2     2     1     1     2 
+#> 18294  5700 19935 29484 12512 26271 14224 22779  2333 10071 11307  1072 12592 
+#>     1     1     1     2     1     2     1     2     1     1     2     1     1 
+#> 28484 10738  3164  8425 14239 23632  9449 29693 29696 20851 27655 24313 14245 
+#>     1     1     1     2     2     2     2     2     1     1     2     2     1 
+#> 22283 27908 13528 
+#>     1     2     1 
+#> 
+#> Within cluster sum of squares by cluster:
+#> [1]  801109.2  922232.7 1041005.6
+#>  (between_SS / total_SS =  78.9 %)
+#> 
+#> Available components:
+#> 
+#> [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+#> [6] "betweenss"    "size"         "iter"         "ifault"
+```
+fviz_cluster(kmenas object, data =, stand=F)
+
+ylim=c(90,101),xlim=c(17,27)
+
+```r
+fviz_cluster(km, data = teens_2 , stand=F)
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-13-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+
+
+```r
+set.seed(123)
+fviz_nbclust(teens_2 , kmeans, method = "wss")
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;" />
+
+Elbow Method
+
+Recall that, the basic idea behind cluster partitioning methods, such as k-means clustering, is to define clusters such that the total intra-cluster variation (known as total within-cluster variation or total within-cluster sum of square) is minimized:
+
+
+```r
+set.seed(123)
+fviz_nbclust(teens_2, kmeans, method = "wss")
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-15-1.png" width="90%" style="display: block; margin: auto;" />
+
+Average Silhouette Method
+
+In short, the average silhouette approach measures the quality of a clustering. That is, it determines how well each object lies within its cluster. A high average silhouette width indicates a good clustering. The average silhouette method computes the average silhouette of observations for different values of k. The optimal number of clusters k is the one that maximizes the average silhouette over a range of possible values for k.2
+
+We can use the silhouette function in the cluster package to compuate the average silhouette width. The following code computes this approach for 1-15 clusters. The results show that 2 clusters maximize the average silhouette values with 4 clusters coming in as second optimal number of clusters.
+
+
+
+```r
+set.seed(123)
+fviz_nbclust(df, kmeans, method = "silhouette")
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+## Cluster intuition
+
+
+We do the cluster intuition only for the k-means, but it could apply for other methods, such as hierarchical clustering.
+
+```r
+teens_scale<-as.data.frame(lapply(teens_2[,2:41], scale))
+summary(teens_scale)
+#>      gender             age               friends          basketball     
+#>  Min.   :-2.0727   Min.   :-3.306980   Min.   :-0.8569   Min.   :-0.3403  
+#>  1st Qu.: 0.4824   1st Qu.:-0.829209   1st Qu.:-0.7455   1st Qu.:-0.3403  
+#>  Median : 0.4824   Median :-0.007369   Median :-0.2720   Median :-0.3403  
+#>  Mean   : 0.0000   Mean   : 0.000000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.: 0.4824   3rd Qu.: 0.843353   3rd Qu.: 0.3687   3rd Qu.:-0.3403  
+#>  Max.   : 0.4824   Max.   : 2.396008   Max.   :11.8721   Max.   :15.4215  
+#>     football           soccer           softball         volleyball     
+#>  Min.   :-0.3696   Min.   :-0.2452   Min.   :-0.2245   Min.   :-0.2259  
+#>  1st Qu.:-0.3696   1st Qu.:-0.2452   1st Qu.:-0.2245   1st Qu.:-0.2259  
+#>  Median :-0.3696   Median :-0.2452   Median :-0.2245   Median :-0.2259  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.:-0.3696   3rd Qu.:-0.2452   3rd Qu.:-0.2245   3rd Qu.:-0.2259  
+#>  Max.   :13.8005   Max.   :28.5005   Max.   :16.2346   Max.   :17.2642  
+#>     swimming        cheerleading       baseball          tennis       
+#>  Min.   :-0.2829   Min.   :-0.211   Min.   :-0.193   Min.   :-0.1663  
+#>  1st Qu.:-0.2829   1st Qu.:-0.211   1st Qu.:-0.193   1st Qu.:-0.1663  
+#>  Median :-0.2829   Median :-0.211   Median :-0.193   Median :-0.1663  
+#>  Mean   : 0.0000   Mean   : 0.000   Mean   : 0.000   Mean   : 0.0000  
+#>  3rd Qu.:-0.2829   3rd Qu.:-0.211   3rd Qu.:-0.193   3rd Qu.:-0.1663  
+#>  Max.   :15.8853   Max.   :16.050   Max.   :25.838   Max.   :22.9600  
+#>      sports             cute              sex               sexy        
+#>  Min.   :-0.2982   Min.   :-0.4074   Min.   :-0.2128   Min.   :-0.2697  
+#>  1st Qu.:-0.2982   1st Qu.:-0.4074   1st Qu.:-0.2128   1st Qu.:-0.2697  
+#>  Median :-0.2982   Median :-0.4074   Median :-0.2128   Median :-0.2697  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.:-0.2982   3rd Qu.:-0.4074   3rd Qu.:-0.2128   3rd Qu.:-0.2697  
+#>  Max.   :25.1558   Max.   :18.1970   Max.   :46.3166   Max.   :22.5086  
+#>       hot              kissed            dance              band        
+#>  Min.   :-0.2614   Min.   :-0.1958   Min.   :-0.3761   Min.   :-0.2958  
+#>  1st Qu.:-0.2614   1st Qu.:-0.1958   1st Qu.:-0.3761   1st Qu.:-0.2958  
+#>  Median :-0.2614   Median :-0.1958   Median :-0.3761   Median :-0.2958  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.:-0.2614   3rd Qu.:-0.1958   3rd Qu.:-0.3761   3rd Qu.:-0.2958  
+#>  Max.   :18.5623   Max.   :45.3319   Max.   :18.7830   Max.   :19.2610  
+#>     marching           music              rock             god         
+#>  Min.   :-0.1366   Min.   :-0.6308   Min.   :-0.339   Min.   :-0.4049  
+#>  1st Qu.:-0.1366   1st Qu.:-0.6308   1st Qu.:-0.339   1st Qu.:-0.4049  
+#>  Median :-0.1366   Median :-0.6308   Median :-0.339   Median :-0.4049  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.000   Mean   : 0.0000  
+#>  3rd Qu.:-0.1366   3rd Qu.: 0.1974   3rd Qu.:-0.339   3rd Qu.: 0.4508  
+#>  Max.   :33.7073   Max.   :21.7306   Max.   :24.272   Max.   :21.8440  
+#>      church            jesus            bible             hair        
+#>  Min.   :-0.2773   Min.   :-0.194   Min.   :-0.105   Min.   :-0.4028  
+#>  1st Qu.:-0.2773   1st Qu.:-0.194   1st Qu.:-0.105   1st Qu.:-0.4028  
+#>  Median :-0.2773   Median :-0.194   Median :-0.105   Median :-0.4028  
+#>  Mean   : 0.0000   Mean   : 0.000   Mean   : 0.000   Mean   : 0.0000  
+#>  3rd Qu.:-0.2773   3rd Qu.:-0.194   3rd Qu.:-0.105   3rd Qu.:-0.4028  
+#>  Max.   :47.2192   Max.   :49.328   Max.   :37.729   Max.   :17.0580  
+#>      dress             blonde             mall            shopping      
+#>  Min.   :-0.2432   Min.   :-0.1838   Min.   :-0.3705   Min.   :-0.4936  
+#>  1st Qu.:-0.2432   1st Qu.:-0.1838   1st Qu.:-0.3705   1st Qu.:-0.4936  
+#>  Median :-0.2432   Median :-0.1838   Median :-0.3705   Median :-0.4936  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.:-0.2432   3rd Qu.:-0.1838   3rd Qu.:-0.3705   3rd Qu.: 0.8737  
+#>  Max.   :20.2934   Max.   :39.8700   Max.   :16.5196   Max.   :10.4445  
+#>     clothes          hollister        abercrombie           die         
+#>  Min.   :-0.3166   Min.   :-0.2004   Min.   :-0.1825   Min.   :-0.3078  
+#>  1st Qu.:-0.3166   1st Qu.:-0.2004   1st Qu.:-0.1825   1st Qu.:-0.3078  
+#>  Median :-0.3166   Median :-0.2004   Median :-0.1825   Median :-0.3078  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.:-0.3166   3rd Qu.:-0.2004   3rd Qu.:-0.1825   3rd Qu.:-0.3078  
+#>  Max.   :16.1428   Max.   :22.1627   Max.   :23.7896   Max.   :26.2269  
+#>      death             drunk             drugs             female       
+#>  Min.   :-0.2529   Min.   :-0.2217   Min.   :-0.1757   Min.   :-2.0727  
+#>  1st Qu.:-0.2529   1st Qu.:-0.2217   1st Qu.:-0.1757   1st Qu.: 0.4824  
+#>  Median :-0.2529   Median :-0.2217   Median :-0.1757   Median : 0.4824  
+#>  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+#>  3rd Qu.:-0.2529   3rd Qu.:-0.2217   3rd Qu.:-0.1757   3rd Qu.: 0.4824  
+#>  Max.   :30.9186   Max.   :19.6631   Max.   :32.2532   Max.   : 0.4824
+```
+
+teen_clusters <- kmeans(data, k)
+
+```r
+set.seed(2345)
+#Ayer  
+teen_clusters <- kmeans(teens_scale, 2)
+
+centroids<-teen_clusters$centers
+class(centroids)
+#> [1] "matrix" "array"
+```
+
+```r
+fviz_cluster(teen_clusters, data = teens_2 , stand=F)
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-19-1.png" width="90%" style="display: block; margin: auto;" />
+
+
+
+Transforming into matrix, for making a plot.
+as.matrix(teen_clusters$centers)
+
+```r
+barplot(height =centroids,main="Centroids",legend.text = TRUE,
+        beside = TRUE,col=c("red","blue"),las=2)
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-20-1.png" width="90%" style="display: block; margin: auto;" />
+
+Function to make a bar plot
+
+```r
+# data is a matrix object with the centroids
+# name is the plot name (main argument)
+my_plot<-function(data,name){
+  
+barplot(height =data,main=name,legend.text = TRUE,
+        beside = TRUE,col=c("red","blue"),las=2)}
+```
+
+
+
+
+```r
+
+se<-seq(1,2,1) 
+hc_caract<-centroids[,c("gender","age","friends")]
+
+my_plot(hc_caract,"Características generales")
+```
+
+<img src="06_clustering_files/figure-html/unnamed-chunk-22-1.png" width="90%" style="display: block; margin: auto;" />
+
+

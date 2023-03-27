@@ -1,6 +1,6 @@
-# Tuning parameters for improving performance 
+# Improving Performance 
 
-## Parameter
+## PARAMETER TUNING
 
 Hyperparameters are model parameters that are specified before training a model – i.e., parameters that are different from model parameters – or weights that an AI/ML model learns during model training.
 
@@ -23,7 +23,8 @@ Grid Search is exhaustive and uses brute force to evaluate the most accurate val
 
 
 ```r
-house<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv")
+house<-read.csv("data/house_clean.csv")
+#house<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/housing.csv")
 set.seed (26)
 dim<-dim(house)
 train_sample<-sample(dim[1],dim[1]*.8)
@@ -323,5 +324,36 @@ bwplot(resamps, layout = c(3, 1))
 ```
 
 <img src="05-tuning_files/figure-html/unnamed-chunk-12-1.png" width="90%" style="display: block; margin: auto;" />
+---no
 
+
+## Evaluate Your System on the Test Set
+
+
+```r
+library(gbm)
+gbm1 <-gbm(SalePrice ~ ., data = house_train, n.trees = 100, shrinkage = 0.09,
+interaction.depth = 3, distribution = "gaussian",bag.fraction = 0.5, train.fraction = 0.5,
+n.minobsinnode = 30, cv.folds = 10, keep.data = TRUE,
+verbose = FALSE)
+```
+
+
+```r
+best.iter <- gbm.perf(gbm1, method = "cv")
+```
+
+<img src="05-tuning_files/figure-html/unnamed-chunk-14-1.png" width="90%" style="display: block; margin: auto;" />
+
+```r
+print(best.iter)
+#> [1] 85
+```
+
+```r
+house_predict<-predict(gbm1, newdata = house_test, n.trees = 100, shrinkage = 0.09,interaction.depth = 3, n.minobsinnode = 30)
+
+sqrt(mean((house_test[,"SalePrice"]-house_predict)^2 ,na.rm = T))
+#> [1] 54768.78
+```
 

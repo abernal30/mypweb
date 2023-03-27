@@ -1,5 +1,6 @@
 # Cross Validation
 
+## Regression Cross Validation
 
 
 
@@ -408,7 +409,290 @@ min(gbmFit1$results[,"RMSE"])
 #> [1] 43706.4
 ```
 
+esto no ---------------
+    ##> Linear Regression with Stepwise Selection 
+    ##>
+    ##> 467 samples
+    ##>  51 predictor
+    ##>
+    ##> No pre-processing
+    ##> Resampling: Cross-Validated (10 fold, repeated 10 times) 
+    ##> Summary of sample sizes: 420, 421, 421, 419, 420, 421, ... 
+    ##> Resampling results:
+    ##>
+    ##>  RMSE   Rsquared   MAE     
+    ##>  50981  0.7143878  30917.71
+
+
+    ##> Call:
+    ##> lm(formula = .outcome ~ MSSubClass + LotFrontage + LotArea + 
+    ##>    LotShape + HouseStyle + OverallQual + OverallCond + Exterior1st + 
+    ##>    MasVnrArea + ExterQual + Foundation + BsmtQual + BsmtExposure + 
+    ##>    BsmtFinType1 + BsmtFinSF1 + BsmtUnfSF + X1stFlrSF + X2ndFlrSF + 
+    ##>    BsmtFullBath + FullBath + HalfBath + KitchenQual + TotRmsAbvGrd + 
+    ##>    Fireplaces + FireplaceQu + GarageArea + SaleCondition, data = dat)
+    ##>
+    ##> Coefficients:
+    ##>  (Intercept)     MSSubClass    LotFrontage        LotArea       LotShape  
+    ##> HouseStyle  
+    ##>    4.120e+04     -2.299e+02     -3.216e+02      5.828e-01     -2.812e+03     
+    ##> -2.889e+03  
+    ##>  OverallQual    OverallCond    Exterior1st     MasVnrArea      ExterQual     
+    ##> Foundation  
+    ##>    1.893e+04      9.620e+03     -1.302e+03      5.605e+01     -8.628e+03      
+    ##> 8.200e+03  
+    ##>     BsmtQual   BsmtExposure   BsmtFinType1     BsmtFinSF1      BsmtUnfSF      
+    ##> X1stFlrSF  
+    ##>   -1.178e+04     -5.687e+03     -3.146e+03     -2.498e+01     -2.111e+01      
+    ##> 3.817e+01  
+    ##>    X2ndFlrSF   BsmtFullBath       FullBath       HalfBath    KitchenQual   
+    ##> TotRmsAbvGrd  
+    ##>    2.565e+01      9.998e+03      1.689e+04      1.139e+04     -7.131e+03      
+    ##> 4.149e+03  
+    ##>   Fireplaces    FireplaceQu     GarageArea  SaleCondition  
+    ##>    1.359e+04     -4.135e+03      4.338e+01      4.348e+03  
+
+
 
   
+
+## Classification Cross-Validation
+
+
+
+```r
+credit<-read.csv("https://raw.githubusercontent.com/abernal30/ml_book/main/credit.csv")
+
+c2<-ifelse(credit[,"Default"]=="Charged Off" ,"No_default","default") 
+credit[,"Default"]<-c2
+credit[,"Default"]<-factor(credit[,"Default"])
+
+set.seed (43)
+dim<-dim(credit)
+train_sample<-sample(dim[1],dim[1]*.8)
+credit_train <- credit[train_sample, ]
+credit_test  <- credit[-train_sample, ]
+```
+
+Finally we use the functions trainControl and train to do the cross validation. 
+
+```r
+fitControl <- trainControl(method = "cv",
+                           number = 10, 
+                           classProbs = T ) 
+```
+
+
+We  start  by aplying the logit model. By default, the metric to verofy the predictive power is the Accuracy.
+
+```r
+
+glmFit <- train(Default~ ., data = credit_train, 
+                 method = "glm", 
+                 trControl = fitControl,
+                family=binomial())
+glmFit        
+#> Generalized Linear Model 
+#> 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'default', 'No_default' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 628, 628, 629, 628, 627, 628, ... 
+#> Resampling results:
+#> 
+#>   Accuracy   Kappa    
+#>   0.9399764  0.7908423
+```
+
+
+
+Also we could specify ROC, sensitivity and specificity as metrics. 
+
+```r
+
+fitControl_Roc <- trainControl(method = "cv",
+                           number = 10, 
+                           classProbs = T,
+                           summaryFunction = twoClassSummary ) 
+
+glmFit <- train(Default~ ., data = credit_train, 
+                 method = "glm", 
+                 trControl = fitControl_Roc,
+                 metric = "ROC",
+                family=binomial())
+glmFit        
+#> Generalized Linear Model 
+#> 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'default', 'No_default' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 628, 628, 628, 628, 628, 628, ... 
+#> Resampling results:
+#> 
+#>   ROC        Sens       Spec     
+#>   0.9591776  0.9638515  0.8613636
+```
+
+
+We can use other models such as gbm.
+
+```r
+gbmFit <- train(Default~ ., data = credit_train, 
+                 method = "gbm", 
+                 trControl = fitControl_Roc ,verbose = FALSE)
+
+#verbose = FALSE
+gbmFit 
+#> Stochastic Gradient Boosting 
+#> 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'default', 'No_default' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 627, 628, 628, 628, 628, 628, ... 
+#> Resampling results across tuning parameters:
+#> 
+#>   interaction.depth  n.trees  ROC        Sens       Spec     
+#>   1                   50      0.9944136  0.9879603  0.8560606
+#>   1                  100      0.9954822  0.9862653  0.8719697
+#>   1                  150      0.9953124  0.9879895  0.8719697
+#>   2                   50      0.9969223  0.9896844  0.9234848
+#>   2                  100      0.9960390  0.9879603  0.9143939
+#>   2                  150      0.9964807  0.9931327  0.9143939
+#>   3                   50      0.9958871  0.9914085  0.9159091
+#>   3                  100      0.9960366  0.9879603  0.9068182
+#>   3                  150      0.9967525  0.9914085  0.9068182
+#> 
+#> Tuning parameter 'shrinkage' was held constant at a value of 0.1
+#> 
+#> Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+#> ROC was used to select the optimal model using the largest value.
+#> The final values used for the model were n.trees = 50, interaction.depth =
+#>  2, shrinkage = 0.1 and n.minobsinnode = 10.
+```
+
+LDA
+
+
+
+```r
+set.seed(825)
+ldaFit <- train(Default~ ., data = credit_train, 
+                 method = "lda", 
+                 trControl = fitControl_Roc ,
+                  metric = "ROC")
+ldaFit
+#> Linear Discriminant Analysis 
+#> 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'default', 'No_default' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 628, 628, 629, 628, 628, 629, ... 
+#> Resampling results:
+#> 
+#>   ROC        Sens       Spec     
+#>   0.9844228  0.9742256  0.8469697
+```
+
+
+
+```r
+set.seed(825)
+fdaFit <- train(Default~ ., data = credit_train, 
+                 method = "fda", 
+                 trControl = fitControl_Roc ,
+                  metric = "ROC")
+fdaFit
+#> Flexible Discriminant Analysis 
+#> 
+#> 698 samples
+#>  70 predictor
+#>   2 classes: 'default', 'No_default' 
+#> 
+#> No pre-processing
+#> Resampling: Cross-Validated (10 fold) 
+#> Summary of sample sizes: 628, 628, 629, 628, 628, 629, ... 
+#> Resampling results across tuning parameters:
+#> 
+#>   nprune  ROC        Sens       Spec     
+#>    2      0.9037095  0.9706897  0.7454545
+#>   21      0.9978178  0.9914378  0.9151515
+#>   41      0.9971116  0.9914378  0.9227273
+#> 
+#> Tuning parameter 'degree' was held constant at a value of 1
+#> ROC was used to select the optimal model using the largest value.
+#> The final values used for the model were degree = 1 and nprune = 21.
+```
+
+
+
+
+```r
+resamps <- resamples(list(Logit = glmFit,
+                          GBM = gbmFit,
+                          LDA=ldaFit,
+                          Logit=glmFit,
+                          Fda=fdaFit))
+
+theme1 <- trellis.par.get()
+theme1$plot.symbol$col = rgb(.2, .2, .2, .4)
+theme1$plot.symbol$pch = 16
+theme1$plot.line$col = rgb(1, 0, 0, .7)
+theme1$plot.line$lwd <- 2
+trellis.par.set(theme1)
+bwplot(resamps, layout = c(3, 1))
+```
+
+<img src="04-resampling_files/figure-html/unnamed-chunk-35-1.png" width="90%" style="display: block; margin: auto;" />
+
+### Evaluate Your System on the Test Set
+
+
+
+```r
+library(pROC)
+clas_test<-function(model,data,levelss,dep,pos){
+  
+credit_predict<-predict(model, newdata=data,type = "raw")
+Defaultf<-factor(credit_predict,levels=levelss)
+confu<-confusionMatrix(Defaultf,credit_test[,dep],positive=pos)
+sen<-round(as.vector(confu$byClass[1])*100,2)
+
+ref<- data[,dep]
+predict_glm<-predict(model, newdata=data, type="prob")
+roc0<-roc(ref, predict_glm[,1], levels = rev(levels(ref)),ret="coords")
+AUC<-round(as.vector(roc0$auc),4)*100
+
+
+print(paste(model$method,"Sensibility=",sen))
+print(paste(model$method,"AUC=",AUC))
+
+}
+clas_test(glmFit,credit_test,c("default","No_default"),"Default","default")
+#> [1] "glm Sensibility= 95.92"
+#> [1] "glm AUC= 98.2"
+clas_test(gbmFit,credit_test,c("default","No_default"),"Default","default")
+#> [1] "gbm Sensibility= 97.96"
+#> [1] "gbm AUC= 99.59"
+clas_test(ldaFit,credit_test,c("default","No_default"),"Default","default")
+#> [1] "lda Sensibility= 96.6"
+#> [1] "lda AUC= 98.1"
+clas_test(fdaFit,credit_test,c("default","No_default"),"Default","default")
+#> [1] "fda Sensibility= 98.64"
+#> [1] "fda AUC= 99.73"
+```
+
+
 
 
