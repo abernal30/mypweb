@@ -423,8 +423,10 @@ Collinearity is when two or more variables are closely related to one another. T
 
 
 The function "cor" is to estimate the correlation matrix, and the function "findCorrelation" shows the correlated variables more than "n" (cutoff argument). For this case, we apply a cut-off of 80%. 
-
-```
+```{r}
+descrCor <-  cor(data4)
+hc <- findCorrelation(descrCor, cutoff = .8, names = T)
+hc
 #>  [1] "open_acc"                   "num_sats"                  
 #>  [3] "total_rev_hi_lim"           "total_bc_limit"            
 #>  [5] "total_rec_prncp"            "acc_open_past_24mths"      
