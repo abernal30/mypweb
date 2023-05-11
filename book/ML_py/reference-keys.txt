@@ -1,0 +1,9 @@
+python-basics
+jupyter-notebook
+data-types-numerical-and-text-objects
+list-and-object-attributes
+dictionaries
+python-modules.
+pandas-data-frames
+selecting-rows-and-columns-in-a-data-frame
+numpy
