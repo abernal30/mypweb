@@ -272,29 +272,29 @@ df
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_b5dd9">
+<table id="T_53e5b">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_b5dd9_level0_col0" class="col_heading level0 col0" >Column 1</th>
+      <th id="T_53e5b_level0_col0" class="col_heading level0 col0" >Column 1</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_b5dd9_level0_row0" class="row_heading level0 row0" >0</th>
-      <td id="T_b5dd9_row0_col0" class="data row0 col0" >Vale</td>
+      <th id="T_53e5b_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_53e5b_row0_col0" class="data row0 col0" >Vale</td>
     </tr>
     <tr>
-      <th id="T_b5dd9_level0_row1" class="row_heading level0 row1" >1</th>
-      <td id="T_b5dd9_row1_col0" class="data row1 col0" >Diana</td>
+      <th id="T_53e5b_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_53e5b_row1_col0" class="data row1 col0" >Diana</td>
     </tr>
     <tr>
-      <th id="T_b5dd9_level0_row2" class="row_heading level0 row2" >2</th>
-      <td id="T_b5dd9_row2_col0" class="data row2 col0" >Ivan</td>
+      <th id="T_53e5b_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_53e5b_row2_col0" class="data row2 col0" >Ivan</td>
     </tr>
     <tr>
-      <th id="T_b5dd9_level0_row3" class="row_heading level0 row3" >3</th>
-      <td id="T_b5dd9_row3_col0" class="data row3 col0" >Vivi</td>
+      <th id="T_53e5b_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_53e5b_row3_col0" class="data row3 col0" >Vivi</td>
     </tr>
   </tbody>
 </table>
@@ -339,23 +339,23 @@ sn
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_c3953">
+<table id="T_e2612">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_c3953_level0_col0" class="col_heading level0 col0" >Vale</th>
-      <th id="T_c3953_level0_col1" class="col_heading level0 col1" >Diana</th>
-      <th id="T_c3953_level0_col2" class="col_heading level0 col2" >Ivan</th>
-      <th id="T_c3953_level0_col3" class="col_heading level0 col3" >Vivi</th>
+      <th id="T_e2612_level0_col0" class="col_heading level0 col0" >Vale</th>
+      <th id="T_e2612_level0_col1" class="col_heading level0 col1" >Diana</th>
+      <th id="T_e2612_level0_col2" class="col_heading level0 col2" >Ivan</th>
+      <th id="T_e2612_level0_col3" class="col_heading level0 col3" >Vivi</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_c3953_level0_row0" class="row_heading level0 row0" >Student_number</th>
-      <td id="T_c3953_row0_col0" class="data row0 col0" >51</td>
-      <td id="T_c3953_row0_col1" class="data row0 col1" >11</td>
-      <td id="T_c3953_row0_col2" class="data row0 col2" >511</td>
-      <td id="T_c3953_row0_col3" class="data row0 col3" >50</td>
+      <th id="T_e2612_level0_row0" class="row_heading level0 row0" >Student_number</th>
+      <td id="T_e2612_row0_col0" class="data row0 col0" >51</td>
+      <td id="T_e2612_row0_col1" class="data row0 col1" >11</td>
+      <td id="T_e2612_row0_col2" class="data row0 col2" >511</td>
+      <td id="T_e2612_row0_col3" class="data row0 col3" >50</td>
     </tr>
   </tbody>
 </table>
@@ -371,29 +371,29 @@ sn.transpose()
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_3d3b5">
+<table id="T_0d9d0">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_3d3b5_level0_col0" class="col_heading level0 col0" >Student_number</th>
+      <th id="T_0d9d0_level0_col0" class="col_heading level0 col0" >Student_number</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_3d3b5_level0_row0" class="row_heading level0 row0" >Vale</th>
-      <td id="T_3d3b5_row0_col0" class="data row0 col0" >51</td>
+      <th id="T_0d9d0_level0_row0" class="row_heading level0 row0" >Vale</th>
+      <td id="T_0d9d0_row0_col0" class="data row0 col0" >51</td>
     </tr>
     <tr>
-      <th id="T_3d3b5_level0_row1" class="row_heading level0 row1" >Diana</th>
-      <td id="T_3d3b5_row1_col0" class="data row1 col0" >11</td>
+      <th id="T_0d9d0_level0_row1" class="row_heading level0 row1" >Diana</th>
+      <td id="T_0d9d0_row1_col0" class="data row1 col0" >11</td>
     </tr>
     <tr>
-      <th id="T_3d3b5_level0_row2" class="row_heading level0 row2" >Ivan</th>
-      <td id="T_3d3b5_row2_col0" class="data row2 col0" >511</td>
+      <th id="T_0d9d0_level0_row2" class="row_heading level0 row2" >Ivan</th>
+      <td id="T_0d9d0_row2_col0" class="data row2 col0" >511</td>
     </tr>
     <tr>
-      <th id="T_3d3b5_level0_row3" class="row_heading level0 row3" >Vivi</th>
-      <td id="T_3d3b5_row3_col0" class="data row3 col0" >50</td>
+      <th id="T_0d9d0_level0_row3" class="row_heading level0 row3" >Vivi</th>
+      <td id="T_0d9d0_row3_col0" class="data row3 col0" >50</td>
     </tr>
   </tbody>
 </table>
@@ -494,29 +494,29 @@ df[["Nick"]]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_1f064">
+<table id="T_feae4">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_1f064_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_feae4_level0_col0" class="col_heading level0 col0" >Nick</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_1f064_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_1f064_row0_col0" class="data row0 col0" >Estef</td>
+      <th id="T_feae4_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_feae4_row0_col0" class="data row0 col0" >Estef</td>
     </tr>
     <tr>
-      <th id="T_1f064_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_1f064_row1_col0" class="data row1 col0" >Yanet</td>
+      <th id="T_feae4_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_feae4_row1_col0" class="data row1 col0" >Yanet</td>
     </tr>
     <tr>
-      <th id="T_1f064_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_1f064_row2_col0" class="data row2 col0" >Lupita</td>
+      <th id="T_feae4_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_feae4_row2_col0" class="data row2 col0" >Lupita</td>
     </tr>
     <tr>
-      <th id="T_1f064_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_1f064_row3_col0" class="data row3 col0" >Karla</td>
+      <th id="T_feae4_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_feae4_row3_col0" class="data row3 col0" >Karla</td>
     </tr>
   </tbody>
 </table>
@@ -534,34 +534,34 @@ df[["Nick","Names"]]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_ff950">
+<table id="T_f49ce">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_ff950_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_ff950_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_f49ce_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_f49ce_level0_col1" class="col_heading level0 col1" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_ff950_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_ff950_row0_col0" class="data row0 col0" >Estef</td>
-      <td id="T_ff950_row0_col1" class="data row0 col1" >Estefanía</td>
+      <th id="T_f49ce_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_f49ce_row0_col0" class="data row0 col0" >Estef</td>
+      <td id="T_f49ce_row0_col1" class="data row0 col1" >Estefanía</td>
     </tr>
     <tr>
-      <th id="T_ff950_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_ff950_row1_col0" class="data row1 col0" >Yanet</td>
-      <td id="T_ff950_row1_col1" class="data row1 col1" >Laura Yanet</td>
+      <th id="T_f49ce_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_f49ce_row1_col0" class="data row1 col0" >Yanet</td>
+      <td id="T_f49ce_row1_col1" class="data row1 col1" >Laura Yanet</td>
     </tr>
     <tr>
-      <th id="T_ff950_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_ff950_row2_col0" class="data row2 col0" >Lupita</td>
-      <td id="T_ff950_row2_col1" class="data row2 col1" >María Guadalupe</td>
+      <th id="T_f49ce_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_f49ce_row2_col0" class="data row2 col0" >Lupita</td>
+      <td id="T_f49ce_row2_col1" class="data row2 col1" >María Guadalupe</td>
     </tr>
     <tr>
-      <th id="T_ff950_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_ff950_row3_col0" class="data row3 col0" >Karla</td>
-      <td id="T_ff950_row3_col1" class="data row3 col1" >Karla Lizette</td>
+      <th id="T_f49ce_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_f49ce_row3_col0" class="data row3 col0" >Karla</td>
+      <td id="T_f49ce_row3_col1" class="data row3 col1" >Karla Lizette</td>
     </tr>
   </tbody>
 </table>
@@ -578,19 +578,19 @@ df.loc[["y"]]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_68ba0">
+<table id="T_46019">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_68ba0_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_68ba0_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_46019_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_46019_level0_col1" class="col_heading level0 col1" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_68ba0_level0_row0" class="row_heading level0 row0" >y</th>
-      <td id="T_68ba0_row0_col0" class="data row0 col0" >Yanet</td>
-      <td id="T_68ba0_row0_col1" class="data row0 col1" >Laura Yanet</td>
+      <th id="T_46019_level0_row0" class="row_heading level0 row0" >y</th>
+      <td id="T_46019_row0_col0" class="data row0 col0" >Yanet</td>
+      <td id="T_46019_row0_col1" class="data row0 col1" >Laura Yanet</td>
     </tr>
   </tbody>
 </table>
@@ -604,24 +604,24 @@ df.loc[["y","z"]]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_1275f">
+<table id="T_343dd">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_1275f_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_1275f_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_343dd_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_343dd_level0_col1" class="col_heading level0 col1" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_1275f_level0_row0" class="row_heading level0 row0" >y</th>
-      <td id="T_1275f_row0_col0" class="data row0 col0" >Yanet</td>
-      <td id="T_1275f_row0_col1" class="data row0 col1" >Laura Yanet</td>
+      <th id="T_343dd_level0_row0" class="row_heading level0 row0" >y</th>
+      <td id="T_343dd_row0_col0" class="data row0 col0" >Yanet</td>
+      <td id="T_343dd_row0_col1" class="data row0 col1" >Laura Yanet</td>
     </tr>
     <tr>
-      <th id="T_1275f_level0_row1" class="row_heading level0 row1" >z</th>
-      <td id="T_1275f_row1_col0" class="data row1 col0" >Lupita</td>
-      <td id="T_1275f_row1_col1" class="data row1 col1" >María Guadalupe</td>
+      <th id="T_343dd_level0_row1" class="row_heading level0 row1" >z</th>
+      <td id="T_343dd_row1_col0" class="data row1 col0" >Lupita</td>
+      <td id="T_343dd_row1_col1" class="data row1 col1" >María Guadalupe</td>
     </tr>
   </tbody>
 </table>
@@ -640,34 +640,34 @@ Or more than one column:
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_8abea">
+<table id="T_e05d7">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_8abea_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_8abea_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_e05d7_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_e05d7_level0_col1" class="col_heading level0 col1" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_8abea_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_8abea_row0_col0" class="data row0 col0" >Estef</td>
-      <td id="T_8abea_row0_col1" class="data row0 col1" >Estefanía</td>
+      <th id="T_e05d7_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_e05d7_row0_col0" class="data row0 col0" >Estef</td>
+      <td id="T_e05d7_row0_col1" class="data row0 col1" >Estefanía</td>
     </tr>
     <tr>
-      <th id="T_8abea_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_8abea_row1_col0" class="data row1 col0" >Yanet</td>
-      <td id="T_8abea_row1_col1" class="data row1 col1" >Laura Yanet</td>
+      <th id="T_e05d7_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_e05d7_row1_col0" class="data row1 col0" >Yanet</td>
+      <td id="T_e05d7_row1_col1" class="data row1 col1" >Laura Yanet</td>
     </tr>
     <tr>
-      <th id="T_8abea_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_8abea_row2_col0" class="data row2 col0" >Lupita</td>
-      <td id="T_8abea_row2_col1" class="data row2 col1" >María Guadalupe</td>
+      <th id="T_e05d7_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_e05d7_row2_col0" class="data row2 col0" >Lupita</td>
+      <td id="T_e05d7_row2_col1" class="data row2 col1" >María Guadalupe</td>
     </tr>
     <tr>
-      <th id="T_8abea_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_8abea_row3_col0" class="data row3 col0" >Karla</td>
-      <td id="T_8abea_row3_col1" class="data row3 col1" >Karla Lizette</td>
+      <th id="T_e05d7_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_e05d7_row3_col0" class="data row3 col0" >Karla</td>
+      <td id="T_e05d7_row3_col1" class="data row3 col1" >Karla Lizette</td>
     </tr>
   </tbody>
 </table>
@@ -684,29 +684,29 @@ df.iloc[: , 1:]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_1c847">
+<table id="T_179af">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_1c847_level0_col0" class="col_heading level0 col0" >Names</th>
+      <th id="T_179af_level0_col0" class="col_heading level0 col0" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_1c847_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_1c847_row0_col0" class="data row0 col0" >Estefanía</td>
+      <th id="T_179af_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_179af_row0_col0" class="data row0 col0" >Estefanía</td>
     </tr>
     <tr>
-      <th id="T_1c847_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_1c847_row1_col0" class="data row1 col0" >Laura Yanet</td>
+      <th id="T_179af_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_179af_row1_col0" class="data row1 col0" >Laura Yanet</td>
     </tr>
     <tr>
-      <th id="T_1c847_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_1c847_row2_col0" class="data row2 col0" >María Guadalupe</td>
+      <th id="T_179af_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_179af_row2_col0" class="data row2 col0" >María Guadalupe</td>
     </tr>
     <tr>
-      <th id="T_1c847_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_1c847_row3_col0" class="data row3 col0" >Karla Lizette</td>
+      <th id="T_179af_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_179af_row3_col0" class="data row3 col0" >Karla Lizette</td>
     </tr>
   </tbody>
 </table>
@@ -723,34 +723,34 @@ df.iloc[: , 0:2]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_59ae4">
+<table id="T_7e35a">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_59ae4_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_59ae4_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_7e35a_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_7e35a_level0_col1" class="col_heading level0 col1" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_59ae4_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_59ae4_row0_col0" class="data row0 col0" >Estef</td>
-      <td id="T_59ae4_row0_col1" class="data row0 col1" >Estefanía</td>
+      <th id="T_7e35a_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_7e35a_row0_col0" class="data row0 col0" >Estef</td>
+      <td id="T_7e35a_row0_col1" class="data row0 col1" >Estefanía</td>
     </tr>
     <tr>
-      <th id="T_59ae4_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_59ae4_row1_col0" class="data row1 col0" >Yanet</td>
-      <td id="T_59ae4_row1_col1" class="data row1 col1" >Laura Yanet</td>
+      <th id="T_7e35a_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_7e35a_row1_col0" class="data row1 col0" >Yanet</td>
+      <td id="T_7e35a_row1_col1" class="data row1 col1" >Laura Yanet</td>
     </tr>
     <tr>
-      <th id="T_59ae4_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_59ae4_row2_col0" class="data row2 col0" >Lupita</td>
-      <td id="T_59ae4_row2_col1" class="data row2 col1" >María Guadalupe</td>
+      <th id="T_7e35a_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_7e35a_row2_col0" class="data row2 col0" >Lupita</td>
+      <td id="T_7e35a_row2_col1" class="data row2 col1" >María Guadalupe</td>
     </tr>
     <tr>
-      <th id="T_59ae4_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_59ae4_row3_col0" class="data row3 col0" >Karla</td>
-      <td id="T_59ae4_row3_col1" class="data row3 col1" >Karla Lizette</td>
+      <th id="T_7e35a_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_7e35a_row3_col0" class="data row3 col0" >Karla</td>
+      <td id="T_7e35a_row3_col1" class="data row3 col1" >Karla Lizette</td>
     </tr>
   </tbody>
 </table>
@@ -766,24 +766,24 @@ df.iloc[2: , ]
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_d03eb">
+<table id="T_19b85">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_d03eb_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_d03eb_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_19b85_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_19b85_level0_col1" class="col_heading level0 col1" >Names</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_d03eb_level0_row0" class="row_heading level0 row0" >z</th>
-      <td id="T_d03eb_row0_col0" class="data row0 col0" >Lupita</td>
-      <td id="T_d03eb_row0_col1" class="data row0 col1" >María Guadalupe</td>
+      <th id="T_19b85_level0_row0" class="row_heading level0 row0" >z</th>
+      <td id="T_19b85_row0_col0" class="data row0 col0" >Lupita</td>
+      <td id="T_19b85_row0_col1" class="data row0 col1" >María Guadalupe</td>
     </tr>
     <tr>
-      <th id="T_d03eb_level0_row1" class="row_heading level0 row1" >w</th>
-      <td id="T_d03eb_row1_col0" class="data row1 col0" >Karla</td>
-      <td id="T_d03eb_row1_col1" class="data row1 col1" >Karla Lizette</td>
+      <th id="T_19b85_level0_row1" class="row_heading level0 row1" >w</th>
+      <td id="T_19b85_row1_col0" class="data row1 col0" >Karla</td>
+      <td id="T_19b85_row1_col1" class="data row1 col1" >Karla Lizette</td>
     </tr>
   </tbody>
 </table>
@@ -802,39 +802,39 @@ df
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_3df28">
+<table id="T_625af">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_3df28_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_3df28_level0_col1" class="col_heading level0 col1" >Names</th>
-      <th id="T_3df28_level0_col2" class="col_heading level0 col2" >Numbers_2</th>
+      <th id="T_625af_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_625af_level0_col1" class="col_heading level0 col1" >Names</th>
+      <th id="T_625af_level0_col2" class="col_heading level0 col2" >Numbers_2</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_3df28_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_3df28_row0_col0" class="data row0 col0" >Estef</td>
-      <td id="T_3df28_row0_col1" class="data row0 col1" >Estefanía</td>
-      <td id="T_3df28_row0_col2" class="data row0 col2" >0</td>
+      <th id="T_625af_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_625af_row0_col0" class="data row0 col0" >Estef</td>
+      <td id="T_625af_row0_col1" class="data row0 col1" >Estefanía</td>
+      <td id="T_625af_row0_col2" class="data row0 col2" >0</td>
     </tr>
     <tr>
-      <th id="T_3df28_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_3df28_row1_col0" class="data row1 col0" >Yanet</td>
-      <td id="T_3df28_row1_col1" class="data row1 col1" >Laura Yanet</td>
-      <td id="T_3df28_row1_col2" class="data row1 col2" >1</td>
+      <th id="T_625af_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_625af_row1_col0" class="data row1 col0" >Yanet</td>
+      <td id="T_625af_row1_col1" class="data row1 col1" >Laura Yanet</td>
+      <td id="T_625af_row1_col2" class="data row1 col2" >1</td>
     </tr>
     <tr>
-      <th id="T_3df28_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_3df28_row2_col0" class="data row2 col0" >Lupita</td>
-      <td id="T_3df28_row2_col1" class="data row2 col1" >María Guadalupe</td>
-      <td id="T_3df28_row2_col2" class="data row2 col2" >2</td>
+      <th id="T_625af_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_625af_row2_col0" class="data row2 col0" >Lupita</td>
+      <td id="T_625af_row2_col1" class="data row2 col1" >María Guadalupe</td>
+      <td id="T_625af_row2_col2" class="data row2 col2" >2</td>
     </tr>
     <tr>
-      <th id="T_3df28_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_3df28_row3_col0" class="data row3 col0" >Karla</td>
-      <td id="T_3df28_row3_col1" class="data row3 col1" >Karla Lizette</td>
-      <td id="T_3df28_row3_col2" class="data row3 col2" >3</td>
+      <th id="T_625af_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_625af_row3_col0" class="data row3 col0" >Karla</td>
+      <td id="T_625af_row3_col1" class="data row3 col1" >Karla Lizette</td>
+      <td id="T_625af_row3_col2" class="data row3 col2" >3</td>
     </tr>
   </tbody>
 </table>
@@ -852,34 +852,34 @@ df.drop(columns=['Names'])
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_c0611">
+<table id="T_2ef80">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_c0611_level0_col0" class="col_heading level0 col0" >Nick</th>
-      <th id="T_c0611_level0_col1" class="col_heading level0 col1" >Numbers_2</th>
+      <th id="T_2ef80_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_2ef80_level0_col1" class="col_heading level0 col1" >Numbers_2</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_c0611_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_c0611_row0_col0" class="data row0 col0" >Estef</td>
-      <td id="T_c0611_row0_col1" class="data row0 col1" >0</td>
+      <th id="T_2ef80_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_2ef80_row0_col0" class="data row0 col0" >Estef</td>
+      <td id="T_2ef80_row0_col1" class="data row0 col1" >0</td>
     </tr>
     <tr>
-      <th id="T_c0611_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_c0611_row1_col0" class="data row1 col0" >Yanet</td>
-      <td id="T_c0611_row1_col1" class="data row1 col1" >1</td>
+      <th id="T_2ef80_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_2ef80_row1_col0" class="data row1 col0" >Yanet</td>
+      <td id="T_2ef80_row1_col1" class="data row1 col1" >1</td>
     </tr>
     <tr>
-      <th id="T_c0611_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_c0611_row2_col0" class="data row2 col0" >Lupita</td>
-      <td id="T_c0611_row2_col1" class="data row2 col1" >2</td>
+      <th id="T_2ef80_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_2ef80_row2_col0" class="data row2 col0" >Lupita</td>
+      <td id="T_2ef80_row2_col1" class="data row2 col1" >2</td>
     </tr>
     <tr>
-      <th id="T_c0611_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_c0611_row3_col0" class="data row3 col0" >Karla</td>
-      <td id="T_c0611_row3_col1" class="data row3 col1" >3</td>
+      <th id="T_2ef80_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_2ef80_row3_col0" class="data row3 col0" >Karla</td>
+      <td id="T_2ef80_row3_col1" class="data row3 col1" >3</td>
     </tr>
   </tbody>
 </table>
@@ -894,29 +894,29 @@ df.drop(columns=['Names',"Numbers_2"])
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_27177">
+<table id="T_45cd2">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_27177_level0_col0" class="col_heading level0 col0" >Nick</th>
+      <th id="T_45cd2_level0_col0" class="col_heading level0 col0" >Nick</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_27177_level0_row0" class="row_heading level0 row0" >x</th>
-      <td id="T_27177_row0_col0" class="data row0 col0" >Estef</td>
+      <th id="T_45cd2_level0_row0" class="row_heading level0 row0" >x</th>
+      <td id="T_45cd2_row0_col0" class="data row0 col0" >Estef</td>
     </tr>
     <tr>
-      <th id="T_27177_level0_row1" class="row_heading level0 row1" >y</th>
-      <td id="T_27177_row1_col0" class="data row1 col0" >Yanet</td>
+      <th id="T_45cd2_level0_row1" class="row_heading level0 row1" >y</th>
+      <td id="T_45cd2_row1_col0" class="data row1 col0" >Yanet</td>
     </tr>
     <tr>
-      <th id="T_27177_level0_row2" class="row_heading level0 row2" >z</th>
-      <td id="T_27177_row2_col0" class="data row2 col0" >Lupita</td>
+      <th id="T_45cd2_level0_row2" class="row_heading level0 row2" >z</th>
+      <td id="T_45cd2_row2_col0" class="data row2 col0" >Lupita</td>
     </tr>
     <tr>
-      <th id="T_27177_level0_row3" class="row_heading level0 row3" >w</th>
-      <td id="T_27177_row3_col0" class="data row3 col0" >Karla</td>
+      <th id="T_45cd2_level0_row3" class="row_heading level0 row3" >w</th>
+      <td id="T_45cd2_row3_col0" class="data row3 col0" >Karla</td>
     </tr>
   </tbody>
 </table>
@@ -929,7 +929,6 @@ df.drop(columns=['Names',"Numbers_2"])
 You can download the Excel file by copying and pasting and pasting to a browser through the following link:
 
 https://github.com/abernal30/ML_python/blob/main/df.xlsx
-
 
 I stored the file in a sub-directory named "data," and I called "df.xlsx"
 
@@ -952,72 +951,72 @@ data
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_0fc8e">
+<table id="T_33221">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_0fc8e_level0_col0" class="col_heading level0 col0" >Unnamed: 0</th>
-      <th id="T_0fc8e_level0_col1" class="col_heading level0 col1" >Unnamed: 1</th>
-      <th id="T_0fc8e_level0_col2" class="col_heading level0 col2" >Unnamed: 2</th>
-      <th id="T_0fc8e_level0_col3" class="col_heading level0 col3" >Unnamed: 3</th>
+      <th id="T_33221_level0_col0" class="col_heading level0 col0" >Unnamed: 0</th>
+      <th id="T_33221_level0_col1" class="col_heading level0 col1" >Unnamed: 1</th>
+      <th id="T_33221_level0_col2" class="col_heading level0 col2" >Unnamed: 2</th>
+      <th id="T_33221_level0_col3" class="col_heading level0 col3" >Unnamed: 3</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_0fc8e_level0_row0" class="row_heading level0 row0" >0</th>
-      <td id="T_0fc8e_row0_col0" class="data row0 col0" >nan</td>
-      <td id="T_0fc8e_row0_col1" class="data row0 col1" >Título HOJA 1</td>
-      <td id="T_0fc8e_row0_col2" class="data row0 col2" >nan</td>
-      <td id="T_0fc8e_row0_col3" class="data row0 col3" >nan</td>
+      <th id="T_33221_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_33221_row0_col0" class="data row0 col0" >nan</td>
+      <td id="T_33221_row0_col1" class="data row0 col1" >Título HOJA 1</td>
+      <td id="T_33221_row0_col2" class="data row0 col2" >nan</td>
+      <td id="T_33221_row0_col3" class="data row0 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row1" class="row_heading level0 row1" >1</th>
-      <td id="T_0fc8e_row1_col0" class="data row1 col0" >nan</td>
-      <td id="T_0fc8e_row1_col1" class="data row1 col1" >nan</td>
-      <td id="T_0fc8e_row1_col2" class="data row1 col2" >X</td>
-      <td id="T_0fc8e_row1_col3" class="data row1 col3" >Y</td>
+      <th id="T_33221_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_33221_row1_col0" class="data row1 col0" >nan</td>
+      <td id="T_33221_row1_col1" class="data row1 col1" >nan</td>
+      <td id="T_33221_row1_col2" class="data row1 col2" >X</td>
+      <td id="T_33221_row1_col3" class="data row1 col3" >Y</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row2" class="row_heading level0 row2" >2</th>
-      <td id="T_0fc8e_row2_col0" class="data row2 col0" >A</td>
-      <td id="T_0fc8e_row2_col1" class="data row2 col1" >nan</td>
-      <td id="T_0fc8e_row2_col2" class="data row2 col2" >2</td>
-      <td id="T_0fc8e_row2_col3" class="data row2 col3" >10</td>
+      <th id="T_33221_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_33221_row2_col0" class="data row2 col0" >A</td>
+      <td id="T_33221_row2_col1" class="data row2 col1" >nan</td>
+      <td id="T_33221_row2_col2" class="data row2 col2" >2</td>
+      <td id="T_33221_row2_col3" class="data row2 col3" >10</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row3" class="row_heading level0 row3" >3</th>
-      <td id="T_0fc8e_row3_col0" class="data row3 col0" >B</td>
-      <td id="T_0fc8e_row3_col1" class="data row3 col1" >nan</td>
-      <td id="T_0fc8e_row3_col2" class="data row3 col2" >50</td>
-      <td id="T_0fc8e_row3_col3" class="data row3 col3" >nan</td>
+      <th id="T_33221_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_33221_row3_col0" class="data row3 col0" >B</td>
+      <td id="T_33221_row3_col1" class="data row3 col1" >nan</td>
+      <td id="T_33221_row3_col2" class="data row3 col2" >50</td>
+      <td id="T_33221_row3_col3" class="data row3 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row4" class="row_heading level0 row4" >4</th>
-      <td id="T_0fc8e_row4_col0" class="data row4 col0" >C</td>
-      <td id="T_0fc8e_row4_col1" class="data row4 col1" >nan</td>
-      <td id="T_0fc8e_row4_col2" class="data row4 col2" >nan</td>
-      <td id="T_0fc8e_row4_col3" class="data row4 col3" >25</td>
+      <th id="T_33221_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_33221_row4_col0" class="data row4 col0" >C</td>
+      <td id="T_33221_row4_col1" class="data row4 col1" >nan</td>
+      <td id="T_33221_row4_col2" class="data row4 col2" >nan</td>
+      <td id="T_33221_row4_col3" class="data row4 col3" >25</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row5" class="row_heading level0 row5" >5</th>
-      <td id="T_0fc8e_row5_col0" class="data row5 col0" >nan</td>
-      <td id="T_0fc8e_row5_col1" class="data row5 col1" >nan</td>
-      <td id="T_0fc8e_row5_col2" class="data row5 col2" >nan</td>
-      <td id="T_0fc8e_row5_col3" class="data row5 col3" >nan</td>
+      <th id="T_33221_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_33221_row5_col0" class="data row5 col0" >nan</td>
+      <td id="T_33221_row5_col1" class="data row5 col1" >nan</td>
+      <td id="T_33221_row5_col2" class="data row5 col2" >nan</td>
+      <td id="T_33221_row5_col3" class="data row5 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row6" class="row_heading level0 row6" >6</th>
-      <td id="T_0fc8e_row6_col0" class="data row6 col0" >D</td>
-      <td id="T_0fc8e_row6_col1" class="data row6 col1" >nan</td>
-      <td id="T_0fc8e_row6_col2" class="data row6 col2" >20</td>
-      <td id="T_0fc8e_row6_col3" class="data row6 col3" >34</td>
+      <th id="T_33221_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_33221_row6_col0" class="data row6 col0" >D</td>
+      <td id="T_33221_row6_col1" class="data row6 col1" >nan</td>
+      <td id="T_33221_row6_col2" class="data row6 col2" >20</td>
+      <td id="T_33221_row6_col3" class="data row6 col3" >34</td>
     </tr>
     <tr>
-      <th id="T_0fc8e_level0_row7" class="row_heading level0 row7" >7</th>
-      <td id="T_0fc8e_row7_col0" class="data row7 col0" >E</td>
-      <td id="T_0fc8e_row7_col1" class="data row7 col1" >nan</td>
-      <td id="T_0fc8e_row7_col2" class="data row7 col2" >200</td>
-      <td id="T_0fc8e_row7_col3" class="data row7 col3" >23</td>
+      <th id="T_33221_level0_row7" class="row_heading level0 row7" >7</th>
+      <td id="T_33221_row7_col0" class="data row7 col0" >E</td>
+      <td id="T_33221_row7_col1" class="data row7 col1" >nan</td>
+      <td id="T_33221_row7_col2" class="data row7 col2" >200</td>
+      <td id="T_33221_row7_col3" class="data row7 col3" >23</td>
     </tr>
   </tbody>
 </table>
@@ -1035,63 +1034,63 @@ data
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_4fa17">
+<table id="T_9d126">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_4fa17_level0_col0" class="col_heading level0 col0" >Unnamed: 1</th>
-      <th id="T_4fa17_level0_col1" class="col_heading level0 col1" >Unnamed: 2</th>
-      <th id="T_4fa17_level0_col2" class="col_heading level0 col2" >Unnamed: 3</th>
+      <th id="T_9d126_level0_col0" class="col_heading level0 col0" >Unnamed: 1</th>
+      <th id="T_9d126_level0_col1" class="col_heading level0 col1" >Unnamed: 2</th>
+      <th id="T_9d126_level0_col2" class="col_heading level0 col2" >Unnamed: 3</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_4fa17_level0_row0" class="row_heading level0 row0" >nan</th>
-      <td id="T_4fa17_row0_col0" class="data row0 col0" >Título HOJA 1</td>
-      <td id="T_4fa17_row0_col1" class="data row0 col1" >nan</td>
-      <td id="T_4fa17_row0_col2" class="data row0 col2" >nan</td>
+      <th id="T_9d126_level0_row0" class="row_heading level0 row0" >nan</th>
+      <td id="T_9d126_row0_col0" class="data row0 col0" >Título HOJA 1</td>
+      <td id="T_9d126_row0_col1" class="data row0 col1" >nan</td>
+      <td id="T_9d126_row0_col2" class="data row0 col2" >nan</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row1" class="row_heading level0 row1" >nan</th>
-      <td id="T_4fa17_row1_col0" class="data row1 col0" >nan</td>
-      <td id="T_4fa17_row1_col1" class="data row1 col1" >X</td>
-      <td id="T_4fa17_row1_col2" class="data row1 col2" >Y</td>
+      <th id="T_9d126_level0_row1" class="row_heading level0 row1" >nan</th>
+      <td id="T_9d126_row1_col0" class="data row1 col0" >nan</td>
+      <td id="T_9d126_row1_col1" class="data row1 col1" >X</td>
+      <td id="T_9d126_row1_col2" class="data row1 col2" >Y</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row2" class="row_heading level0 row2" >A</th>
-      <td id="T_4fa17_row2_col0" class="data row2 col0" >nan</td>
-      <td id="T_4fa17_row2_col1" class="data row2 col1" >2</td>
-      <td id="T_4fa17_row2_col2" class="data row2 col2" >10</td>
+      <th id="T_9d126_level0_row2" class="row_heading level0 row2" >A</th>
+      <td id="T_9d126_row2_col0" class="data row2 col0" >nan</td>
+      <td id="T_9d126_row2_col1" class="data row2 col1" >2</td>
+      <td id="T_9d126_row2_col2" class="data row2 col2" >10</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row3" class="row_heading level0 row3" >B</th>
-      <td id="T_4fa17_row3_col0" class="data row3 col0" >nan</td>
-      <td id="T_4fa17_row3_col1" class="data row3 col1" >50</td>
-      <td id="T_4fa17_row3_col2" class="data row3 col2" >nan</td>
+      <th id="T_9d126_level0_row3" class="row_heading level0 row3" >B</th>
+      <td id="T_9d126_row3_col0" class="data row3 col0" >nan</td>
+      <td id="T_9d126_row3_col1" class="data row3 col1" >50</td>
+      <td id="T_9d126_row3_col2" class="data row3 col2" >nan</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row4" class="row_heading level0 row4" >C</th>
-      <td id="T_4fa17_row4_col0" class="data row4 col0" >nan</td>
-      <td id="T_4fa17_row4_col1" class="data row4 col1" >nan</td>
-      <td id="T_4fa17_row4_col2" class="data row4 col2" >25</td>
+      <th id="T_9d126_level0_row4" class="row_heading level0 row4" >C</th>
+      <td id="T_9d126_row4_col0" class="data row4 col0" >nan</td>
+      <td id="T_9d126_row4_col1" class="data row4 col1" >nan</td>
+      <td id="T_9d126_row4_col2" class="data row4 col2" >25</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row5" class="row_heading level0 row5" >nan</th>
-      <td id="T_4fa17_row5_col0" class="data row5 col0" >nan</td>
-      <td id="T_4fa17_row5_col1" class="data row5 col1" >nan</td>
-      <td id="T_4fa17_row5_col2" class="data row5 col2" >nan</td>
+      <th id="T_9d126_level0_row5" class="row_heading level0 row5" >nan</th>
+      <td id="T_9d126_row5_col0" class="data row5 col0" >nan</td>
+      <td id="T_9d126_row5_col1" class="data row5 col1" >nan</td>
+      <td id="T_9d126_row5_col2" class="data row5 col2" >nan</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row6" class="row_heading level0 row6" >D</th>
-      <td id="T_4fa17_row6_col0" class="data row6 col0" >nan</td>
-      <td id="T_4fa17_row6_col1" class="data row6 col1" >20</td>
-      <td id="T_4fa17_row6_col2" class="data row6 col2" >34</td>
+      <th id="T_9d126_level0_row6" class="row_heading level0 row6" >D</th>
+      <td id="T_9d126_row6_col0" class="data row6 col0" >nan</td>
+      <td id="T_9d126_row6_col1" class="data row6 col1" >20</td>
+      <td id="T_9d126_row6_col2" class="data row6 col2" >34</td>
     </tr>
     <tr>
-      <th id="T_4fa17_level0_row7" class="row_heading level0 row7" >E</th>
-      <td id="T_4fa17_row7_col0" class="data row7 col0" >nan</td>
-      <td id="T_4fa17_row7_col1" class="data row7 col1" >200</td>
-      <td id="T_4fa17_row7_col2" class="data row7 col2" >23</td>
+      <th id="T_9d126_level0_row7" class="row_heading level0 row7" >E</th>
+      <td id="T_9d126_row7_col0" class="data row7 col0" >nan</td>
+      <td id="T_9d126_row7_col1" class="data row7 col1" >200</td>
+      <td id="T_9d126_row7_col2" class="data row7 col2" >23</td>
     </tr>
   </tbody>
 </table>
@@ -1147,51 +1146,51 @@ data
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_98b28">
+<table id="T_0b4f6">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_98b28_level0_col0" class="col_heading level0 col0" >Unnamed: 1</th>
-      <th id="T_98b28_level0_col1" class="col_heading level0 col1" >X</th>
-      <th id="T_98b28_level0_col2" class="col_heading level0 col2" >Y</th>
+      <th id="T_0b4f6_level0_col0" class="col_heading level0 col0" >Unnamed: 1</th>
+      <th id="T_0b4f6_level0_col1" class="col_heading level0 col1" >X</th>
+      <th id="T_0b4f6_level0_col2" class="col_heading level0 col2" >Y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_98b28_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_98b28_row0_col0" class="data row0 col0" >nan</td>
-      <td id="T_98b28_row0_col1" class="data row0 col1" >2.000000</td>
-      <td id="T_98b28_row0_col2" class="data row0 col2" >10.000000</td>
+      <th id="T_0b4f6_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_0b4f6_row0_col0" class="data row0 col0" >nan</td>
+      <td id="T_0b4f6_row0_col1" class="data row0 col1" >2.000000</td>
+      <td id="T_0b4f6_row0_col2" class="data row0 col2" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_98b28_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_98b28_row1_col0" class="data row1 col0" >nan</td>
-      <td id="T_98b28_row1_col1" class="data row1 col1" >50.000000</td>
-      <td id="T_98b28_row1_col2" class="data row1 col2" >nan</td>
+      <th id="T_0b4f6_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_0b4f6_row1_col0" class="data row1 col0" >nan</td>
+      <td id="T_0b4f6_row1_col1" class="data row1 col1" >50.000000</td>
+      <td id="T_0b4f6_row1_col2" class="data row1 col2" >nan</td>
     </tr>
     <tr>
-      <th id="T_98b28_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_98b28_row2_col0" class="data row2 col0" >nan</td>
-      <td id="T_98b28_row2_col1" class="data row2 col1" >nan</td>
-      <td id="T_98b28_row2_col2" class="data row2 col2" >25.000000</td>
+      <th id="T_0b4f6_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_0b4f6_row2_col0" class="data row2 col0" >nan</td>
+      <td id="T_0b4f6_row2_col1" class="data row2 col1" >nan</td>
+      <td id="T_0b4f6_row2_col2" class="data row2 col2" >25.000000</td>
     </tr>
     <tr>
-      <th id="T_98b28_level0_row3" class="row_heading level0 row3" >nan</th>
-      <td id="T_98b28_row3_col0" class="data row3 col0" >nan</td>
-      <td id="T_98b28_row3_col1" class="data row3 col1" >nan</td>
-      <td id="T_98b28_row3_col2" class="data row3 col2" >nan</td>
+      <th id="T_0b4f6_level0_row3" class="row_heading level0 row3" >nan</th>
+      <td id="T_0b4f6_row3_col0" class="data row3 col0" >nan</td>
+      <td id="T_0b4f6_row3_col1" class="data row3 col1" >nan</td>
+      <td id="T_0b4f6_row3_col2" class="data row3 col2" >nan</td>
     </tr>
     <tr>
-      <th id="T_98b28_level0_row4" class="row_heading level0 row4" >D</th>
-      <td id="T_98b28_row4_col0" class="data row4 col0" >nan</td>
-      <td id="T_98b28_row4_col1" class="data row4 col1" >20.000000</td>
-      <td id="T_98b28_row4_col2" class="data row4 col2" >34.000000</td>
+      <th id="T_0b4f6_level0_row4" class="row_heading level0 row4" >D</th>
+      <td id="T_0b4f6_row4_col0" class="data row4 col0" >nan</td>
+      <td id="T_0b4f6_row4_col1" class="data row4 col1" >20.000000</td>
+      <td id="T_0b4f6_row4_col2" class="data row4 col2" >34.000000</td>
     </tr>
     <tr>
-      <th id="T_98b28_level0_row5" class="row_heading level0 row5" >E</th>
-      <td id="T_98b28_row5_col0" class="data row5 col0" >nan</td>
-      <td id="T_98b28_row5_col1" class="data row5 col1" >200.000000</td>
-      <td id="T_98b28_row5_col2" class="data row5 col2" >23.000000</td>
+      <th id="T_0b4f6_level0_row5" class="row_heading level0 row5" >E</th>
+      <td id="T_0b4f6_row5_col0" class="data row5 col0" >nan</td>
+      <td id="T_0b4f6_row5_col1" class="data row5 col1" >200.000000</td>
+      <td id="T_0b4f6_row5_col2" class="data row5 col2" >23.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1209,44 +1208,44 @@ data
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_c1bd2">
+<table id="T_27c9e">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_c1bd2_level0_col0" class="col_heading level0 col0" >X</th>
-      <th id="T_c1bd2_level0_col1" class="col_heading level0 col1" >Y</th>
+      <th id="T_27c9e_level0_col0" class="col_heading level0 col0" >X</th>
+      <th id="T_27c9e_level0_col1" class="col_heading level0 col1" >Y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_c1bd2_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_c1bd2_row0_col0" class="data row0 col0" >2.000000</td>
-      <td id="T_c1bd2_row0_col1" class="data row0 col1" >10.000000</td>
+      <th id="T_27c9e_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_27c9e_row0_col0" class="data row0 col0" >2.000000</td>
+      <td id="T_27c9e_row0_col1" class="data row0 col1" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_c1bd2_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_c1bd2_row1_col0" class="data row1 col0" >50.000000</td>
-      <td id="T_c1bd2_row1_col1" class="data row1 col1" >nan</td>
+      <th id="T_27c9e_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_27c9e_row1_col0" class="data row1 col0" >50.000000</td>
+      <td id="T_27c9e_row1_col1" class="data row1 col1" >nan</td>
     </tr>
     <tr>
-      <th id="T_c1bd2_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_c1bd2_row2_col0" class="data row2 col0" >nan</td>
-      <td id="T_c1bd2_row2_col1" class="data row2 col1" >25.000000</td>
+      <th id="T_27c9e_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_27c9e_row2_col0" class="data row2 col0" >nan</td>
+      <td id="T_27c9e_row2_col1" class="data row2 col1" >25.000000</td>
     </tr>
     <tr>
-      <th id="T_c1bd2_level0_row3" class="row_heading level0 row3" >nan</th>
-      <td id="T_c1bd2_row3_col0" class="data row3 col0" >nan</td>
-      <td id="T_c1bd2_row3_col1" class="data row3 col1" >nan</td>
+      <th id="T_27c9e_level0_row3" class="row_heading level0 row3" >nan</th>
+      <td id="T_27c9e_row3_col0" class="data row3 col0" >nan</td>
+      <td id="T_27c9e_row3_col1" class="data row3 col1" >nan</td>
     </tr>
     <tr>
-      <th id="T_c1bd2_level0_row4" class="row_heading level0 row4" >D</th>
-      <td id="T_c1bd2_row4_col0" class="data row4 col0" >20.000000</td>
-      <td id="T_c1bd2_row4_col1" class="data row4 col1" >34.000000</td>
+      <th id="T_27c9e_level0_row4" class="row_heading level0 row4" >D</th>
+      <td id="T_27c9e_row4_col0" class="data row4 col0" >20.000000</td>
+      <td id="T_27c9e_row4_col1" class="data row4 col1" >34.000000</td>
     </tr>
     <tr>
-      <th id="T_c1bd2_level0_row5" class="row_heading level0 row5" >E</th>
-      <td id="T_c1bd2_row5_col0" class="data row5 col0" >200.000000</td>
-      <td id="T_c1bd2_row5_col1" class="data row5 col1" >23.000000</td>
+      <th id="T_27c9e_level0_row5" class="row_heading level0 row5" >E</th>
+      <td id="T_27c9e_row5_col0" class="data row5 col0" >200.000000</td>
+      <td id="T_27c9e_row5_col1" class="data row5 col1" >23.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1273,29 +1272,29 @@ data.dropna()
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_12ba1">
+<table id="T_6f1ff">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_12ba1_level0_col0" class="col_heading level0 col0" >X</th>
-      <th id="T_12ba1_level0_col1" class="col_heading level0 col1" >Y</th>
+      <th id="T_6f1ff_level0_col0" class="col_heading level0 col0" >X</th>
+      <th id="T_6f1ff_level0_col1" class="col_heading level0 col1" >Y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_12ba1_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_12ba1_row0_col0" class="data row0 col0" >2.000000</td>
-      <td id="T_12ba1_row0_col1" class="data row0 col1" >10.000000</td>
+      <th id="T_6f1ff_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_6f1ff_row0_col0" class="data row0 col0" >2.000000</td>
+      <td id="T_6f1ff_row0_col1" class="data row0 col1" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_12ba1_level0_row1" class="row_heading level0 row1" >D</th>
-      <td id="T_12ba1_row1_col0" class="data row1 col0" >20.000000</td>
-      <td id="T_12ba1_row1_col1" class="data row1 col1" >34.000000</td>
+      <th id="T_6f1ff_level0_row1" class="row_heading level0 row1" >D</th>
+      <td id="T_6f1ff_row1_col0" class="data row1 col0" >20.000000</td>
+      <td id="T_6f1ff_row1_col1" class="data row1 col1" >34.000000</td>
     </tr>
     <tr>
-      <th id="T_12ba1_level0_row2" class="row_heading level0 row2" >E</th>
-      <td id="T_12ba1_row2_col0" class="data row2 col0" >200.000000</td>
-      <td id="T_12ba1_row2_col1" class="data row2 col1" >23.000000</td>
+      <th id="T_6f1ff_level0_row2" class="row_heading level0 row2" >E</th>
+      <td id="T_6f1ff_row2_col0" class="data row2 col0" >200.000000</td>
+      <td id="T_6f1ff_row2_col1" class="data row2 col1" >23.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1311,44 +1310,44 @@ data.fillna(method='ffill')
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_7d9a1">
+<table id="T_0a1f2">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_7d9a1_level0_col0" class="col_heading level0 col0" >X</th>
-      <th id="T_7d9a1_level0_col1" class="col_heading level0 col1" >Y</th>
+      <th id="T_0a1f2_level0_col0" class="col_heading level0 col0" >X</th>
+      <th id="T_0a1f2_level0_col1" class="col_heading level0 col1" >Y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_7d9a1_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_7d9a1_row0_col0" class="data row0 col0" >2.000000</td>
-      <td id="T_7d9a1_row0_col1" class="data row0 col1" >10.000000</td>
+      <th id="T_0a1f2_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_0a1f2_row0_col0" class="data row0 col0" >2.000000</td>
+      <td id="T_0a1f2_row0_col1" class="data row0 col1" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_7d9a1_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_7d9a1_row1_col0" class="data row1 col0" >50.000000</td>
-      <td id="T_7d9a1_row1_col1" class="data row1 col1" >10.000000</td>
+      <th id="T_0a1f2_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_0a1f2_row1_col0" class="data row1 col0" >50.000000</td>
+      <td id="T_0a1f2_row1_col1" class="data row1 col1" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_7d9a1_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_7d9a1_row2_col0" class="data row2 col0" >50.000000</td>
-      <td id="T_7d9a1_row2_col1" class="data row2 col1" >25.000000</td>
+      <th id="T_0a1f2_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_0a1f2_row2_col0" class="data row2 col0" >50.000000</td>
+      <td id="T_0a1f2_row2_col1" class="data row2 col1" >25.000000</td>
     </tr>
     <tr>
-      <th id="T_7d9a1_level0_row3" class="row_heading level0 row3" >nan</th>
-      <td id="T_7d9a1_row3_col0" class="data row3 col0" >50.000000</td>
-      <td id="T_7d9a1_row3_col1" class="data row3 col1" >25.000000</td>
+      <th id="T_0a1f2_level0_row3" class="row_heading level0 row3" >nan</th>
+      <td id="T_0a1f2_row3_col0" class="data row3 col0" >50.000000</td>
+      <td id="T_0a1f2_row3_col1" class="data row3 col1" >25.000000</td>
     </tr>
     <tr>
-      <th id="T_7d9a1_level0_row4" class="row_heading level0 row4" >D</th>
-      <td id="T_7d9a1_row4_col0" class="data row4 col0" >20.000000</td>
-      <td id="T_7d9a1_row4_col1" class="data row4 col1" >34.000000</td>
+      <th id="T_0a1f2_level0_row4" class="row_heading level0 row4" >D</th>
+      <td id="T_0a1f2_row4_col0" class="data row4 col0" >20.000000</td>
+      <td id="T_0a1f2_row4_col1" class="data row4 col1" >34.000000</td>
     </tr>
     <tr>
-      <th id="T_7d9a1_level0_row5" class="row_heading level0 row5" >E</th>
-      <td id="T_7d9a1_row5_col0" class="data row5 col0" >200.000000</td>
-      <td id="T_7d9a1_row5_col1" class="data row5 col1" >23.000000</td>
+      <th id="T_0a1f2_level0_row5" class="row_heading level0 row5" >E</th>
+      <td id="T_0a1f2_row5_col0" class="data row5 col0" >200.000000</td>
+      <td id="T_0a1f2_row5_col1" class="data row5 col1" >23.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1388,7 +1387,7 @@ The next function
 # This function skips the index elements of a data frame that are missing values, space or: ".",",",";",";","'",'""'.
 # It returns a data frame without the ignored elements.
 # Parameters:
-# df: data frame  
+# df: data frame. The object for which the method is called
 
 #---- Do not change anything from here ----
 def clean_na_index2(df):
@@ -1408,39 +1407,39 @@ df_index_clean
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_cc157">
+<table id="T_848b5">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_cc157_level0_col0" class="col_heading level0 col0" >X</th>
-      <th id="T_cc157_level0_col1" class="col_heading level0 col1" >Y</th>
+      <th id="T_848b5_level0_col0" class="col_heading level0 col0" >X</th>
+      <th id="T_848b5_level0_col1" class="col_heading level0 col1" >Y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_cc157_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_cc157_row0_col0" class="data row0 col0" >2.000000</td>
-      <td id="T_cc157_row0_col1" class="data row0 col1" >10.000000</td>
+      <th id="T_848b5_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_848b5_row0_col0" class="data row0 col0" >2.000000</td>
+      <td id="T_848b5_row0_col1" class="data row0 col1" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_cc157_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_cc157_row1_col0" class="data row1 col0" >50.000000</td>
-      <td id="T_cc157_row1_col1" class="data row1 col1" >0.000000</td>
+      <th id="T_848b5_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_848b5_row1_col0" class="data row1 col0" >50.000000</td>
+      <td id="T_848b5_row1_col1" class="data row1 col1" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_cc157_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_cc157_row2_col0" class="data row2 col0" >0.000000</td>
-      <td id="T_cc157_row2_col1" class="data row2 col1" >25.000000</td>
+      <th id="T_848b5_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_848b5_row2_col0" class="data row2 col0" >0.000000</td>
+      <td id="T_848b5_row2_col1" class="data row2 col1" >25.000000</td>
     </tr>
     <tr>
-      <th id="T_cc157_level0_row3" class="row_heading level0 row3" >D</th>
-      <td id="T_cc157_row3_col0" class="data row3 col0" >20.000000</td>
-      <td id="T_cc157_row3_col1" class="data row3 col1" >34.000000</td>
+      <th id="T_848b5_level0_row3" class="row_heading level0 row3" >D</th>
+      <td id="T_848b5_row3_col0" class="data row3 col0" >20.000000</td>
+      <td id="T_848b5_row3_col1" class="data row3 col1" >34.000000</td>
     </tr>
     <tr>
-      <th id="T_cc157_level0_row4" class="row_heading level0 row4" >E</th>
-      <td id="T_cc157_row4_col0" class="data row4 col0" >200.000000</td>
-      <td id="T_cc157_row4_col1" class="data row4 col1" >23.000000</td>
+      <th id="T_848b5_level0_row4" class="row_heading level0 row4" >E</th>
+      <td id="T_848b5_row4_col0" class="data row4 col0" >200.000000</td>
+      <td id="T_848b5_row4_col1" class="data row4 col1" >23.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1460,39 +1459,39 @@ data
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_8e00b">
+<table id="T_26cb0">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_8e00b_level0_col0" class="col_heading level0 col0" >W</th>
-      <th id="T_8e00b_level0_col1" class="col_heading level0 col1" >Z</th>
+      <th id="T_26cb0_level0_col0" class="col_heading level0 col0" >W</th>
+      <th id="T_26cb0_level0_col1" class="col_heading level0 col1" >Z</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_8e00b_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_8e00b_row0_col0" class="data row0 col0" >2</td>
-      <td id="T_8e00b_row0_col1" class="data row0 col1" >10</td>
+      <th id="T_26cb0_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_26cb0_row0_col0" class="data row0 col0" >2</td>
+      <td id="T_26cb0_row0_col1" class="data row0 col1" >10</td>
     </tr>
     <tr>
-      <th id="T_8e00b_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_8e00b_row1_col0" class="data row1 col0" >50</td>
-      <td id="T_8e00b_row1_col1" class="data row1 col1" >30</td>
+      <th id="T_26cb0_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_26cb0_row1_col0" class="data row1 col0" >50</td>
+      <td id="T_26cb0_row1_col1" class="data row1 col1" >30</td>
     </tr>
     <tr>
-      <th id="T_8e00b_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_8e00b_row2_col0" class="data row2 col0" >30</td>
-      <td id="T_8e00b_row2_col1" class="data row2 col1" >25</td>
+      <th id="T_26cb0_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_26cb0_row2_col0" class="data row2 col0" >30</td>
+      <td id="T_26cb0_row2_col1" class="data row2 col1" >25</td>
     </tr>
     <tr>
-      <th id="T_8e00b_level0_row3" class="row_heading level0 row3" >D</th>
-      <td id="T_8e00b_row3_col0" class="data row3 col0" >20</td>
-      <td id="T_8e00b_row3_col1" class="data row3 col1" >34</td>
+      <th id="T_26cb0_level0_row3" class="row_heading level0 row3" >D</th>
+      <td id="T_26cb0_row3_col0" class="data row3 col0" >20</td>
+      <td id="T_26cb0_row3_col1" class="data row3 col1" >34</td>
     </tr>
     <tr>
-      <th id="T_8e00b_level0_row4" class="row_heading level0 row4" >E</th>
-      <td id="T_8e00b_row4_col0" class="data row4 col0" >200</td>
-      <td id="T_8e00b_row4_col1" class="data row4 col1" >23</td>
+      <th id="T_26cb0_level0_row4" class="row_heading level0 row4" >E</th>
+      <td id="T_26cb0_row4_col0" class="data row4 col0" >200</td>
+      <td id="T_26cb0_row4_col1" class="data row4 col1" >23</td>
     </tr>
   </tbody>
 </table>
@@ -1516,51 +1515,51 @@ pd.concat([df_index_clean,data],axis=1)
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_cb81c">
+<table id="T_258e3">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_cb81c_level0_col0" class="col_heading level0 col0" >X</th>
-      <th id="T_cb81c_level0_col1" class="col_heading level0 col1" >Y</th>
-      <th id="T_cb81c_level0_col2" class="col_heading level0 col2" >W</th>
-      <th id="T_cb81c_level0_col3" class="col_heading level0 col3" >Z</th>
+      <th id="T_258e3_level0_col0" class="col_heading level0 col0" >X</th>
+      <th id="T_258e3_level0_col1" class="col_heading level0 col1" >Y</th>
+      <th id="T_258e3_level0_col2" class="col_heading level0 col2" >W</th>
+      <th id="T_258e3_level0_col3" class="col_heading level0 col3" >Z</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_cb81c_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_cb81c_row0_col0" class="data row0 col0" >2.000000</td>
-      <td id="T_cb81c_row0_col1" class="data row0 col1" >10.000000</td>
-      <td id="T_cb81c_row0_col2" class="data row0 col2" >2</td>
-      <td id="T_cb81c_row0_col3" class="data row0 col3" >10</td>
+      <th id="T_258e3_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_258e3_row0_col0" class="data row0 col0" >2.000000</td>
+      <td id="T_258e3_row0_col1" class="data row0 col1" >10.000000</td>
+      <td id="T_258e3_row0_col2" class="data row0 col2" >2</td>
+      <td id="T_258e3_row0_col3" class="data row0 col3" >10</td>
     </tr>
     <tr>
-      <th id="T_cb81c_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_cb81c_row1_col0" class="data row1 col0" >50.000000</td>
-      <td id="T_cb81c_row1_col1" class="data row1 col1" >0.000000</td>
-      <td id="T_cb81c_row1_col2" class="data row1 col2" >50</td>
-      <td id="T_cb81c_row1_col3" class="data row1 col3" >30</td>
+      <th id="T_258e3_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_258e3_row1_col0" class="data row1 col0" >50.000000</td>
+      <td id="T_258e3_row1_col1" class="data row1 col1" >0.000000</td>
+      <td id="T_258e3_row1_col2" class="data row1 col2" >50</td>
+      <td id="T_258e3_row1_col3" class="data row1 col3" >30</td>
     </tr>
     <tr>
-      <th id="T_cb81c_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_cb81c_row2_col0" class="data row2 col0" >0.000000</td>
-      <td id="T_cb81c_row2_col1" class="data row2 col1" >25.000000</td>
-      <td id="T_cb81c_row2_col2" class="data row2 col2" >30</td>
-      <td id="T_cb81c_row2_col3" class="data row2 col3" >25</td>
+      <th id="T_258e3_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_258e3_row2_col0" class="data row2 col0" >0.000000</td>
+      <td id="T_258e3_row2_col1" class="data row2 col1" >25.000000</td>
+      <td id="T_258e3_row2_col2" class="data row2 col2" >30</td>
+      <td id="T_258e3_row2_col3" class="data row2 col3" >25</td>
     </tr>
     <tr>
-      <th id="T_cb81c_level0_row3" class="row_heading level0 row3" >D</th>
-      <td id="T_cb81c_row3_col0" class="data row3 col0" >20.000000</td>
-      <td id="T_cb81c_row3_col1" class="data row3 col1" >34.000000</td>
-      <td id="T_cb81c_row3_col2" class="data row3 col2" >20</td>
-      <td id="T_cb81c_row3_col3" class="data row3 col3" >34</td>
+      <th id="T_258e3_level0_row3" class="row_heading level0 row3" >D</th>
+      <td id="T_258e3_row3_col0" class="data row3 col0" >20.000000</td>
+      <td id="T_258e3_row3_col1" class="data row3 col1" >34.000000</td>
+      <td id="T_258e3_row3_col2" class="data row3 col2" >20</td>
+      <td id="T_258e3_row3_col3" class="data row3 col3" >34</td>
     </tr>
     <tr>
-      <th id="T_cb81c_level0_row4" class="row_heading level0 row4" >E</th>
-      <td id="T_cb81c_row4_col0" class="data row4 col0" >200.000000</td>
-      <td id="T_cb81c_row4_col1" class="data row4 col1" >23.000000</td>
-      <td id="T_cb81c_row4_col2" class="data row4 col2" >200</td>
-      <td id="T_cb81c_row4_col3" class="data row4 col3" >23</td>
+      <th id="T_258e3_level0_row4" class="row_heading level0 row4" >E</th>
+      <td id="T_258e3_row4_col0" class="data row4 col0" >200.000000</td>
+      <td id="T_258e3_row4_col1" class="data row4 col1" >23.000000</td>
+      <td id="T_258e3_row4_col2" class="data row4 col2" >200</td>
+      <td id="T_258e3_row4_col3" class="data row4 col3" >23</td>
     </tr>
   </tbody>
 </table>
@@ -1579,98 +1578,457 @@ pd.concat([df_index_clean,data])
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_22d2d">
+<table id="T_4f54e">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_22d2d_level0_col0" class="col_heading level0 col0" >X</th>
-      <th id="T_22d2d_level0_col1" class="col_heading level0 col1" >Y</th>
-      <th id="T_22d2d_level0_col2" class="col_heading level0 col2" >W</th>
-      <th id="T_22d2d_level0_col3" class="col_heading level0 col3" >Z</th>
+      <th id="T_4f54e_level0_col0" class="col_heading level0 col0" >X</th>
+      <th id="T_4f54e_level0_col1" class="col_heading level0 col1" >Y</th>
+      <th id="T_4f54e_level0_col2" class="col_heading level0 col2" >W</th>
+      <th id="T_4f54e_level0_col3" class="col_heading level0 col3" >Z</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_22d2d_level0_row0" class="row_heading level0 row0" >A</th>
-      <td id="T_22d2d_row0_col0" class="data row0 col0" >2.000000</td>
-      <td id="T_22d2d_row0_col1" class="data row0 col1" >10.000000</td>
-      <td id="T_22d2d_row0_col2" class="data row0 col2" >nan</td>
-      <td id="T_22d2d_row0_col3" class="data row0 col3" >nan</td>
+      <th id="T_4f54e_level0_row0" class="row_heading level0 row0" >A</th>
+      <td id="T_4f54e_row0_col0" class="data row0 col0" >2.000000</td>
+      <td id="T_4f54e_row0_col1" class="data row0 col1" >10.000000</td>
+      <td id="T_4f54e_row0_col2" class="data row0 col2" >nan</td>
+      <td id="T_4f54e_row0_col3" class="data row0 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row1" class="row_heading level0 row1" >B</th>
-      <td id="T_22d2d_row1_col0" class="data row1 col0" >50.000000</td>
-      <td id="T_22d2d_row1_col1" class="data row1 col1" >0.000000</td>
-      <td id="T_22d2d_row1_col2" class="data row1 col2" >nan</td>
-      <td id="T_22d2d_row1_col3" class="data row1 col3" >nan</td>
+      <th id="T_4f54e_level0_row1" class="row_heading level0 row1" >B</th>
+      <td id="T_4f54e_row1_col0" class="data row1 col0" >50.000000</td>
+      <td id="T_4f54e_row1_col1" class="data row1 col1" >0.000000</td>
+      <td id="T_4f54e_row1_col2" class="data row1 col2" >nan</td>
+      <td id="T_4f54e_row1_col3" class="data row1 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row2" class="row_heading level0 row2" >C</th>
-      <td id="T_22d2d_row2_col0" class="data row2 col0" >0.000000</td>
-      <td id="T_22d2d_row2_col1" class="data row2 col1" >25.000000</td>
-      <td id="T_22d2d_row2_col2" class="data row2 col2" >nan</td>
-      <td id="T_22d2d_row2_col3" class="data row2 col3" >nan</td>
+      <th id="T_4f54e_level0_row2" class="row_heading level0 row2" >C</th>
+      <td id="T_4f54e_row2_col0" class="data row2 col0" >0.000000</td>
+      <td id="T_4f54e_row2_col1" class="data row2 col1" >25.000000</td>
+      <td id="T_4f54e_row2_col2" class="data row2 col2" >nan</td>
+      <td id="T_4f54e_row2_col3" class="data row2 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row3" class="row_heading level0 row3" >D</th>
-      <td id="T_22d2d_row3_col0" class="data row3 col0" >20.000000</td>
-      <td id="T_22d2d_row3_col1" class="data row3 col1" >34.000000</td>
-      <td id="T_22d2d_row3_col2" class="data row3 col2" >nan</td>
-      <td id="T_22d2d_row3_col3" class="data row3 col3" >nan</td>
+      <th id="T_4f54e_level0_row3" class="row_heading level0 row3" >D</th>
+      <td id="T_4f54e_row3_col0" class="data row3 col0" >20.000000</td>
+      <td id="T_4f54e_row3_col1" class="data row3 col1" >34.000000</td>
+      <td id="T_4f54e_row3_col2" class="data row3 col2" >nan</td>
+      <td id="T_4f54e_row3_col3" class="data row3 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row4" class="row_heading level0 row4" >E</th>
-      <td id="T_22d2d_row4_col0" class="data row4 col0" >200.000000</td>
-      <td id="T_22d2d_row4_col1" class="data row4 col1" >23.000000</td>
-      <td id="T_22d2d_row4_col2" class="data row4 col2" >nan</td>
-      <td id="T_22d2d_row4_col3" class="data row4 col3" >nan</td>
+      <th id="T_4f54e_level0_row4" class="row_heading level0 row4" >E</th>
+      <td id="T_4f54e_row4_col0" class="data row4 col0" >200.000000</td>
+      <td id="T_4f54e_row4_col1" class="data row4 col1" >23.000000</td>
+      <td id="T_4f54e_row4_col2" class="data row4 col2" >nan</td>
+      <td id="T_4f54e_row4_col3" class="data row4 col3" >nan</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row5" class="row_heading level0 row5" >A</th>
-      <td id="T_22d2d_row5_col0" class="data row5 col0" >nan</td>
-      <td id="T_22d2d_row5_col1" class="data row5 col1" >nan</td>
-      <td id="T_22d2d_row5_col2" class="data row5 col2" >2.000000</td>
-      <td id="T_22d2d_row5_col3" class="data row5 col3" >10.000000</td>
+      <th id="T_4f54e_level0_row5" class="row_heading level0 row5" >A</th>
+      <td id="T_4f54e_row5_col0" class="data row5 col0" >nan</td>
+      <td id="T_4f54e_row5_col1" class="data row5 col1" >nan</td>
+      <td id="T_4f54e_row5_col2" class="data row5 col2" >2.000000</td>
+      <td id="T_4f54e_row5_col3" class="data row5 col3" >10.000000</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row6" class="row_heading level0 row6" >B</th>
-      <td id="T_22d2d_row6_col0" class="data row6 col0" >nan</td>
-      <td id="T_22d2d_row6_col1" class="data row6 col1" >nan</td>
-      <td id="T_22d2d_row6_col2" class="data row6 col2" >50.000000</td>
-      <td id="T_22d2d_row6_col3" class="data row6 col3" >30.000000</td>
+      <th id="T_4f54e_level0_row6" class="row_heading level0 row6" >B</th>
+      <td id="T_4f54e_row6_col0" class="data row6 col0" >nan</td>
+      <td id="T_4f54e_row6_col1" class="data row6 col1" >nan</td>
+      <td id="T_4f54e_row6_col2" class="data row6 col2" >50.000000</td>
+      <td id="T_4f54e_row6_col3" class="data row6 col3" >30.000000</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row7" class="row_heading level0 row7" >C</th>
-      <td id="T_22d2d_row7_col0" class="data row7 col0" >nan</td>
-      <td id="T_22d2d_row7_col1" class="data row7 col1" >nan</td>
-      <td id="T_22d2d_row7_col2" class="data row7 col2" >30.000000</td>
-      <td id="T_22d2d_row7_col3" class="data row7 col3" >25.000000</td>
+      <th id="T_4f54e_level0_row7" class="row_heading level0 row7" >C</th>
+      <td id="T_4f54e_row7_col0" class="data row7 col0" >nan</td>
+      <td id="T_4f54e_row7_col1" class="data row7 col1" >nan</td>
+      <td id="T_4f54e_row7_col2" class="data row7 col2" >30.000000</td>
+      <td id="T_4f54e_row7_col3" class="data row7 col3" >25.000000</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row8" class="row_heading level0 row8" >D</th>
-      <td id="T_22d2d_row8_col0" class="data row8 col0" >nan</td>
-      <td id="T_22d2d_row8_col1" class="data row8 col1" >nan</td>
-      <td id="T_22d2d_row8_col2" class="data row8 col2" >20.000000</td>
-      <td id="T_22d2d_row8_col3" class="data row8 col3" >34.000000</td>
+      <th id="T_4f54e_level0_row8" class="row_heading level0 row8" >D</th>
+      <td id="T_4f54e_row8_col0" class="data row8 col0" >nan</td>
+      <td id="T_4f54e_row8_col1" class="data row8 col1" >nan</td>
+      <td id="T_4f54e_row8_col2" class="data row8 col2" >20.000000</td>
+      <td id="T_4f54e_row8_col3" class="data row8 col3" >34.000000</td>
     </tr>
     <tr>
-      <th id="T_22d2d_level0_row9" class="row_heading level0 row9" >E</th>
-      <td id="T_22d2d_row9_col0" class="data row9 col0" >nan</td>
-      <td id="T_22d2d_row9_col1" class="data row9 col1" >nan</td>
-      <td id="T_22d2d_row9_col2" class="data row9 col2" >200.000000</td>
-      <td id="T_22d2d_row9_col3" class="data row9 col3" >23.000000</td>
+      <th id="T_4f54e_level0_row9" class="row_heading level0 row9" >E</th>
+      <td id="T_4f54e_row9_col0" class="data row9 col0" >nan</td>
+      <td id="T_4f54e_row9_col1" class="data row9 col1" >nan</td>
+      <td id="T_4f54e_row9_col2" class="data row9 col2" >200.000000</td>
+      <td id="T_4f54e_row9_col3" class="data row9 col3" >23.000000</td>
     </tr>
   </tbody>
 </table>
 
 ```
 
-## APIS
+## API´s (Application Programming Interface)
+
+
+### The "yfinance" library 
+
+It was designed to download market data from Yahoo! Finance. To see how to install it and more information: https://pypi.org/project/yfinance/
 
 
 
+```python
+import yfinance as yf
+
+msft = yf.Ticker("MSFT")
+```
+
+The following code shows a dictionary that contains information such as company address, business summary, etc.
+
+```{}
+msft.info
+```
+
+To download the ticker´s prices.
+
+```{}
+msft.history(period="1mo").head()
+```
+
+
+```{=html}
+<style type="text/css">
+</style>
+<table id="T_63940">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_63940_level0_col0" class="col_heading level0 col0" >Open</th>
+      <th id="T_63940_level0_col1" class="col_heading level0 col1" >High</th>
+      <th id="T_63940_level0_col2" class="col_heading level0 col2" >Low</th>
+      <th id="T_63940_level0_col3" class="col_heading level0 col3" >Close</th>
+      <th id="T_63940_level0_col4" class="col_heading level0 col4" >Volume</th>
+      <th id="T_63940_level0_col5" class="col_heading level0 col5" >Dividends</th>
+      <th id="T_63940_level0_col6" class="col_heading level0 col6" >Stock Splits</th>
+    </tr>
+    <tr>
+      <th class="index_name level0" >Date</th>
+      <th class="blank col0" >&nbsp;</th>
+      <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
+      <th class="blank col3" >&nbsp;</th>
+      <th class="blank col4" >&nbsp;</th>
+      <th class="blank col5" >&nbsp;</th>
+      <th class="blank col6" >&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_63940_level0_row0" class="row_heading level0 row0" >2023-04-18 00:00:00-04:00</th>
+      <td id="T_63940_row0_col0" class="data row0 col0" >290.933999</td>
+      <td id="T_63940_row0_col1" class="data row0 col1" >291.123587</td>
+      <td id="T_63940_row0_col2" class="data row0 col2" >286.383948</td>
+      <td id="T_63940_row0_col3" class="data row0 col3" >287.740967</td>
+      <td id="T_63940_row0_col4" class="data row0 col4" >20161800</td>
+      <td id="T_63940_row0_col5" class="data row0 col5" >0.000000</td>
+      <td id="T_63940_row0_col6" class="data row0 col6" >0.000000</td>
+    </tr>
+    <tr>
+      <th id="T_63940_level0_row1" class="row_heading level0 row1" >2023-04-19 00:00:00-04:00</th>
+      <td id="T_63940_row1_col0" class="data row1 col0" >285.366175</td>
+      <td id="T_63940_row1_col1" class="data row1 col1" >288.419498</td>
+      <td id="T_63940_row1_col2" class="data row1 col2" >283.919356</td>
+      <td id="T_63940_row1_col3" class="data row1 col3" >287.820831</td>
+      <td id="T_63940_row1_col4" class="data row1 col4" >17150300</td>
+      <td id="T_63940_row1_col5" class="data row1 col5" >0.000000</td>
+      <td id="T_63940_row1_col6" class="data row1 col6" >0.000000</td>
+    </tr>
+    <tr>
+      <th id="T_63940_level0_row2" class="row_heading level0 row2" >2023-04-20 00:00:00-04:00</th>
+      <td id="T_63940_row2_col0" class="data row2 col0" >284.627791</td>
+      <td id="T_63940_row2_col1" class="data row2 col1" >288.399545</td>
+      <td id="T_63940_row2_col2" class="data row2 col2" >284.458149</td>
+      <td id="T_63940_row2_col3" class="data row2 col3" >285.485901</td>
+      <td id="T_63940_row2_col4" class="data row2 col4" >23244400</td>
+      <td id="T_63940_row2_col5" class="data row2 col5" >0.000000</td>
+      <td id="T_63940_row2_col6" class="data row2 col6" >0.000000</td>
+    </tr>
+    <tr>
+      <th id="T_63940_level0_row3" class="row_heading level0 row3" >2023-04-21 00:00:00-04:00</th>
+      <td id="T_63940_row3_col0" class="data row3 col0" >284.388324</td>
+      <td id="T_63940_row3_col1" class="data row3 col1" >285.645555</td>
+      <td id="T_63940_row3_col2" class="data row3 col2" >282.442565</td>
+      <td id="T_63940_row3_col3" class="data row3 col3" >285.136688</td>
+      <td id="T_63940_row3_col4" class="data row3 col4" >21676400</td>
+      <td id="T_63940_row3_col5" class="data row3 col5" >0.000000</td>
+      <td id="T_63940_row3_col6" class="data row3 col6" >0.000000</td>
+    </tr>
+    <tr>
+      <th id="T_63940_level0_row4" class="row_heading level0 row4" >2023-04-24 00:00:00-04:00</th>
+      <td id="T_63940_row4_col0" class="data row4 col0" >281.474674</td>
+      <td id="T_63940_row4_col1" class="data row4 col1" >284.328452</td>
+      <td id="T_63940_row4_col2" class="data row4 col2" >278.112030</td>
+      <td id="T_63940_row4_col3" class="data row4 col3" >281.155365</td>
+      <td id="T_63940_row4_col4" class="data row4 col4" >26611000</td>
+      <td id="T_63940_row4_col5" class="data row4 col5" >0.000000</td>
+      <td id="T_63940_row4_col6" class="data row4 col6" >0.000000</td>
+    </tr>
+  </tbody>
+</table>
+
+```
+
+As you can see in the method help (help(msft.history)), valid periods are: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
+
+Also there are other parameters such as interval='1d': intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
+
+For some of the procedures we will apply in this book, we require the dates in a format, for example "%Y-%m-%d". And the 
+
+```python
+import yfinance as yf
+# This function download market data from Yahoo! Finance's
+# It returns a data frame with a specific format date. 
+# Parameters:
+# ticker: Yahoo finance ticker symbol
+# per: valid periods are: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max
+# inter: intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
+# price_type: Open', 'High', 'Low', 'Close', 'Volume', 'Dividends', 'Stock Splits
+# format_date:  index format date
+# d_ini: initial date if the subset
+# d_fin: final date of the subset
+
+#---- Do not change anything from here ----
+def my_yahoo(ticker,per,inter,price_type,format_date,d_ini,d_fin):
+    import pandas as pd
+    x = yf.Ticker(ticker)
+    hist = x.history(period=per,interval=inter)
+    date=list(hist.index)
+    hist_date=[date.strftime(format_date) for date in date]
+    price=list(hist[price_type])
+    hist={ticker:price}
+    hist=pd.DataFrame(hist,index=hist_date)
+    return hist.loc[d_ini:d_fin]
+#----- To here ------------
+
+#Run the code cell so that Python can execute the function
+```
+
+
+```{}
+format_date="%Y-%m-%d"
+per="5y"
+inter='1mo'
+price_type="Close"
+ticker="^MXX"
+d_ini="2021-01-01"
+d_fin="2022-12-01"
+
+ipc=my_yahoo(ticker,per,inter,price_type,format_date,d_ini,d_fin).head()
+ipc.style
+```
+
+
+
+```{=html}
+<style type="text/css">
+</style>
+<table id="T_87f39">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_87f39_level0_col0" class="col_heading level0 col0" >^MXX</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_87f39_level0_row0" class="row_heading level0 row0" >2021-01-01</th>
+      <td id="T_87f39_row0_col0" class="data row0 col0" >42985.730469</td>
+    </tr>
+    <tr>
+      <th id="T_87f39_level0_row1" class="row_heading level0 row1" >2021-02-01</th>
+      <td id="T_87f39_row1_col0" class="data row1 col0" >44592.910156</td>
+    </tr>
+    <tr>
+      <th id="T_87f39_level0_row2" class="row_heading level0 row2" >2021-03-01</th>
+      <td id="T_87f39_row2_col0" class="data row2 col0" >47246.261719</td>
+    </tr>
+    <tr>
+      <th id="T_87f39_level0_row3" class="row_heading level0 row3" >2021-04-01</th>
+      <td id="T_87f39_row3_col0" class="data row3 col0" >48009.718750</td>
+    </tr>
+    <tr>
+      <th id="T_87f39_level0_row4" class="row_heading level0 row4" >2021-05-01</th>
+      <td id="T_87f39_row4_col0" class="data row4 col0" >50885.949219</td>
+    </tr>
+  </tbody>
+</table>
+
+```
+
+
+
+### Banxico API
+
+To download historical information of the Mexican central bank (BANXICO). Such as interest rates, exchange rates and other macroeconomic information. To see how to install it and more information:
+https://pypi.org/project/sie-banxico/
+
+
+We need to get a token in the following web page:
+https://www.banxico.org.mx/SieAPIRest/service/v1/token?locale=en
+
+
+The token must look like this. And you have to store it in an object, for example:
+```{}
+token = "e3980208bf01ec653aba9aee3c2d6f70f6ae8b066d2545e379b9e0ef92e9de25"
+```
+
+
+In the same web page you could see the Series catalog, which are the variable ID:
+```{}
+from sie_banxico import SIEBanxico
+
+# This function download information from BANXICO 
+# It returns a data frame with a specific format date
+# Parameters:
+# token: The token object
+# my_series: Banxico´s Series ID´s
+# my_series_name: The short name we want to assign to the Serie.
+# d_in: initian date of the subset
+# d_fin: final date of the subset
+# format_date: index format date
+
+#---- Do not change anything from here ----
+def my_banxico_py(token,my_series,my_series_name,d_in,d_fin,format_date):
+    import pandas as pd
+    le=len(my_series)
+    ser=0
+    if(le==1):
+        ser=0
+        api = SIEBanxico(token = token, id_series = my_series[ser])
+        timeseries_range=api.get_timeseries_range(init_date=d_in,end_date=d_fin)
+        timeseries_range=timeseries_range['bmx']['series'][0]['datos']
+        data=pd.DataFrame(timeseries_range)
+        dates=[pd.Timestamp(date).strftime(format_date) for date in list(data["fecha"])]
+        data=pd.DataFrame({my_series_name[ser]:list(data["dato"])},index=dates)
+    else:
+        ser=0
+        api = SIEBanxico(token = token, id_series = my_series[ser])
+        timeseries_range=api.get_timeseries_range(init_date=d_in, end_date=d_fin)
+        timeseries_range=timeseries_range['bmx']['series'][0]['datos']
+        data=pd.DataFrame(timeseries_range)
+        dates=[pd.Timestamp(date).strftime(format_date) for date in list(data["fecha"])]
+        data=pd.DataFrame({my_series_name[ser]:list(data["dato"])},index=dates)
+        for ser in range(1,le):
+            api = SIEBanxico(token = token, id_series = my_series[ser])
+            timeseries_range=api.get_timeseries_range(init_date=d_in, end_date=d_fin)
+            timeseries_range=timeseries_range['bmx']['series'][0]['datos']
+            data2=pd.DataFrame(timeseries_range)
+            dates2=[pd.Timestamp(date).strftime(format_date) for date in list(data2["fecha"])]
+            data2=pd.DataFrame({my_series_name[ser]:list(data2["dato"])},index=dates2)
+            data=pd.concat([data,data2],axis=1)
+    ban_names=list(data.columns)
+    for col_i in range(data.shape[1]):
+        cel_num=[float(cel) for cel in data[ban_names[col_i]]]
+        data[ban_names[col_i]]=cel_num
+    return data
+  
+#----- To here ------------
+```
+
+For this example, we want to download the following Series:
+
+SF17908: Exchange rate Pesos per US dollar
+
+SF282: 28 days Mexican treasury bills 
+
+SP74660: Mexican inflation rate
+
+SR16734: Global indicator of Mexican economic activity 
+```{}
+#Run the code cell so that Python can execute the function
+my_series=['SF17908' ,'SF282',"SP74660","SR16734"]
+my_series_name=["TC","Cetes_28","Mex_inflation","igae"]
+d_in='2021-01-01'
+d_fin='2022-12-01'
+format_date="%Y-%d-%m"
+my_banxico_py(token,my_series,my_series_name,d_in,d_fin,format_date).head()
+```
+
+
+
+
+```{=html}
+<style type="text/css">
+</style>
+<table id="T_e85c3">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_e85c3_level0_col0" class="col_heading level0 col0" >TC</th>
+      <th id="T_e85c3_level0_col1" class="col_heading level0 col1" >Cetes_28</th>
+      <th id="T_e85c3_level0_col2" class="col_heading level0 col2" >Mex_inflation</th>
+      <th id="T_e85c3_level0_col3" class="col_heading level0 col3" >igae</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_e85c3_level0_row0" class="row_heading level0 row0" >2021-01-01</th>
+      <td id="T_e85c3_row0_col0" class="data row0 col0" >19.921500</td>
+      <td id="T_e85c3_row0_col1" class="data row0 col1" >4.220000</td>
+      <td id="T_e85c3_row0_col2" class="data row0 col2" >0.360000</td>
+      <td id="T_e85c3_row0_col3" class="data row0 col3" >105.556100</td>
+    </tr>
+    <tr>
+      <th id="T_e85c3_level0_row1" class="row_heading level0 row1" >2021-02-01</th>
+      <td id="T_e85c3_row1_col0" class="data row1 col0" >20.309700</td>
+      <td id="T_e85c3_row1_col1" class="data row1 col1" >4.120000</td>
+      <td id="T_e85c3_row1_col2" class="data row1 col2" >0.390000</td>
+      <td id="T_e85c3_row1_col3" class="data row1 col3" >102.813500</td>
+    </tr>
+    <tr>
+      <th id="T_e85c3_level0_row2" class="row_heading level0 row2" >2021-03-01</th>
+      <td id="T_e85c3_row2_col0" class="data row2 col0" >20.755500</td>
+      <td id="T_e85c3_row2_col1" class="data row2 col1" >4.050000</td>
+      <td id="T_e85c3_row2_col2" class="data row2 col2" >0.540000</td>
+      <td id="T_e85c3_row2_col3" class="data row2 col3" >111.492300</td>
+    </tr>
+    <tr>
+      <th id="T_e85c3_level0_row3" class="row_heading level0 row3" >2021-04-01</th>
+      <td id="T_e85c3_row3_col0" class="data row3 col0" >20.015300</td>
+      <td id="T_e85c3_row3_col1" class="data row3 col1" >4.070000</td>
+      <td id="T_e85c3_row3_col2" class="data row3 col2" >0.370000</td>
+      <td id="T_e85c3_row3_col3" class="data row3 col3" >107.809300</td>
+    </tr>
+    <tr>
+      <th id="T_e85c3_level0_row4" class="row_heading level0 row4" >2021-05-01</th>
+      <td id="T_e85c3_row4_col0" class="data row4 col0" >19.963100</td>
+      <td id="T_e85c3_row4_col1" class="data row4 col1" >4.060000</td>
+      <td id="T_e85c3_row4_col2" class="data row4 col2" >0.530000</td>
+      <td id="T_e85c3_row4_col3" class="data row4 col3" >111.132500</td>
+    </tr>
+  </tbody>
+</table>
+
+```
 
 ## Plots or graphs
+
+For example, we use the method plot to plot the APPLE historical price. First, we download the prices.
+
+```{}
+format_date="%Y-%m-%d"
+per="5y"
+inter='1mo'
+price_type="Close"
+ticker="AAPL"
+d_ini="2023-01-01"
+d_fin="2023-05-01"
+apple=my_yahoo(ticker,per,inter,price_type,format_date,d_ini,d_fin)
+```
+
+
+Then we use the function plot;
+```{}
+apple.plot(title="APPLE close price", ylabel="Price in $",xlabel="Date");
+```
+
+<img src="01-py-Basics_files/figure-html/unnamed-chunk-69-1.png" width="90%" style="display: block; margin: auto;" />
 
 
 
@@ -1689,39 +2047,39 @@ data
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_f2bdd">
+<table id="T_cd88c">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_f2bdd_level0_col0" class="col_heading level0 col0" >date</th>
-      <th id="T_f2bdd_level0_col1" class="col_heading level0 col1" >Sales</th>
+      <th id="T_cd88c_level0_col0" class="col_heading level0 col0" >date</th>
+      <th id="T_cd88c_level0_col1" class="col_heading level0 col1" >Sales</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_f2bdd_level0_row0" class="row_heading level0 row0" >0</th>
-      <td id="T_f2bdd_row0_col0" class="data row0 col0" >Ene 2021</td>
-      <td id="T_f2bdd_row0_col1" class="data row0 col1" >5</td>
+      <th id="T_cd88c_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_cd88c_row0_col0" class="data row0 col0" >Ene 2021</td>
+      <td id="T_cd88c_row0_col1" class="data row0 col1" >5</td>
     </tr>
     <tr>
-      <th id="T_f2bdd_level0_row1" class="row_heading level0 row1" >1</th>
-      <td id="T_f2bdd_row1_col0" class="data row1 col0" >Feb 2021</td>
-      <td id="T_f2bdd_row1_col1" class="data row1 col1" >7</td>
+      <th id="T_cd88c_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_cd88c_row1_col0" class="data row1 col0" >Feb 2021</td>
+      <td id="T_cd88c_row1_col1" class="data row1 col1" >7</td>
     </tr>
     <tr>
-      <th id="T_f2bdd_level0_row2" class="row_heading level0 row2" >2</th>
-      <td id="T_f2bdd_row2_col0" class="data row2 col0" >Mar 2021</td>
-      <td id="T_f2bdd_row2_col1" class="data row2 col1" >60</td>
+      <th id="T_cd88c_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_cd88c_row2_col0" class="data row2 col0" >Mar 2021</td>
+      <td id="T_cd88c_row2_col1" class="data row2 col1" >60</td>
     </tr>
     <tr>
-      <th id="T_f2bdd_level0_row3" class="row_heading level0 row3" >3</th>
-      <td id="T_f2bdd_row3_col0" class="data row3 col0" >Abr 2021</td>
-      <td id="T_f2bdd_row3_col1" class="data row3 col1" >20</td>
+      <th id="T_cd88c_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_cd88c_row3_col0" class="data row3 col0" >Abr 2021</td>
+      <td id="T_cd88c_row3_col1" class="data row3 col1" >20</td>
     </tr>
     <tr>
-      <th id="T_f2bdd_level0_row4" class="row_heading level0 row4" >4</th>
-      <td id="T_f2bdd_row4_col0" class="data row4 col0" >May 2021</td>
-      <td id="T_f2bdd_row4_col1" class="data row4 col1" >21</td>
+      <th id="T_cd88c_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_cd88c_row4_col0" class="data row4 col0" >May 2021</td>
+      <td id="T_cd88c_row4_col1" class="data row4 col1" >21</td>
     </tr>
   </tbody>
 </table>
@@ -1764,39 +2122,40 @@ date_name="date"
 data_ind_date=index_date(data,i_date,freq_i,col_name,date_name)
 data_ind_date
 ```
+
 Now the index is in a "Timestamp" format. For the moment, let's say that it is a date format. 
 
 
 ```{=html}
 <style type="text/css">
 </style>
-<table id="T_6cb80">
+<table id="T_57ca3">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_6cb80_level0_col0" class="col_heading level0 col0" >Sales</th>
+      <th id="T_57ca3_level0_col0" class="col_heading level0 col0" >Sales</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_6cb80_level0_row0" class="row_heading level0 row0" >2020-01-31 00:00:00</th>
-      <td id="T_6cb80_row0_col0" class="data row0 col0" >5</td>
+      <th id="T_57ca3_level0_row0" class="row_heading level0 row0" >2020-01-31 00:00:00</th>
+      <td id="T_57ca3_row0_col0" class="data row0 col0" >5</td>
     </tr>
     <tr>
-      <th id="T_6cb80_level0_row1" class="row_heading level0 row1" >2020-02-29 00:00:00</th>
-      <td id="T_6cb80_row1_col0" class="data row1 col0" >7</td>
+      <th id="T_57ca3_level0_row1" class="row_heading level0 row1" >2020-02-29 00:00:00</th>
+      <td id="T_57ca3_row1_col0" class="data row1 col0" >7</td>
     </tr>
     <tr>
-      <th id="T_6cb80_level0_row2" class="row_heading level0 row2" >2020-03-31 00:00:00</th>
-      <td id="T_6cb80_row2_col0" class="data row2 col0" >60</td>
+      <th id="T_57ca3_level0_row2" class="row_heading level0 row2" >2020-03-31 00:00:00</th>
+      <td id="T_57ca3_row2_col0" class="data row2 col0" >60</td>
     </tr>
     <tr>
-      <th id="T_6cb80_level0_row3" class="row_heading level0 row3" >2020-04-30 00:00:00</th>
-      <td id="T_6cb80_row3_col0" class="data row3 col0" >20</td>
+      <th id="T_57ca3_level0_row3" class="row_heading level0 row3" >2020-04-30 00:00:00</th>
+      <td id="T_57ca3_row3_col0" class="data row3 col0" >20</td>
     </tr>
     <tr>
-      <th id="T_6cb80_level0_row4" class="row_heading level0 row4" >2020-05-31 00:00:00</th>
-      <td id="T_6cb80_row4_col0" class="data row4 col0" >21</td>
+      <th id="T_57ca3_level0_row4" class="row_heading level0 row4" >2020-05-31 00:00:00</th>
+      <td id="T_57ca3_row4_col0" class="data row4 col0" >21</td>
     </tr>
   </tbody>
 </table>

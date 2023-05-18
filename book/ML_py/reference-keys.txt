@@ -10,6 +10,8 @@ reading-excel-and-csv-files
 numpy-modules
 missing-value-management
 merge-joint-or-concatenate-data-frames
-apis
+apis-application-programming-interface
+the-yfinance-library
+banxico-api
 plots-or-graphs
 dates-management
