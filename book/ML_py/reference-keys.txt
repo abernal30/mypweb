@@ -3,7 +3,13 @@ jupyter-notebook
 data-types-numerical-and-text-objects
 list-and-object-attributes
 dictionaries
-python-modules.
+python-modules
 pandas-data-frames
 selecting-rows-and-columns-in-a-data-frame
-numpy
+reading-excel-and-csv-files
+numpy-modules
+missing-value-management
+merge-joint-or-concatenate-data-frames
+apis
+plots-or-graphs
+dates-management

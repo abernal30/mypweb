@@ -71,19 +71,19 @@
 <h2>
 <span class="header-section-number">1.2</span> Data types, numerical and text objects<a class="anchor" aria-label="anchor" href="#data-types-numerical-and-text-objects"><i class="fas fa-link"></i></a>
 </h2>
-<p>Python is a programming language that lets our work quickly and integrate systems more effectively contains many data types as part of the core language <span class="citation">(<a href="#ref-py" role="doc-biblioref"><strong>py?</strong></a>)</span>.</p>
-<p>The entities that we can create and manipulate in python are called objects. We could create those objects by applying the assignment operator (‘=’).</p>
+<p>Python is a programming language that lets us work quickly and integrate systems more effectively and contains many data types as part of the core language <span class="citation">(<a href="#ref-py" role="doc-biblioref"><strong>py?</strong></a>)</span>.</p>
+<p>The entities that we can create and manipulate in Python are called objects. We could make those objects by applying the assignment operator (‘=’).</p>
 <p>For example, we create the object “a”; winch has assigned the value 4.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="python-basics.html#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="python-basics.html#cb1-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span><span class="dv">4</span></span>
 <span id="cb1-3"><a href="python-basics.html#cb1-3" aria-hidden="true" tabindex="-1"></a>x</span>
 <span id="cb1-4"><a href="python-basics.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4</span></span></code></pre></div>
 <p>Each object in Python has tho characteristics, object type and object value.</p>
-<p>Object type tells Python what kind of an object it’s dealing with. A type could be a number, or a string, or a list, or something else. In this book we will use those type of objects. Also we will cover more complex data structures such as dictionaries, arrays and data frames.</p>
-<p>The function type() give us the object type. For example, the object x is an integer(int):</p>
+<p>Object type tells Python what kind of an object it’s dealing with. A type could be a number, a string, a list, or something else. In this book, we will use those types of objects. Also, we will cover more complex data structures such as dictionaries, arrays and data frames.</p>
+<p>The function type() shows us the object type. For example, the object x is an integer(int):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="python-basics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(x)</span>
 <span id="cb2-2"><a href="python-basics.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'int'&gt;</span></span></code></pre></div>
-<p>In this example, the object type is integer(int) and the object value is 4.</p>
+<p>In this example, the object type is an integer(int), and the value is 4.</p>
 <p>Besides integers, Python provides other numeric types, floating point numbers, and complex numbers (for example (5j). For example:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="python-basics.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="fl">1.23</span>)</span>
 <span id="cb3-2"><a href="python-basics.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'float'&gt;</span></span></code></pre></div>
@@ -91,52 +91,52 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="python-basics.html#cb4-1" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span><span class="st">"Apple"</span></span>
 <span id="cb4-2"><a href="python-basics.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(y)</span>
 <span id="cb4-3"><a href="python-basics.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'str'&gt;</span></span></code></pre></div>
-<p>Look that we are adding the ” ” to tell Python that Apple is a string.</p>
+<p>We are adding the ” ” to tell Python that Apple is a string.</p>
 </div>
 <div id="list-and-object-attributes" class="section level2" number="1.3">
 <h2>
 <span class="header-section-number">1.3</span> List and object attributes<a class="anchor" aria-label="anchor" href="#list-and-object-attributes"><i class="fas fa-link"></i></a>
 </h2>
-<p>A list is another useful object in Python, which is a vector of integers, strings, or both.</p>
+<p>A list is another useful object in Python, a vector of integers, strings, or both.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="python-basics.html#cb5-1" aria-hidden="true" tabindex="-1"></a>liste<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]</span>
 <span id="cb5-2"><a href="python-basics.html#cb5-2" aria-hidden="true" tabindex="-1"></a>liste</span>
 <span id="cb5-3"><a href="python-basics.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3]</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="python-basics.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(liste)</span>
 <span id="cb6-2"><a href="python-basics.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'list'&gt;</span></span></code></pre></div>
-<p>Objects whose value can change called mutable objects, whereas objects whose value is unchangeable after they’ve been created are called immutable.</p>
+<p>Objects whose value can change are called mutable objects, whereas objects whose value is unchangeable after they’ve been created are called immutable.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="python-basics.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="co"># is inmutable</span></span>
 <span id="cb7-2"><a href="python-basics.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="python-basics.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># but liste is mutable</span></span>
 <span id="cb7-4"><a href="python-basics.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4</span></span>
 <span id="cb7-5"><a href="python-basics.html#cb7-5" aria-hidden="true" tabindex="-1"></a>liste<span class="op">=</span>[<span class="st">"a"</span>,<span class="st">"b"</span>]</span></code></pre></div>
 <p>Most Python objects have either data or functions or both associated with them. These are known as attributes. The name of the attribute follows the name of the object. And these two are separated by a dot in between them. The two types of attributes are called either data attributes or methods.</p>
-<p>The list data type has some more methods. Here are all of the methods of list objects:</p>
+<p>The “list” data type has some more methods. Here are all of the methods of “list” objects:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="python-basics.html#cb8-1" aria-hidden="true" tabindex="-1"></a>s<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]</span>
 <span id="cb8-2"><a href="python-basics.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(s)[<span class="dv">1</span>:<span class="dv">10</span>]</span>
 <span id="cb8-3"><a href="python-basics.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ['__class__', '__class_getitem__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__']</span></span></code></pre></div>
-<p>We printed only the first 10 methods. But in the list you could find more methods. In this section we will cover some examples. For instance the method append, which appends an object to the end of the list.</p>
+<p>We printed only the first ten methods. But in the list, you can find more methods. In this section, we will cover some examples—the method append, which appends an object to the end of the list.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="python-basics.html#cb9-1" aria-hidden="true" tabindex="-1"></a>s.append(<span class="dv">6</span>)</span>
 <span id="cb9-2"><a href="python-basics.html#cb9-2" aria-hidden="true" tabindex="-1"></a>s</span>
 <span id="cb9-3"><a href="python-basics.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 4, 6]</span></span></code></pre></div>
-<p>A data atribute contains information about the object. For example, to get the number of elements of a list, we use the data method len.</p>
+<p>A data attribute contains information about the object. For example, to get the number of elements of a list, we use the data method “len.”</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="python-basics.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(s)</span>
 <span id="cb10-2"><a href="python-basics.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5</span></span></code></pre></div>
-<p>There are other ways to manipulate a list, without using a method. For instance, to concatenate two different lists:</p>
+<p>There are other ways to manipulate a “list” without a method. For instance, to concatenate two different lists:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="python-basics.html#cb11-1" aria-hidden="true" tabindex="-1"></a>t<span class="op">=</span>[<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>]</span>
 <span id="cb11-2"><a href="python-basics.html#cb11-2" aria-hidden="true" tabindex="-1"></a>s<span class="op">=</span>s<span class="op">+</span>t</span>
 <span id="cb11-3"><a href="python-basics.html#cb11-3" aria-hidden="true" tabindex="-1"></a>s</span>
 <span id="cb11-4"><a href="python-basics.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 3, 4, 6, 12, 14, 16]</span></span></code></pre></div>
-<p>To select an element of a list. for example selecting the second element of the list:</p>
+<p>To select an element of a list, for example, selecting the second element of the list:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="python-basics.html#cb12-1" aria-hidden="true" tabindex="-1"></a>s[<span class="dv">1</span>]</span>
 <span id="cb12-2"><a href="python-basics.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2</span></span></code></pre></div>
-<p>As you can see, instead of typing the s[2], we type number one, because Python starts counting in zero.</p>
+<p>As you can see, instead of typing the s[2], we write the number one because Python starts counting to zero.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="python-basics.html#cb13-1" aria-hidden="true" tabindex="-1"></a>s[<span class="dv">0</span>]</span>
 <span id="cb13-2"><a href="python-basics.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1</span></span></code></pre></div>
-<p>To replace an element of a list, for example replace number 3 in lis “s” by number 100</p>
+<p>For example, replace the number 3 in lis “s” with the number 100 to replace an element of a list.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="python-basics.html#cb14-1" aria-hidden="true" tabindex="-1"></a>s[<span class="dv">2</span>]<span class="op">=</span><span class="dv">100</span></span>
 <span id="cb14-2"><a href="python-basics.html#cb14-2" aria-hidden="true" tabindex="-1"></a>s</span>
 <span id="cb14-3"><a href="python-basics.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 2, 100, 4, 6, 12, 14, 16]</span></span></code></pre></div>
-<p>To remove an element, for example number 2:</p>
+<p>To remove an element, for example, number 2:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="python-basics.html#cb15-1" aria-hidden="true" tabindex="-1"></a>s.remove(<span class="dv">2</span>)</span>
 <span id="cb15-2"><a href="python-basics.html#cb15-2" aria-hidden="true" tabindex="-1"></a>s</span>
 <span id="cb15-3"><a href="python-basics.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1, 100, 4, 6, 12, 14, 16]</span></span></code></pre></div>
@@ -146,482 +146,388 @@
 <span class="header-section-number">1.4</span> Dictionaries<a class="anchor" aria-label="anchor" href="#dictionaries"><i class="fas fa-link"></i></a>
 </h2>
 <p>Dictionaries are useful objects for performing fast look-ups on underscored data.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="python-basics.html#cb16-1" aria-hidden="true" tabindex="-1"></a>grades_dict<span class="op">=</span>{<span class="st">"Arturo"</span>: <span class="dv">100</span>, <span class="st">"Fátima"</span>:<span class="dv">120</span>} </span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="python-basics.html#cb16-1" aria-hidden="true" tabindex="-1"></a>grades_dict<span class="op">=</span>{<span class="st">"Paulina"</span>: <span class="dv">100</span>, <span class="st">"Coral"</span>:<span class="dv">95</span>} </span>
 <span id="cb16-2"><a href="python-basics.html#cb16-2" aria-hidden="true" tabindex="-1"></a>grades_dict</span>
-<span id="cb16-3"><a href="python-basics.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Arturo': 100, 'Fátima': 120}</span></span></code></pre></div>
-<p>Has two components, the keys:</p>
+<span id="cb16-3"><a href="python-basics.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Paulina': 100, 'Coral': 95}</span></span></code></pre></div>
+<p>The “dictionaries” have two components, keys and values. The keys:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="python-basics.html#cb17-1" aria-hidden="true" tabindex="-1"></a>grades_dict.keys()</span>
-<span id="cb17-2"><a href="python-basics.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dict_keys(['Arturo', 'Fátima'])</span></span></code></pre></div>
+<span id="cb17-2"><a href="python-basics.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dict_keys(['Paulina', 'Coral'])</span></span></code></pre></div>
 <p>And values:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="python-basics.html#cb18-1" aria-hidden="true" tabindex="-1"></a>grades_dict.values()</span>
-<span id="cb18-2"><a href="python-basics.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dict_values([100, 120])</span></span></code></pre></div>
-<p>Dictionaries are mutable, then we can modify its contents, adding a new element:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="python-basics.html#cb19-1" aria-hidden="true" tabindex="-1"></a>grades_dict[<span class="st">"Karina"</span>]<span class="op">=</span><span class="dv">200</span></span>
+<span id="cb18-2"><a href="python-basics.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dict_values([100, 95])</span></span></code></pre></div>
+<p>Dictionaries are mutable, then we can modify their content, by adding a new element:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="python-basics.html#cb19-1" aria-hidden="true" tabindex="-1"></a>grades_dict[<span class="st">"Alejandra"</span>]<span class="op">=</span><span class="dv">120</span></span>
 <span id="cb19-2"><a href="python-basics.html#cb19-2" aria-hidden="true" tabindex="-1"></a>grades_dict</span>
-<span id="cb19-3"><a href="python-basics.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Arturo': 100, 'Fátima': 120, 'Karina': 200}</span></span></code></pre></div>
+<span id="cb19-3"><a href="python-basics.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Paulina': 100, 'Coral': 95, 'Alejandra': 120}</span></span></code></pre></div>
 <p>Or modifying an element:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="python-basics.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modify an element</span></span>
-<span id="cb20-2"><a href="python-basics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>grades_dict[<span class="st">"Arturo"</span>]<span class="op">=</span>grades_dict[<span class="st">"Arturo"</span>]<span class="op">-</span><span class="dv">10</span></span>
+<span id="cb20-2"><a href="python-basics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>grades_dict[<span class="st">"Alejandra"</span>]<span class="op">=</span>grades_dict[<span class="st">"Alejandra"</span>]<span class="op">-</span><span class="dv">30</span></span>
 <span id="cb20-3"><a href="python-basics.html#cb20-3" aria-hidden="true" tabindex="-1"></a>grades_dict</span>
-<span id="cb20-4"><a href="python-basics.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Arturo': 90, 'Fátima': 120, 'Karina': 200}</span></span></code></pre></div>
-<p>We could ask for an elemnt in the dctionary:</p>
+<span id="cb20-4"><a href="python-basics.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Paulina': 100, 'Coral': 95, 'Alejandra': 90}</span></span></code></pre></div>
+<p>We could ask for an element in the dictionary:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="python-basics.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># members</span></span>
 <span id="cb21-2"><a href="python-basics.html#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="python-basics.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">"Karina"</span> <span class="kw">in</span> grades_dict</span>
-<span id="cb21-4"><a href="python-basics.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; True</span></span></code></pre></div>
+<span id="cb21-4"><a href="python-basics.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; False</span></span></code></pre></div>
 <p>We could combine two or more lists into a dictionary, having two keys and four values each:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="python-basics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>letters<span class="op">=</span>[<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"D"</span>]</span>
-<span id="cb22-2"><a href="python-basics.html#cb22-2" aria-hidden="true" tabindex="-1"></a>colors<span class="op">=</span>[<span class="st">"Blue"</span>,<span class="st">"Red"</span>,<span class="st">"Black"</span>,<span class="st">"Orange"</span>]</span>
-<span id="cb22-3"><a href="python-basics.html#cb22-3" aria-hidden="true" tabindex="-1"></a>combine <span class="op">=</span> {<span class="st">"Letthers"</span>:letters,<span class="st">"Colors"</span>:colors}</span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="python-basics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>names<span class="op">=</span>[<span class="st">"Eugenio"</span>,<span class="st">"Luis"</span>,<span class="st">"Isa"</span>,<span class="st">"Gisell"</span>]</span>
+<span id="cb22-2"><a href="python-basics.html#cb22-2" aria-hidden="true" tabindex="-1"></a>numbers<span class="op">=</span>[<span class="dv">9</span>,<span class="dv">17</span>,<span class="dv">80</span>,<span class="dv">79</span>]</span>
+<span id="cb22-3"><a href="python-basics.html#cb22-3" aria-hidden="true" tabindex="-1"></a>combine <span class="op">=</span> {<span class="st">"Letthers"</span>:names,<span class="st">"Colors"</span>:numbers}</span>
 <span id="cb22-4"><a href="python-basics.html#cb22-4" aria-hidden="true" tabindex="-1"></a>combine</span>
-<span id="cb22-5"><a href="python-basics.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Letthers': ['A', 'B', 'C', 'D'], 'Colors': ['Blue', 'Red', 'Black', 'Orange']}</span></span></code></pre></div>
+<span id="cb22-5"><a href="python-basics.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Letthers': ['Eugenio', 'Luis', 'Isa', 'Gisell'], 'Colors': [9, 17, 80, 79]}</span></span></code></pre></div>
 <p>Or we may want to use one list for the keys and the other for the values:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="python-basics.html#cb23-1" aria-hidden="true" tabindex="-1"></a>region_colors <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(letters, colors))</span>
-<span id="cb23-2"><a href="python-basics.html#cb23-2" aria-hidden="true" tabindex="-1"></a>region_colors</span>
-<span id="cb23-3"><a href="python-basics.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'A': 'Blue', 'B': 'Red', 'C': 'Black', 'D': 'Orange'}</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="python-basics.html#cb23-1" aria-hidden="true" tabindex="-1"></a>stud<span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(names, numbers))</span>
+<span id="cb23-2"><a href="python-basics.html#cb23-2" aria-hidden="true" tabindex="-1"></a>stud</span>
+<span id="cb23-3"><a href="python-basics.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {'Eugenio': 9, 'Luis': 17, 'Isa': 80, 'Gisell': 79}</span></span></code></pre></div>
 </div>
-<div id="python-modules." class="section level2" number="1.5">
+<div id="python-modules" class="section level2" number="1.5">
 <h2>
-<span class="header-section-number">1.5</span> Python modules.<a class="anchor" aria-label="anchor" href="#python-modules."><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5</span> Python modules<a class="anchor" aria-label="anchor" href="#python-modules"><i class="fas fa-link"></i></a>
 </h2>
-<p>Python also contains building functions that can be used by all Python programs. Functions could be made by the user or could be developed by someone else in a library.</p>
-<p>The Python modules are libraries of code and you can import Python modules using the import statements. Two of the mos popular libraries in Python are Pandas and numpy.</p>
+<p>Python also contains building functions that all Python programs can use. The user could make functions or could be developed by someone else in a library.</p>
+<p>The Python modules are code libraries, and you can import Python modules using the import statements. Two of the most popular libraries in Python are Pandas and Numpy.</p>
 <div id="pandas-data-frames" class="section level3" number="1.5.1">
 <h3>
 <span class="header-section-number">1.5.1</span> Pandas data frames<a class="anchor" aria-label="anchor" href="#pandas-data-frames"><i class="fas fa-link"></i></a>
 </h3>
-<p>Is a Python package providing fast, flexible, and expressive data structures designed to make working with “relational” or “labeled” data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, real-world data analysis in Python. Additionally, it has the broader goal of becoming the most powerful and flexible open source data analysis/manipulation tool available in any language. It is already well on its way toward this goal.</p>
+<p>It is a Python package that provides fast, flexible, and expressive data structures designed to make working with “relational” or “labeled” data easy and intuitive. It is the fundamental high-level building block for practical, real-world data analysis in Python. Additionally, it aims to become the most powerful and flexible open-source data analysis/manipulation tool available in any language. It is already well on its way toward this goal.</p>
 <p>We will use it to create and manipulate data frames, which are two-dimensional, size-mutable, potentially heterogeneous tabular data.</p>
-<p>To install the Pandas module, in the Terminal prompt or in a cell in the Jupyter note book type: pip install pandas.</p>
+<p>To install the Pandas module, we write in a notebook cell or in the Conda terminal prompt “pip install pandas” in the Terminal prompt.</p>
 <pre><code>pip install pandas</code></pre>
 <p>To import the library we use the “import” statement:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="python-basics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre></div>
-<p>Look that after the name pandas we use the “as” statement, to give pandas a short name. Then, when we use it is easier to call pd than pandas. For example, to create a data frame we have to call the pd. and the method DataFrame, referring that we are calling the the function DataFrame from the library pandas:</p>
-<pre><code>colors=["Blue","Red","Black","Orange"]
-df = pd.DataFrame(colors,columns=["Column 1"])
+<p>After the name Pandas, we use the “as” statement to give pandas a short name. Then, when we use it, it is easier to call pd than pandas. For example, to create a data frame, we have to call the “pd”. and the method DataFrame, referring to that we are calling the method DataFrame from the library pandas:</p>
+<pre><code>name=["Vale","Diana","Ivan","Vivi"]
+df = pd.DataFrame(name,columns=["Column 1"])
 df</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_6a241" class="table table-sm">
+<div class="inline-table"><table id="T_b5dd9" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_6a241_level0_col0" class="col_heading level0 col0">Column 1</th>
+      <th id="T_b5dd9_level0_col0" class="col_heading level0 col0">Column 1</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_6a241_level0_row0" class="row_heading level0 row0">0</th>
-      <td id="T_6a241_row0_col0" class="data row0 col0">Blue</td>
+<th id="T_b5dd9_level0_row0" class="row_heading level0 row0">0</th>
+      <td id="T_b5dd9_row0_col0" class="data row0 col0">Vale</td>
     </tr>
 <tr>
-<th id="T_6a241_level0_row1" class="row_heading level0 row1">1</th>
-      <td id="T_6a241_row1_col0" class="data row1 col0">Red</td>
+<th id="T_b5dd9_level0_row1" class="row_heading level0 row1">1</th>
+      <td id="T_b5dd9_row1_col0" class="data row1 col0">Diana</td>
     </tr>
 <tr>
-<th id="T_6a241_level0_row2" class="row_heading level0 row2">2</th>
-      <td id="T_6a241_row2_col0" class="data row2 col0">Black</td>
+<th id="T_b5dd9_level0_row2" class="row_heading level0 row2">2</th>
+      <td id="T_b5dd9_row2_col0" class="data row2 col0">Ivan</td>
     </tr>
 <tr>
-<th id="T_6a241_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_6a241_row3_col0" class="data row3 col0">Orange</td>
+<th id="T_b5dd9_level0_row3" class="row_heading level0 row3">3</th>
+      <td id="T_b5dd9_row3_col0" class="data row3 col0">Vivi</td>
     </tr>
 </tbody>
 </table></div>
-<p>In the previous example, an argument of the function is columns, winch is the column name of the data frame. To knowing more about the function and its arguments, we could ask like this:</p>
+<p>In the previous example, an argument of the function is columns; winch is the column name of the data frame. To know more about the function and its arguments, we could ask like this:</p>
 <pre><code>help(pd.DataFrame) # or like this: pd.DataFrame?</code></pre>
-<p>In the previous example, by default the index, the left column without a title, are numbers from zero to 3, but if we want to change the index:</p>
-<pre><code>letters=["A","B","C","D"]
-df = pd.DataFrame(colors,columns=["Column 1"],index=letters)
+<p>In the previous example, by default, the index, the left column without a title, is numbered from zero to 3, but if we want to change the index:</p>
+<pre><code>name=["Vale","Diana","Ivan","Vivi"]
+numbers=[51,11,511,50]
+df = pd.DataFrame(name,columns=["Column 1"],index=numbers)
 df</code></pre>
-<style type="text/css">
-</style>
-<div class="inline-table"><table id="T_b9b49" class="table table-sm">
-<thead><tr>
-<th class="blank level0"> </th>
-      <th id="T_b9b49_level0_col0" class="col_heading level0 col0">Column 1</th>
-    </tr></thead>
-<tbody>
-<tr>
-<th id="T_b9b49_level0_row0" class="row_heading level0 row0">A</th>
-      <td id="T_b9b49_row0_col0" class="data row0 col0">Blue</td>
-    </tr>
-<tr>
-<th id="T_b9b49_level0_row1" class="row_heading level0 row1">B</th>
-      <td id="T_b9b49_row1_col0" class="data row1 col0">Red</td>
-    </tr>
-<tr>
-<th id="T_b9b49_level0_row2" class="row_heading level0 row2">C</th>
-      <td id="T_b9b49_row2_col0" class="data row2 col0">Black</td>
-    </tr>
-<tr>
-<th id="T_b9b49_level0_row3" class="row_heading level0 row3">D</th>
-      <td id="T_b9b49_row3_col0" class="data row3 col0">Orange</td>
-    </tr>
-</tbody>
-</table></div>
+<pre><code>#&gt;     Column 1
+#&gt; 51      Vale
+#&gt; 11     Diana
+#&gt; 511     Ivan
+#&gt; 50      Vivi</code></pre>
 <p>We could take advantage of the creation of a dictionary and transform it into a data frame:</p>
-<pre><code>my_dict=dict(zip(letters, colors))
-pd.DataFrame(my_dict,index=[0])</code></pre>
+<pre><code>my_dict=dict(zip(name, numbers))
+sn=pd.DataFrame(my_dict,index=["Student_number"])
+sn</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_766b3" class="table table-sm">
+<div class="inline-table"><table id="T_c3953" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_766b3_level0_col0" class="col_heading level0 col0">A</th>
-      <th id="T_766b3_level0_col1" class="col_heading level0 col1">B</th>
-      <th id="T_766b3_level0_col2" class="col_heading level0 col2">C</th>
-      <th id="T_766b3_level0_col3" class="col_heading level0 col3">D</th>
+      <th id="T_c3953_level0_col0" class="col_heading level0 col0">Vale</th>
+      <th id="T_c3953_level0_col1" class="col_heading level0 col1">Diana</th>
+      <th id="T_c3953_level0_col2" class="col_heading level0 col2">Ivan</th>
+      <th id="T_c3953_level0_col3" class="col_heading level0 col3">Vivi</th>
     </tr></thead>
 <tbody><tr>
-<th id="T_766b3_level0_row0" class="row_heading level0 row0">0</th>
-      <td id="T_766b3_row0_col0" class="data row0 col0">Blue</td>
-      <td id="T_766b3_row0_col1" class="data row0 col1">Red</td>
-      <td id="T_766b3_row0_col2" class="data row0 col2">Black</td>
-      <td id="T_766b3_row0_col3" class="data row0 col3">Orange</td>
+<th id="T_c3953_level0_row0" class="row_heading level0 row0">Student_number</th>
+      <td id="T_c3953_row0_col0" class="data row0 col0">51</td>
+      <td id="T_c3953_row0_col1" class="data row0 col1">11</td>
+      <td id="T_c3953_row0_col2" class="data row0 col2">511</td>
+      <td id="T_c3953_row0_col3" class="data row0 col3">50</td>
     </tr></tbody>
 </table></div>
-<pre><code>letters=["A","B","C","D"]
-colors=["Blue","Red","Black","Orange"]
-numbers=[10,20,30,40]
+<p>If we want to have the student_number as columns instead of a row, we could transpose the data frame:</p>
+<pre><code>sn.transpose()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_3d3b5" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_3d3b5_level0_col0" class="col_heading level0 col0">Student_number</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_3d3b5_level0_row0" class="row_heading level0 row0">Vale</th>
+      <td id="T_3d3b5_row0_col0" class="data row0 col0">51</td>
+    </tr>
+<tr>
+<th id="T_3d3b5_level0_row1" class="row_heading level0 row1">Diana</th>
+      <td id="T_3d3b5_row1_col0" class="data row1 col0">11</td>
+    </tr>
+<tr>
+<th id="T_3d3b5_level0_row2" class="row_heading level0 row2">Ivan</th>
+      <td id="T_3d3b5_row2_col0" class="data row2 col0">511</td>
+    </tr>
+<tr>
+<th id="T_3d3b5_level0_row3" class="row_heading level0 row3">Vivi</th>
+      <td id="T_3d3b5_row3_col0" class="data row3 col0">50</td>
+    </tr>
+</tbody>
+</table></div>
+<pre><code>name=["Estefanía","Laura Yanet","María Guadalupe","Karla Lizette"]
+nick=["Estef","Yanet","Lupita","Karla"]
+number=[1,2,3,4]
 
 # We use two list to create the dictionary
-combine = {"Letters":letters,"Colors":colors,"Numbers":numbers}
+combine = {"Nick_name":nick,"Name":name}
 
 # and from the dictionary we create the  data frame
-df=pd.DataFrame(combine)
+df=pd.DataFrame(combine,index=number)
 df</code></pre>
-<style type="text/css">
-</style>
-<div class="inline-table"><table id="T_6ded0" class="table table-sm">
-<thead><tr>
-<th class="blank level0"> </th>
-      <th id="T_6ded0_level0_col0" class="col_heading level0 col0">Letters</th>
-      <th id="T_6ded0_level0_col1" class="col_heading level0 col1">Colors</th>
-      <th id="T_6ded0_level0_col2" class="col_heading level0 col2">Numbers</th>
-    </tr></thead>
-<tbody>
-<tr>
-<th id="T_6ded0_level0_row0" class="row_heading level0 row0">0</th>
-      <td id="T_6ded0_row0_col0" class="data row0 col0">A</td>
-      <td id="T_6ded0_row0_col1" class="data row0 col1">Blue</td>
-      <td id="T_6ded0_row0_col2" class="data row0 col2">10</td>
-    </tr>
-<tr>
-<th id="T_6ded0_level0_row1" class="row_heading level0 row1">1</th>
-      <td id="T_6ded0_row1_col0" class="data row1 col0">B</td>
-      <td id="T_6ded0_row1_col1" class="data row1 col1">Red</td>
-      <td id="T_6ded0_row1_col2" class="data row1 col2">20</td>
-    </tr>
-<tr>
-<th id="T_6ded0_level0_row2" class="row_heading level0 row2">2</th>
-      <td id="T_6ded0_row2_col0" class="data row2 col0">C</td>
-      <td id="T_6ded0_row2_col1" class="data row2 col1">Black</td>
-      <td id="T_6ded0_row2_col2" class="data row2 col2">30</td>
-    </tr>
-<tr>
-<th id="T_6ded0_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_6ded0_row3_col0" class="data row3 col0">D</td>
-      <td id="T_6ded0_row3_col1" class="data row3 col1">Orange</td>
-      <td id="T_6ded0_row3_col2" class="data row3 col2">40</td>
-    </tr>
-</tbody>
-</table></div>
-<p>To apply a method (function) to the data frame, we must type the pandas object and a dot, before the method. A useful a useful method is shape, which give us the number of rows and columns.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="python-basics.html#cb31-1" aria-hidden="true" tabindex="-1"></a>df.shape </span>
-<span id="cb31-2"><a href="python-basics.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (4, 3)</span></span></code></pre></div>
-<p>To rename a column:</p>
-<pre><code>df=df.rename(columns={"Letters": "let", "Colors": "col"})
-df</code></pre>
-<style type="text/css">
-</style>
-<div class="inline-table"><table id="T_d5078" class="table table-sm">
-<thead><tr>
-<th class="blank level0"> </th>
-      <th id="T_d5078_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_d5078_level0_col1" class="col_heading level0 col1">col</th>
-      <th id="T_d5078_level0_col2" class="col_heading level0 col2">Numbers</th>
-    </tr></thead>
-<tbody>
-<tr>
-<th id="T_d5078_level0_row0" class="row_heading level0 row0">0</th>
-      <td id="T_d5078_row0_col0" class="data row0 col0">A</td>
-      <td id="T_d5078_row0_col1" class="data row0 col1">Blue</td>
-      <td id="T_d5078_row0_col2" class="data row0 col2">10</td>
-    </tr>
-<tr>
-<th id="T_d5078_level0_row1" class="row_heading level0 row1">1</th>
-      <td id="T_d5078_row1_col0" class="data row1 col0">B</td>
-      <td id="T_d5078_row1_col1" class="data row1 col1">Red</td>
-      <td id="T_d5078_row1_col2" class="data row1 col2">20</td>
-    </tr>
-<tr>
-<th id="T_d5078_level0_row2" class="row_heading level0 row2">2</th>
-      <td id="T_d5078_row2_col0" class="data row2 col0">C</td>
-      <td id="T_d5078_row2_col1" class="data row2 col1">Black</td>
-      <td id="T_d5078_row2_col2" class="data row2 col2">30</td>
-    </tr>
-<tr>
-<th id="T_d5078_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_d5078_row3_col0" class="data row3 col0">D</td>
-      <td id="T_d5078_row3_col1" class="data row3 col1">Orange</td>
-      <td id="T_d5078_row3_col2" class="data row3 col2">40</td>
-    </tr>
-</tbody>
-</table></div>
+<pre><code>#&gt;   Nick_name             name
+#&gt; 1     Estef        Estefanía
+#&gt; 2     Yanet      Laura Yanet
+#&gt; 3    Lupita  María Guadalupe
+#&gt; 4     Karla    Karla Lizette</code></pre>
+<p>To apply a method (function) to the data frame, we must type the Pandas object and a dot before the method. A useful method is “shape,” which gives us the number of rows and columns.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="python-basics.html#cb34-1" aria-hidden="true" tabindex="-1"></a>df.shape </span>
+<span id="cb34-2"><a href="python-basics.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (4, 2)</span></span></code></pre></div>
+<p>To rename a data frame column:</p>
+<pre><code>df=df.rename(columns={"Nick_name": "Nick", "name": "Names"})
+df#</code></pre>
+<pre><code>#&gt;      Nick            Names
+#&gt; 1   Estef        Estefanía
+#&gt; 2   Yanet      Laura Yanet
+#&gt; 3  Lupita  María Guadalupe
+#&gt; 4   Karla    Karla Lizette</code></pre>
 <p>It also applies for index:</p>
-<pre><code>df=df.rename(index={0: "x", 1: "y", 2: "z"})
+<pre><code>df=df.rename(index={1: "x", 2: "y", 3: "z",4:"w"})
 df</code></pre>
-<style type="text/css">
-</style>
-<div class="inline-table"><table id="T_04813" class="table table-sm">
-<thead><tr>
-<th class="blank level0"> </th>
-      <th id="T_04813_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_04813_level0_col1" class="col_heading level0 col1">col</th>
-      <th id="T_04813_level0_col2" class="col_heading level0 col2">Numbers</th>
-    </tr></thead>
-<tbody>
-<tr>
-<th id="T_04813_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_04813_row0_col0" class="data row0 col0">A</td>
-      <td id="T_04813_row0_col1" class="data row0 col1">Blue</td>
-      <td id="T_04813_row0_col2" class="data row0 col2">10</td>
-    </tr>
-<tr>
-<th id="T_04813_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_04813_row1_col0" class="data row1 col0">B</td>
-      <td id="T_04813_row1_col1" class="data row1 col1">Red</td>
-      <td id="T_04813_row1_col2" class="data row1 col2">20</td>
-    </tr>
-<tr>
-<th id="T_04813_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_04813_row2_col0" class="data row2 col0">C</td>
-      <td id="T_04813_row2_col1" class="data row2 col1">Black</td>
-      <td id="T_04813_row2_col2" class="data row2 col2">30</td>
-    </tr>
-<tr>
-<th id="T_04813_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_04813_row3_col0" class="data row3 col0">D</td>
-      <td id="T_04813_row3_col1" class="data row3 col1">Orange</td>
-      <td id="T_04813_row3_col2" class="data row3 col2">40</td>
-    </tr>
-</tbody>
-</table></div>
+<pre><code>#&gt;      Nick            Names
+#&gt; x   Estef        Estefanía
+#&gt; y   Yanet      Laura Yanet
+#&gt; z  Lupita  María Guadalupe
+#&gt; w   Karla    Karla Lizette</code></pre>
 </div>
 <div id="selecting-rows-and-columns-in-a-data-frame" class="section level3" number="1.5.2">
 <h3>
 <span class="header-section-number">1.5.2</span> Selecting rows and columns in a data frame<a class="anchor" aria-label="anchor" href="#selecting-rows-and-columns-in-a-data-frame"><i class="fas fa-link"></i></a>
 </h3>
-<p>To select a column we could type the column name:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="python-basics.html#cb34-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"col"</span>]</span>
-<span id="cb34-2"><a href="python-basics.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x      Blue</span></span>
-<span id="cb34-3"><a href="python-basics.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; y       Red</span></span>
-<span id="cb34-4"><a href="python-basics.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; z     Black</span></span>
-<span id="cb34-5"><a href="python-basics.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    Orange</span></span>
-<span id="cb34-6"><a href="python-basics.html#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Name: col, dtype: object</span></span></code></pre></div>
-<p>The resulting object is a pandas series, which is a one dimensional object, such as a list, but with and index, in this case the data frame index.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="python-basics.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(df[<span class="st">"col"</span>])</span>
-<span id="cb35-2"><a href="python-basics.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'pandas.core.series.Series'&gt;</span></span></code></pre></div>
-<p>If we want to keep the data frame type, we should add the swuare brackets twice:</p>
-<pre><code>df[["col"]]</code></pre>
+<p>To select a column, we could type the column name:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="python-basics.html#cb39-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Nick"</span>]</span>
+<span id="cb39-2"><a href="python-basics.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x     Estef</span></span>
+<span id="cb39-3"><a href="python-basics.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; y     Yanet</span></span>
+<span id="cb39-4"><a href="python-basics.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; z    Lupita</span></span>
+<span id="cb39-5"><a href="python-basics.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; w     Karla</span></span>
+<span id="cb39-6"><a href="python-basics.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Name: Nick, dtype: object</span></span></code></pre></div>
+<p>The resulting object is a pandas series, a one-dimensional object, such as a list, but with an index, in this case, the data frame index.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="python-basics.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(df[<span class="st">"Nick"</span>])</span>
+<span id="cb40-2"><a href="python-basics.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'pandas.core.series.Series'&gt;</span></span></code></pre></div>
+<p>If we want to keep the data frame type, we should add the square brackets twice:</p>
+<pre><code>df[["Nick"]]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_fa6d0" class="table table-sm">
+<div class="inline-table"><table id="T_1f064" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_fa6d0_level0_col0" class="col_heading level0 col0">col</th>
+      <th id="T_1f064_level0_col0" class="col_heading level0 col0">Nick</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_fa6d0_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_fa6d0_row0_col0" class="data row0 col0">Blue</td>
+<th id="T_1f064_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_1f064_row0_col0" class="data row0 col0">Estef</td>
     </tr>
 <tr>
-<th id="T_fa6d0_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_fa6d0_row1_col0" class="data row1 col0">Red</td>
+<th id="T_1f064_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_1f064_row1_col0" class="data row1 col0">Yanet</td>
     </tr>
 <tr>
-<th id="T_fa6d0_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_fa6d0_row2_col0" class="data row2 col0">Black</td>
+<th id="T_1f064_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_1f064_row2_col0" class="data row2 col0">Lupita</td>
     </tr>
 <tr>
-<th id="T_fa6d0_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_fa6d0_row3_col0" class="data row3 col0">Orange</td>
+<th id="T_1f064_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_1f064_row3_col0" class="data row3 col0">Karla</td>
     </tr>
 </tbody>
 </table></div>
-<p>or two columns at once:</p>
-<pre><code>df[["col","let"]]</code></pre>
+<p>Or two columns at once:</p>
+<pre><code>df[["Nick","Names"]]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_b78d7" class="table table-sm">
+<div class="inline-table"><table id="T_ff950" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_b78d7_level0_col0" class="col_heading level0 col0">col</th>
-      <th id="T_b78d7_level0_col1" class="col_heading level0 col1">let</th>
+      <th id="T_ff950_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_ff950_level0_col1" class="col_heading level0 col1">Names</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_b78d7_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_b78d7_row0_col0" class="data row0 col0">Blue</td>
-      <td id="T_b78d7_row0_col1" class="data row0 col1">A</td>
+<th id="T_ff950_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_ff950_row0_col0" class="data row0 col0">Estef</td>
+      <td id="T_ff950_row0_col1" class="data row0 col1">Estefanía</td>
     </tr>
 <tr>
-<th id="T_b78d7_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_b78d7_row1_col0" class="data row1 col0">Red</td>
-      <td id="T_b78d7_row1_col1" class="data row1 col1">B</td>
+<th id="T_ff950_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_ff950_row1_col0" class="data row1 col0">Yanet</td>
+      <td id="T_ff950_row1_col1" class="data row1 col1">Laura Yanet</td>
     </tr>
 <tr>
-<th id="T_b78d7_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_b78d7_row2_col0" class="data row2 col0">Black</td>
-      <td id="T_b78d7_row2_col1" class="data row2 col1">C</td>
+<th id="T_ff950_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_ff950_row2_col0" class="data row2 col0">Lupita</td>
+      <td id="T_ff950_row2_col1" class="data row2 col1">María Guadalupe</td>
     </tr>
 <tr>
-<th id="T_b78d7_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_b78d7_row3_col0" class="data row3 col0">Orange</td>
-      <td id="T_b78d7_row3_col1" class="data row3 col1">D</td>
+<th id="T_ff950_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_ff950_row3_col0" class="data row3 col0">Karla</td>
+      <td id="T_ff950_row3_col1" class="data row3 col1">Karla Lizette</td>
     </tr>
 </tbody>
 </table></div>
-<p>To select rows we use the method .loc</p>
-<pre><code>df.loc[["x"]]</code></pre>
+<p>To select rows, we use the method “.loc”.</p>
+<pre><code>df.loc[["y"]]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_52dbe" class="table table-sm">
+<div class="inline-table"><table id="T_68ba0" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_52dbe_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_52dbe_level0_col1" class="col_heading level0 col1">col</th>
-      <th id="T_52dbe_level0_col2" class="col_heading level0 col2">Numbers</th>
+      <th id="T_68ba0_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_68ba0_level0_col1" class="col_heading level0 col1">Names</th>
     </tr></thead>
 <tbody><tr>
-<th id="T_52dbe_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_52dbe_row0_col0" class="data row0 col0">A</td>
-      <td id="T_52dbe_row0_col1" class="data row0 col1">Blue</td>
-      <td id="T_52dbe_row0_col2" class="data row0 col2">10</td>
+<th id="T_68ba0_level0_row0" class="row_heading level0 row0">y</th>
+      <td id="T_68ba0_row0_col0" class="data row0 col0">Yanet</td>
+      <td id="T_68ba0_row0_col1" class="data row0 col1">Laura Yanet</td>
     </tr></tbody>
 </table></div>
-<pre><code>df.loc[["x","z"]]# .styl</code></pre>
+<pre><code>df.loc[["y","z"]]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_c0a5c" class="table table-sm">
+<div class="inline-table"><table id="T_1275f" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_c0a5c_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_c0a5c_level0_col1" class="col_heading level0 col1">col</th>
-      <th id="T_c0a5c_level0_col2" class="col_heading level0 col2">Numbers</th>
+      <th id="T_1275f_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_1275f_level0_col1" class="col_heading level0 col1">Names</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_c0a5c_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_c0a5c_row0_col0" class="data row0 col0">A</td>
-      <td id="T_c0a5c_row0_col1" class="data row0 col1">Blue</td>
-      <td id="T_c0a5c_row0_col2" class="data row0 col2">10</td>
+<th id="T_1275f_level0_row0" class="row_heading level0 row0">y</th>
+      <td id="T_1275f_row0_col0" class="data row0 col0">Yanet</td>
+      <td id="T_1275f_row0_col1" class="data row0 col1">Laura Yanet</td>
     </tr>
 <tr>
-<th id="T_c0a5c_level0_row1" class="row_heading level0 row1">z</th>
-      <td id="T_c0a5c_row1_col0" class="data row1 col0">C</td>
-      <td id="T_c0a5c_row1_col1" class="data row1 col1">Black</td>
-      <td id="T_c0a5c_row1_col2" class="data row1 col2">30</td>
+<th id="T_1275f_level0_row1" class="row_heading level0 row1">z</th>
+      <td id="T_1275f_row1_col0" class="data row1 col0">Lupita</td>
+      <td id="T_1275f_row1_col1" class="data row1 col1">María Guadalupe</td>
     </tr>
 </tbody>
 </table></div>
-<p>The loc method works also for selecting columns:</p>
-<pre><code>df.loc[:, ("col","Numbers")]</code></pre>
-<p>The loc method works also for selecting columns:</p>
+<p>The “loc” method also works for selecting a column:</p>
+<pre><code>df.loc[:, ("Nick","Names")]</code></pre>
+<p>Or more than one column:</p>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_d1bba" class="table table-sm">
+<div class="inline-table"><table id="T_8abea" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_d1bba_level0_col0" class="col_heading level0 col0">col</th>
-      <th id="T_d1bba_level0_col1" class="col_heading level0 col1">Numbers</th>
+      <th id="T_8abea_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_8abea_level0_col1" class="col_heading level0 col1">Names</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_d1bba_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_d1bba_row0_col0" class="data row0 col0">Blue</td>
-      <td id="T_d1bba_row0_col1" class="data row0 col1">10</td>
+<th id="T_8abea_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_8abea_row0_col0" class="data row0 col0">Estef</td>
+      <td id="T_8abea_row0_col1" class="data row0 col1">Estefanía</td>
     </tr>
 <tr>
-<th id="T_d1bba_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_d1bba_row1_col0" class="data row1 col0">Red</td>
-      <td id="T_d1bba_row1_col1" class="data row1 col1">20</td>
+<th id="T_8abea_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_8abea_row1_col0" class="data row1 col0">Yanet</td>
+      <td id="T_8abea_row1_col1" class="data row1 col1">Laura Yanet</td>
     </tr>
 <tr>
-<th id="T_d1bba_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_d1bba_row2_col0" class="data row2 col0">Black</td>
-      <td id="T_d1bba_row2_col1" class="data row2 col1">30</td>
+<th id="T_8abea_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_8abea_row2_col0" class="data row2 col0">Lupita</td>
+      <td id="T_8abea_row2_col1" class="data row2 col1">María Guadalupe</td>
     </tr>
 <tr>
-<th id="T_d1bba_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_d1bba_row3_col0" class="data row3 col0">Orange</td>
-      <td id="T_d1bba_row3_col1" class="data row3 col1">40</td>
+<th id="T_8abea_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_8abea_row3_col0" class="data row3 col0">Karla</td>
+      <td id="T_8abea_row3_col1" class="data row3 col1">Karla Lizette</td>
     </tr>
 </tbody>
 </table></div>
-<p>Some times is useful selecting by position. in this case we use the method .iloc[ rows, columns ]. For example to select the second and third columns:</p>
+<p>Sometimes is useful to select by position. We use the method .iloc[ rows, columns ] in this case. For example, to select the second and third columns:</p>
 <pre><code>df.iloc[: , 1:]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_c5e77" class="table table-sm">
+<div class="inline-table"><table id="T_1c847" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_c5e77_level0_col0" class="col_heading level0 col0">col</th>
-      <th id="T_c5e77_level0_col1" class="col_heading level0 col1">Numbers</th>
+      <th id="T_1c847_level0_col0" class="col_heading level0 col0">Names</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_c5e77_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_c5e77_row0_col0" class="data row0 col0">Blue</td>
-      <td id="T_c5e77_row0_col1" class="data row0 col1">10</td>
+<th id="T_1c847_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_1c847_row0_col0" class="data row0 col0">Estefanía</td>
     </tr>
 <tr>
-<th id="T_c5e77_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_c5e77_row1_col0" class="data row1 col0">Red</td>
-      <td id="T_c5e77_row1_col1" class="data row1 col1">20</td>
+<th id="T_1c847_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_1c847_row1_col0" class="data row1 col0">Laura Yanet</td>
     </tr>
 <tr>
-<th id="T_c5e77_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_c5e77_row2_col0" class="data row2 col0">Black</td>
-      <td id="T_c5e77_row2_col1" class="data row2 col1">30</td>
+<th id="T_1c847_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_1c847_row2_col0" class="data row2 col0">María Guadalupe</td>
     </tr>
 <tr>
-<th id="T_c5e77_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_c5e77_row3_col0" class="data row3 col0">Orange</td>
-      <td id="T_c5e77_row3_col1" class="data row3 col1">40</td>
+<th id="T_1c847_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_1c847_row3_col0" class="data row3 col0">Karla Lizette</td>
     </tr>
 </tbody>
 </table></div>
-<p>The left side of the comma is for selecting rows and the right for columns. Another example:</p>
+<p>The left side of the comma is for selecting rows, and the right is for columns. Another example:</p>
 <pre><code>df.iloc[: , 0:2]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_e84e7" class="table table-sm">
+<div class="inline-table"><table id="T_59ae4" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_e84e7_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_e84e7_level0_col1" class="col_heading level0 col1">col</th>
+      <th id="T_59ae4_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_59ae4_level0_col1" class="col_heading level0 col1">Names</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_e84e7_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_e84e7_row0_col0" class="data row0 col0">A</td>
-      <td id="T_e84e7_row0_col1" class="data row0 col1">Blue</td>
+<th id="T_59ae4_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_59ae4_row0_col0" class="data row0 col0">Estef</td>
+      <td id="T_59ae4_row0_col1" class="data row0 col1">Estefanía</td>
     </tr>
 <tr>
-<th id="T_e84e7_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_e84e7_row1_col0" class="data row1 col0">B</td>
-      <td id="T_e84e7_row1_col1" class="data row1 col1">Red</td>
+<th id="T_59ae4_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_59ae4_row1_col0" class="data row1 col0">Yanet</td>
+      <td id="T_59ae4_row1_col1" class="data row1 col1">Laura Yanet</td>
     </tr>
 <tr>
-<th id="T_e84e7_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_e84e7_row2_col0" class="data row2 col0">C</td>
-      <td id="T_e84e7_row2_col1" class="data row2 col1">Black</td>
+<th id="T_59ae4_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_59ae4_row2_col0" class="data row2 col0">Lupita</td>
+      <td id="T_59ae4_row2_col1" class="data row2 col1">María Guadalupe</td>
     </tr>
 <tr>
-<th id="T_e84e7_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_e84e7_row3_col0" class="data row3 col0">D</td>
-      <td id="T_e84e7_row3_col1" class="data row3 col1">Orange</td>
+<th id="T_59ae4_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_59ae4_row3_col0" class="data row3 col0">Karla</td>
+      <td id="T_59ae4_row3_col1" class="data row3 col1">Karla Lizette</td>
     </tr>
 </tbody>
 </table></div>
@@ -629,170 +535,852 @@ df</code></pre>
 <pre><code>df.iloc[2: , ]</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_34c9f" class="table table-sm">
+<div class="inline-table"><table id="T_d03eb" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_34c9f_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_34c9f_level0_col1" class="col_heading level0 col1">col</th>
-      <th id="T_34c9f_level0_col2" class="col_heading level0 col2">Numbers</th>
+      <th id="T_d03eb_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_d03eb_level0_col1" class="col_heading level0 col1">Names</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_34c9f_level0_row0" class="row_heading level0 row0">z</th>
-      <td id="T_34c9f_row0_col0" class="data row0 col0">C</td>
-      <td id="T_34c9f_row0_col1" class="data row0 col1">Black</td>
-      <td id="T_34c9f_row0_col2" class="data row0 col2">30</td>
+<th id="T_d03eb_level0_row0" class="row_heading level0 row0">z</th>
+      <td id="T_d03eb_row0_col0" class="data row0 col0">Lupita</td>
+      <td id="T_d03eb_row0_col1" class="data row0 col1">María Guadalupe</td>
     </tr>
 <tr>
-<th id="T_34c9f_level0_row1" class="row_heading level0 row1">3</th>
-      <td id="T_34c9f_row1_col0" class="data row1 col0">D</td>
-      <td id="T_34c9f_row1_col1" class="data row1 col1">Orange</td>
-      <td id="T_34c9f_row1_col2" class="data row1 col2">40</td>
+<th id="T_d03eb_level0_row1" class="row_heading level0 row1">w</th>
+      <td id="T_d03eb_row1_col0" class="data row1 col0">Karla</td>
+      <td id="T_d03eb_row1_col1" class="data row1 col1">Karla Lizette</td>
     </tr>
 </tbody>
 </table></div>
-<p>To inset a new column</p>
+<p>To insert a new column:</p>
 <pre><code>num_2=list(range(4))
 
 df["Numbers_2"]=num_2
 df</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_ff7a7" class="table table-sm">
+<div class="inline-table"><table id="T_3df28" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_ff7a7_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_ff7a7_level0_col1" class="col_heading level0 col1">col</th>
-      <th id="T_ff7a7_level0_col2" class="col_heading level0 col2">Numbers</th>
-      <th id="T_ff7a7_level0_col3" class="col_heading level0 col3">Numbers_2</th>
+      <th id="T_3df28_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_3df28_level0_col1" class="col_heading level0 col1">Names</th>
+      <th id="T_3df28_level0_col2" class="col_heading level0 col2">Numbers_2</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_ff7a7_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_ff7a7_row0_col0" class="data row0 col0">A</td>
-      <td id="T_ff7a7_row0_col1" class="data row0 col1">Blue</td>
-      <td id="T_ff7a7_row0_col2" class="data row0 col2">10</td>
-      <td id="T_ff7a7_row0_col3" class="data row0 col3">0</td>
+<th id="T_3df28_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_3df28_row0_col0" class="data row0 col0">Estef</td>
+      <td id="T_3df28_row0_col1" class="data row0 col1">Estefanía</td>
+      <td id="T_3df28_row0_col2" class="data row0 col2">0</td>
     </tr>
 <tr>
-<th id="T_ff7a7_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_ff7a7_row1_col0" class="data row1 col0">B</td>
-      <td id="T_ff7a7_row1_col1" class="data row1 col1">Red</td>
-      <td id="T_ff7a7_row1_col2" class="data row1 col2">20</td>
-      <td id="T_ff7a7_row1_col3" class="data row1 col3">1</td>
+<th id="T_3df28_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_3df28_row1_col0" class="data row1 col0">Yanet</td>
+      <td id="T_3df28_row1_col1" class="data row1 col1">Laura Yanet</td>
+      <td id="T_3df28_row1_col2" class="data row1 col2">1</td>
     </tr>
 <tr>
-<th id="T_ff7a7_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_ff7a7_row2_col0" class="data row2 col0">C</td>
-      <td id="T_ff7a7_row2_col1" class="data row2 col1">Black</td>
-      <td id="T_ff7a7_row2_col2" class="data row2 col2">30</td>
-      <td id="T_ff7a7_row2_col3" class="data row2 col3">2</td>
+<th id="T_3df28_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_3df28_row2_col0" class="data row2 col0">Lupita</td>
+      <td id="T_3df28_row2_col1" class="data row2 col1">María Guadalupe</td>
+      <td id="T_3df28_row2_col2" class="data row2 col2">2</td>
     </tr>
 <tr>
-<th id="T_ff7a7_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_ff7a7_row3_col0" class="data row3 col0">D</td>
-      <td id="T_ff7a7_row3_col1" class="data row3 col1">Orange</td>
-      <td id="T_ff7a7_row3_col2" class="data row3 col2">40</td>
-      <td id="T_ff7a7_row3_col3" class="data row3 col3">3</td>
+<th id="T_3df28_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_3df28_row3_col0" class="data row3 col0">Karla</td>
+      <td id="T_3df28_row3_col1" class="data row3 col1">Karla Lizette</td>
+      <td id="T_3df28_row3_col2" class="data row3 col2">3</td>
     </tr>
 </tbody>
 </table></div>
 <p>The range method return an object that produces a sequence of integers from start (inclusive) to stop (exclusive) by step. range(i, j) produces i, i+1, i+2, …, j-1.</p>
 <p>To drooping colum(s):</p>
-<pre><code>df.drop(columns=['col'])</code></pre>
+<pre><code>df.drop(columns=['Names'])</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_d79a0" class="table table-sm">
+<div class="inline-table"><table id="T_c0611" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_d79a0_level0_col0" class="col_heading level0 col0">let</th>
-      <th id="T_d79a0_level0_col1" class="col_heading level0 col1">Numbers</th>
-      <th id="T_d79a0_level0_col2" class="col_heading level0 col2">Numbers_2</th>
+      <th id="T_c0611_level0_col0" class="col_heading level0 col0">Nick</th>
+      <th id="T_c0611_level0_col1" class="col_heading level0 col1">Numbers_2</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_d79a0_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_d79a0_row0_col0" class="data row0 col0">A</td>
-      <td id="T_d79a0_row0_col1" class="data row0 col1">10</td>
-      <td id="T_d79a0_row0_col2" class="data row0 col2">0</td>
+<th id="T_c0611_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_c0611_row0_col0" class="data row0 col0">Estef</td>
+      <td id="T_c0611_row0_col1" class="data row0 col1">0</td>
     </tr>
 <tr>
-<th id="T_d79a0_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_d79a0_row1_col0" class="data row1 col0">B</td>
-      <td id="T_d79a0_row1_col1" class="data row1 col1">20</td>
-      <td id="T_d79a0_row1_col2" class="data row1 col2">1</td>
+<th id="T_c0611_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_c0611_row1_col0" class="data row1 col0">Yanet</td>
+      <td id="T_c0611_row1_col1" class="data row1 col1">1</td>
     </tr>
 <tr>
-<th id="T_d79a0_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_d79a0_row2_col0" class="data row2 col0">C</td>
-      <td id="T_d79a0_row2_col1" class="data row2 col1">30</td>
-      <td id="T_d79a0_row2_col2" class="data row2 col2">2</td>
+<th id="T_c0611_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_c0611_row2_col0" class="data row2 col0">Lupita</td>
+      <td id="T_c0611_row2_col1" class="data row2 col1">2</td>
     </tr>
 <tr>
-<th id="T_d79a0_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_d79a0_row3_col0" class="data row3 col0">D</td>
-      <td id="T_d79a0_row3_col1" class="data row3 col1">40</td>
-      <td id="T_d79a0_row3_col2" class="data row3 col2">3</td>
+<th id="T_c0611_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_c0611_row3_col0" class="data row3 col0">Karla</td>
+      <td id="T_c0611_row3_col1" class="data row3 col1">3</td>
     </tr>
 </tbody>
 </table></div>
-<pre><code>df.drop(columns=['col',"let"])</code></pre>
+<pre><code>df.drop(columns=['Names',"Numbers_2"])</code></pre>
 <style type="text/css">
 </style>
-<div class="inline-table"><table id="T_2410c" class="table table-sm">
+<div class="inline-table"><table id="T_27177" class="table table-sm">
 <thead><tr>
 <th class="blank level0"> </th>
-      <th id="T_2410c_level0_col0" class="col_heading level0 col0">Numbers</th>
-      <th id="T_2410c_level0_col1" class="col_heading level0 col1">Numbers_2</th>
+      <th id="T_27177_level0_col0" class="col_heading level0 col0">Nick</th>
     </tr></thead>
 <tbody>
 <tr>
-<th id="T_2410c_level0_row0" class="row_heading level0 row0">x</th>
-      <td id="T_2410c_row0_col0" class="data row0 col0">10</td>
-      <td id="T_2410c_row0_col1" class="data row0 col1">0</td>
+<th id="T_27177_level0_row0" class="row_heading level0 row0">x</th>
+      <td id="T_27177_row0_col0" class="data row0 col0">Estef</td>
     </tr>
 <tr>
-<th id="T_2410c_level0_row1" class="row_heading level0 row1">y</th>
-      <td id="T_2410c_row1_col0" class="data row1 col0">20</td>
-      <td id="T_2410c_row1_col1" class="data row1 col1">1</td>
+<th id="T_27177_level0_row1" class="row_heading level0 row1">y</th>
+      <td id="T_27177_row1_col0" class="data row1 col0">Yanet</td>
     </tr>
 <tr>
-<th id="T_2410c_level0_row2" class="row_heading level0 row2">z</th>
-      <td id="T_2410c_row2_col0" class="data row2 col0">30</td>
-      <td id="T_2410c_row2_col1" class="data row2 col1">2</td>
+<th id="T_27177_level0_row2" class="row_heading level0 row2">z</th>
+      <td id="T_27177_row2_col0" class="data row2 col0">Lupita</td>
     </tr>
 <tr>
-<th id="T_2410c_level0_row3" class="row_heading level0 row3">3</th>
-      <td id="T_2410c_row3_col0" class="data row3 col0">40</td>
-      <td id="T_2410c_row3_col1" class="data row3 col1">3</td>
+<th id="T_27177_level0_row3" class="row_heading level0 row3">w</th>
+      <td id="T_27177_row3_col0" class="data row3 col0">Karla</td>
     </tr>
 </tbody>
 </table></div>
 </div>
-<div id="numpy" class="section level3" number="1.5.3">
-<h3>
-<span class="header-section-number">1.5.3</span> Numpy<a class="anchor" aria-label="anchor" href="#numpy"><i class="fas fa-link"></i></a>
-</h3>
+</div>
+<div id="reading-excel-and-csv-files" class="section level2" number="1.6">
+<h2>
+<span class="header-section-number">1.6</span> Reading Excel and csv files<a class="anchor" aria-label="anchor" href="#reading-excel-and-csv-files"><i class="fas fa-link"></i></a>
+</h2>
+<p>You can download the Excel file by copying and pasting and pasting to a browser through the following link:</p>
+<p><a href="https://github.com/abernal30/ML_python/blob/main/df.xlsx" class="uri">https://github.com/abernal30/ML_python/blob/main/df.xlsx</a></p>
+<p>I stored the file in a sub-directory named “data,” and I called “df.xlsx”</p>
+<p>To verify the names of the Sheets, we use the following code:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="python-basics.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb52-2"><a href="python-basics.html#cb52-2" aria-hidden="true" tabindex="-1"></a>sheets<span class="op">=</span>pd.ExcelFile(<span class="st">"data/df.xlsx"</span>).sheet_names</span>
+<span id="cb52-3"><a href="python-basics.html#cb52-3" aria-hidden="true" tabindex="-1"></a>sheets</span>
+<span id="cb52-4"><a href="python-basics.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ['Sheet1', 'Sheet2', 'Sheet3']</span></span></code></pre></div>
+<p>I use the function read_excel of the Pandas library to read the Excel file. In this case, I use the argument sheet_name=sheets[0], equivalent to sheet_name=“Sheet1”.</p>
+<pre><code>data=pd.read_excel("data/df.xlsx",sheet_name=sheets[0])
+data</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_0fc8e" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_0fc8e_level0_col0" class="col_heading level0 col0">Unnamed: 0</th>
+      <th id="T_0fc8e_level0_col1" class="col_heading level0 col1">Unnamed: 1</th>
+      <th id="T_0fc8e_level0_col2" class="col_heading level0 col2">Unnamed: 2</th>
+      <th id="T_0fc8e_level0_col3" class="col_heading level0 col3">Unnamed: 3</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_0fc8e_level0_row0" class="row_heading level0 row0">0</th>
+      <td id="T_0fc8e_row0_col0" class="data row0 col0">nan</td>
+      <td id="T_0fc8e_row0_col1" class="data row0 col1">Título HOJA 1</td>
+      <td id="T_0fc8e_row0_col2" class="data row0 col2">nan</td>
+      <td id="T_0fc8e_row0_col3" class="data row0 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row1" class="row_heading level0 row1">1</th>
+      <td id="T_0fc8e_row1_col0" class="data row1 col0">nan</td>
+      <td id="T_0fc8e_row1_col1" class="data row1 col1">nan</td>
+      <td id="T_0fc8e_row1_col2" class="data row1 col2">X</td>
+      <td id="T_0fc8e_row1_col3" class="data row1 col3">Y</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row2" class="row_heading level0 row2">2</th>
+      <td id="T_0fc8e_row2_col0" class="data row2 col0">A</td>
+      <td id="T_0fc8e_row2_col1" class="data row2 col1">nan</td>
+      <td id="T_0fc8e_row2_col2" class="data row2 col2">2</td>
+      <td id="T_0fc8e_row2_col3" class="data row2 col3">10</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row3" class="row_heading level0 row3">3</th>
+      <td id="T_0fc8e_row3_col0" class="data row3 col0">B</td>
+      <td id="T_0fc8e_row3_col1" class="data row3 col1">nan</td>
+      <td id="T_0fc8e_row3_col2" class="data row3 col2">50</td>
+      <td id="T_0fc8e_row3_col3" class="data row3 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row4" class="row_heading level0 row4">4</th>
+      <td id="T_0fc8e_row4_col0" class="data row4 col0">C</td>
+      <td id="T_0fc8e_row4_col1" class="data row4 col1">nan</td>
+      <td id="T_0fc8e_row4_col2" class="data row4 col2">nan</td>
+      <td id="T_0fc8e_row4_col3" class="data row4 col3">25</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row5" class="row_heading level0 row5">5</th>
+      <td id="T_0fc8e_row5_col0" class="data row5 col0">nan</td>
+      <td id="T_0fc8e_row5_col1" class="data row5 col1">nan</td>
+      <td id="T_0fc8e_row5_col2" class="data row5 col2">nan</td>
+      <td id="T_0fc8e_row5_col3" class="data row5 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row6" class="row_heading level0 row6">6</th>
+      <td id="T_0fc8e_row6_col0" class="data row6 col0">D</td>
+      <td id="T_0fc8e_row6_col1" class="data row6 col1">nan</td>
+      <td id="T_0fc8e_row6_col2" class="data row6 col2">20</td>
+      <td id="T_0fc8e_row6_col3" class="data row6 col3">34</td>
+    </tr>
+<tr>
+<th id="T_0fc8e_level0_row7" class="row_heading level0 row7">7</th>
+      <td id="T_0fc8e_row7_col0" class="data row7 col0">E</td>
+      <td id="T_0fc8e_row7_col1" class="data row7 col1">nan</td>
+      <td id="T_0fc8e_row7_col2" class="data row7 col2">200</td>
+      <td id="T_0fc8e_row7_col3" class="data row7 col3">23</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Sometimes is useful to read the Excel file and define as the index a column of the Excel file. In this case, we want the column “Unnamed: 0”.</p>
+<pre><code>data=pd.read_excel("data/df.xlsx",sheet_name=sheets[0],index_col="Unnamed: 0")
+data</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_4fa17" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_4fa17_level0_col0" class="col_heading level0 col0">Unnamed: 1</th>
+      <th id="T_4fa17_level0_col1" class="col_heading level0 col1">Unnamed: 2</th>
+      <th id="T_4fa17_level0_col2" class="col_heading level0 col2">Unnamed: 3</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_4fa17_level0_row0" class="row_heading level0 row0">nan</th>
+      <td id="T_4fa17_row0_col0" class="data row0 col0">Título HOJA 1</td>
+      <td id="T_4fa17_row0_col1" class="data row0 col1">nan</td>
+      <td id="T_4fa17_row0_col2" class="data row0 col2">nan</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row1" class="row_heading level0 row1">nan</th>
+      <td id="T_4fa17_row1_col0" class="data row1 col0">nan</td>
+      <td id="T_4fa17_row1_col1" class="data row1 col1">X</td>
+      <td id="T_4fa17_row1_col2" class="data row1 col2">Y</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row2" class="row_heading level0 row2">A</th>
+      <td id="T_4fa17_row2_col0" class="data row2 col0">nan</td>
+      <td id="T_4fa17_row2_col1" class="data row2 col1">2</td>
+      <td id="T_4fa17_row2_col2" class="data row2 col2">10</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row3" class="row_heading level0 row3">B</th>
+      <td id="T_4fa17_row3_col0" class="data row3 col0">nan</td>
+      <td id="T_4fa17_row3_col1" class="data row3 col1">50</td>
+      <td id="T_4fa17_row3_col2" class="data row3 col2">nan</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row4" class="row_heading level0 row4">C</th>
+      <td id="T_4fa17_row4_col0" class="data row4 col0">nan</td>
+      <td id="T_4fa17_row4_col1" class="data row4 col1">nan</td>
+      <td id="T_4fa17_row4_col2" class="data row4 col2">25</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row5" class="row_heading level0 row5">nan</th>
+      <td id="T_4fa17_row5_col0" class="data row5 col0">nan</td>
+      <td id="T_4fa17_row5_col1" class="data row5 col1">nan</td>
+      <td id="T_4fa17_row5_col2" class="data row5 col2">nan</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row6" class="row_heading level0 row6">D</th>
+      <td id="T_4fa17_row6_col0" class="data row6 col0">nan</td>
+      <td id="T_4fa17_row6_col1" class="data row6 col1">20</td>
+      <td id="T_4fa17_row6_col2" class="data row6 col2">34</td>
+    </tr>
+<tr>
+<th id="T_4fa17_level0_row7" class="row_heading level0 row7">E</th>
+      <td id="T_4fa17_row7_col0" class="data row7 col0">nan</td>
+      <td id="T_4fa17_row7_col1" class="data row7 col1">200</td>
+      <td id="T_4fa17_row7_col2" class="data row7 col2">23</td>
+    </tr>
+</tbody>
+</table></div>
+</div>
+<div id="numpy-modules" class="section level2" number="1.7">
+<h2>
+<span class="header-section-number">1.7</span> Numpy modules<a class="anchor" aria-label="anchor" href="#numpy-modules"><i class="fas fa-link"></i></a>
+</h2>
 <p>NumPy is the fundamental package for scientific computing in Python. It is a Python library that provides a multidimensional array object, various derived objects (such as masked arrays and matrices), and an assortment of routines for fast operations on arrays, including mathematical, logical, shape manipulation, sorting, selecting, I/O, discrete Fourier transforms, basic linear algebra, basic statistical operations, random simulation and much more.</p>
-<p>In machine learnig models is useful to work with numpy arrays.
+<p>In machine learning models is useful to work with Numpy arrays.
 NumPy’s main object is the homogeneous multidimensional array.
-For example, we could define variable x and y as an array.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="python-basics.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb47-2"><a href="python-basics.html#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="python-basics.html#cb47-3" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>np.array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span>
-<span id="cb47-4"><a href="python-basics.html#cb47-4" aria-hidden="true" tabindex="-1"></a>X</span>
-<span id="cb47-5"><a href="python-basics.html#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
-<span id="cb47-6"><a href="python-basics.html#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [4, 5, 6]])</span></span></code></pre></div>
+For example, we could define variables x and y as an array.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="python-basics.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb55-2"><a href="python-basics.html#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="python-basics.html#cb55-3" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>np.array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span>
+<span id="cb55-4"><a href="python-basics.html#cb55-4" aria-hidden="true" tabindex="-1"></a>X</span>
+<span id="cb55-5"><a href="python-basics.html#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[1, 2, 3],</span></span>
+<span id="cb55-6"><a href="python-basics.html#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [4, 5, 6]])</span></span></code></pre></div>
 <p>Or we can create a matrix for several variables.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="python-basics.html#cb48-1" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span>np.array([[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>],[<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>]])</span>
-<span id="cb48-2"><a href="python-basics.html#cb48-2" aria-hidden="true" tabindex="-1"></a>Y</span>
-<span id="cb48-3"><a href="python-basics.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[ 2,  4,  6],</span></span>
-<span id="cb48-4"><a href="python-basics.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [ 8, 10, 12]])</span></span></code></pre></div>
-<p>Sometimes is useful to simulate an missing value:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="python-basics.html#cb49-1" aria-hidden="true" tabindex="-1"></a>np.nan</span>
-<span id="cb49-2"><a href="python-basics.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; nan</span></span></code></pre></div>
-
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="python-basics.html#cb56-1" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span>np.array([[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>],[<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>]])</span>
+<span id="cb56-2"><a href="python-basics.html#cb56-2" aria-hidden="true" tabindex="-1"></a>Y</span>
+<span id="cb56-3"><a href="python-basics.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([[ 2,  4,  6],</span></span>
+<span id="cb56-4"><a href="python-basics.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        [ 8, 10, 12]])</span></span></code></pre></div>
+<p>Sometimes is useful to simulate a missing value:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="python-basics.html#cb57-1" aria-hidden="true" tabindex="-1"></a>np.nan</span>
+<span id="cb57-2"><a href="python-basics.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; nan</span></span></code></pre></div>
 </div>
+<div id="missing-value-management" class="section level2" number="1.8">
+<h2>
+<span class="header-section-number">1.8</span> Missing value management<a class="anchor" aria-label="anchor" href="#missing-value-management"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose we read the Excel we used in the section “Reading Excel and CSV files.” We want to work with the “Unnamed: 2” column, as a header we use the second row.</p>
+<pre><code>data=pd.read_excel("data/df.xlsx",sheet_name="Sheet1",index_col="Unnamed: 0",header=2)
+data</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_98b28" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_98b28_level0_col0" class="col_heading level0 col0">Unnamed: 1</th>
+      <th id="T_98b28_level0_col1" class="col_heading level0 col1">X</th>
+      <th id="T_98b28_level0_col2" class="col_heading level0 col2">Y</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_98b28_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_98b28_row0_col0" class="data row0 col0">nan</td>
+      <td id="T_98b28_row0_col1" class="data row0 col1">2.000000</td>
+      <td id="T_98b28_row0_col2" class="data row0 col2">10.000000</td>
+    </tr>
+<tr>
+<th id="T_98b28_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_98b28_row1_col0" class="data row1 col0">nan</td>
+      <td id="T_98b28_row1_col1" class="data row1 col1">50.000000</td>
+      <td id="T_98b28_row1_col2" class="data row1 col2">nan</td>
+    </tr>
+<tr>
+<th id="T_98b28_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_98b28_row2_col0" class="data row2 col0">nan</td>
+      <td id="T_98b28_row2_col1" class="data row2 col1">nan</td>
+      <td id="T_98b28_row2_col2" class="data row2 col2">25.000000</td>
+    </tr>
+<tr>
+<th id="T_98b28_level0_row3" class="row_heading level0 row3">nan</th>
+      <td id="T_98b28_row3_col0" class="data row3 col0">nan</td>
+      <td id="T_98b28_row3_col1" class="data row3 col1">nan</td>
+      <td id="T_98b28_row3_col2" class="data row3 col2">nan</td>
+    </tr>
+<tr>
+<th id="T_98b28_level0_row4" class="row_heading level0 row4">D</th>
+      <td id="T_98b28_row4_col0" class="data row4 col0">nan</td>
+      <td id="T_98b28_row4_col1" class="data row4 col1">20.000000</td>
+      <td id="T_98b28_row4_col2" class="data row4 col2">34.000000</td>
+    </tr>
+<tr>
+<th id="T_98b28_level0_row5" class="row_heading level0 row5">E</th>
+      <td id="T_98b28_row5_col0" class="data row5 col0">nan</td>
+      <td id="T_98b28_row5_col1" class="data row5 col1">200.000000</td>
+      <td id="T_98b28_row5_col2" class="data row5 col2">23.000000</td>
+    </tr>
+</tbody>
+</table></div>
+<p>To get a better look at our data frame, we select the second and third columns, with the following method:</p>
+<pre><code>data=data.iloc[:,1:]
+data</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_c1bd2" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_c1bd2_level0_col0" class="col_heading level0 col0">X</th>
+      <th id="T_c1bd2_level0_col1" class="col_heading level0 col1">Y</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_c1bd2_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_c1bd2_row0_col0" class="data row0 col0">2.000000</td>
+      <td id="T_c1bd2_row0_col1" class="data row0 col1">10.000000</td>
+    </tr>
+<tr>
+<th id="T_c1bd2_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_c1bd2_row1_col0" class="data row1 col0">50.000000</td>
+      <td id="T_c1bd2_row1_col1" class="data row1 col1">nan</td>
+    </tr>
+<tr>
+<th id="T_c1bd2_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_c1bd2_row2_col0" class="data row2 col0">nan</td>
+      <td id="T_c1bd2_row2_col1" class="data row2 col1">25.000000</td>
+    </tr>
+<tr>
+<th id="T_c1bd2_level0_row3" class="row_heading level0 row3">nan</th>
+      <td id="T_c1bd2_row3_col0" class="data row3 col0">nan</td>
+      <td id="T_c1bd2_row3_col1" class="data row3 col1">nan</td>
+    </tr>
+<tr>
+<th id="T_c1bd2_level0_row4" class="row_heading level0 row4">D</th>
+      <td id="T_c1bd2_row4_col0" class="data row4 col0">20.000000</td>
+      <td id="T_c1bd2_row4_col1" class="data row4 col1">34.000000</td>
+    </tr>
+<tr>
+<th id="T_c1bd2_level0_row5" class="row_heading level0 row5">E</th>
+      <td id="T_c1bd2_row5_col0" class="data row5 col0">200.000000</td>
+      <td id="T_c1bd2_row5_col1" class="data row5 col1">23.000000</td>
+    </tr>
+</tbody>
+</table></div>
+<p>A first look to detect missing values is using the following function:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="python-basics.html#cb60-1" aria-hidden="true" tabindex="-1"></a>data.isna().<span class="bu">sum</span>()</span>
+<span id="cb60-2"><a href="python-basics.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; X    2</span></span>
+<span id="cb60-3"><a href="python-basics.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Y    2</span></span>
+<span id="cb60-4"><a href="python-basics.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dtype: int64</span></span></code></pre></div>
+<p>It tells us that both columns, “X” and “Y”, have two missing values.</p>
+<p>We have many alternatives to manage them. First eliminating the row that has at least one missing value.</p>
+<pre><code>data.dropna()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_12ba1" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_12ba1_level0_col0" class="col_heading level0 col0">X</th>
+      <th id="T_12ba1_level0_col1" class="col_heading level0 col1">Y</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_12ba1_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_12ba1_row0_col0" class="data row0 col0">2.000000</td>
+      <td id="T_12ba1_row0_col1" class="data row0 col1">10.000000</td>
+    </tr>
+<tr>
+<th id="T_12ba1_level0_row1" class="row_heading level0 row1">D</th>
+      <td id="T_12ba1_row1_col0" class="data row1 col0">20.000000</td>
+      <td id="T_12ba1_row1_col1" class="data row1 col1">34.000000</td>
+    </tr>
+<tr>
+<th id="T_12ba1_level0_row2" class="row_heading level0 row2">E</th>
+      <td id="T_12ba1_row2_col0" class="data row2 col0">200.000000</td>
+      <td id="T_12ba1_row2_col1" class="data row2 col1">23.000000</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Another alternative is filling them with a value, for example the last value available in the data frame.</p>
+<pre><code>data.fillna(method='ffill')</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_7d9a1" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_7d9a1_level0_col0" class="col_heading level0 col0">X</th>
+      <th id="T_7d9a1_level0_col1" class="col_heading level0 col1">Y</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_7d9a1_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_7d9a1_row0_col0" class="data row0 col0">2.000000</td>
+      <td id="T_7d9a1_row0_col1" class="data row0 col1">10.000000</td>
+    </tr>
+<tr>
+<th id="T_7d9a1_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_7d9a1_row1_col0" class="data row1 col0">50.000000</td>
+      <td id="T_7d9a1_row1_col1" class="data row1 col1">10.000000</td>
+    </tr>
+<tr>
+<th id="T_7d9a1_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_7d9a1_row2_col0" class="data row2 col0">50.000000</td>
+      <td id="T_7d9a1_row2_col1" class="data row2 col1">25.000000</td>
+    </tr>
+<tr>
+<th id="T_7d9a1_level0_row3" class="row_heading level0 row3">nan</th>
+      <td id="T_7d9a1_row3_col0" class="data row3 col0">50.000000</td>
+      <td id="T_7d9a1_row3_col1" class="data row3 col1">25.000000</td>
+    </tr>
+<tr>
+<th id="T_7d9a1_level0_row4" class="row_heading level0 row4">D</th>
+      <td id="T_7d9a1_row4_col0" class="data row4 col0">20.000000</td>
+      <td id="T_7d9a1_row4_col1" class="data row4 col1">34.000000</td>
+    </tr>
+<tr>
+<th id="T_7d9a1_level0_row5" class="row_heading level0 row5">E</th>
+      <td id="T_7d9a1_row5_col0" class="data row5 col0">200.000000</td>
+      <td id="T_7d9a1_row5_col1" class="data row5 col1">23.000000</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Or with a value such as zero:</p>
+<pre><code>data_clenan=data.replace(np.nan,0)
+
+# which is equivalent to 
+#data.fillna(0)
+
+data_clenan</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="python-basics.html#cb64-1" aria-hidden="true" tabindex="-1"></a>data_clean<span class="op">=</span>data.replace(np.nan,<span class="dv">0</span>)</span>
+<span id="cb64-2"><a href="python-basics.html#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="python-basics.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># which is equivalent to </span></span>
+<span id="cb64-4"><a href="python-basics.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data.fillna(0)</span></span>
+<span id="cb64-5"><a href="python-basics.html#cb64-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-6"><a href="python-basics.html#cb64-6" aria-hidden="true" tabindex="-1"></a>data_clean</span>
+<span id="cb64-7"><a href="python-basics.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          X     Y</span></span>
+<span id="cb64-8"><a href="python-basics.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A      2.0  10.0</span></span>
+<span id="cb64-9"><a href="python-basics.html#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; B     50.0   0.0</span></span>
+<span id="cb64-10"><a href="python-basics.html#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C      0.0  25.0</span></span>
+<span id="cb64-11"><a href="python-basics.html#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NaN    0.0   0.0</span></span>
+<span id="cb64-12"><a href="python-basics.html#cb64-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D     20.0  34.0</span></span>
+<span id="cb64-13"><a href="python-basics.html#cb64-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; E    200.0  23.0</span></span></code></pre></div>
+<p>We still have a missing value in the index, after letter “C”.
+The next function</p>
+<pre><code># This function skips the index elements of a data frame that are missing values, space or: ".",",",";",";","'",'""'.
+# It returns a data frame without the ignored elements.
+# Parameters:
+# df: data frame  
+
+#---- Do not change anything from here ----
+def clean_na_index2(df):
+    skips=[".",",",";",";","'",'""'," ",np.nan]
+    con=[name_ind for name_ind in df.index if name_ind not in skips]
+    return  df.loc[con, ]
+#----- To here ------------
+
+#Run the code so that Python can execute the function
+
+df_index_clean=clean_na_index2(data_clean)
+df_index_clean</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_cc157" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_cc157_level0_col0" class="col_heading level0 col0">X</th>
+      <th id="T_cc157_level0_col1" class="col_heading level0 col1">Y</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_cc157_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_cc157_row0_col0" class="data row0 col0">2.000000</td>
+      <td id="T_cc157_row0_col1" class="data row0 col1">10.000000</td>
+    </tr>
+<tr>
+<th id="T_cc157_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_cc157_row1_col0" class="data row1 col0">50.000000</td>
+      <td id="T_cc157_row1_col1" class="data row1 col1">0.000000</td>
+    </tr>
+<tr>
+<th id="T_cc157_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_cc157_row2_col0" class="data row2 col0">0.000000</td>
+      <td id="T_cc157_row2_col1" class="data row2 col1">25.000000</td>
+    </tr>
+<tr>
+<th id="T_cc157_level0_row3" class="row_heading level0 row3">D</th>
+      <td id="T_cc157_row3_col0" class="data row3 col0">20.000000</td>
+      <td id="T_cc157_row3_col1" class="data row3 col1">34.000000</td>
+    </tr>
+<tr>
+<th id="T_cc157_level0_row4" class="row_heading level0 row4">E</th>
+      <td id="T_cc157_row4_col0" class="data row4 col0">200.000000</td>
+      <td id="T_cc157_row4_col1" class="data row4 col1">23.000000</td>
+    </tr>
+</tbody>
+</table></div>
+</div>
+<div id="merge-joint-or-concatenate-data-frames" class="section level2" number="1.9">
+<h2>
+<span class="header-section-number">1.9</span> Merge, joint or concatenate data frames<a class="anchor" aria-label="anchor" href="#merge-joint-or-concatenate-data-frames"><i class="fas fa-link"></i></a>
+</h2>
+<p>Suppose we want to merge the object df_index_clean of the previous section, with the data frame in the “Sheet2” of the Excel file “df.xlsx”:</p>
+<pre><code>#,header=2
+data=pd.read_excel("data/df.xlsx",sheet_name="Sheet2",index_col="Unnamed: 0")
+data</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_8e00b" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_8e00b_level0_col0" class="col_heading level0 col0">W</th>
+      <th id="T_8e00b_level0_col1" class="col_heading level0 col1">Z</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_8e00b_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_8e00b_row0_col0" class="data row0 col0">2</td>
+      <td id="T_8e00b_row0_col1" class="data row0 col1">10</td>
+    </tr>
+<tr>
+<th id="T_8e00b_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_8e00b_row1_col0" class="data row1 col0">50</td>
+      <td id="T_8e00b_row1_col1" class="data row1 col1">30</td>
+    </tr>
+<tr>
+<th id="T_8e00b_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_8e00b_row2_col0" class="data row2 col0">30</td>
+      <td id="T_8e00b_row2_col1" class="data row2 col1">25</td>
+    </tr>
+<tr>
+<th id="T_8e00b_level0_row3" class="row_heading level0 row3">D</th>
+      <td id="T_8e00b_row3_col0" class="data row3 col0">20</td>
+      <td id="T_8e00b_row3_col1" class="data row3 col1">34</td>
+    </tr>
+<tr>
+<th id="T_8e00b_level0_row4" class="row_heading level0 row4">E</th>
+      <td id="T_8e00b_row4_col0" class="data row4 col0">200</td>
+      <td id="T_8e00b_row4_col1" class="data row4 col1">23</td>
+    </tr>
+</tbody>
+</table></div>
+<p>In this case, both data frames have the same index:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="python-basics.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.index)</span>
+<span id="cb67-2"><a href="python-basics.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Index(['A', 'B', 'C', 'D', 'E'], dtype='object')</span></span>
+<span id="cb67-3"><a href="python-basics.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_index_clean.index)</span>
+<span id="cb67-4"><a href="python-basics.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Index(['A', 'B', 'C', 'D', 'E'], dtype='object')</span></span></code></pre></div>
+<p>Then we can use the function concat. The argument axis=1 is to concatenate the columns of both data frames in the columns.</p>
+<pre><code>pd.concat([df_index_clean,data],axis=1)</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_cb81c" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_cb81c_level0_col0" class="col_heading level0 col0">X</th>
+      <th id="T_cb81c_level0_col1" class="col_heading level0 col1">Y</th>
+      <th id="T_cb81c_level0_col2" class="col_heading level0 col2">W</th>
+      <th id="T_cb81c_level0_col3" class="col_heading level0 col3">Z</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_cb81c_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_cb81c_row0_col0" class="data row0 col0">2.000000</td>
+      <td id="T_cb81c_row0_col1" class="data row0 col1">10.000000</td>
+      <td id="T_cb81c_row0_col2" class="data row0 col2">2</td>
+      <td id="T_cb81c_row0_col3" class="data row0 col3">10</td>
+    </tr>
+<tr>
+<th id="T_cb81c_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_cb81c_row1_col0" class="data row1 col0">50.000000</td>
+      <td id="T_cb81c_row1_col1" class="data row1 col1">0.000000</td>
+      <td id="T_cb81c_row1_col2" class="data row1 col2">50</td>
+      <td id="T_cb81c_row1_col3" class="data row1 col3">30</td>
+    </tr>
+<tr>
+<th id="T_cb81c_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_cb81c_row2_col0" class="data row2 col0">0.000000</td>
+      <td id="T_cb81c_row2_col1" class="data row2 col1">25.000000</td>
+      <td id="T_cb81c_row2_col2" class="data row2 col2">30</td>
+      <td id="T_cb81c_row2_col3" class="data row2 col3">25</td>
+    </tr>
+<tr>
+<th id="T_cb81c_level0_row3" class="row_heading level0 row3">D</th>
+      <td id="T_cb81c_row3_col0" class="data row3 col0">20.000000</td>
+      <td id="T_cb81c_row3_col1" class="data row3 col1">34.000000</td>
+      <td id="T_cb81c_row3_col2" class="data row3 col2">20</td>
+      <td id="T_cb81c_row3_col3" class="data row3 col3">34</td>
+    </tr>
+<tr>
+<th id="T_cb81c_level0_row4" class="row_heading level0 row4">E</th>
+      <td id="T_cb81c_row4_col0" class="data row4 col0">200.000000</td>
+      <td id="T_cb81c_row4_col1" class="data row4 col1">23.000000</td>
+      <td id="T_cb81c_row4_col2" class="data row4 col2">200</td>
+      <td id="T_cb81c_row4_col3" class="data row4 col3">23</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Otherwise it would concatenate in the index (rows)</p>
+<pre><code>pd.concat([df_index_clean,data])
+</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_22d2d" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_22d2d_level0_col0" class="col_heading level0 col0">X</th>
+      <th id="T_22d2d_level0_col1" class="col_heading level0 col1">Y</th>
+      <th id="T_22d2d_level0_col2" class="col_heading level0 col2">W</th>
+      <th id="T_22d2d_level0_col3" class="col_heading level0 col3">Z</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_22d2d_level0_row0" class="row_heading level0 row0">A</th>
+      <td id="T_22d2d_row0_col0" class="data row0 col0">2.000000</td>
+      <td id="T_22d2d_row0_col1" class="data row0 col1">10.000000</td>
+      <td id="T_22d2d_row0_col2" class="data row0 col2">nan</td>
+      <td id="T_22d2d_row0_col3" class="data row0 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row1" class="row_heading level0 row1">B</th>
+      <td id="T_22d2d_row1_col0" class="data row1 col0">50.000000</td>
+      <td id="T_22d2d_row1_col1" class="data row1 col1">0.000000</td>
+      <td id="T_22d2d_row1_col2" class="data row1 col2">nan</td>
+      <td id="T_22d2d_row1_col3" class="data row1 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row2" class="row_heading level0 row2">C</th>
+      <td id="T_22d2d_row2_col0" class="data row2 col0">0.000000</td>
+      <td id="T_22d2d_row2_col1" class="data row2 col1">25.000000</td>
+      <td id="T_22d2d_row2_col2" class="data row2 col2">nan</td>
+      <td id="T_22d2d_row2_col3" class="data row2 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row3" class="row_heading level0 row3">D</th>
+      <td id="T_22d2d_row3_col0" class="data row3 col0">20.000000</td>
+      <td id="T_22d2d_row3_col1" class="data row3 col1">34.000000</td>
+      <td id="T_22d2d_row3_col2" class="data row3 col2">nan</td>
+      <td id="T_22d2d_row3_col3" class="data row3 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row4" class="row_heading level0 row4">E</th>
+      <td id="T_22d2d_row4_col0" class="data row4 col0">200.000000</td>
+      <td id="T_22d2d_row4_col1" class="data row4 col1">23.000000</td>
+      <td id="T_22d2d_row4_col2" class="data row4 col2">nan</td>
+      <td id="T_22d2d_row4_col3" class="data row4 col3">nan</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row5" class="row_heading level0 row5">A</th>
+      <td id="T_22d2d_row5_col0" class="data row5 col0">nan</td>
+      <td id="T_22d2d_row5_col1" class="data row5 col1">nan</td>
+      <td id="T_22d2d_row5_col2" class="data row5 col2">2.000000</td>
+      <td id="T_22d2d_row5_col3" class="data row5 col3">10.000000</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row6" class="row_heading level0 row6">B</th>
+      <td id="T_22d2d_row6_col0" class="data row6 col0">nan</td>
+      <td id="T_22d2d_row6_col1" class="data row6 col1">nan</td>
+      <td id="T_22d2d_row6_col2" class="data row6 col2">50.000000</td>
+      <td id="T_22d2d_row6_col3" class="data row6 col3">30.000000</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row7" class="row_heading level0 row7">C</th>
+      <td id="T_22d2d_row7_col0" class="data row7 col0">nan</td>
+      <td id="T_22d2d_row7_col1" class="data row7 col1">nan</td>
+      <td id="T_22d2d_row7_col2" class="data row7 col2">30.000000</td>
+      <td id="T_22d2d_row7_col3" class="data row7 col3">25.000000</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row8" class="row_heading level0 row8">D</th>
+      <td id="T_22d2d_row8_col0" class="data row8 col0">nan</td>
+      <td id="T_22d2d_row8_col1" class="data row8 col1">nan</td>
+      <td id="T_22d2d_row8_col2" class="data row8 col2">20.000000</td>
+      <td id="T_22d2d_row8_col3" class="data row8 col3">34.000000</td>
+    </tr>
+<tr>
+<th id="T_22d2d_level0_row9" class="row_heading level0 row9">E</th>
+      <td id="T_22d2d_row9_col0" class="data row9 col0">nan</td>
+      <td id="T_22d2d_row9_col1" class="data row9 col1">nan</td>
+      <td id="T_22d2d_row9_col2" class="data row9 col2">200.000000</td>
+      <td id="T_22d2d_row9_col3" class="data row9 col3">23.000000</td>
+    </tr>
+</tbody>
+</table></div>
+</div>
+<div id="apis" class="section level2" number="1.10">
+<h2>
+<span class="header-section-number">1.10</span> APIS<a class="anchor" aria-label="anchor" href="#apis"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="plots-or-graphs" class="section level2" number="1.11">
+<h2>
+<span class="header-section-number">1.11</span> Plots or graphs<a class="anchor" aria-label="anchor" href="#plots-or-graphs"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="dates-management" class="section level2" number="1.12">
+<h2>
+<span class="header-section-number">1.12</span> Dates management<a class="anchor" aria-label="anchor" href="#dates-management"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this section we mange the data frame dates.</p>
+<pre><code>data=pd.read_excel("data/df.xlsx",sheet_name="Sheet3")
+#,index_col="Unnamed: 0"
+data</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_f2bdd" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_f2bdd_level0_col0" class="col_heading level0 col0">date</th>
+      <th id="T_f2bdd_level0_col1" class="col_heading level0 col1">Sales</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_f2bdd_level0_row0" class="row_heading level0 row0">0</th>
+      <td id="T_f2bdd_row0_col0" class="data row0 col0">Ene 2021</td>
+      <td id="T_f2bdd_row0_col1" class="data row0 col1">5</td>
+    </tr>
+<tr>
+<th id="T_f2bdd_level0_row1" class="row_heading level0 row1">1</th>
+      <td id="T_f2bdd_row1_col0" class="data row1 col0">Feb 2021</td>
+      <td id="T_f2bdd_row1_col1" class="data row1 col1">7</td>
+    </tr>
+<tr>
+<th id="T_f2bdd_level0_row2" class="row_heading level0 row2">2</th>
+      <td id="T_f2bdd_row2_col0" class="data row2 col0">Mar 2021</td>
+      <td id="T_f2bdd_row2_col1" class="data row2 col1">60</td>
+    </tr>
+<tr>
+<th id="T_f2bdd_level0_row3" class="row_heading level0 row3">3</th>
+      <td id="T_f2bdd_row3_col0" class="data row3 col0">Abr 2021</td>
+      <td id="T_f2bdd_row3_col1" class="data row3 col1">20</td>
+    </tr>
+<tr>
+<th id="T_f2bdd_level0_row4" class="row_heading level0 row4">4</th>
+      <td id="T_f2bdd_row4_col0" class="data row4 col0">May 2021</td>
+      <td id="T_f2bdd_row4_col1" class="data row4 col1">21</td>
+    </tr>
+</tbody>
+</table></div>
+<p>For some analysis in machine learning, we require to have the index data as date format. The previous data frame index type is a string:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="python-basics.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(data.index[<span class="dv">0</span>])</span>
+<span id="cb71-2"><a href="python-basics.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;class 'int'&gt;</span></span></code></pre></div>
+<p>Then, we use the following function:</p>
+<pre><code># This function transforms the data frame index into a date format  
+# (Timestamp). 
+# It returns a data frame with the new date index
+# Parameters:
+# data: data frame with two columns, a date column and another one
+# i_date: is the start date of the new index
+# freq_i; frequency if the new index, "y" for year, "m" month, "d" day, "h" hour.
+# col_name: name of the column in the data frame data that is not the date
+# date_name= name of the column in the data that is the date
+#---- Do not change anything from here ----
+def index_date(data,i_date,freq_i,col_name,date_name):
+  dat=data.set_index(date_name)
+  ventas_s= pd.Series(
+  list(dat[col_name]), index=pd.date_range(i_date, periods=len(dat),
+  freq=freq_i), name=col_name)
+  return pd.DataFrame(ventas_s)
+#----- To here ------------
+
+#Run the code so that Python can execute the function
+
+i_date="1-1-2020"
+freq_i="m"
+col_name="Sales"
+date_name="date"
+data_ind_date=index_date(data,i_date,freq_i,col_name,date_name)
+data_ind_date</code></pre>
+<p>Now the index is in a “Timestamp” format. For the moment, let’s say that it is a date format.</p>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_6cb80" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_6cb80_level0_col0" class="col_heading level0 col0">Sales</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_6cb80_level0_row0" class="row_heading level0 row0">2020-01-31 00:00:00</th>
+      <td id="T_6cb80_row0_col0" class="data row0 col0">5</td>
+    </tr>
+<tr>
+<th id="T_6cb80_level0_row1" class="row_heading level0 row1">2020-02-29 00:00:00</th>
+      <td id="T_6cb80_row1_col0" class="data row1 col0">7</td>
+    </tr>
+<tr>
+<th id="T_6cb80_level0_row2" class="row_heading level0 row2">2020-03-31 00:00:00</th>
+      <td id="T_6cb80_row2_col0" class="data row2 col0">60</td>
+    </tr>
+<tr>
+<th id="T_6cb80_level0_row3" class="row_heading level0 row3">2020-04-30 00:00:00</th>
+      <td id="T_6cb80_row3_col0" class="data row3 col0">20</td>
+    </tr>
+<tr>
+<th id="T_6cb80_level0_row4" class="row_heading level0 row4">2020-05-31 00:00:00</th>
+      <td id="T_6cb80_row4_col0" class="data row4 col0">21</td>
+    </tr>
+</tbody>
+</table></div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -807,12 +1395,18 @@ For example, we could define variable x and y as an array.</p>
 <li><a class="nav-link" href="#list-and-object-attributes"><span class="header-section-number">1.3</span> List and object attributes</a></li>
 <li><a class="nav-link" href="#dictionaries"><span class="header-section-number">1.4</span> Dictionaries</a></li>
 <li>
-<a class="nav-link" href="#python-modules."><span class="header-section-number">1.5</span> Python modules.</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#python-modules"><span class="header-section-number">1.5</span> Python modules</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#pandas-data-frames"><span class="header-section-number">1.5.1</span> Pandas data frames</a></li>
 <li><a class="nav-link" href="#selecting-rows-and-columns-in-a-data-frame"><span class="header-section-number">1.5.2</span> Selecting rows and columns in a data frame</a></li>
-<li><a class="nav-link" href="#numpy"><span class="header-section-number">1.5.3</span> Numpy</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#reading-excel-and-csv-files"><span class="header-section-number">1.6</span> Reading Excel and csv files</a></li>
+<li><a class="nav-link" href="#numpy-modules"><span class="header-section-number">1.7</span> Numpy modules</a></li>
+<li><a class="nav-link" href="#missing-value-management"><span class="header-section-number">1.8</span> Missing value management</a></li>
+<li><a class="nav-link" href="#merge-joint-or-concatenate-data-frames"><span class="header-section-number">1.9</span> Merge, joint or concatenate data frames</a></li>
+<li><a class="nav-link" href="#apis"><span class="header-section-number">1.10</span> APIS</a></li>
+<li><a class="nav-link" href="#plots-or-graphs"><span class="header-section-number">1.11</span> Plots or graphs</a></li>
+<li><a class="nav-link" href="#dates-management"><span class="header-section-number">1.12</span> Dates management</a></li>
 </ul>
 
       <div class="book-extra">
@@ -829,7 +1423,7 @@ For example, we could define variable x and y as an array.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Machine learning introductory guide Python</strong>" was written by L. Arturo Bernal. It was last built on 2023-05-10.</p>
+    <p>"<strong>Machine learning introductory guide Python</strong>" was written by L. Arturo Bernal. It was last built on 2023-05-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
