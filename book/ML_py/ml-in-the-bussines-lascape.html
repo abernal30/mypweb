@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 ML in the bussines lascape | Machine learning introductory guide Python</title>
+<meta name="author" content="L. Arturo Bernal">
+<meta name="description" content="2.1 Machine learning (ML) In short, A machine learning problem generally relates to a prediction when data is available. Machine Learning is the science (and art) of programming computers so they...">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta property="og:title" content="2 ML in the bussines lascape | Machine learning introductory guide Python">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/ml-in-the-bussines-lascape.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<meta property="og:description" content="2.1 Machine learning (ML) In short, A machine learning problem generally relates to a prediction when data is available. Machine Learning is the science (and art) of programming computers so they...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 ML in the bussines lascape | Machine learning introductory guide Python">
+<meta name="twitter:description" content="2.1 Machine learning (ML) In short, A machine learning problem generally relates to a prediction when data is available. Machine Learning is the science (and art) of programming computers so they...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Machine learning introductory guide Python</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Machine learning introductory guide</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="python-basics.html"><span class="header-section-number">1</span> Python Basics</a></li>
+<li><a class="active" href="ml-in-the-bussines-lascape.html"><span class="header-section-number">2</span> ML in the bussines lascape</a></li>
+<li><a class="" href="training-and-evaluating-regression-models.html"><span class="header-section-number">3</span> Training and evaluating regression models</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="ml-in-the-bussines-lascape" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> ML in the bussines lascape<a class="anchor" aria-label="anchor" href="#ml-in-the-bussines-lascape"><i class="fas fa-link"></i></a>
+</h1>
+<div id="machine-learning-ml" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Machine learning (ML)<a class="anchor" aria-label="anchor" href="#machine-learning-ml"><i class="fas fa-link"></i></a>
+</h2>
+<p>In short, A machine learning problem generally relates to a prediction when data is available. Machine Learning is the science (and art) of programming computers so they can learn from data <span class="citation">(<a href="training-and-evaluating-regression-models.html#ref-Geron" role="doc-biblioref">Géron 2023</a>)</span>. It is about extracting knowledge from data, a research field at the intersection of statistics, artificial intelligence, and computer science. It is also known as predictive analytics or statistical learning <span class="citation">(<a href="#ref-Muller" role="doc-biblioref"><strong>Muller?</strong></a>)</span>.
+Machine learning is about programming, but only some programming problems require ML. To detect if the problem we are facing is a ML problem, we need to have an objective, and what the benefit is for the company (client) we apply in business <span class="citation">(<a href="training-and-evaluating-regression-models.html#ref-BF" role="doc-biblioref">Burton and Shah 2013</a>)</span>.</p>
+<p>In this paragraph, we describe some examples. When describing those examples, we use some terminology that may sound unfamiliar to you, but we will cover it in further chapters.</p>
+<p>Understanding the goal allows us to determine what kind of data we expect to handle and the models we could apply. Suppose we are facing a problem in the housing market, and the business objective is to detect investment opportunities such as buying sub-valuated (in price) houses by predicting the housing prices. In this example, we would expect housing price data, such as housing location in latitude, longitude, median age z, total rooms, etc. In that case, we may apply supervised models such as linear regression and evaluate the model performance with RMSE. Another example in the financial sector could be predicting if a new bank customer would default on a loan or not (will repay the loan or not). In that case, it would be a classification problem, and we could use models such as logit or LDA and measure the performance with the Confusion Matrix.
+On the other hand, in the same housing prices example, if we already have the information we mentioned in the last paragraph, and we want to know how crime affects the price in some areas. We could solve it by linear regression, but it wúltnd be a ML problem, but a causality one. It would be a ML problem if we want to predict the house prices in certain areas where crime has increased. Even when that would be an ML problem, it wouldn´t necessarily benefit our client or us. For example, if our client or we are a housing builder, it could help to decide where to build. Still, if the client is unaffected by the relationship between crime-house prices, then it would be an ML problem, but it is not benefiting our client or us.</p>
+<p>In conclusion, before handling data and running algorithms, we suggest establishing a business goal, detecting if it is an ML problem, and if it would benefit the company (or client).</p>
+</div>
+<div id="variables-terminology-and-notation" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Variables terminology and notation<a class="anchor" aria-label="anchor" href="#variables-terminology-and-notation"><i class="fas fa-link"></i></a>
+</h2>
+<p>Many of the models we will cover in this book are of this kind:</p>
+<p><span class="math display">\[y=\alpha_{0}\ +\beta_{1}\ x_{1}+\beta_{2}\ x_{2}+...+\beta_{n}\ x_{n}+e\]</span>
+Where <span class="math inline">\(y\)</span> is called the dependent variable, but also in other materials are, called the explained, output variable or response variable. On the other hand, <span class="math inline">\(x\)</span> are called independent variables and input variables, predictors or features. The <span class="math inline">\(\beta´s\)</span> are the parameters to be estimated, and <span class="math inline">\(e\)</span> is the error term.</p>
+<p>In regression, the idea is to estimate the parameters <span class="math inline">\(\beta_{1}, \beta_{2},...,\beta_{n}\)</span>, to predict the value of <span class="math inline">\(y\)</span>. When that happens, we represent the predicted values and estimated parameters as:</p>
+<p><span class="math display">\[\hat{y}=\beta_{0}\ +\hat{\beta_{1}}\ x_{1}+\hat{\beta_{1}}\ x_{2}+...+\ \hat{\beta_{1}}\ x_{n}\]</span>
+Also, if we compare <span class="math inline">\(y_{i}\)</span> and a predicted value, we call that the residual, usually denoted by <span class="math inline">\(\hat{e}\)</span>. It is defined as:</p>
+<p><span class="math display">\[\hat{e_{i}}=y_{i}-\hat{y_{i}}=y_{i}-\beta_{0}\ -\hat{\beta_{1}}\ x_{1i}-\hat{\beta_{1}}\ x_{2i}-,...,-\ \hat{\beta_{1}}\ x_{ni}\]</span>
+In other words, each <span class="math inline">\(\hat{e_{i}}\)</span> is the residual for each observation. For example, if we have a data set with <span class="math inline">\(n\)</span> variables and <span class="math inline">\(m\)</span> observations, there would be <span class="math inline">\(m\)</span> residuals.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="python-basics.html"><span class="header-section-number">1</span> Python Basics</a></div>
+<div class="next"><a href="training-and-evaluating-regression-models.html"><span class="header-section-number">3</span> Training and evaluating regression models</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ml-in-the-bussines-lascape"><span class="header-section-number">2</span> ML in the bussines lascape</a></li>
+<li><a class="nav-link" href="#machine-learning-ml"><span class="header-section-number">2.1</span> Machine learning (ML)</a></li>
+<li><a class="nav-link" href="#variables-terminology-and-notation"><span class="header-section-number">2.2</span> Variables terminology and notation</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Machine learning introductory guide Python</strong>" was written by L. Arturo Bernal. It was last built on 2023-05-23.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

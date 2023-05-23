@@ -15,3 +15,14 @@ the-yfinance-library
 banxico-api
 plots-or-graphs
 dates-management
+ml-in-the-bussines-lascape
+machine-learning-ml
+variables-terminology-and-notation
+training-and-evaluating-regression-models
+data-collection-and-cleaning.
+definition-of-the-independent-variable
+testing-for-stationary-in-the-dependet-variable-y
+training-and-test-set-back-testing
+performance-measure-root-mean-square-error-rmse.
+appendix
+stationary-and-nonstationary-time-series

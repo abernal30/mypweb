@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>3 Training and evaluating regression models | Machine learning introductory guide Python</title>
+<meta name="author" content="L. Arturo Bernal">
+<meta name="description" content="Machine learning models such as regression aim to predict the dependent variable, “y.” This chapter describes the machine learning processes to predict a time series. We will predict the ASURB.MX...">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta property="og:title" content="3 Training and evaluating regression models | Machine learning introductory guide Python">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://www.arturo-bernal.com/book/training-and-evaluating-regression-models.html">
+<meta property="og:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<meta property="og:description" content="Machine learning models such as regression aim to predict the dependent variable, “y.” This chapter describes the machine learning processes to predict a time series. We will predict the ASURB.MX...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 Training and evaluating regression models | Machine learning introductory guide Python">
+<meta name="twitter:description" content="Machine learning models such as regression aim to predict the dependent variable, “y.” This chapter describes the machine learning processes to predict a time series. We will predict the ASURB.MX...">
+<meta name="twitter:image" content="https://www.arturo-bernal.com/book/images/Picture1.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Machine learning introductory guide Python</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Machine learning introductory guide</a></li>
+<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="python-basics.html"><span class="header-section-number">1</span> Python Basics</a></li>
+<li><a class="" href="ml-in-the-bussines-lascape.html"><span class="header-section-number">2</span> ML in the bussines lascape</a></li>
+<li><a class="active" href="training-and-evaluating-regression-models.html"><span class="header-section-number">3</span> Training and evaluating regression models</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="training-and-evaluating-regression-models" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Training and evaluating regression models<a class="anchor" aria-label="anchor" href="#training-and-evaluating-regression-models"><i class="fas fa-link"></i></a>
+</h1>
+<p>Machine learning models such as regression aim to predict the dependent variable, “y.” This chapter describes the machine learning processes to predict a time series. We will predict the ASURB.MX close price. As independent variables, we will use some macroeconomic variables.</p>
+<p><span class="math display">\[ASURB.MX\_price_{t}=\beta_{0}+\beta_{1}\ ER_{t-1} + \beta_{2}\ inflation_{t-1} + \beta_{3}\ srate_{t-1}+ \beta_{4}\ growth_{t-1}+ \beta_{5}\ mrate_{t-1}+ \beta_{6}\ inv_{t-1} + \beta_{7}\ MR_{t-1} + e_{t}\]</span>
+Where <span class="math inline">\(ER\)</span> is the exchange rate USD-MXN, <span class="math inline">\(inflation\)</span> is the Mexican inflation, <span class="math inline">\(srate\)</span> is the short term Mexican treasury bills (28 days), <span class="math inline">\(growth\)</span> is the monthly Mexican economic growth indicator, <span class="math inline">\(mrate\)</span> is the 1 year Mexican treasury bills, <span class="math inline">\(inv\)</span>is the Mexican gross fixed investment, <span class="math inline">\(MR\)</span> is the Mexican stock market index and <span class="math inline">\(e\)</span> is the error term.</p>
+<div id="data-collection-and-cleaning." class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Data collection and cleaning.<a class="anchor" aria-label="anchor" href="#data-collection-and-cleaning."><i class="fas fa-link"></i></a>
+</h2>
+<p>In this section, we use the APIs we cover in Chapter 1. Also, we will use other sources of information. In some cases, we will detect and clean missing values. First we download the yahoo finance information.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb78-1"><a href="training-and-evaluating-regression-models.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb78-2"><a href="training-and-evaluating-regression-models.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb78-3"><a href="training-and-evaluating-regression-models.html#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
+<span id="cb78-4"><a href="training-and-evaluating-regression-models.html#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sie_banxico <span class="im">import</span> SIEBanxico</span>
+<span id="cb78-5"><a href="training-and-evaluating-regression-models.html#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb78-6"><a href="training-and-evaluating-regression-models.html#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="training-and-evaluating-regression-models.html#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="training-and-evaluating-regression-models.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This function download market data from Yahoo! Finance's</span></span>
+<span id="cb79-2"><a href="training-and-evaluating-regression-models.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co"># It returns a data frame with a specific format date. </span></span>
+<span id="cb79-3"><a href="training-and-evaluating-regression-models.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters:</span></span>
+<span id="cb79-4"><a href="training-and-evaluating-regression-models.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co"># tickers: a list with the Yahoo Finance ticker symbol</span></span>
+<span id="cb79-5"><a href="training-and-evaluating-regression-models.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inter: intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo</span></span>
+<span id="cb79-6"><a href="training-and-evaluating-regression-models.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="co"># price_type: Open', 'High', 'Low', 'Close', 'Volume', 'Dividends', 'Stock Splits</span></span>
+<span id="cb79-7"><a href="training-and-evaluating-regression-models.html#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="co"># format_date:  index format date</span></span>
+<span id="cb79-8"><a href="training-and-evaluating-regression-models.html#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="co"># d_ini: initial date if the subset</span></span>
+<span id="cb79-9"><a href="training-and-evaluating-regression-models.html#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="co"># d_fin: final date of the subset</span></span>
+<span id="cb79-10"><a href="training-and-evaluating-regression-models.html#cb79-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-11"><a href="training-and-evaluating-regression-models.html#cb79-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_yahoo_tickers(tickers,inter,price_type,format_date,d_ini,d_fin):</span>
+<span id="cb79-12"><a href="training-and-evaluating-regression-models.html#cb79-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> my_yahoo(ticker,inter,price_type,format_date,d_ini,d_fin):</span>
+<span id="cb79-13"><a href="training-and-evaluating-regression-models.html#cb79-13" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> yf.Ticker(ticker)</span>
+<span id="cb79-14"><a href="training-and-evaluating-regression-models.html#cb79-14" aria-hidden="true" tabindex="-1"></a>        hist <span class="op">=</span> x.history(start<span class="op">=</span>d_ini,end<span class="op">=</span>d_fin,interval<span class="op">=</span>inter)</span>
+<span id="cb79-15"><a href="training-and-evaluating-regression-models.html#cb79-15" aria-hidden="true" tabindex="-1"></a>        date<span class="op">=</span><span class="bu">list</span>(hist.index)</span>
+<span id="cb79-16"><a href="training-and-evaluating-regression-models.html#cb79-16" aria-hidden="true" tabindex="-1"></a>        hist_date<span class="op">=</span>[date.strftime(format_date) <span class="cf">for</span> date <span class="kw">in</span> date]</span>
+<span id="cb79-17"><a href="training-and-evaluating-regression-models.html#cb79-17" aria-hidden="true" tabindex="-1"></a>        price<span class="op">=</span><span class="bu">list</span>(hist[price_type])</span>
+<span id="cb79-18"><a href="training-and-evaluating-regression-models.html#cb79-18" aria-hidden="true" tabindex="-1"></a>        hist<span class="op">=</span>{ticker:price}</span>
+<span id="cb79-19"><a href="training-and-evaluating-regression-models.html#cb79-19" aria-hidden="true" tabindex="-1"></a>        hist<span class="op">=</span>pd.DataFrame(hist,index<span class="op">=</span>hist_date)</span>
+<span id="cb79-20"><a href="training-and-evaluating-regression-models.html#cb79-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> hist.loc[d_ini:d_fin]</span>
+<span id="cb79-21"><a href="training-and-evaluating-regression-models.html#cb79-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(tickers)<span class="op">==</span><span class="dv">1</span>:</span>
+<span id="cb79-22"><a href="training-and-evaluating-regression-models.html#cb79-22" aria-hidden="true" tabindex="-1"></a>        s1<span class="op">=</span>my_yahoo(tickers[<span class="dv">0</span>],inter,price_type,format_date,d_ini,d_fin)</span>
+<span id="cb79-23"><a href="training-and-evaluating-regression-models.html#cb79-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb79-24"><a href="training-and-evaluating-regression-models.html#cb79-24" aria-hidden="true" tabindex="-1"></a>        s1<span class="op">=</span>my_yahoo(tickers[<span class="dv">0</span>],inter,price_type,format_date,d_ini,d_fin)</span>
+<span id="cb79-25"><a href="training-and-evaluating-regression-models.html#cb79-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> ticker <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="bu">len</span>(tickers)):</span>
+<span id="cb79-26"><a href="training-and-evaluating-regression-models.html#cb79-26" aria-hidden="true" tabindex="-1"></a>            s2<span class="op">=</span>my_yahoo(tickers[ticker],inter,price_type,format_date,d_ini,d_fin)</span>
+<span id="cb79-27"><a href="training-and-evaluating-regression-models.html#cb79-27" aria-hidden="true" tabindex="-1"></a>            s1<span class="op">=</span>pd.concat([s1,s2],axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb79-28"><a href="training-and-evaluating-regression-models.html#cb79-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s1</span>
+<span id="cb79-29"><a href="training-and-evaluating-regression-models.html#cb79-29" aria-hidden="true" tabindex="-1"></a>inter<span class="op">=</span><span class="st">'1mo'</span></span>
+<span id="cb79-30"><a href="training-and-evaluating-regression-models.html#cb79-30" aria-hidden="true" tabindex="-1"></a>price_type<span class="op">=</span><span class="st">"Close"</span></span>
+<span id="cb79-31"><a href="training-and-evaluating-regression-models.html#cb79-31" aria-hidden="true" tabindex="-1"></a>format_date<span class="op">=</span><span class="st">"%Y-%m-</span><span class="sc">%d</span><span class="st">"</span></span>
+<span id="cb79-32"><a href="training-and-evaluating-regression-models.html#cb79-32" aria-hidden="true" tabindex="-1"></a>d_ini<span class="op">=</span><span class="st">"2020-02-01"</span></span>
+<span id="cb79-33"><a href="training-and-evaluating-regression-models.html#cb79-33" aria-hidden="true" tabindex="-1"></a>d_fin<span class="op">=</span><span class="st">"2023-03-01"</span></span>
+<span id="cb79-34"><a href="training-and-evaluating-regression-models.html#cb79-34" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [ticker,<span class="st">"^MXX"</span>]</span></code></pre></div>
+<pre><code>df=my_yahoo_tickers(tickers,inter,price_type,format_date,d_ini,d_fin)
+df.head()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_c2448" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_c2448_level0_col0" class="col_heading level0 col0">ASURB.MX</th>
+      <th id="T_c2448_level0_col1" class="col_heading level0 col1">^MXX</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_c2448_level0_row0" class="row_heading level0 row0">2020-02-01</th>
+      <td id="T_c2448_row0_col0" class="data row0 col0">303.918579</td>
+      <td id="T_c2448_row0_col1" class="data row0 col1">41324.308594</td>
+    </tr>
+<tr>
+<th id="T_c2448_level0_row1" class="row_heading level0 row1">2020-03-01</th>
+      <td id="T_c2448_row1_col0" class="data row1 col0">208.942261</td>
+      <td id="T_c2448_row1_col1" class="data row1 col1">34554.531250</td>
+    </tr>
+<tr>
+<th id="T_c2448_level0_row2" class="row_heading level0 row2">2020-04-01</th>
+      <td id="T_c2448_row2_col0" class="data row2 col0">225.808441</td>
+      <td id="T_c2448_row2_col1" class="data row2 col1">36470.109375</td>
+    </tr>
+<tr>
+<th id="T_c2448_level0_row3" class="row_heading level0 row3">2020-05-01</th>
+      <td id="T_c2448_row3_col0" class="data row3 col0">213.797256</td>
+      <td id="T_c2448_row3_col1" class="data row3 col1">36122.730469</td>
+    </tr>
+<tr>
+<th id="T_c2448_level0_row4" class="row_heading level0 row4">2020-06-01</th>
+      <td id="T_c2448_row4_col0" class="data row4 col0">240.083420</td>
+      <td id="T_c2448_row4_col1" class="data row4 col1">37716.429688</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Also, we download the macroeconomic variables using the Banxico API we used in chapter 1.</p>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_2480a" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_2480a_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_2480a_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_2480a_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_2480a_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_2480a_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_2480a_level0_col5" class="col_heading level0 col5">inv_fija</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_2480a_level0_row0" class="row_heading level0 row0">2020-02-01</th>
+      <td id="T_2480a_row0_col0" class="data row0 col0">18.844300</td>
+      <td id="T_2480a_row0_col1" class="data row0 col1">6.960000</td>
+      <td id="T_2480a_row0_col2" class="data row0 col2">0.360000</td>
+      <td id="T_2480a_row0_col3" class="data row0 col3">108.799200</td>
+      <td id="T_2480a_row0_col4" class="data row0 col4">6.680000</td>
+      <td id="T_2480a_row0_col5" class="data row0 col5">95.730000</td>
+    </tr>
+<tr>
+<th id="T_2480a_level0_row1" class="row_heading level0 row1">2020-03-01</th>
+      <td id="T_2480a_row1_col0" class="data row1 col0">22.378400</td>
+      <td id="T_2480a_row1_col1" class="data row1 col1">6.810000</td>
+      <td id="T_2480a_row1_col2" class="data row1 col2">0.290000</td>
+      <td id="T_2480a_row1_col3" class="data row1 col3">109.990100</td>
+      <td id="T_2480a_row1_col4" class="data row1 col4">6.610000</td>
+      <td id="T_2480a_row1_col5" class="data row1 col5">93.140000</td>
+    </tr>
+<tr>
+<th id="T_2480a_level0_row2" class="row_heading level0 row2">2020-04-01</th>
+      <td id="T_2480a_row2_col0" class="data row2 col0">24.265800</td>
+      <td id="T_2480a_row2_col1" class="data row2 col1">6.090000</td>
+      <td id="T_2480a_row2_col2" class="data row2 col2">0.360000</td>
+      <td id="T_2480a_row2_col3" class="data row2 col3">88.291500</td>
+      <td id="T_2480a_row2_col4" class="data row2 col4">5.800000</td>
+      <td id="T_2480a_row2_col5" class="data row2 col5">63.160000</td>
+    </tr>
+<tr>
+<th id="T_2480a_level0_row3" class="row_heading level0 row3">2020-05-01</th>
+      <td id="T_2480a_row3_col0" class="data row3 col0">23.423000</td>
+      <td id="T_2480a_row3_col1" class="data row3 col1">5.470000</td>
+      <td id="T_2480a_row3_col2" class="data row3 col2">0.300000</td>
+      <td id="T_2480a_row3_col3" class="data row3 col3">89.023800</td>
+      <td id="T_2480a_row3_col4" class="data row3 col4">5.030000</td>
+      <td id="T_2480a_row3_col5" class="data row3 col5">64.900000</td>
+    </tr>
+<tr>
+<th id="T_2480a_level0_row4" class="row_heading level0 row4">2020-06-01</th>
+      <td id="T_2480a_row4_col0" class="data row4 col0">22.299000</td>
+      <td id="T_2480a_row4_col1" class="data row4 col1">5.060000</td>
+      <td id="T_2480a_row4_col2" class="data row4 col2">0.370000</td>
+      <td id="T_2480a_row4_col3" class="data row4 col3">97.956700</td>
+      <td id="T_2480a_row4_col4" class="data row4 col4">4.910000</td>
+      <td id="T_2480a_row4_col5" class="data row4 col5">78.690000</td>
+    </tr>
+</tbody>
+</table></div>
+<pre><code>
+#---- Do not change anything from here ----
+
+def my_banxico_py(token,my_series,my_series_name,d_in,d_fin,format_date):
+    le=len(my_series)
+    ser=0
+    if(le==1):
+        ser=0
+        api = SIEBanxico(token = token, id_series = my_series[ser])
+        timeseries_range=api.get_timeseries_range(init_date=d_in, end_date=d_fin)
+        timeseries_range=timeseries_range['bmx']['series'][0]['datos']
+        data=pd.DataFrame(timeseries_range)
+        dates=[pd.Timestamp(date).strftime(format_date) for date in list(data["fecha"])]
+        data=pd.DataFrame({my_series_name[ser]:list(data["dato"])},index=dates)
+    else:
+        ser=0
+        api = SIEBanxico(token = token, id_series = my_series[ser])
+        timeseries_range=api.get_timeseries_range(init_date=d_in, end_date=d_fin)
+        timeseries_range=timeseries_range['bmx']['series'][0]['datos']
+        data=pd.DataFrame(timeseries_range)
+        dates=[pd.Timestamp(date).strftime(format_date) for date in list(data["fecha"])]
+        data=pd.DataFrame({my_series_name[ser]:list(data["dato"])},index=dates)
+        for ser in range(1,le):
+            api = SIEBanxico(token = token, id_series = my_series[ser])
+            timeseries_range=api.get_timeseries_range(init_date=d_in, end_date=d_fin)
+            timeseries_range=timeseries_range['bmx']['series'][0]['datos']
+            data2=pd.DataFrame(timeseries_range)
+            dates2=[pd.Timestamp(date).strftime(format_date) for date in list(data2["fecha"])]
+            data2=pd.DataFrame({my_series_name[ser]:list(data2["dato"])},index=dates2)
+            data=pd.concat([data,data2],axis=1)
+    ban_names=list(data.columns)
+    for col_i in range(data.shape[1]):
+        cel_num=[float(cel) for cel in data[ban_names[col_i]]]
+        data[ban_names[col_i]]=cel_num
+    return data
+#----- To here ------------
+    
+token = "776cab8e243c5b661cee8571d7e3e5d573395471011cf093ab5684d233a80d67"
+
+my_series=['SF17908' ,'SF282',"SP74660","SR16734","SF3367","SR16525"]
+my_series_name=["TC","Cetes_28","infla","igae","Cetes_1a","inv_fija"]
+d_ini="2020-02-01"
+d_fin="2023-02-01"
+format_date="%Y-%d-%m"
+ban=my_banxico_py(token,my_series,my_series_name,d_ini,d_fin,format_date)
+ban.head()</code></pre>
+<p>Here we concatenate the Banxico data and the Yahoo Finance one.</p>
+<pre><code>dataset=pd.concat([ban,df],axis=1)
+dataset.head()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_79936" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_79936_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_79936_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_79936_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_79936_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_79936_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_79936_level0_col5" class="col_heading level0 col5">inv_fija</th>
+      <th id="T_79936_level0_col6" class="col_heading level0 col6">ASURB.MX</th>
+      <th id="T_79936_level0_col7" class="col_heading level0 col7">^MXX</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_79936_level0_row0" class="row_heading level0 row0">2020-02-01</th>
+      <td id="T_79936_row0_col0" class="data row0 col0">18.844300</td>
+      <td id="T_79936_row0_col1" class="data row0 col1">6.960000</td>
+      <td id="T_79936_row0_col2" class="data row0 col2">0.360000</td>
+      <td id="T_79936_row0_col3" class="data row0 col3">108.799200</td>
+      <td id="T_79936_row0_col4" class="data row0 col4">6.680000</td>
+      <td id="T_79936_row0_col5" class="data row0 col5">95.730000</td>
+      <td id="T_79936_row0_col6" class="data row0 col6">303.918579</td>
+      <td id="T_79936_row0_col7" class="data row0 col7">41324.308594</td>
+    </tr>
+<tr>
+<th id="T_79936_level0_row1" class="row_heading level0 row1">2020-03-01</th>
+      <td id="T_79936_row1_col0" class="data row1 col0">22.378400</td>
+      <td id="T_79936_row1_col1" class="data row1 col1">6.810000</td>
+      <td id="T_79936_row1_col2" class="data row1 col2">0.290000</td>
+      <td id="T_79936_row1_col3" class="data row1 col3">109.990100</td>
+      <td id="T_79936_row1_col4" class="data row1 col4">6.610000</td>
+      <td id="T_79936_row1_col5" class="data row1 col5">93.140000</td>
+      <td id="T_79936_row1_col6" class="data row1 col6">208.942261</td>
+      <td id="T_79936_row1_col7" class="data row1 col7">34554.531250</td>
+    </tr>
+<tr>
+<th id="T_79936_level0_row2" class="row_heading level0 row2">2020-04-01</th>
+      <td id="T_79936_row2_col0" class="data row2 col0">24.265800</td>
+      <td id="T_79936_row2_col1" class="data row2 col1">6.090000</td>
+      <td id="T_79936_row2_col2" class="data row2 col2">0.360000</td>
+      <td id="T_79936_row2_col3" class="data row2 col3">88.291500</td>
+      <td id="T_79936_row2_col4" class="data row2 col4">5.800000</td>
+      <td id="T_79936_row2_col5" class="data row2 col5">63.160000</td>
+      <td id="T_79936_row2_col6" class="data row2 col6">225.808441</td>
+      <td id="T_79936_row2_col7" class="data row2 col7">36470.109375</td>
+    </tr>
+<tr>
+<th id="T_79936_level0_row3" class="row_heading level0 row3">2020-05-01</th>
+      <td id="T_79936_row3_col0" class="data row3 col0">23.423000</td>
+      <td id="T_79936_row3_col1" class="data row3 col1">5.470000</td>
+      <td id="T_79936_row3_col2" class="data row3 col2">0.300000</td>
+      <td id="T_79936_row3_col3" class="data row3 col3">89.023800</td>
+      <td id="T_79936_row3_col4" class="data row3 col4">5.030000</td>
+      <td id="T_79936_row3_col5" class="data row3 col5">64.900000</td>
+      <td id="T_79936_row3_col6" class="data row3 col6">213.797256</td>
+      <td id="T_79936_row3_col7" class="data row3 col7">36122.730469</td>
+    </tr>
+<tr>
+<th id="T_79936_level0_row4" class="row_heading level0 row4">2020-06-01</th>
+      <td id="T_79936_row4_col0" class="data row4 col0">22.299000</td>
+      <td id="T_79936_row4_col1" class="data row4 col1">5.060000</td>
+      <td id="T_79936_row4_col2" class="data row4 col2">0.370000</td>
+      <td id="T_79936_row4_col3" class="data row4 col3">97.956700</td>
+      <td id="T_79936_row4_col4" class="data row4 col4">4.910000</td>
+      <td id="T_79936_row4_col5" class="data row4 col5">78.690000</td>
+      <td id="T_79936_row4_col6" class="data row4 col6">240.083420</td>
+      <td id="T_79936_row4_col7" class="data row4 col7">37716.429688</td>
+    </tr>
+</tbody>
+</table></div>
+<div id="definition-of-the-independent-variable" class="section level3" number="3.1.1">
+<h3>
+<span class="header-section-number">3.1.1</span> Definition of the independent variable<a class="anchor" aria-label="anchor" href="#definition-of-the-independent-variable"><i class="fas fa-link"></i></a>
+</h3>
+<p>Here we define the independent variable and do some tests.</p>
+<p>As we mention below, we want to predict the <code>r</code>ticker` price in one month. Then, our model state that we have to lag one period, one month in this case, the dependent variable
+<span class="math inline">\(ASURB.MX\_price_{t}\)</span>. Remember that our model is:</p>
+<p><span class="math display">\[ASURB.MX\_price_{t}=\beta_{0}+\beta_{1}\ ER_{t-1} + \beta_{2}\ inflation_{t-1} + \beta_{3}\ srate_{t-1}+ \beta_{4}\ growth_{t-1}+ \beta_{5}\ mrate_{t-1}+ \beta_{6}\ inv_{t-1} + \beta_{7}\ MR_{t-1} + e_{t}\]</span>
+Where the suffix <span class="math inline">\(t-1\)</span> indicates the variable one period before period <span class="math inline">\(t\)</span>.</p>
+<p>To automate the procedure, we define:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="training-and-evaluating-regression-models.html#cb83-1" aria-hidden="true" tabindex="-1"></a>var<span class="op">=</span>ticker <span class="co"># name of the ticker we want to predict</span></span>
+<span id="cb83-2"><a href="training-and-evaluating-regression-models.html#cb83-2" aria-hidden="true" tabindex="-1"></a>lag<span class="op">=-</span><span class="dv">1</span> <span class="co"># number of periods we want to lag</span></span></code></pre></div>
+<p>We use the function shift():</p>
+<pre><code>y_lag=dataset[var].shift(lag) 
+y_lag.head()</code></pre>
+<pre><code>#&gt; 2020-02-01    208.942261
+#&gt; 2020-03-01    225.808441
+#&gt; 2020-04-01    213.797256
+#&gt; 2020-05-01    240.083420
+#&gt; 2020-06-01    206.921692
+#&gt; Name: ASURB.MX, dtype: float64</code></pre>
+<p>Then we insert the lagged variable in the data set, adding the text “_lag”:</p>
+<pre><code>dataset[var+"_lag"]= y_lag
+dataset.head() #</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_9583c" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_9583c_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_9583c_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_9583c_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_9583c_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_9583c_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_9583c_level0_col5" class="col_heading level0 col5">inv_fija</th>
+      <th id="T_9583c_level0_col6" class="col_heading level0 col6">ASURB.MX</th>
+      <th id="T_9583c_level0_col7" class="col_heading level0 col7">^MXX</th>
+      <th id="T_9583c_level0_col8" class="col_heading level0 col8">ASURB.MX_lag</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_9583c_level0_row0" class="row_heading level0 row0">2020-02-01</th>
+      <td id="T_9583c_row0_col0" class="data row0 col0">18.844300</td>
+      <td id="T_9583c_row0_col1" class="data row0 col1">6.960000</td>
+      <td id="T_9583c_row0_col2" class="data row0 col2">0.360000</td>
+      <td id="T_9583c_row0_col3" class="data row0 col3">108.799200</td>
+      <td id="T_9583c_row0_col4" class="data row0 col4">6.680000</td>
+      <td id="T_9583c_row0_col5" class="data row0 col5">95.730000</td>
+      <td id="T_9583c_row0_col6" class="data row0 col6">303.918579</td>
+      <td id="T_9583c_row0_col7" class="data row0 col7">41324.308594</td>
+      <td id="T_9583c_row0_col8" class="data row0 col8">208.942261</td>
+    </tr>
+<tr>
+<th id="T_9583c_level0_row1" class="row_heading level0 row1">2020-03-01</th>
+      <td id="T_9583c_row1_col0" class="data row1 col0">22.378400</td>
+      <td id="T_9583c_row1_col1" class="data row1 col1">6.810000</td>
+      <td id="T_9583c_row1_col2" class="data row1 col2">0.290000</td>
+      <td id="T_9583c_row1_col3" class="data row1 col3">109.990100</td>
+      <td id="T_9583c_row1_col4" class="data row1 col4">6.610000</td>
+      <td id="T_9583c_row1_col5" class="data row1 col5">93.140000</td>
+      <td id="T_9583c_row1_col6" class="data row1 col6">208.942261</td>
+      <td id="T_9583c_row1_col7" class="data row1 col7">34554.531250</td>
+      <td id="T_9583c_row1_col8" class="data row1 col8">225.808441</td>
+    </tr>
+<tr>
+<th id="T_9583c_level0_row2" class="row_heading level0 row2">2020-04-01</th>
+      <td id="T_9583c_row2_col0" class="data row2 col0">24.265800</td>
+      <td id="T_9583c_row2_col1" class="data row2 col1">6.090000</td>
+      <td id="T_9583c_row2_col2" class="data row2 col2">0.360000</td>
+      <td id="T_9583c_row2_col3" class="data row2 col3">88.291500</td>
+      <td id="T_9583c_row2_col4" class="data row2 col4">5.800000</td>
+      <td id="T_9583c_row2_col5" class="data row2 col5">63.160000</td>
+      <td id="T_9583c_row2_col6" class="data row2 col6">225.808441</td>
+      <td id="T_9583c_row2_col7" class="data row2 col7">36470.109375</td>
+      <td id="T_9583c_row2_col8" class="data row2 col8">213.797256</td>
+    </tr>
+<tr>
+<th id="T_9583c_level0_row3" class="row_heading level0 row3">2020-05-01</th>
+      <td id="T_9583c_row3_col0" class="data row3 col0">23.423000</td>
+      <td id="T_9583c_row3_col1" class="data row3 col1">5.470000</td>
+      <td id="T_9583c_row3_col2" class="data row3 col2">0.300000</td>
+      <td id="T_9583c_row3_col3" class="data row3 col3">89.023800</td>
+      <td id="T_9583c_row3_col4" class="data row3 col4">5.030000</td>
+      <td id="T_9583c_row3_col5" class="data row3 col5">64.900000</td>
+      <td id="T_9583c_row3_col6" class="data row3 col6">213.797256</td>
+      <td id="T_9583c_row3_col7" class="data row3 col7">36122.730469</td>
+      <td id="T_9583c_row3_col8" class="data row3 col8">240.083420</td>
+    </tr>
+<tr>
+<th id="T_9583c_level0_row4" class="row_heading level0 row4">2020-06-01</th>
+      <td id="T_9583c_row4_col0" class="data row4 col0">22.299000</td>
+      <td id="T_9583c_row4_col1" class="data row4 col1">5.060000</td>
+      <td id="T_9583c_row4_col2" class="data row4 col2">0.370000</td>
+      <td id="T_9583c_row4_col3" class="data row4 col3">97.956700</td>
+      <td id="T_9583c_row4_col4" class="data row4 col4">4.910000</td>
+      <td id="T_9583c_row4_col5" class="data row4 col5">78.690000</td>
+      <td id="T_9583c_row4_col6" class="data row4 col6">240.083420</td>
+      <td id="T_9583c_row4_col7" class="data row4 col7">37716.429688</td>
+      <td id="T_9583c_row4_col8" class="data row4 col8">206.921692</td>
+    </tr>
+</tbody>
+</table></div>
+<p>As we see, the last row has a missing value, the one we lost by doing the lag.</p>
+<pre><code>dataset.tail()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_4ddb7" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_4ddb7_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_4ddb7_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_4ddb7_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_4ddb7_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_4ddb7_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_4ddb7_level0_col5" class="col_heading level0 col5">inv_fija</th>
+      <th id="T_4ddb7_level0_col6" class="col_heading level0 col6">ASURB.MX</th>
+      <th id="T_4ddb7_level0_col7" class="col_heading level0 col7">^MXX</th>
+      <th id="T_4ddb7_level0_col8" class="col_heading level0 col8">ASURB.MX_lag</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_4ddb7_level0_row0" class="row_heading level0 row0">2022-10-01</th>
+      <td id="T_4ddb7_row0_col0" class="data row0 col0">19.984500</td>
+      <td id="T_4ddb7_row0_col1" class="data row0 col1">8.930000</td>
+      <td id="T_4ddb7_row0_col2" class="data row0 col2">0.630000</td>
+      <td id="T_4ddb7_row0_col3" class="data row0 col3">113.121300</td>
+      <td id="T_4ddb7_row0_col4" class="data row0 col4">10.770000</td>
+      <td id="T_4ddb7_row0_col5" class="data row0 col5">100.900000</td>
+      <td id="T_4ddb7_row0_col6" class="data row0 col6">464.970001</td>
+      <td id="T_4ddb7_row0_col7" class="data row0 col7">49922.300781</td>
+      <td id="T_4ddb7_row0_col8" class="data row0 col8">478.500000</td>
+    </tr>
+<tr>
+<th id="T_4ddb7_level0_row1" class="row_heading level0 row1">2022-11-01</th>
+      <td id="T_4ddb7_row1_col0" class="data row1 col0">19.444900</td>
+      <td id="T_4ddb7_row1_col1" class="data row1 col1">9.420000</td>
+      <td id="T_4ddb7_row1_col2" class="data row1 col2">0.450000</td>
+      <td id="T_4ddb7_row1_col3" class="data row1 col3">116.340600</td>
+      <td id="T_4ddb7_row1_col4" class="data row1 col4">10.840000</td>
+      <td id="T_4ddb7_row1_col5" class="data row1 col5">103.440000</td>
+      <td id="T_4ddb7_row1_col6" class="data row1 col6">478.500000</td>
+      <td id="T_4ddb7_row1_col7" class="data row1 col7">51684.859375</td>
+      <td id="T_4ddb7_row1_col8" class="data row1 col8">454.010010</td>
+    </tr>
+<tr>
+<th id="T_4ddb7_level0_row2" class="row_heading level0 row2">2022-12-01</th>
+      <td id="T_4ddb7_row2_col0" class="data row2 col0">19.593000</td>
+      <td id="T_4ddb7_row2_col1" class="data row2 col1">9.960000</td>
+      <td id="T_4ddb7_row2_col2" class="data row2 col2">0.650000</td>
+      <td id="T_4ddb7_row2_col3" class="data row2 col3">115.577100</td>
+      <td id="T_4ddb7_row2_col4" class="data row2 col4">10.870000</td>
+      <td id="T_4ddb7_row2_col5" class="data row2 col5">107.190000</td>
+      <td id="T_4ddb7_row2_col6" class="data row2 col6">454.010010</td>
+      <td id="T_4ddb7_row2_col7" class="data row2 col7">48463.859375</td>
+      <td id="T_4ddb7_row2_col8" class="data row2 col8">510.230011</td>
+    </tr>
+<tr>
+<th id="T_4ddb7_level0_row3" class="row_heading level0 row3">2023-01-01</th>
+      <td id="T_4ddb7_row3_col0" class="data row3 col0">18.986300</td>
+      <td id="T_4ddb7_row3_col1" class="data row3 col1">10.610000</td>
+      <td id="T_4ddb7_row3_col2" class="data row3 col2">0.710000</td>
+      <td id="T_4ddb7_row3_col3" class="data row3 col3">112.093900</td>
+      <td id="T_4ddb7_row3_col4" class="data row3 col4">11.090000</td>
+      <td id="T_4ddb7_row3_col5" class="data row3 col5">106.030000</td>
+      <td id="T_4ddb7_row3_col6" class="data row3 col6">510.230011</td>
+      <td id="T_4ddb7_row3_col7" class="data row3 col7">54564.269531</td>
+      <td id="T_4ddb7_row3_col8" class="data row3 col8">523.859985</td>
+    </tr>
+<tr>
+<th id="T_4ddb7_level0_row4" class="row_heading level0 row4">2023-02-01</th>
+      <td id="T_4ddb7_row4_col0" class="data row4 col0">18.598600</td>
+      <td id="T_4ddb7_row4_col1" class="data row4 col1">10.920000</td>
+      <td id="T_4ddb7_row4_col2" class="data row4 col2">0.610000</td>
+      <td id="T_4ddb7_row4_col3" class="data row4 col3">109.613300</td>
+      <td id="T_4ddb7_row4_col4" class="data row4 col4">11.660000</td>
+      <td id="T_4ddb7_row4_col5" class="data row4 col5">105.420000</td>
+      <td id="T_4ddb7_row4_col6" class="data row4 col6">523.859985</td>
+      <td id="T_4ddb7_row4_col7" class="data row4 col7">52758.058594</td>
+      <td id="T_4ddb7_row4_col8" class="data row4 col8">nan</td>
+    </tr>
+</tbody>
+</table></div>
+<p>That missing value would´t allow us to perform some procedures below. Then we cut it, using the method shape, which shows the number of rows and columns of a data frame.</p>
+<p>in this case the data set has 37 rows and 9 columns.</p>
+<pre><code>dataset_lag=dataset.iloc[:dataset.shape[0]-1,]
+dataset_lag.head()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_6faca" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_6faca_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_6faca_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_6faca_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_6faca_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_6faca_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_6faca_level0_col5" class="col_heading level0 col5">inv_fija</th>
+      <th id="T_6faca_level0_col6" class="col_heading level0 col6">ASURB.MX</th>
+      <th id="T_6faca_level0_col7" class="col_heading level0 col7">^MXX</th>
+      <th id="T_6faca_level0_col8" class="col_heading level0 col8">ASURB.MX_lag</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_6faca_level0_row0" class="row_heading level0 row0">2020-02-01</th>
+      <td id="T_6faca_row0_col0" class="data row0 col0">18.844300</td>
+      <td id="T_6faca_row0_col1" class="data row0 col1">6.960000</td>
+      <td id="T_6faca_row0_col2" class="data row0 col2">0.360000</td>
+      <td id="T_6faca_row0_col3" class="data row0 col3">108.799200</td>
+      <td id="T_6faca_row0_col4" class="data row0 col4">6.680000</td>
+      <td id="T_6faca_row0_col5" class="data row0 col5">95.730000</td>
+      <td id="T_6faca_row0_col6" class="data row0 col6">303.918579</td>
+      <td id="T_6faca_row0_col7" class="data row0 col7">41324.308594</td>
+      <td id="T_6faca_row0_col8" class="data row0 col8">208.942261</td>
+    </tr>
+<tr>
+<th id="T_6faca_level0_row1" class="row_heading level0 row1">2020-03-01</th>
+      <td id="T_6faca_row1_col0" class="data row1 col0">22.378400</td>
+      <td id="T_6faca_row1_col1" class="data row1 col1">6.810000</td>
+      <td id="T_6faca_row1_col2" class="data row1 col2">0.290000</td>
+      <td id="T_6faca_row1_col3" class="data row1 col3">109.990100</td>
+      <td id="T_6faca_row1_col4" class="data row1 col4">6.610000</td>
+      <td id="T_6faca_row1_col5" class="data row1 col5">93.140000</td>
+      <td id="T_6faca_row1_col6" class="data row1 col6">208.942261</td>
+      <td id="T_6faca_row1_col7" class="data row1 col7">34554.531250</td>
+      <td id="T_6faca_row1_col8" class="data row1 col8">225.808441</td>
+    </tr>
+<tr>
+<th id="T_6faca_level0_row2" class="row_heading level0 row2">2020-04-01</th>
+      <td id="T_6faca_row2_col0" class="data row2 col0">24.265800</td>
+      <td id="T_6faca_row2_col1" class="data row2 col1">6.090000</td>
+      <td id="T_6faca_row2_col2" class="data row2 col2">0.360000</td>
+      <td id="T_6faca_row2_col3" class="data row2 col3">88.291500</td>
+      <td id="T_6faca_row2_col4" class="data row2 col4">5.800000</td>
+      <td id="T_6faca_row2_col5" class="data row2 col5">63.160000</td>
+      <td id="T_6faca_row2_col6" class="data row2 col6">225.808441</td>
+      <td id="T_6faca_row2_col7" class="data row2 col7">36470.109375</td>
+      <td id="T_6faca_row2_col8" class="data row2 col8">213.797256</td>
+    </tr>
+<tr>
+<th id="T_6faca_level0_row3" class="row_heading level0 row3">2020-05-01</th>
+      <td id="T_6faca_row3_col0" class="data row3 col0">23.423000</td>
+      <td id="T_6faca_row3_col1" class="data row3 col1">5.470000</td>
+      <td id="T_6faca_row3_col2" class="data row3 col2">0.300000</td>
+      <td id="T_6faca_row3_col3" class="data row3 col3">89.023800</td>
+      <td id="T_6faca_row3_col4" class="data row3 col4">5.030000</td>
+      <td id="T_6faca_row3_col5" class="data row3 col5">64.900000</td>
+      <td id="T_6faca_row3_col6" class="data row3 col6">213.797256</td>
+      <td id="T_6faca_row3_col7" class="data row3 col7">36122.730469</td>
+      <td id="T_6faca_row3_col8" class="data row3 col8">240.083420</td>
+    </tr>
+<tr>
+<th id="T_6faca_level0_row4" class="row_heading level0 row4">2020-06-01</th>
+      <td id="T_6faca_row4_col0" class="data row4 col0">22.299000</td>
+      <td id="T_6faca_row4_col1" class="data row4 col1">5.060000</td>
+      <td id="T_6faca_row4_col2" class="data row4 col2">0.370000</td>
+      <td id="T_6faca_row4_col3" class="data row4 col3">97.956700</td>
+      <td id="T_6faca_row4_col4" class="data row4 col4">4.910000</td>
+      <td id="T_6faca_row4_col5" class="data row4 col5">78.690000</td>
+      <td id="T_6faca_row4_col6" class="data row4 col6">240.083420</td>
+      <td id="T_6faca_row4_col7" class="data row4 col7">37716.429688</td>
+      <td id="T_6faca_row4_col8" class="data row4 col8">206.921692</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Here we define the dependent variable (Y):</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="training-and-evaluating-regression-models.html#cb89-1" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span>dataset_lag[var<span class="op">+</span><span class="st">"_lag"</span>] <span class="co"># esto es el resultado, pero quiero automatizarlo</span></span>
+<span id="cb89-2"><a href="training-and-evaluating-regression-models.html#cb89-2" aria-hidden="true" tabindex="-1"></a>Y.head()</span>
+<span id="cb89-3"><a href="training-and-evaluating-regression-models.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-02-01    208.942261</span></span>
+<span id="cb89-4"><a href="training-and-evaluating-regression-models.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-03-01    225.808441</span></span>
+<span id="cb89-5"><a href="training-and-evaluating-regression-models.html#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-04-01    213.797256</span></span>
+<span id="cb89-6"><a href="training-and-evaluating-regression-models.html#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-05-01    240.083420</span></span>
+<span id="cb89-7"><a href="training-and-evaluating-regression-models.html#cb89-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-06-01    206.921692</span></span>
+<span id="cb89-8"><a href="training-and-evaluating-regression-models.html#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Name: ASURB.MX_lag, dtype: float64</span></span></code></pre></div>
+</div>
+<div id="testing-for-stationary-in-the-dependet-variable-y" class="section level3" number="3.1.2">
+<h3>
+<span class="header-section-number">3.1.2</span> Testing for stationary in the dependet variable (Y)<a class="anchor" aria-label="anchor" href="#testing-for-stationary-in-the-dependet-variable-y"><i class="fas fa-link"></i></a>
+</h3>
+<p>A stationary time series process is one whose probability distributions are stable over time in the following sense: If we take any collection of random variables in the sequence and then shift that sequence ahead h time periods, the joint probability distribution must remain unchanged.</p>
+<p>On a practical level, if we want to understand the relationship between two or more variables using regression analysis, such as the model:</p>
+<p><span class="math display">\[ASURB.MX\_price_{t}=\beta_{0}+\beta_{1}\ ER_{t-1} + \beta_{2}\ inflation_{t-1} +.. + e_{t},\]</span></p>
+<p>we need to assume some sort of stability over time. If we allow the relationship between two variables those variables in the equation to change arbitrarily in each time period, then we cannot hope to learn much about how a change in one variable affects the other variable if we only have access to a single time series realization <span class="citation">(<a href="training-and-evaluating-regression-models.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span>. In the Appendix we extend this explanation.</p>
+<p>Because this is an introductory machine learning book, we only would apply the Augmented Dickey-Fuller (ADF) (see <span class="citation">(<a href="training-and-evaluating-regression-models.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span> for a further reading).</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb90-1"><a href="training-and-evaluating-regression-models.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This method shows the ADF statistic and P-value </span></span>
+<span id="cb90-2"><a href="training-and-evaluating-regression-models.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters:</span></span>
+<span id="cb90-3"><a href="training-and-evaluating-regression-models.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data: is a data frame of time Pandas Series with the time serie </span></span>
+<span id="cb90-4"><a href="training-and-evaluating-regression-models.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="co">#---- Do not change anything from here ----</span></span>
+<span id="cb90-5"><a href="training-and-evaluating-regression-models.html#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="training-and-evaluating-regression-models.html#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.stattools <span class="im">import</span> adfuller</span>
+<span id="cb90-7"><a href="training-and-evaluating-regression-models.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> adf(data):</span>
+<span id="cb90-8"><a href="training-and-evaluating-regression-models.html#cb90-8" aria-hidden="true" tabindex="-1"></a>    ADF <span class="op">=</span> adfuller(data)  </span>
+<span id="cb90-9"><a href="training-and-evaluating-regression-models.html#cb90-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">print</span>(<span class="ss">f'ADF Statistic: </span><span class="sc">{</span>ADF[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,<span class="ss">f'p-value: </span><span class="sc">{</span>ADF[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb90-10"><a href="training-and-evaluating-regression-models.html#cb90-10" aria-hidden="true" tabindex="-1"></a><span class="co">#----- To here ------------</span></span>
+<span id="cb90-11"><a href="training-and-evaluating-regression-models.html#cb90-11" aria-hidden="true" tabindex="-1"></a>adf(Y)</span>
+<span id="cb90-12"><a href="training-and-evaluating-regression-models.html#cb90-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ADF Statistic: -1.9361997214419064 p-value: 0.31522784631900724</span></span></code></pre></div>
+<p>If the second term of the output, the P-value, is less than 10% (0.1), then we can perform the prediction with that time series. If it is greater than 10%(0.1), we have to adjust, such as the change of the variable.</p>
+<p>in this case, the P-value is less than 10%(0.1), then the time series is not stationary, then we have to do an adjustment. The adjustment we will do is to do the change in the independent varible:</p>
+<p><span class="math display">\[\Delta ASURB.MX\_price_{t}=\beta_{0}+\beta_{1}\ ER_{t-1} + \beta_{2}\ inflation_{t-1} +.. + e_{t},\]</span>
+The <span class="math inline">\(\Delta ASURB.MX\)</span> means the change in the variable, <span class="math inline">\(ASURB.MX\_price_{t}-ASURB.MX\_price_{t-1}\)</span>. To do that we use the method diff. First we need to do a copy of the
+dataset_lag, other wise we could get a warning about the method.</p>
+<pre><code>dataset_lag_dif=dataset_lag.copy() 
+dataset_lag_dif[var+"_lag_dif"]=Y.diff()
+dataset_lag_dif.head()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_590c9" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_590c9_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_590c9_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_590c9_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_590c9_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_590c9_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_590c9_level0_col5" class="col_heading level0 col5">inv_fija</th>
+      <th id="T_590c9_level0_col6" class="col_heading level0 col6">ASURB.MX</th>
+      <th id="T_590c9_level0_col7" class="col_heading level0 col7">^MXX</th>
+      <th id="T_590c9_level0_col8" class="col_heading level0 col8">ASURB.MX_lag</th>
+      <th id="T_590c9_level0_col9" class="col_heading level0 col9">ASURB.MX_lag_dif</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_590c9_level0_row0" class="row_heading level0 row0">2020-02-01</th>
+      <td id="T_590c9_row0_col0" class="data row0 col0">18.844300</td>
+      <td id="T_590c9_row0_col1" class="data row0 col1">6.960000</td>
+      <td id="T_590c9_row0_col2" class="data row0 col2">0.360000</td>
+      <td id="T_590c9_row0_col3" class="data row0 col3">108.799200</td>
+      <td id="T_590c9_row0_col4" class="data row0 col4">6.680000</td>
+      <td id="T_590c9_row0_col5" class="data row0 col5">95.730000</td>
+      <td id="T_590c9_row0_col6" class="data row0 col6">303.918579</td>
+      <td id="T_590c9_row0_col7" class="data row0 col7">41324.308594</td>
+      <td id="T_590c9_row0_col8" class="data row0 col8">208.942261</td>
+      <td id="T_590c9_row0_col9" class="data row0 col9">nan</td>
+    </tr>
+<tr>
+<th id="T_590c9_level0_row1" class="row_heading level0 row1">2020-03-01</th>
+      <td id="T_590c9_row1_col0" class="data row1 col0">22.378400</td>
+      <td id="T_590c9_row1_col1" class="data row1 col1">6.810000</td>
+      <td id="T_590c9_row1_col2" class="data row1 col2">0.290000</td>
+      <td id="T_590c9_row1_col3" class="data row1 col3">109.990100</td>
+      <td id="T_590c9_row1_col4" class="data row1 col4">6.610000</td>
+      <td id="T_590c9_row1_col5" class="data row1 col5">93.140000</td>
+      <td id="T_590c9_row1_col6" class="data row1 col6">208.942261</td>
+      <td id="T_590c9_row1_col7" class="data row1 col7">34554.531250</td>
+      <td id="T_590c9_row1_col8" class="data row1 col8">225.808441</td>
+      <td id="T_590c9_row1_col9" class="data row1 col9">16.866180</td>
+    </tr>
+<tr>
+<th id="T_590c9_level0_row2" class="row_heading level0 row2">2020-04-01</th>
+      <td id="T_590c9_row2_col0" class="data row2 col0">24.265800</td>
+      <td id="T_590c9_row2_col1" class="data row2 col1">6.090000</td>
+      <td id="T_590c9_row2_col2" class="data row2 col2">0.360000</td>
+      <td id="T_590c9_row2_col3" class="data row2 col3">88.291500</td>
+      <td id="T_590c9_row2_col4" class="data row2 col4">5.800000</td>
+      <td id="T_590c9_row2_col5" class="data row2 col5">63.160000</td>
+      <td id="T_590c9_row2_col6" class="data row2 col6">225.808441</td>
+      <td id="T_590c9_row2_col7" class="data row2 col7">36470.109375</td>
+      <td id="T_590c9_row2_col8" class="data row2 col8">213.797256</td>
+      <td id="T_590c9_row2_col9" class="data row2 col9">-12.011185</td>
+    </tr>
+<tr>
+<th id="T_590c9_level0_row3" class="row_heading level0 row3">2020-05-01</th>
+      <td id="T_590c9_row3_col0" class="data row3 col0">23.423000</td>
+      <td id="T_590c9_row3_col1" class="data row3 col1">5.470000</td>
+      <td id="T_590c9_row3_col2" class="data row3 col2">0.300000</td>
+      <td id="T_590c9_row3_col3" class="data row3 col3">89.023800</td>
+      <td id="T_590c9_row3_col4" class="data row3 col4">5.030000</td>
+      <td id="T_590c9_row3_col5" class="data row3 col5">64.900000</td>
+      <td id="T_590c9_row3_col6" class="data row3 col6">213.797256</td>
+      <td id="T_590c9_row3_col7" class="data row3 col7">36122.730469</td>
+      <td id="T_590c9_row3_col8" class="data row3 col8">240.083420</td>
+      <td id="T_590c9_row3_col9" class="data row3 col9">26.286163</td>
+    </tr>
+<tr>
+<th id="T_590c9_level0_row4" class="row_heading level0 row4">2020-06-01</th>
+      <td id="T_590c9_row4_col0" class="data row4 col0">22.299000</td>
+      <td id="T_590c9_row4_col1" class="data row4 col1">5.060000</td>
+      <td id="T_590c9_row4_col2" class="data row4 col2">0.370000</td>
+      <td id="T_590c9_row4_col3" class="data row4 col3">97.956700</td>
+      <td id="T_590c9_row4_col4" class="data row4 col4">4.910000</td>
+      <td id="T_590c9_row4_col5" class="data row4 col5">78.690000</td>
+      <td id="T_590c9_row4_col6" class="data row4 col6">240.083420</td>
+      <td id="T_590c9_row4_col7" class="data row4 col7">37716.429688</td>
+      <td id="T_590c9_row4_col8" class="data row4 col8">206.921692</td>
+      <td id="T_590c9_row4_col9" class="data row4 col9">-33.161728</td>
+    </tr>
+</tbody>
+</table></div>
+<p>As we see the lost one observation at the begining, then we cut that row.</p>
+<pre><code>dataset_lag_dif=dataset_lag_dif.iloc[1:,]
+dataset_lag_dif.head()</code></pre>
+<style type="text/css">
+</style>
+<div class="inline-table"><table id="T_cb46e" class="table table-sm">
+<thead><tr>
+<th class="blank level0"> </th>
+      <th id="T_cb46e_level0_col0" class="col_heading level0 col0">TC</th>
+      <th id="T_cb46e_level0_col1" class="col_heading level0 col1">Cetes_28</th>
+      <th id="T_cb46e_level0_col2" class="col_heading level0 col2">infla</th>
+      <th id="T_cb46e_level0_col3" class="col_heading level0 col3">igae</th>
+      <th id="T_cb46e_level0_col4" class="col_heading level0 col4">Cetes_1a</th>
+      <th id="T_cb46e_level0_col5" class="col_heading level0 col5">inv_fija</th>
+      <th id="T_cb46e_level0_col6" class="col_heading level0 col6">ASURB.MX</th>
+      <th id="T_cb46e_level0_col7" class="col_heading level0 col7">^MXX</th>
+      <th id="T_cb46e_level0_col8" class="col_heading level0 col8">ASURB.MX_lag</th>
+      <th id="T_cb46e_level0_col9" class="col_heading level0 col9">ASURB.MX_lag_dif</th>
+    </tr></thead>
+<tbody>
+<tr>
+<th id="T_cb46e_level0_row0" class="row_heading level0 row0">2020-03-01</th>
+      <td id="T_cb46e_row0_col0" class="data row0 col0">22.378400</td>
+      <td id="T_cb46e_row0_col1" class="data row0 col1">6.810000</td>
+      <td id="T_cb46e_row0_col2" class="data row0 col2">0.290000</td>
+      <td id="T_cb46e_row0_col3" class="data row0 col3">109.990100</td>
+      <td id="T_cb46e_row0_col4" class="data row0 col4">6.610000</td>
+      <td id="T_cb46e_row0_col5" class="data row0 col5">93.140000</td>
+      <td id="T_cb46e_row0_col6" class="data row0 col6">208.942261</td>
+      <td id="T_cb46e_row0_col7" class="data row0 col7">34554.531250</td>
+      <td id="T_cb46e_row0_col8" class="data row0 col8">225.808441</td>
+      <td id="T_cb46e_row0_col9" class="data row0 col9">16.866180</td>
+    </tr>
+<tr>
+<th id="T_cb46e_level0_row1" class="row_heading level0 row1">2020-04-01</th>
+      <td id="T_cb46e_row1_col0" class="data row1 col0">24.265800</td>
+      <td id="T_cb46e_row1_col1" class="data row1 col1">6.090000</td>
+      <td id="T_cb46e_row1_col2" class="data row1 col2">0.360000</td>
+      <td id="T_cb46e_row1_col3" class="data row1 col3">88.291500</td>
+      <td id="T_cb46e_row1_col4" class="data row1 col4">5.800000</td>
+      <td id="T_cb46e_row1_col5" class="data row1 col5">63.160000</td>
+      <td id="T_cb46e_row1_col6" class="data row1 col6">225.808441</td>
+      <td id="T_cb46e_row1_col7" class="data row1 col7">36470.109375</td>
+      <td id="T_cb46e_row1_col8" class="data row1 col8">213.797256</td>
+      <td id="T_cb46e_row1_col9" class="data row1 col9">-12.011185</td>
+    </tr>
+<tr>
+<th id="T_cb46e_level0_row2" class="row_heading level0 row2">2020-05-01</th>
+      <td id="T_cb46e_row2_col0" class="data row2 col0">23.423000</td>
+      <td id="T_cb46e_row2_col1" class="data row2 col1">5.470000</td>
+      <td id="T_cb46e_row2_col2" class="data row2 col2">0.300000</td>
+      <td id="T_cb46e_row2_col3" class="data row2 col3">89.023800</td>
+      <td id="T_cb46e_row2_col4" class="data row2 col4">5.030000</td>
+      <td id="T_cb46e_row2_col5" class="data row2 col5">64.900000</td>
+      <td id="T_cb46e_row2_col6" class="data row2 col6">213.797256</td>
+      <td id="T_cb46e_row2_col7" class="data row2 col7">36122.730469</td>
+      <td id="T_cb46e_row2_col8" class="data row2 col8">240.083420</td>
+      <td id="T_cb46e_row2_col9" class="data row2 col9">26.286163</td>
+    </tr>
+<tr>
+<th id="T_cb46e_level0_row3" class="row_heading level0 row3">2020-06-01</th>
+      <td id="T_cb46e_row3_col0" class="data row3 col0">22.299000</td>
+      <td id="T_cb46e_row3_col1" class="data row3 col1">5.060000</td>
+      <td id="T_cb46e_row3_col2" class="data row3 col2">0.370000</td>
+      <td id="T_cb46e_row3_col3" class="data row3 col3">97.956700</td>
+      <td id="T_cb46e_row3_col4" class="data row3 col4">4.910000</td>
+      <td id="T_cb46e_row3_col5" class="data row3 col5">78.690000</td>
+      <td id="T_cb46e_row3_col6" class="data row3 col6">240.083420</td>
+      <td id="T_cb46e_row3_col7" class="data row3 col7">37716.429688</td>
+      <td id="T_cb46e_row3_col8" class="data row3 col8">206.921692</td>
+      <td id="T_cb46e_row3_col9" class="data row3 col9">-33.161728</td>
+    </tr>
+<tr>
+<th id="T_cb46e_level0_row4" class="row_heading level0 row4">2020-07-01</th>
+      <td id="T_cb46e_row4_col0" class="data row4 col0">22.403300</td>
+      <td id="T_cb46e_row4_col1" class="data row4 col1">4.820000</td>
+      <td id="T_cb46e_row4_col2" class="data row4 col2">0.400000</td>
+      <td id="T_cb46e_row4_col3" class="data row4 col3">102.413100</td>
+      <td id="T_cb46e_row4_col4" class="data row4 col4">4.610000</td>
+      <td id="T_cb46e_row4_col5" class="data row4 col5">80.340000</td>
+      <td id="T_cb46e_row4_col6" class="data row4 col6">206.921692</td>
+      <td id="T_cb46e_row4_col7" class="data row4 col7">37019.679688</td>
+      <td id="T_cb46e_row4_col8" class="data row4 col8">231.973053</td>
+      <td id="T_cb46e_row4_col9" class="data row4 col9">25.051361</td>
+    </tr>
+</tbody>
+</table></div>
+<p>Again we define the Y variable:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb93-1"><a href="training-and-evaluating-regression-models.html#cb93-1" aria-hidden="true" tabindex="-1"></a>Y<span class="op">=</span>dataset_lag_dif[var<span class="op">+</span><span class="st">"_lag_dif"</span>]</span>
+<span id="cb93-2"><a href="training-and-evaluating-regression-models.html#cb93-2" aria-hidden="true" tabindex="-1"></a>Y.head()</span>
+<span id="cb93-3"><a href="training-and-evaluating-regression-models.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-03-01    16.866180</span></span>
+<span id="cb93-4"><a href="training-and-evaluating-regression-models.html#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-04-01   -12.011185</span></span>
+<span id="cb93-5"><a href="training-and-evaluating-regression-models.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-05-01    26.286163</span></span>
+<span id="cb93-6"><a href="training-and-evaluating-regression-models.html#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-06-01   -33.161728</span></span>
+<span id="cb93-7"><a href="training-and-evaluating-regression-models.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-07-01    25.051361</span></span>
+<span id="cb93-8"><a href="training-and-evaluating-regression-models.html#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Name: ASURB.MX_lag_dif, dtype: float64</span></span></code></pre></div>
+<p>Now we make a subset to get the independent variables (X´s):</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb94-1"><a href="training-and-evaluating-regression-models.html#cb94-1" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>dataset_lag_dif.drop(columns<span class="op">=</span>[var,var<span class="op">+</span><span class="st">"_lag"</span>,var<span class="op">+</span><span class="st">"_lag_dif"</span>],axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb94-2"><a href="training-and-evaluating-regression-models.html#cb94-2" aria-hidden="true" tabindex="-1"></a>X.head()</span>
+<span id="cb94-3"><a href="training-and-evaluating-regression-models.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  TC  Cetes_28  infla  ...  Cetes_1a  inv_fija          ^MXX</span></span>
+<span id="cb94-4"><a href="training-and-evaluating-regression-models.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-03-01  22.3784      6.81   0.29  ...      6.61     93.14  34554.531250</span></span>
+<span id="cb94-5"><a href="training-and-evaluating-regression-models.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-04-01  24.2658      6.09   0.36  ...      5.80     63.16  36470.109375</span></span>
+<span id="cb94-6"><a href="training-and-evaluating-regression-models.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-05-01  23.4230      5.47   0.30  ...      5.03     64.90  36122.730469</span></span>
+<span id="cb94-7"><a href="training-and-evaluating-regression-models.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-06-01  22.2990      5.06   0.37  ...      4.91     78.69  37716.429688</span></span>
+<span id="cb94-8"><a href="training-and-evaluating-regression-models.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2020-07-01  22.4033      4.82   0.40  ...      4.61     80.34  37019.679688</span></span>
+<span id="cb94-9"><a href="training-and-evaluating-regression-models.html#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb94-10"><a href="training-and-evaluating-regression-models.html#cb94-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [5 rows x 7 columns]</span></span></code></pre></div>
+</div>
+</div>
+<div id="training-and-test-set-back-testing" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Training and test set (Back testing)<a class="anchor" aria-label="anchor" href="#training-and-test-set-back-testing"><i class="fas fa-link"></i></a>
+</h2>
+<p>In the machine learning literature is common to apply that testing procedure for several observations. We call this back-testing, which divides the data set into training and testing, often called in_sample and out_sample.</p>
+<p>To answer why we need a back-testing, think that if we want to validate the prediction performance, we have at least two alternatives:</p>
+<p>Alternative 1: Estimate a ML model, make a prediction and wait in time, for example, 30 days, to verify if the prediction is good or not; if the forecast is not good (it is not close to the real value), then we have to train and test it again, let’s say other 30 days and so on.</p>
+<p>Alternative 2 (The one we will apply): Take aside some observations, assuming those are observations we don’t know and store them in a data frame called “test.” Train and test the ML model. If we are not making a good prediction, we train and test the model again until we get a good prediction performance.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="training-and-evaluating-regression-models.html#cb95-1" aria-hidden="true" tabindex="-1"></a>validation_size <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb95-2"><a href="training-and-evaluating-regression-models.html#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="training-and-evaluating-regression-models.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="co">#In case the data is not dependent on the time series, then train and test split randomly</span></span>
+<span id="cb95-4"><a href="training-and-evaluating-regression-models.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="co"># seed = 7</span></span>
+<span id="cb95-5"><a href="training-and-evaluating-regression-models.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=validation_size, random_state=seed)</span></span>
+<span id="cb95-6"><a href="training-and-evaluating-regression-models.html#cb95-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-7"><a href="training-and-evaluating-regression-models.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="co">#In case the data is not dependent on the time series, then train and test split should be done based on sequential sample</span></span>
+<span id="cb95-8"><a href="training-and-evaluating-regression-models.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="co">#This can be done by selecting an arbitrary split point in the ordered list of observations and creating two new datasets.</span></span>
+<span id="cb95-9"><a href="training-and-evaluating-regression-models.html#cb95-9" aria-hidden="true" tabindex="-1"></a>train_size <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(X) <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>validation_size))</span>
+<span id="cb95-10"><a href="training-and-evaluating-regression-models.html#cb95-10" aria-hidden="true" tabindex="-1"></a>X_train, X_test <span class="op">=</span> X[<span class="dv">0</span>:train_size], X[train_size:<span class="bu">len</span>(X)]</span>
+<span id="cb95-11"><a href="training-and-evaluating-regression-models.html#cb95-11" aria-hidden="true" tabindex="-1"></a>Y_train, Y_test <span class="op">=</span> Y[<span class="dv">0</span>:train_size], Y[train_size:<span class="bu">len</span>(X)]</span></code></pre></div>
+<p>We start by running the Linear regression model, one of several machine learning models.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb96-1"><a href="training-and-evaluating-regression-models.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb96-2"><a href="training-and-evaluating-regression-models.html#cb96-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb96-3"><a href="training-and-evaluating-regression-models.html#cb96-3" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, Y_train)</span></code></pre></div>
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style>
+<div id="sk-container-id-1" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>LinearRegression()</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div>
+</div></div></div>
+</div>
+<p>Apparently, we did not get a result. But in the model object we store some information, such as the coefficients of the model:</p>
+<p><span class="math display">\[ASURB.MX\_price_{t}=\beta_{0}+\beta_{1}\ ER_{t-1} + \beta_{2}\ inflation_{t-1} + \beta_{3}\ srate_{t-1}+ \beta_{4}\ growth_{t-1}+ \beta_{5}\ mrate_{t-1}+ \beta_{6}\ inv_{t-1} + \beta_{7}\ MR_{t-1} + e_{t}\]</span></p>
+<pre><code>#&gt;    Betas     Values
+#&gt; 0  Beta1  -2.587712
+#&gt; 1  Beta2  -0.435412
+#&gt; 2  Beta3 -65.425396
+#&gt; 3  Beta4  -0.877509
+#&gt; 4  Beta5   0.507544
+#&gt; 5  Beta6   0.924602
+#&gt; 6  Beta7  -0.000094</code></pre>
+<p>We do the prediction of the ASURB.MX price, in the X_test data set:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb98-1"><a href="training-and-evaluating-regression-models.html#cb98-1" aria-hidden="true" tabindex="-1"></a>y_pred<span class="op">=</span>model.predict(X_test)</span>
+<span id="cb98-2"><a href="training-and-evaluating-regression-models.html#cb98-2" aria-hidden="true" tabindex="-1"></a>y_pred</span>
+<span id="cb98-3"><a href="training-and-evaluating-regression-models.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; array([-2.1233116 , -5.14063355,  0.72607998,  2.69665977, 15.04951998,</span></span>
+<span id="cb98-4"><a href="training-and-evaluating-regression-models.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         5.80142587,  4.68486414])</span></span></code></pre></div>
+<div id="performance-measure-root-mean-square-error-rmse." class="section level3" number="3.2.1">
+<h3>
+<span class="header-section-number">3.2.1</span> Performance Measure Root Mean Square Error (RMSE).<a class="anchor" aria-label="anchor" href="#performance-measure-root-mean-square-error-rmse."><i class="fas fa-link"></i></a>
+</h3>
+<p>In the previous section, we discussed whether the prediction was good (the prediction performance). This section formally defines the metrics for the prediction performance.</p>
+<p>The first metric is the Root Mean Square Error (RMSE). The mathematical formula to compute the RMSE is:</p>
+<p><span class="math display">\[RMSE =\sqrt{\frac{1}{n}\ \sum_{i=1}^{n} (y_{i}-\hat{y_{i}})^{2}} \]</span></p>
+<p>where <span class="math inline">\(\hat{y_{i}}\)</span> is the prediction for the ith observation, <span class="math inline">\(y_{i}\)</span> is the ith observation of the independent variable we store in the test set, and n is the number of observations.</p>
+<p><span class="math display">\[\hat{y_{i}}=\hat{\beta_{0}}+\hat{\beta_{1}}x_{1}+,..,+\hat{\beta_{n}}x_{n}\]</span></p>
+<p>We can estimate the RMSE using the training data set. But generally, we do not care how well the model works on the training set. Rather, we are interested in the model performance tested on unseen data; then, we try the RMSE on the test data set or the validation set for cross-validation. The lower the test RMSE, the better the prediction.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb99-1"><a href="training-and-evaluating-regression-models.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb99-2"><a href="training-and-evaluating-regression-models.html#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="training-and-evaluating-regression-models.html#cb99-3" aria-hidden="true" tabindex="-1"></a>mean_squared_error(Y_test, y_pred)</span>
+<span id="cb99-4"><a href="training-and-evaluating-regression-models.html#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1660.54739314444</span></span></code></pre></div>
+</div>
+</div>
+<div id="appendix" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Appendix<a class="anchor" aria-label="anchor" href="#appendix"><i class="fas fa-link"></i></a>
+</h2>
+<div id="stationary-and-nonstationary-time-series" class="section level3" number="3.3.1">
+<h3>
+<span class="header-section-number">3.3.1</span> Stationary and Nonstationary Time Series<a class="anchor" aria-label="anchor" href="#stationary-and-nonstationary-time-series"><i class="fas fa-link"></i></a>
+</h3>
+<p>Historically, the notion of a stationary process has played an important role in the analysis of time series. A stationary time series process is one whose probability distributions are stable over time in the following sense: If we take any collection of random variables in the sequence and then shift that sequence ahead h time periods, the joint probability distribution must remain unchanged.</p>
+<p>The stochastic process $x_{t}: t=1,2,…, $ is stationary if
+for every collection of time indices <span class="math inline">\(1 \leq t_{1} &lt; t_{2} &lt; … &lt; t_{m}\)</span>, the joint distribution of <span class="math inline">\((x_{t1} , x_{t2} , …, x_t{m})\)</span> is the same as the joint distribution of <span class="math inline">\((x_{t1+h}=x_{t2+h},...,x_{tn+h})\)</span> for all integers <span class="math inline">\(h \geq 1\)</span>.</p>
+<p>Covariance Stationary Process. A stochastic process <span class="math inline">\({x_{t}: t = 1, 2, …}\)</span> with a finite
+second moment <span class="math inline">\(E(x_{t}^2) &lt; \infty\)</span> is covariance stationary if (i) <span class="math inline">\(E(x_{t})\)</span> is constant; (ii) <span class="math inline">\(Var(x_{t})\)</span> is constant; and (iii) for any <span class="math inline">\(t, h \geq 1, Cov(x_{t}, x_{t+h})\)</span> depends only on h and not on t.</p>
+<p>On a practical level, if we want to understand the relationship between two or more variables using regression analysis, we need to assume some sort of stability over time.</p>
+<p>If we allow the relationship between two variables (say, yt and xt) to change arbitrarily in each time period, then we cannot hope to learn much about how a change in one variable affects the other variable if we only have access to a single time series realization.</p>
+<p>In stating a multiple regression model for time series data, we are assuming a certain
+form of stationarity in that the <span class="math inline">\(\beta_{j}\)</span> do not change over time.</p>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-BF" class="csl-entry">
+Burton, Edwin T., and Sunit N. Shah. 2013. <em>Behavioral Finance</em>. Hoboken, New Jersey: John Wiley &amp; Sons.
+</div>
+<div id="ref-Geron" class="csl-entry">
+Géron, Aurélien. 2023. <em>Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow</em>. Sebastopol, CA: O’Reilly Media, Inc.
+</div>
+<div id="ref-wooldridge" class="csl-entry">
+Wooldridge, Jeffrey M. 2020. <em>Introductory Econometrics: A Modern Approach</em>. South-Western Cengage Learning.
+</div>
+</div>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="ml-in-the-bussines-lascape.html"><span class="header-section-number">2</span> ML in the bussines lascape</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#training-and-evaluating-regression-models"><span class="header-section-number">3</span> Training and evaluating regression models</a></li>
+<li>
+<a class="nav-link" href="#data-collection-and-cleaning."><span class="header-section-number">3.1</span> Data collection and cleaning.</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#definition-of-the-independent-variable"><span class="header-section-number">3.1.1</span> Definition of the independent variable</a></li>
+<li><a class="nav-link" href="#testing-for-stationary-in-the-dependet-variable-y"><span class="header-section-number">3.1.2</span> Testing for stationary in the dependet variable (Y)</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#training-and-test-set-back-testing"><span class="header-section-number">3.2</span> Training and test set (Back testing)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#performance-measure-root-mean-square-error-rmse."><span class="header-section-number">3.2.1</span> Performance Measure Root Mean Square Error (RMSE).</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#appendix"><span class="header-section-number">3.3</span> Appendix</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#stationary-and-nonstationary-time-series"><span class="header-section-number">3.3.1</span> Stationary and Nonstationary Time Series</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Machine learning introductory guide Python</strong>" was written by L. Arturo Bernal. It was last built on 2023-05-23.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
