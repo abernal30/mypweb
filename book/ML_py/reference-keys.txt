@@ -24,5 +24,8 @@ definition-of-the-independent-variable
 testing-for-stationary-in-the-dependet-variable-y
 training-and-test-set-back-testing
 performance-measure-root-mean-square-error-rmse.
+mean-absolute-error-mae
+several-models
 appendix
 stationary-and-nonstationary-time-series
+the-macd-indicator
