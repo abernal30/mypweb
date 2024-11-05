@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; 1 Credit risk The Basel Accords – Algorithms and Financial Programing in Python</title>
+<title>2&nbsp; Credit analysis – Algorithms and Financial Programing in Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./intropy.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -104,10 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -150,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./credit.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1 Credit risk The Basel Accords</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./credit.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Credit analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -183,8 +180,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./intropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">intropy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./credit.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1 Credit risk The Basel Accords</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Credit analysis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -203,13 +206,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default." id="toc-logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default." class="nav-link active" data-scroll-target="#logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default."><span class="header-section-number">2</span> 2. Logistic regression and discriminant analysis, credit allocation analysis and Probability of Default.</a>
+  <li><a href="#credit-risk-the-basel-accords" id="toc-credit-risk-the-basel-accords" class="nav-link active" data-scroll-target="#credit-risk-the-basel-accords"><span class="header-section-number">2.1</span> Credit risk The Basel Accords</a></li>
+  <li><a href="#logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default." id="toc-logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default." class="nav-link" data-scroll-target="#logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default."><span class="header-section-number">2.2</span> Logistic regression and discriminant analysis, credit allocation analysis and Probability of Default.</a>
   <ul class="collapse">
-  <li><a href="#gather-historical-data-on-borrowers" id="toc-gather-historical-data-on-borrowers" class="nav-link" data-scroll-target="#gather-historical-data-on-borrowers"><span class="header-section-number">2.1</span> 1 Gather historical data on borrowers</a></li>
-  <li><a href="#defining-the-model-follow-a-standardized-approaches" id="toc-defining-the-model-follow-a-standardized-approaches" class="nav-link" data-scroll-target="#defining-the-model-follow-a-standardized-approaches"><span class="header-section-number">2.2</span> 2 Defining the model (Follow a standardized approaches)</a></li>
-  <li><a href="#training-the-model-model-validation" id="toc-training-the-model-model-validation" class="nav-link" data-scroll-target="#training-the-model-model-validation"><span class="header-section-number">2.3</span> 3 Training the model (Model validation)</a></li>
-  <li><a href="#lineardiscriminantanalysis" id="toc-lineardiscriminantanalysis" class="nav-link" data-scroll-target="#lineardiscriminantanalysis"><span class="header-section-number">2.4</span> LinearDiscriminantAnalysis</a></li>
-  <li><a href="#probability-of-default" id="toc-probability-of-default" class="nav-link" data-scroll-target="#probability-of-default"><span class="header-section-number">2.5</span> Probability of Default</a></li>
+  <li><a href="#gather-historical-data-on-borrowers" id="toc-gather-historical-data-on-borrowers" class="nav-link" data-scroll-target="#gather-historical-data-on-borrowers"><span class="header-section-number">2.2.1</span> Gather historical data on borrowers</a></li>
+  <li><a href="#defining-the-model-follow-a-standardized-approaches" id="toc-defining-the-model-follow-a-standardized-approaches" class="nav-link" data-scroll-target="#defining-the-model-follow-a-standardized-approaches"><span class="header-section-number">2.2.2</span> Defining the model (Follow a standardized approaches)</a></li>
+  <li><a href="#training-the-model-model-validation" id="toc-training-the-model-model-validation" class="nav-link" data-scroll-target="#training-the-model-model-validation"><span class="header-section-number">2.2.3</span> Training the model (Model validation)</a></li>
+  <li><a href="#lineardiscriminantanalysis" id="toc-lineardiscriminantanalysis" class="nav-link" data-scroll-target="#lineardiscriminantanalysis"><span class="header-section-number">2.2.4</span> LinearDiscriminantAnalysis</a></li>
+  <li><a href="#probability-of-default" id="toc-probability-of-default" class="nav-link" data-scroll-target="#probability-of-default"><span class="header-section-number">2.2.5</span> Probability of Default</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -219,7 +223,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1 Credit risk The Basel Accords</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Credit analysis</span></h1>
 </div>
 
 
@@ -236,6 +240,8 @@ window.Quarto = {
 </header>
 
 
+<section id="credit-risk-the-basel-accords" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="credit-risk-the-basel-accords"><span class="header-section-number">2.1</span> Credit risk The Basel Accords</h2>
 <p><strong>Credit risk</strong> refers to the possibility that a borrower will fail to meet their debt obligations according to the agreed terms, leading to a financial loss for the lender or creditor. It is a fundamental component of risk management in banking and finance, affecting a wide range of financial products, from personal loans and credit cards to corporate bonds and syndicated loans.</p>
 <p>Basel accords (Basel I, Basel II, and Basel III) is foundational to how banks and financial institutions manage and mitigate credit risk. The Basel accords are a series of international regulatory frameworks developed by the Basel Committee on Banking Supervision (BCBS) to ensure that banks have sufficient capital to cover the risks they face, including creddit risk.</p>
 <p>The <strong>Basel Accords</strong> are a set of international banking regulations developed by the Basel Committee on Banking Supervision (BCBS). - Basel I (1988) introduced minimum capital requirements for banks, focusing on credit risk. - Basel II (2004) expanded on Basel I by including capital requirements for operational risk and enhancing risk management and disclosure practices. - Basel III (2010) was implemented in response to the 2008 financial crisis, introducing stricter capital requirements, leverage ratios, and liquidity standards. - The Accords aim to strengthen the regulation, supervision, and risk management within the banking sector globally. - Compliance with Basel standards is voluntary, but adoption is strongly encouraged by international financial systems</p>
@@ -253,14 +259,15 @@ window.Quarto = {
 </ol>
 <p>Backtesting: Compare model predictions with actual historical outcomes to validate accuracy</p>
 <p>In this session, we will focus only on the IBR , estimating only the <strong>Probability of Default (PD)</strong>.</p>
-<section id="logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default." class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 2. Logistic regression and discriminant analysis, credit allocation analysis and Probability of Default.</h1>
+</section>
+<section id="logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default." class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="logistic-regression-and-discriminant-analysis-credit-allocation-analysis-and-probability-of-default."><span class="header-section-number">2.2</span> Logistic regression and discriminant analysis, credit allocation analysis and Probability of Default.</h2>
 <p>To cover this topics we will estimate the Probability of Default (PD) using Logistoc regression and discriminant analysis models. We do that in a credit allocation analysis.</p>
-<section id="gather-historical-data-on-borrowers" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="gather-historical-data-on-borrowers"><span class="header-section-number">2.1</span> 1 Gather historical data on borrowers</h2>
+<section id="gather-historical-data-on-borrowers" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="gather-historical-data-on-borrowers"><span class="header-section-number">2.2.1</span> Gather historical data on borrowers</h3>
 <p>In this case, In this chapter, we will cover credit allocation analysis (loan origination). The database credit.xlsx has historical information on Lendingclub, <a href="https://www.lendingclub.com/" class="uri">https://www.lendingclub.com/</a> fintech marketplace bank at scale. On the spreadsheets, you will find the variable description. The original data set has at least 2 million observations and 150 variables. Inside the file “credit.xlsx,” you will find only 873 observations (rows) and 71 columns. Each row represents a Lendingclub client. We previously made the data cleaning (missing values, correlated variables, Zero- and Near Zero-Variance Predictors).</p>
 <p>In the next output, we see the variables of Lendingclub’s customers when they granted the loan. For example, the variable term is the term, in years, of the loan, “annual_inc,” which is the customer’s annual income when she got the loan, etc.</p>
-<div id="d4db1c2a" class="cell" data-execution_count="1">
+<div id="ea5dcede" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -272,7 +279,7 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a2dbe812" class="cell" data-execution_count="2">
+<div id="62dcbd65" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>credit<span class="op">=</span>pd.read_csv(<span class="st">"https://raw.githubusercontent.com/abernal30/ml_book/main/credit.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>credit.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -438,7 +445,7 @@ window.Quarto = {
 <p>The variable “Default”, winch originally has the name “loan_status”, it has two labels:</p>
 <p>“Charge off” means that the credit grantor wrote your account off of their receivables as a loss and is closed to future charges. When an account displays a status of “charge off,” it is closed to future use, although the customer still owns the debt. For this example, we will consider Charged Off equivalent to Default and Fully Paid as no default.</p>
 <p>In a previous output, we show that the “Default” variable class is “character,” and a function we will apply below does only accept numeric or factor variables. We transform that variable into “factor.”</p>
-<div id="7a2dd9b1" class="cell" data-execution_count="3">
+<div id="86af55df" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> credit[<span class="st">"Default"</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Default
@@ -448,35 +455,35 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="defining-the-model-follow-a-standardized-approaches" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="defining-the-model-follow-a-standardized-approaches"><span class="header-section-number">2.2</span> 2 Defining the model (Follow a standardized approaches)</h2>
+<section id="defining-the-model-follow-a-standardized-approaches" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="defining-the-model-follow-a-standardized-approaches"><span class="header-section-number">2.2.2</span> Defining the model (Follow a standardized approaches)</h3>
 <p>We use the Internal Ratings-Based (IRB) approach.</p>
 <p>For IRB, we will estimate Probability of Default (PD)</p>
 <p>First we define our independent and dependent variables</p>
 <p><span class="math display">\[Default=\alpha_{0}\ +\beta_{1}\ term_{1}+\beta_{2}\ grade_{2}+...+\beta_{n}\ variable_{n}+e\]</span></p>
-<div id="870f4442" class="cell" data-execution_count="4">
+<div id="b25966c0" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>credit[<span class="st">"Default"</span>] <span class="co"># select the Defalut variable</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>credit.drop(columns<span class="op">=</span>[<span class="st">"Default"</span>]) <span class="co"># we drop the dependent variable, Default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="training-the-model-model-validation" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="training-the-model-model-validation"><span class="header-section-number">2.3</span> 3 Training the model (Model validation)</h2>
+<section id="training-the-model-model-validation" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="training-the-model-model-validation"><span class="header-section-number">2.2.3</span> Training the model (Model validation)</h3>
 <p>It is a common practice to divide the data set into training (80% of the observations) and testing (the other 20%). However, other authors suggest splitting it into Training Set, Validation Set and a Test Set (Lantz 2019). In the latter case, the proposal is to train the model on the training set (for example, 60% of the data), do the cross-validation (a procedure we will cover below) on the validation set (for example, 20% of the data), and once the model has a good prediction performance, test it in the test set (20% of the data).</p>
 <p>We split randomly into 80% the train dataset and 20% the test dataset.</p>
-<div id="f980a757" class="cell" data-execution_count="5">
+<div id="e5aa87b2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">43</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The “train_test_split” function performs the partition. The argument “test size” is the size of the test database. The “random state” argument is to control the experiment. In such a way that we all have the same results, since the partition is random</p>
 <p>We define the “machine learning” model that we want to run. In this case is a Logistic Regression model, which has the particularity that it accepts binary variables as dependent variables.</p>
-<div id="62a4e7d2" class="cell" data-execution_count="6">
+<div id="af43ca08" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="0cc97830" class="cell" data-execution_count="7">
+<div id="2ae7f2de" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then we estimate the parameters. First comes the X and then the y.</p>
-<div id="7a4d579e" class="cell" data-execution_count="8">
+<div id="8eccf211" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model.fit(X_train,y_train) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <style>#sk-container-id-1 {
@@ -888,7 +895,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <p>Unlike econometric models, where we do causality analysis, here we are not concerned with printing the resulting regression parameters but instead making the prediction. In this case, the prediction is whether it will be “Fully paid” (no default) or “Charged off” (default). The previous output we got only tells us that we have run a logit model.</p>
 <p>The next step is to make the prediction on the test data set.</p>
-<div id="f99aed22" class="cell" data-execution_count="9">
+<div id="12a11884" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>predict_logit<span class="op">=</span>model.predict(X_test)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>predict_logit[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -898,7 +905,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <p>Measuring model performance</p>
 <p>To measure the performance of our prediction, we will use the accuracy_score.The first argument is the test dataset and then the prediction.</p>
-<div id="b10874fc" class="cell" data-execution_count="10">
+<div id="ac7cf077" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>accuracy_score(y_test, predict_logit) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>0.9314285714285714</code></pre>
@@ -906,14 +913,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <p>To explain the accuracy briefly, it is important to see that the algorithm first compares our prediction to the real observation (stored inside the y_test dataset). In brief, the resulting 0.9314 or 93.14% is the percentage of times that our prediction is equal to the real data. The bigger this percentage, the better our prediction.</p>
 </section>
-<section id="lineardiscriminantanalysis" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="lineardiscriminantanalysis"><span class="header-section-number">2.4</span> LinearDiscriminantAnalysis</h2>
+<section id="lineardiscriminantanalysis" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="lineardiscriminantanalysis"><span class="header-section-number">2.2.4</span> LinearDiscriminantAnalysis</h3>
 <p>Now we train other machine learning model, Linear Discriminat Analysis (LDA). The idea is to verify which of the two models, between Logistic and LDA, has a better accuracy. The only thing we do different regarding the Logistic model us change this code:</p>
-<div id="0e544242" class="cell" data-execution_count="11">
+<div id="b77116ac" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model_LDA<span class="op">=</span>LinearDiscriminantAnalysis()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The other prodecure is the same.</p>
-<div id="bfe5118e" class="cell" data-execution_count="12">
+<div id="d7b13b4e" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model_LDA.fit(X_train,y_train)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>predict_LDA<span class="op">=</span>model_LDA.predict(X_test)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>accuracy_score(y_test, predict_LDA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -924,10 +931,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <p>In this case we see that the model LDA is a better model, then we use this model to do the prediction.</p>
 <p>We can make other adjustments to improve the predictive power and “Accuracy,” such as looking for combinations of the independent variables, X, or running other machine learning models. But for this course, this is all that will be covered.</p>
 </section>
-<section id="probability-of-default" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="probability-of-default"><span class="header-section-number">2.5</span> Probability of Default</h2>
+<section id="probability-of-default" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="probability-of-default"><span class="header-section-number">2.2.5</span> Probability of Default</h3>
 <p>We estimate the Probabilities of Default (PD) from the best model between Logit and Linear Discriminant.</p>
-<div id="7c03e7cc" class="cell" data-execution_count="13">
+<div id="5069244f" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(model_LDA.predict_proba(X_test)).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -973,7 +980,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 </div>
-<p>Now we estimate the probability of default based on the X_test database. The column with the number 1 is the one with the probability of “default”, and the column labeled zero is (1 - the probability of default). In this case, 0.999964 or 99.9% is the probability that a person with the characteristics of the first observation in the X_tests database will not pay the loan.</p>
+<p>Now we estimate the probability of default based on the X_test database. The column with the number 1 is the one with the probability of “default”, and the column labelled zero is (1 - the probability of default). In this case, 0.999964 or 99.99% is the probability that a person with the characteristics of the first observation in the X_tests database will not pay the loan.</p>
 
 
 </section>
@@ -1402,8 +1409,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./intropy.html" class="pagination-link" aria-label="intropy">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">intropy</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
