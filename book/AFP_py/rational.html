@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; 1 Rational agent and behavioural finance – Algorithms and Financial Programing in Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./credit.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rational.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1 Rational agent and behavioural finance</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Algorithms and Financial Programing in Python</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./credit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Credit analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rational.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1 Rational agent and behavioural finance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-rational-agent-and-behavioural-finance" id="toc-introduction-to-rational-agent-and-behavioural-finance" class="nav-link active" data-scroll-target="#introduction-to-rational-agent-and-behavioural-finance"><span class="header-section-number">3.1</span> Introduction to rational agent and behavioural finance</a></li>
+  <li><a href="#emh-test-on-historical-returns-for-one-asset" id="toc-emh-test-on-historical-returns-for-one-asset" class="nav-link" data-scroll-target="#emh-test-on-historical-returns-for-one-asset"><span class="header-section-number">3.2</span> EMH test on historical returns for one asset</a></li>
+  <li><a href="#emh-test-for-variance-for-one-asset" id="toc-emh-test-for-variance-for-one-asset" class="nav-link" data-scroll-target="#emh-test-for-variance-for-one-asset"><span class="header-section-number">3.3</span> EMH test for variance for one asset</a></li>
+  <li><a href="#emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio" id="toc-emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio" class="nav-link" data-scroll-target="#emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio"><span class="header-section-number">3.4</span> EMH tests for the variance for many assets to build a portfolio</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1 Rational agent and behavioural finance</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter and the next two chapters aim to build a portfolio using the Rational agent and behavioral finance theory and the markets anomalies theory. The idea is to start with several assets (stocks) and filter for those assets based on the following.</p>
+<ul>
+<li><p>Step 1. Filter Market efficiency. We will test each stock to verify if we can use its historical information to forecast the Price.</p></li>
+<li><p>Step 2. Filter Market anomalies. The strategy consists of buying assets when their prices are trending up and selling them when they are down. We will pick stocks that contribute to increasing the portfolio return.</p></li>
+<li><p>Step 3. Portfolio allocation. Finally, we will optimize.</p></li>
+</ul>
+<p>It is important to note that this is not the traditional Markowitz portfolio building, where we only optimize the weights of the portfolio’s assets. First, we pick stock stocks, which we call filters in this book, that fulfill some assumptions. Those assumptions are related to rational agent theory and market anomalies theory. After that stock picking, we optimize the weights of the assets.</p>
+<section id="introduction-to-rational-agent-and-behavioural-finance" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="introduction-to-rational-agent-and-behavioural-finance"><span class="header-section-number">3.1</span> Introduction to rational agent and behavioural finance</h2>
+<p>Around 1970, economists argued that an efficient market should instantaneously reflect all the available information of a particular financial security, called the Efficient Market Hypothesis EMH <span class="citation" data-cites="FAMA">(<a href="references.html#ref-FAMA" role="doc-biblioref">Fama 1970</a>)</span>. Then, arbitrage opportunities were challenging to exist, or they used to argue that those markets were not predictable. Academics were reasonably content with the EMH until in1987 stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average’s historic collapse. What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view. Economists actively discussing and acting in financial markets seemed to believe that markets were predictable, a fundamental principle of modern behavioral finance <span class="citation" data-cites="BF">(<a href="references.html#ref-BF" role="doc-biblioref">Burton and Shah 2013</a>)</span>. By designing systematic trading platforms, some traders and trading systems aim to generate signals that consistently produce positive outcomes over many trades. Usually, the trades test successful trading systems on large amounts of past historical data. A more scientific method for analyzing a particular financial security may be determining whether the security price changes are random. If the price changes are random, the probability of detecting a consistently profitable trading opportunity for that particular security is negligible. On the other hand, if the price changes are non-random, the financial security has persistent predictability and should be analyzed further. Then, it is possible to measure the relative availability of trading opportunities with the market inefficiency tests <span class="citation" data-cites="HFT">(<a href="references.html#ref-HFT" role="doc-biblioref">Aldridge 2010</a>)</span>. In summary, if the tests detect that new information takes in slowly in the asset prices, arbitrage opportunities exist, and the market is inefficient.</p>
+<p>In this chapter, we apply the EMH test proposed by <span class="citation" data-cites="wooldridge">(<a href="references.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span> to identify arbitrage opportunities or to find inefficient markets.</p>
+</section>
+<section id="emh-test-on-historical-returns-for-one-asset" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="emh-test-on-historical-returns-for-one-asset"><span class="header-section-number">3.2</span> EMH test on historical returns for one asset</h2>
+<p>Suppose <span class="math inline">\(y_{t}\)</span> is the daily price of the S&amp;P500. A strict form of the efficient markets hypothesis establishes that the historical information on the index before day <em>t</em> should not help predict the index. If we use only past information on <span class="math inline">\(y_{t}\)</span>, a market is efficient if the following is true:</p>
+<p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t\ (1)\]</span></p>
+<p>Where the term on the right is the expected value of <span class="math inline">\(y_{t}\)</span>, given the historical information of the index <span class="math inline">\(y_{t-1} ,y_{t-2},....\)</span>. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price. One advantage of this test is that is easy to understand, assuming that you have at least basic econometric knowledge.</p>
+<p>Suppose that we want to make the EMH test on the returns of the AAPL.</p>
+<div id="934621ca" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.stats.api <span class="im">as</span> sms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For this chapter we use daily data for several stocks from Jan.&nbsp;2020 to May. 2020.</p>
+<div id="7647f702" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">=</span>pd.read_csv(<span class="st">"https://raw.githubusercontent.com/abernal30/AFP_py/refs/heads/main/data/1Rational_agent.csv"</span>,index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data<span class="co">#.head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AAPL.Close</th>
+<th data-quarto-table-cell-role="th">MSFT.Close</th>
+<th data-quarto-table-cell-role="th">GOOG.Close</th>
+<th data-quarto-table-cell-role="th">GOOGL.Close</th>
+<th data-quarto-table-cell-role="th">AMZN.Close</th>
+<th data-quarto-table-cell-role="th">TSLA.Close</th>
+<th data-quarto-table-cell-role="th">BRK.A.Close</th>
+<th data-quarto-table-cell-role="th">BRK.B.Close</th>
+<th data-quarto-table-cell-role="th">FB.Close</th>
+<th data-quarto-table-cell-role="th">TSM.Close</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">TMUS.Close</th>
+<th data-quarto-table-cell-role="th">PM.Close</th>
+<th data-quarto-table-cell-role="th">AMD.Close</th>
+<th data-quarto-table-cell-role="th">LIN.Close</th>
+<th data-quarto-table-cell-role="th">TXN.Close</th>
+<th data-quarto-table-cell-role="th">CRM.Close</th>
+<th data-quarto-table-cell-role="th">BMY.Close</th>
+<th data-quarto-table-cell-role="th">UPS.Close</th>
+<th data-quarto-table-cell-role="th">RLLCF.Close</th>
+<th data-quarto-table-cell-role="th">QCOM.Close</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/02/2020</td>
+<td>75.087502</td>
+<td>160.619995</td>
+<td>1367.369995</td>
+<td>1368.680054</td>
+<td>1898.010010</td>
+<td>86.052002</td>
+<td>342261</td>
+<td>228.389999</td>
+<td>209.779999</td>
+<td>60.040001</td>
+<td>...</td>
+<td>78.589996</td>
+<td>85.190002</td>
+<td>49.099998</td>
+<td>210.740005</td>
+<td>129.570007</td>
+<td>166.990005</td>
+<td>63.340000</td>
+<td>116.790001</td>
+<td>0.0046</td>
+<td>88.690002</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">01/03/2020</td>
+<td>74.357498</td>
+<td>158.619995</td>
+<td>1360.660034</td>
+<td>1361.520020</td>
+<td>1874.969971</td>
+<td>88.601997</td>
+<td>339155</td>
+<td>226.179993</td>
+<td>208.669998</td>
+<td>58.060001</td>
+<td>...</td>
+<td>78.169998</td>
+<td>85.029999</td>
+<td>48.599998</td>
+<td>205.259995</td>
+<td>127.849998</td>
+<td>166.169998</td>
+<td>62.779999</td>
+<td>116.720001</td>
+<td>0.0100</td>
+<td>87.019997</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/06/2020</td>
+<td>74.949997</td>
+<td>159.029999</td>
+<td>1394.209961</td>
+<td>1397.810059</td>
+<td>1902.880005</td>
+<td>90.307999</td>
+<td>340210</td>
+<td>226.990005</td>
+<td>212.600006</td>
+<td>57.389999</td>
+<td>...</td>
+<td>78.620003</td>
+<td>86.019997</td>
+<td>48.389999</td>
+<td>204.389999</td>
+<td>126.959999</td>
+<td>173.449997</td>
+<td>62.980000</td>
+<td>116.199997</td>
+<td>0.0217</td>
+<td>86.510002</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">01/07/2020</td>
+<td>74.597504</td>
+<td>157.580002</td>
+<td>1393.339966</td>
+<td>1395.109985</td>
+<td>1906.859985</td>
+<td>93.811996</td>
+<td>338901</td>
+<td>225.919998</td>
+<td>213.059998</td>
+<td>58.320000</td>
+<td>...</td>
+<td>78.919998</td>
+<td>86.400002</td>
+<td>48.250000</td>
+<td>204.830002</td>
+<td>129.410004</td>
+<td>176.000000</td>
+<td>63.930000</td>
+<td>116.000000</td>
+<td>0.0126</td>
+<td>88.970001</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/08/2020</td>
+<td>75.797501</td>
+<td>160.089996</td>
+<td>1404.319946</td>
+<td>1405.040039</td>
+<td>1891.969971</td>
+<td>98.428001</td>
+<td>339188</td>
+<td>225.990005</td>
+<td>215.220001</td>
+<td>58.750000</td>
+<td>...</td>
+<td>79.419998</td>
+<td>88.040001</td>
+<td>47.830002</td>
+<td>207.389999</td>
+<td>129.759995</td>
+<td>177.330002</td>
+<td>63.860001</td>
+<td>116.660004</td>
+<td>0.0099</td>
+<td>88.709999</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">05/20/2022</td>
+<td>137.589996</td>
+<td>252.559998</td>
+<td>2186.260010</td>
+<td>2178.159912</td>
+<td>2151.820068</td>
+<td>663.900024</td>
+<td>456500</td>
+<td>304.049988</td>
+<td>193.539993</td>
+<td>90.779999</td>
+<td>...</td>
+<td>126.040001</td>
+<td>101.150002</td>
+<td>93.500000</td>
+<td>315.179993</td>
+<td>169.809998</td>
+<td>159.649994</td>
+<td>76.190002</td>
+<td>171.039993</td>
+<td>0.0072</td>
+<td>131.600006</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">05/23/2022</td>
+<td>143.110001</td>
+<td>260.649994</td>
+<td>2233.330078</td>
+<td>2229.760010</td>
+<td>2151.139893</td>
+<td>674.900024</td>
+<td>464510</td>
+<td>310.200012</td>
+<td>196.229996</td>
+<td>91.500000</td>
+<td>...</td>
+<td>129.889999</td>
+<td>102.910004</td>
+<td>95.070000</td>
+<td>320.420013</td>
+<td>169.929993</td>
+<td>160.320007</td>
+<td>76.699997</td>
+<td>174.389999</td>
+<td>0.0085</td>
+<td>132.119995</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">05/24/2022</td>
+<td>140.360001</td>
+<td>259.619995</td>
+<td>2118.520020</td>
+<td>2119.399902</td>
+<td>2082.000000</td>
+<td>628.159973</td>
+<td>463606</td>
+<td>309.170013</td>
+<td>181.279999</td>
+<td>88.720001</td>
+<td>...</td>
+<td>129.220001</td>
+<td>106.620003</td>
+<td>91.160004</td>
+<td>320.489990</td>
+<td>167.860001</td>
+<td>156.929993</td>
+<td>77.129997</td>
+<td>174.110001</td>
+<td>0.0075</td>
+<td>128.529999</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">05/25/2022</td>
+<td>140.520004</td>
+<td>262.519989</td>
+<td>2116.790039</td>
+<td>2116.100098</td>
+<td>2135.500000</td>
+<td>658.799988</td>
+<td>462890</td>
+<td>308.640015</td>
+<td>183.830002</td>
+<td>90.410004</td>
+<td>...</td>
+<td>131.440002</td>
+<td>108.570000</td>
+<td>92.650002</td>
+<td>315.850006</td>
+<td>170.009995</td>
+<td>159.649994</td>
+<td>77.239998</td>
+<td>173.860001</td>
+<td>0.0080</td>
+<td>131.229996</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">05/26/2022</td>
+<td>143.779999</td>
+<td>265.899994</td>
+<td>2165.919922</td>
+<td>2155.850098</td>
+<td>2221.550049</td>
+<td>707.729980</td>
+<td>468805</td>
+<td>312.500000</td>
+<td>191.630005</td>
+<td>91.000000</td>
+<td>...</td>
+<td>132.740005</td>
+<td>108.070000</td>
+<td>98.750000</td>
+<td>320.329987</td>
+<td>174.130005</td>
+<td>162.460007</td>
+<td>77.589996</td>
+<td>178.380005</td>
+<td>0.0085</td>
+<td>134.839996</td>
+</tr>
+</tbody>
+</table>
+
+<p>606 rows × 100 columns</p>
+</div>
+</div>
+</div>
+<div id="428675ff" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stock<span class="op">=</span><span class="st">"AAPL.Close"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>aapl<span class="op">=</span>data[stock] <span class="co"># subset of one the stock</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>aapl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>date
+01/02/2020    75.087502
+01/03/2020    74.357498
+01/06/2020    74.949997
+01/07/2020    74.597504
+01/08/2020    75.797501
+Name: AAPL.Close, dtype: float64</code></pre>
+</div>
+</div>
+<p>This is the Efficient market hypothesis EMH for one stock</p>
+<p><span class="math display">\[\begin{align}
+ret =\beta_{0}+\beta_{1}ret_{-1}+\beta_{1}ret_{-2}+u\ (2)
+\end{align}\]</span></p>
+<p>where ret is the return of the stock, <span class="math inline">\(ret_{-1}\)</span> is the return of the lagged one period, <span class="math inline">\(ret_{-2}\)</span> is the return of the lagged two periods</p>
+<p>To run the previous model, we need to estimate the returns, create the variables and store them in a data frame. We estimate arithmetic return: (P/P(t-e))-1</p>
+<div id="04de6c36" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ret<span class="op">=</span>aapl.pct_change()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ret.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>date
+01/02/2020         NaN
+01/03/2020   -0.009722
+01/06/2020    0.007968
+01/07/2020   -0.004703
+01/08/2020    0.016086
+Name: AAPL.Close, dtype: float64</code></pre>
+</div>
+</div>
+<p>Here we create the lags of the variable df.shift(-1), and concatenate in one data frame.</p>
+<div id="a6127541" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lag1<span class="op">=</span>ret.shift(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lag1<span class="op">=</span>lag1.rename(<span class="st">"lag_1"</span>) <span class="co"># This is the first lag  r(t-1)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lag2<span class="op">=</span>ret.shift(<span class="op">-</span><span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>lag2<span class="op">=</span>lag2.rename(<span class="st">"lag_2"</span>) <span class="co"># This is the second lag  r(t-1)o r(t-2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, we concatenate the three variables.</p>
+<div id="b9d00e6e" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span><span class="op">=</span>pd.concat([ret,lag1,lag2],axis<span class="op">=</span><span class="dv">1</span>) </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AAPL.Close</th>
+<th data-quarto-table-cell-role="th">lag_1</th>
+<th data-quarto-table-cell-role="th">lag_2</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/02/2020</td>
+<td>NaN</td>
+<td>-0.009722</td>
+<td>0.007968</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">01/03/2020</td>
+<td>-0.009722</td>
+<td>0.007968</td>
+<td>-0.004703</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/06/2020</td>
+<td>0.007968</td>
+<td>-0.004703</td>
+<td>0.016086</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">01/07/2020</td>
+<td>-0.004703</td>
+<td>0.016086</td>
+<td>0.021241</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/08/2020</td>
+<td>0.016086</td>
+<td>0.021241</td>
+<td>0.002261</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Now we run the OLS model, but first we eliminate the missing values.</p>
+<div id="44e34677" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>.dropna(inplace<span class="op">=</span><span class="va">True</span>) <span class="co"># Dropping  missing values</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>todas2<span class="op">=</span>sm.add_constant(<span class="bu">all</span>) <span class="co"># Adding the constant to the model</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>todas2[stock] <span class="co"># defining the ariable y</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>todas2.loc[:,(<span class="st">"const"</span>,<span class="st">"lag_1"</span>,<span class="st">"lag_2"</span>)] <span class="co"># Defining X, by select the independent variables</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>model<span class="op">=</span>sm.OLS(y,X) <span class="co"># Runing the OLS model</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>res<span class="op">=</span>model.fit() <span class="co"># Estimating the parameters of the OLS model</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(res.summary()) <span class="co"># printing the summary of the output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             AAPL.Close   R-squared:                       0.034
+Model:                            OLS   Adj. R-squared:                  0.031
+Method:                 Least Squares   F-statistic:                     10.65
+Date:                Thu, 07 Nov 2024   Prob (F-statistic):           2.86e-05
+Time:                        13:22:46   Log-Likelihood:                 1419.3
+No. Observations:                 603   AIC:                            -2833.
+Df Residuals:                     600   BIC:                            -2819.
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.0015      0.001      1.615      0.107      -0.000       0.003
+lag_1         -0.1800      0.041     -4.410      0.000      -0.260      -0.100
+lag_2          0.0214      0.041      0.525      0.600      -0.059       0.102
+==============================================================================
+Omnibus:                       54.729   Durbin-Watson:                   1.997
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              304.988
+Skew:                           0.008   Prob(JB):                     5.93e-67
+Kurtosis:                       6.484   Cond. No.                         47.3
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<p>Remember, a significant beta1 coefficient would reject EMH. In this case, the coefficient of lag 1 is significant at 1%, and the coefficient of lag 2 is insignificant. For this example, we can use the previous day’s return on Apple to predict tomorrow’s return. However, we can not use the previous day and the two days before returns to predict tomorrow’s return. If, in this case, the two coefficients were significant, the market would not be efficient for Apple because we can use historical information to predict future returns. If both coefficients were insignificant, we could say that the market is efficient for Apple, and then that historical information to predict the future return would not be helpful. We mentioned that one advantage of this test is that it is easy to understand. However, like in the Apple case, if one coefficient is significant and the other is not, we have an inconclusive EMH test, so we need another EMH test that corrects that issue, which is what the next EMH test for variance does.</p>
+</section>
+<section id="emh-test-for-variance-for-one-asset" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="emh-test-for-variance-for-one-asset"><span class="header-section-number">3.3</span> EMH test for variance for one asset</h2>
+<p>For some financial time series, such as stock returns, the expected returns do may not depend on past returns (the Market is efficient), but the variance of returns may. For example, in the model:</p>
+<p><span class="math display">\[r_t= \beta_0 +\beta_1\ r_{t-1}+\beta_2\ r_{t-2}+u_t\ (3)\]</span></p>
+<p>We could apply a test to verify if the variance of returns have an effect o the returns:</p>
+<p><span class="math display">\[u^2_{t}= \delta_0 +\delta_1\ r_{t-1}+\delta_2\ r_{t-2}+e_t\ (3.1)\]</span></p>
+<p>The previous model is for heteroskedasticity test, then we could apply Breusch-Pagan (BP) test for heteroskedasticity. The intuition behind applying the heteroskedasticity to test EMH, is because, remember that the null hypothesis in a test such as BP in equation 3.1:</p>
+<p><span class="math display">\[\delta_0=\delta_1=\delta_2=0\]</span></p>
+<p>Then, for a small p-value of the BP test, we reject the null hypothesis and the model would be heteroscedastic. If that happens, in terms of the EMH it implies that there is evidence that the variance of the historic returns have an effect on the today return, and then we can use the historical information of the return to predict future returns.<br>
+Here we aply the BP test.</p>
+<div id="c4cda4b8" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> sms.het_breuschpagan(res.resid, res.model.exog)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>(0.4445405267105208,
+ 0.8006989355087222,
+ 0.22132760713799005,
+ 0.8015194789663879)</code></pre>
+</div>
+</div>
+<p>We have four statistics: the Lagrange value and its t p-value and the F-value and its p.value. Both are usually consistent in their results. For this chapter, we will use the F-value. This is the F-value</p>
+<div id="0b50adef" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>test[<span class="dv">2</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>0.22132760713799005</code></pre>
+</div>
+</div>
+<p>This is the F-pvalue</p>
+<div id="f0559c50" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>test[<span class="dv">3</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>0.8015194789663879</code></pre>
+</div>
+</div>
+<p>In the previous output, we see, by the F-pvale, that we do not reject the null hypothesis, then the model is homoscedastic. Regarding the EMH, in this case, it would imply that there is evidence that the variance of the historic returns does not affect today’s return, and we can not use the historical information of the return to predict future returns. The implication for our portfolio is that we must exclude Apple from it.</p>
+</section>
+<section id="emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio"><span class="header-section-number">3.4</span> EMH tests for the variance for many assets to build a portfolio</h2>
+<p>In this chapter, we filter those stocks so that we can make a prediction. Regarding the EMH test for variance, the stocks for which there is a small p-value on the BP test. For this chapter, small is a p-value less than 0.1.</p>
+<p>The next code is to build a “Loop For” to perform the EMH test for variance for many assets. First, we get the ticker’s names.</p>
+<div id="cf3f1a9d" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tickers<span class="op">=</span><span class="bu">list</span>(data.columns) <span class="co"># tickers names</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>tickers[:<span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>['AAPL.Close', 'MSFT.Close', 'GOOG.Close', 'GOOGL.Close', 'AMZN.Close']</code></pre>
+</div>
+</div>
+<div id="d402e9dc" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pval<span class="op">=</span>[] </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fstat<span class="op">=</span>[]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>names<span class="op">=</span>[]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stock <span class="kw">in</span> tickers:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  ap<span class="op">=</span>data[[stock]]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  ret<span class="op">=</span>ap.pct_change()</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  lag1<span class="op">=</span>ret.shift(<span class="op">-</span><span class="dv">1</span>)  </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  lag1<span class="op">=</span>lag1.rename(columns<span class="op">=</span>{stock:<span class="st">"lag_1"</span>})</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  lag2<span class="op">=</span>ret.shift(<span class="op">-</span><span class="dv">2</span>)  </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  lag2<span class="op">=</span>lag2.rename(columns<span class="op">=</span>{stock:<span class="st">"lag_2"</span>})</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  ret2<span class="op">=</span>pd.concat([ret[stock],lag1,lag2],axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  ret2.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  data3<span class="op">=</span>sm.add_constant(ret2)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  y<span class="op">=</span>data3[stock]</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  X<span class="op">=</span>data3.loc[:,(<span class="st">"const"</span>,<span class="st">"lag_1"</span>,<span class="st">"lag_2"</span>)]</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span>sm.OLS(y,X)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  res<span class="op">=</span>model.fit()</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  test <span class="op">=</span> sms.het_breuschpagan(res.resid, res.model.exog)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  pval.append(test[<span class="dv">3</span>]) <span class="co"># To store the  F-pvalue</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  fstat.append(test[<span class="dv">2</span>])<span class="co"># To store the  F values</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  names.append(stock)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We transform the results into a data frame.</p>
+<div id="42337a95" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.DataFrame({<span class="st">"pval"</span>:pval,<span class="st">"fstat"</span>:fstat},index<span class="op">=</span>names)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pval</th>
+<th data-quarto-table-cell-role="th">fstat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AAPL.Close</td>
+<td>0.801519</td>
+<td>0.221328</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MSFT.Close</td>
+<td>0.113536</td>
+<td>2.183545</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">GOOG.Close</td>
+<td>0.555914</td>
+<td>0.587716</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">GOOGL.Close</td>
+<td>0.771132</td>
+<td>0.260009</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AMZN.Close</td>
+<td>0.626187</td>
+<td>0.468472</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Here we apply the filter to get the stocks whit a Fp-value less than 0.1.</p>
+<div id="55e85738" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df2<span class="op">=</span>df[df[<span class="st">"pval"</span>]<span class="op">&lt;=</span><span class="fl">0.1</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pval</th>
+<th data-quarto-table-cell-role="th">fstat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">TSLA.Close</td>
+<td>0.001851</td>
+<td>6.358248</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">TSM.Close</td>
+<td>0.025103</td>
+<td>3.707484</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">JNJ.Close</td>
+<td>0.000003</td>
+<td>12.999178</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">UNH.Close</td>
+<td>0.039176</td>
+<td>3.257248</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">JPM.Close</td>
+<td>0.052720</td>
+<td>2.957243</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="1ea36c7e" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df2.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pval</th>
+<th data-quarto-table-cell-role="th">fstat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">NKE.Close</td>
+<td>7.981519e-03</td>
+<td>4.869728</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">INTC.Close</td>
+<td>2.204589e-02</td>
+<td>3.838985</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C.PJ.Close</td>
+<td>5.401396e-28</td>
+<td>69.839166</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">TMUS.Close</td>
+<td>6.114786e-03</td>
+<td>5.140592</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">TXN.Close</td>
+<td>3.416205e-03</td>
+<td>5.733322</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>For the portfolio’s next stage, we kept the stocks inside the data frame df2. We will also need the prices and returns of those stocks, so we will build a data frame with their prices.</p>
+<div id="1c7f8f31" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data2<span class="op">=</span>data.loc[:,df2.index]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>data2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TSLA.Close</th>
+<th data-quarto-table-cell-role="th">TSM.Close</th>
+<th data-quarto-table-cell-role="th">JNJ.Close</th>
+<th data-quarto-table-cell-role="th">UNH.Close</th>
+<th data-quarto-table-cell-role="th">JPM.Close</th>
+<th data-quarto-table-cell-role="th">TCEHY.Close</th>
+<th data-quarto-table-cell-role="th">TCTZF.Close</th>
+<th data-quarto-table-cell-role="th">XOM.Close</th>
+<th data-quarto-table-cell-role="th">BAC.Close</th>
+<th data-quarto-table-cell-role="th">PG.Close</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">ACN.Close</th>
+<th data-quarto-table-cell-role="th">CSCO.Close</th>
+<th data-quarto-table-cell-role="th">LRLCF.Close</th>
+<th data-quarto-table-cell-role="th">CICHF.Close</th>
+<th data-quarto-table-cell-role="th">MCD.Close</th>
+<th data-quarto-table-cell-role="th">NKE.Close</th>
+<th data-quarto-table-cell-role="th">INTC.Close</th>
+<th data-quarto-table-cell-role="th">C.PJ.Close</th>
+<th data-quarto-table-cell-role="th">TMUS.Close</th>
+<th data-quarto-table-cell-role="th">TXN.Close</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/02/2020</td>
+<td>86.052002</td>
+<td>60.040001</td>
+<td>145.970001</td>
+<td>292.500000</td>
+<td>141.089996</td>
+<td>49.880001</td>
+<td>49.880001</td>
+<td>70.900002</td>
+<td>35.639999</td>
+<td>123.410004</td>
+<td>...</td>
+<td>210.149994</td>
+<td>48.419998</td>
+<td>293.450012</td>
+<td>0.87</td>
+<td>200.789993</td>
+<td>102.199997</td>
+<td>60.840000</td>
+<td>28.570000</td>
+<td>78.589996</td>
+<td>129.570007</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">01/03/2020</td>
+<td>88.601997</td>
+<td>58.060001</td>
+<td>144.279999</td>
+<td>289.540009</td>
+<td>138.339996</td>
+<td>49.029999</td>
+<td>48.930000</td>
+<td>70.330002</td>
+<td>34.900002</td>
+<td>122.580002</td>
+<td>...</td>
+<td>209.800003</td>
+<td>47.630001</td>
+<td>297.130005</td>
+<td>0.84</td>
+<td>200.080002</td>
+<td>101.919998</td>
+<td>60.099998</td>
+<td>28.719999</td>
+<td>78.169998</td>
+<td>127.849998</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/06/2020</td>
+<td>90.307999</td>
+<td>57.389999</td>
+<td>144.100006</td>
+<td>291.549988</td>
+<td>138.229996</td>
+<td>48.770000</td>
+<td>48.700001</td>
+<td>70.870003</td>
+<td>34.849998</td>
+<td>122.750000</td>
+<td>...</td>
+<td>208.429993</td>
+<td>47.799999</td>
+<td>293.000000</td>
+<td>0.84</td>
+<td>202.330002</td>
+<td>101.830002</td>
+<td>59.930000</td>
+<td>28.719999</td>
+<td>78.620003</td>
+<td>126.959999</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">01/07/2020</td>
+<td>93.811996</td>
+<td>58.320000</td>
+<td>144.979996</td>
+<td>289.790009</td>
+<td>135.880005</td>
+<td>49.779999</td>
+<td>49.770000</td>
+<td>70.290001</td>
+<td>34.619999</td>
+<td>121.989998</td>
+<td>...</td>
+<td>203.929993</td>
+<td>47.490002</td>
+<td>288.549988</td>
+<td>0.88</td>
+<td>202.630005</td>
+<td>101.779999</td>
+<td>58.930000</td>
+<td>28.629999</td>
+<td>78.919998</td>
+<td>129.410004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">01/08/2020</td>
+<td>98.428001</td>
+<td>58.750000</td>
+<td>144.960007</td>
+<td>295.899994</td>
+<td>136.940002</td>
+<td>49.650002</td>
+<td>49.650002</td>
+<td>69.230003</td>
+<td>34.970001</td>
+<td>122.510002</td>
+<td>...</td>
+<td>204.330002</td>
+<td>47.520000</td>
+<td>287.500000</td>
+<td>0.88</td>
+<td>205.910004</td>
+<td>101.550003</td>
+<td>58.970001</td>
+<td>28.709999</td>
+<td>79.419998</td>
+<td>129.759995</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 56 columns</p>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-HFT" class="csl-entry" role="listitem">
+Aldridge, Irene. 2010. <em>High-Frequency Trading: A Practical Guide to Algorithmic Strategies and Trading Systems</em>. Hoboken, New Jersey: John Wiley &amp; Sons.
+</div>
+<div id="ref-BF" class="csl-entry" role="listitem">
+Burton, Edwin T., and Sunit N. Shah. 2013. <em>Behavioral Finance</em>. Hoboken, New Jersey: John Wiley &amp; Sons.
+</div>
+<div id="ref-FAMA" class="csl-entry" role="listitem">
+Fama, Eugene. 1970. <span>“Efficient Capital Markets: A Review of Theory and Empirical Work.”</span> <em>Journal of Finance</em> 25: 383–417.
+</div>
+<div id="ref-wooldridge" class="csl-entry" role="listitem">
+Wooldridge, Jeffrey M. 2020. <em>Introductory Econometrics: A Modern Approach</em>. South-Western Cengage Learning.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./credit.html" class="pagination-link" aria-label="Credit analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Credit analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
