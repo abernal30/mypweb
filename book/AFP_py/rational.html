@@ -270,25 +270,26 @@ window.Quarto = {
 <li><p>Step 2. Filter Market anomalies. The strategy consists of buying assets when their prices are trending up and selling them when they are down. We will pick stocks that contribute to increasing the portfolio return.</p></li>
 <li><p>Step 3. Portfolio allocation. Finally, we will optimize.</p></li>
 </ul>
-<p>It is important to note that this is not the traditional Markowitz portfolio building, where we only optimize the weights of the portfolio’s assets. First, we pick stock stocks, which we call filters in this book, that fulfill some assumptions. Those assumptions are related to rational agent theory and market anomalies theory. After that stock picking, we optimize the weights of the assets.</p>
+<p>It is important to note that this is not the traditional Markowitz portfolio building, where we only optimize the weights of the portfolio’s assets. First, we do a stock pick, which we call filters in this book, that fulfill some assumptions. Those assumptions are related to rational agent theory and market anomalies theory. After that stock picking, we optimize the weights of the assets.</p>
 <section id="introduction-to-rational-agent-and-behavioural-finance" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="introduction-to-rational-agent-and-behavioural-finance"><span class="header-section-number">3.1</span> Introduction to rational agent and behavioural finance</h2>
-<p>Around 1970, economists argued that an efficient market should instantaneously reflect all the available information of a particular financial security, called the Efficient Market Hypothesis EMH <span class="citation" data-cites="FAMA">(<a href="references.html#ref-FAMA" role="doc-biblioref">Fama 1970</a>)</span>. Then, arbitrage opportunities were challenging to exist, or they used to argue that those markets were not predictable. Academics were reasonably content with the EMH until in1987 stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average’s historic collapse. What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view. Economists actively discussing and acting in financial markets seemed to believe that markets were predictable, a fundamental principle of modern behavioral finance <span class="citation" data-cites="BF">(<a href="references.html#ref-BF" role="doc-biblioref">Burton and Shah 2013</a>)</span>. By designing systematic trading platforms, some traders and trading systems aim to generate signals that consistently produce positive outcomes over many trades. Usually, the trades test successful trading systems on large amounts of past historical data. A more scientific method for analyzing a particular financial security may be determining whether the security price changes are random. If the price changes are random, the probability of detecting a consistently profitable trading opportunity for that particular security is negligible. On the other hand, if the price changes are non-random, the financial security has persistent predictability and should be analyzed further. Then, it is possible to measure the relative availability of trading opportunities with the market inefficiency tests <span class="citation" data-cites="HFT">(<a href="references.html#ref-HFT" role="doc-biblioref">Aldridge 2010</a>)</span>. In summary, if the tests detect that new information takes in slowly in the asset prices, arbitrage opportunities exist, and the market is inefficient.</p>
+<p>Around 1970, economists argued that an efficient market should instantaneously reflect all the available information of a particular financial security, called the Efficient Market Hypothesis EMH <span class="citation" data-cites="FAMA">(<a href="references.html#ref-FAMA" role="doc-biblioref">Fama 1970</a>)</span>. Then, arbitrage opportunities were challenging to exist, or they used to argue that those markets were not predictable. Academics were reasonably content with the EMH until in1987 stock market behavior in 1987 was bizarre. The year began with the Dow Jones Industrial Average’s historic collapse. What is interesting about 1987 is that trading folklore and the activities of leading academic economists fit the behavioral finance point of view, not the EMH point of view.</p>
+<p>Economists actively discussing and acting in financial markets seemed to believe that markets were predictable, a fundamental principle of modern behavioral finance <span class="citation" data-cites="BF">(<a href="references.html#ref-BF" role="doc-biblioref">Burton and Shah 2013</a>)</span>. By designing systematic trading platforms, some traders and trading systems aim to generate signals that consistently produce positive outcomes over many trades. Usually, the trades test successful trading systems on large amounts of past historical data. A more scientific method for analyzing a particular financial security may be determining whether the security price changes are random. If the price changes are random, the probability of detecting a consistently profitable trading opportunity for that particular security is negligible. On the other hand, if the price changes are non-random, the financial security has persistent predictability and should be analyzed further. Then, it is possible to measure the relative availability of trading opportunities with the market inefficiency tests <span class="citation" data-cites="HFT">(<a href="references.html#ref-HFT" role="doc-biblioref">Aldridge 2010</a>)</span>. In summary, if the tests detect that new information takes in slowly in the asset prices, arbitrage opportunities exist, and the market is inefficient.</p>
 <p>In this chapter, we apply the EMH test proposed by <span class="citation" data-cites="wooldridge">(<a href="references.html#ref-wooldridge" role="doc-biblioref">Wooldridge 2020</a>)</span> to identify arbitrage opportunities or to find inefficient markets.</p>
 </section>
 <section id="emh-test-on-historical-returns-for-one-asset" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="emh-test-on-historical-returns-for-one-asset"><span class="header-section-number">3.2</span> EMH test on historical returns for one asset</h2>
-<p>Suppose <span class="math inline">\(y_{t}\)</span> is the daily price of the S&amp;P500. A strict form of the efficient markets hypothesis establishes that the historical information on the index before day <em>t</em> should not help predict the index. If we use only past information on <span class="math inline">\(y_{t}\)</span>, a market is efficient if the following is true:</p>
+<p>Suppose <span class="math inline">\(y_{t}\)</span> is the daily price of the S&amp;P500. A strict form of the Efficient Markets Hypothesis EMH establishes that the historical information on the index before day <em>t</em> should not help predict the index. If we use only past information on <span class="math inline">\(y_{t}\)</span>, a market is efficient if the following is true:</p>
 <p><span class="math display">\[y_t= \beta_0 +\beta_1\ y_{t-1} + \beta_2\ y_{t-2}+u_t\ (1)\]</span></p>
-<p>Where the term on the right is the expected value of <span class="math inline">\(y_{t}\)</span>, given the historical information of the index <span class="math inline">\(y_{t-1} ,y_{t-2},....\)</span>. In other words, the expected value does not depend on its own historical information. However, if the previous equation is false, it implies that we could use the information to predict the current price. If the previous equation is false, we could use the information on the past to predict the current price. One advantage of this test is that is easy to understand, assuming that you have at least basic econometric knowledge.</p>
+<p>Where the term on the right is the expected value of <span class="math inline">\(y_{t}\)</span>, given the historical information of the index <span class="math inline">\(y_{t-1} ,y_{t-2},....\)</span>. In other words, the expected value does depend on its own historical information. However, if the previous equation is false, it implies that we could not use the information to predict the current price. One advantage of this test is that is easy to understand, assuming that you have at least basic econometric knowledge.</p>
 <p>Suppose that we want to make the EMH test on the returns of the AAPL.</p>
-<div id="934621ca" class="cell" data-execution_count="1">
+<div id="2296a5e8" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.stats.api <span class="im">as</span> sms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For this chapter we use daily data for several stocks from Jan.&nbsp;2020 to May. 2020.</p>
-<div id="7647f702" class="cell" data-execution_count="2">
+<div id="76450b98" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">=</span>pd.read_csv(<span class="st">"https://raw.githubusercontent.com/abernal30/AFP_py/refs/heads/main/data/1Rational_agent.csv"</span>,index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data<span class="co">#.head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -618,7 +619,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="428675ff" class="cell" data-execution_count="3">
+<div id="94170664" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stock<span class="op">=</span><span class="st">"AAPL.Close"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>aapl<span class="op">=</span>data[stock] <span class="co"># subset of one the stock</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>aapl.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -636,9 +637,9 @@ Name: AAPL.Close, dtype: float64</code></pre>
 <p><span class="math display">\[\begin{align}
 ret =\beta_{0}+\beta_{1}ret_{-1}+\beta_{1}ret_{-2}+u\ (2)
 \end{align}\]</span></p>
-<p>where ret is the return of the stock, <span class="math inline">\(ret_{-1}\)</span> is the return of the lagged one period, <span class="math inline">\(ret_{-2}\)</span> is the return of the lagged two periods</p>
+<p>where ret is the return of the stock, <span class="math inline">\(ret_{-1}\)</span> is the return of the lagged one period, and <span class="math inline">\(ret_{-2}\)</span> is the return of the lagged two periods</p>
 <p>To run the previous model, we need to estimate the returns, create the variables and store them in a data frame. We estimate arithmetic return: (P/P(t-e))-1</p>
-<div id="04de6c36" class="cell" data-execution_count="4">
+<div id="16990b6f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ret<span class="op">=</span>aapl.pct_change()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ret.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -651,15 +652,15 @@ ret =\beta_{0}+\beta_{1}ret_{-1}+\beta_{1}ret_{-2}+u\ (2)
 Name: AAPL.Close, dtype: float64</code></pre>
 </div>
 </div>
-<p>Here we create the lags of the variable df.shift(-1), and concatenate in one data frame.</p>
-<div id="a6127541" class="cell" data-execution_count="5">
+<p>Here we create the lags of the variables, and concatenate them on a data frame.</p>
+<div id="8ffaf745" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lag1<span class="op">=</span>ret.shift(<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lag1<span class="op">=</span>lag1.rename(<span class="st">"lag_1"</span>) <span class="co"># This is the first lag  r(t-1)</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lag2<span class="op">=</span>ret.shift(<span class="op">-</span><span class="dv">2</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>lag2<span class="op">=</span>lag2.rename(<span class="st">"lag_2"</span>) <span class="co"># This is the second lag  r(t-1)o r(t-2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, we concatenate the three variables.</p>
-<div id="b9d00e6e" class="cell" data-execution_count="6">
+<div id="5980d75f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span><span class="op">=</span>pd.concat([ret,lag1,lag2],axis<span class="op">=</span><span class="dv">1</span>) </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -719,7 +720,7 @@ Name: AAPL.Close, dtype: float64</code></pre>
 </div>
 </div>
 <p>Now we run the OLS model, but first we eliminate the missing values.</p>
-<div id="44e34677" class="cell" data-execution_count="7">
+<div id="9dbfa1b1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">all</span>.dropna(inplace<span class="op">=</span><span class="va">True</span>) <span class="co"># Dropping  missing values</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>todas2<span class="op">=</span>sm.add_constant(<span class="bu">all</span>) <span class="co"># Adding the constant to the model</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>todas2[stock] <span class="co"># defining the ariable y</span></span>
@@ -734,7 +735,7 @@ Dep. Variable:             AAPL.Close   R-squared:                       0.034
 Model:                            OLS   Adj. R-squared:                  0.031
 Method:                 Least Squares   F-statistic:                     10.65
 Date:                Thu, 07 Nov 2024   Prob (F-statistic):           2.86e-05
-Time:                        13:22:46   Log-Likelihood:                 1419.3
+Time:                        13:37:57   Log-Likelihood:                 1419.3
 No. Observations:                 603   AIC:                            -2833.
 Df Residuals:                     600   BIC:                            -2819.
 Df Model:                           2                                         
@@ -764,11 +765,11 @@ Notes:
 <p><span class="math display">\[r_t= \beta_0 +\beta_1\ r_{t-1}+\beta_2\ r_{t-2}+u_t\ (3)\]</span></p>
 <p>We could apply a test to verify if the variance of returns have an effect o the returns:</p>
 <p><span class="math display">\[u^2_{t}= \delta_0 +\delta_1\ r_{t-1}+\delta_2\ r_{t-2}+e_t\ (3.1)\]</span></p>
-<p>The previous model is for heteroskedasticity test, then we could apply Breusch-Pagan (BP) test for heteroskedasticity. The intuition behind applying the heteroskedasticity to test EMH, is because, remember that the null hypothesis in a test such as BP in equation 3.1:</p>
+<p>The previous model is for heteroskedasticity test, then we could apply Breusch-Pagan (BP) test for heteroskedasticity. The intuition behind applying the heteroskedasticity to test EMH, is because, remember that the null hypothesis in a test such as BP in equation 3.1 is:</p>
 <p><span class="math display">\[\delta_0=\delta_1=\delta_2=0\]</span></p>
 <p>Then, for a small p-value of the BP test, we reject the null hypothesis and the model would be heteroscedastic. If that happens, in terms of the EMH it implies that there is evidence that the variance of the historic returns have an effect on the today return, and then we can use the historical information of the return to predict future returns.<br>
 Here we aply the BP test.</p>
-<div id="c4cda4b8" class="cell" data-execution_count="8">
+<div id="7ab5bd9c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> sms.het_breuschpagan(res.resid, res.model.exog)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -779,14 +780,14 @@ Here we aply the BP test.</p>
 </div>
 </div>
 <p>We have four statistics: the Lagrange value and its t p-value and the F-value and its p.value. Both are usually consistent in their results. For this chapter, we will use the F-value. This is the F-value</p>
-<div id="0b50adef" class="cell" data-execution_count="9">
+<div id="2866e972" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>test[<span class="dv">2</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>0.22132760713799005</code></pre>
 </div>
 </div>
 <p>This is the F-pvalue</p>
-<div id="f0559c50" class="cell" data-execution_count="10">
+<div id="ffe0495b" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>test[<span class="dv">3</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>0.8015194789663879</code></pre>
@@ -798,14 +799,14 @@ Here we aply the BP test.</p>
 <h2 data-number="3.4" class="anchored" data-anchor-id="emh-tests-for-the-variance-for-many-assets-to-build-a-portfolio"><span class="header-section-number">3.4</span> EMH tests for the variance for many assets to build a portfolio</h2>
 <p>In this chapter, we filter those stocks so that we can make a prediction. Regarding the EMH test for variance, the stocks for which there is a small p-value on the BP test. For this chapter, small is a p-value less than 0.1.</p>
 <p>The next code is to build a “Loop For” to perform the EMH test for variance for many assets. First, we get the ticker’s names.</p>
-<div id="cf3f1a9d" class="cell" data-execution_count="11">
+<div id="ec2d2b49" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tickers<span class="op">=</span><span class="bu">list</span>(data.columns) <span class="co"># tickers names</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>tickers[:<span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>['AAPL.Close', 'MSFT.Close', 'GOOG.Close', 'GOOGL.Close', 'AMZN.Close']</code></pre>
 </div>
 </div>
-<div id="d402e9dc" class="cell" data-execution_count="12">
+<div id="81eadf02" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pval<span class="op">=</span>[] </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fstat<span class="op">=</span>[]</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>names<span class="op">=</span>[]</span>
@@ -832,7 +833,7 @@ Here we aply the BP test.</p>
 <span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  names.append(stock)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We transform the results into a data frame.</p>
-<div id="42337a95" class="cell" data-execution_count="13">
+<div id="b65d3950" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.DataFrame({<span class="st">"pval"</span>:pval,<span class="st">"fstat"</span>:fstat},index<span class="op">=</span>names)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -881,7 +882,7 @@ Here we aply the BP test.</p>
 </div>
 </div>
 <p>Here we apply the filter to get the stocks whit a Fp-value less than 0.1.</p>
-<div id="55e85738" class="cell" data-execution_count="14">
+<div id="f79da07e" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df2<span class="op">=</span>df[df[<span class="st">"pval"</span>]<span class="op">&lt;=</span><span class="fl">0.1</span>]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -928,7 +929,7 @@ Here we aply the BP test.</p>
 </div>
 </div>
 </div>
-<div id="1ea36c7e" class="cell" data-execution_count="15">
+<div id="ab11babd" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df2.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
@@ -975,7 +976,7 @@ Here we aply the BP test.</p>
 </div>
 </div>
 <p>For the portfolio’s next stage, we kept the stocks inside the data frame df2. We will also need the prices and returns of those stocks, so we will build a data frame with their prices.</p>
-<div id="1c7f8f31" class="cell" data-execution_count="16">
+<div id="fdec3a11" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data2<span class="op">=</span>data.loc[:,df2.index]</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>data2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
