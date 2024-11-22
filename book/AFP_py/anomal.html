@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./portfolio.html" rel="next">
 <link href="./rational.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -198,6 +198,12 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./portfolio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Portfolio management</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -205,7 +211,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
   </div>
 </li>
     </ul>
@@ -244,12 +250,12 @@ div.csl-indent {
 </header>
 
 
-<div id="b330adea" class="cell" data-execution_count="1">
+<div id="07382718" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the previous chapter, we started with 100 stocks and applied the EMH filter test to the variance to get only those stocks for which the EMH fails (markets are inefficient). We ended with 56 stocks. Then, we can make a prediction based on past information.</p>
-<div id="b4a09fe9" class="cell" data-execution_count="2">
+<div id="28887915" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">=</span>pd.read_csv(<span class="st">"https://raw.githubusercontent.com/abernal30/AFP_py/refs/heads/main/data/anomalies.csv"</span>,index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -446,16 +452,16 @@ div.csl-indent {
 <p>To create the signal, we follow the book <span class="citation" data-cites="Jeet">(<a href="references.html#ref-Jeet" role="doc-biblioref">Jeet and Vats 2017</a>)</span>. The idea is to use two technical analysis indicators: the Bollinger Bands (BB) and the Moving Average Converge Diverge (MACD) (see the Appendix for descriptions of these indicators).</p>
 <p>As an example, we first create the Bollinger Bands (BB) for one stock and plot a few observations.</p>
 <p>We will use the Python module ta.</p>
-<div id="b575cc21" class="cell" data-execution_count="3">
+<div id="1ba5457d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ticker<span class="op">=</span><span class="st">"TSLA.Close"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bb<span class="op">=</span>ta.volatility.BollingerBands(data[ticker], window<span class="op">=</span><span class="dv">20</span>, window_dev<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>bb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>&lt;ta.volatility.BollingerBands at 0x1821bd17440&gt;</code></pre>
+<pre><code>&lt;ta.volatility.BollingerBands at 0x1e00c1a71d0&gt;</code></pre>
 </div>
 </div>
 <p>The argument Window is the time to estimate the standard deviation, and window_dev is the number of standard deviations of the bands. Inside the object “bb” is information, such as the upper or higher band.</p>
-<div id="1639314c" class="cell" data-execution_count="4">
+<div id="c04f9157" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hb<span class="op">=</span>bb.bollinger_hband()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hb.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -469,11 +475,11 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>Or the lower band.</p>
-<div id="998e4e5b" class="cell" data-execution_count="5">
+<div id="ddd04aaa" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lb<span class="op">=</span>bb.bollinger_lband() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To store the two bands in a data frame, together with the price:</p>
-<div id="e63093b1" class="cell" data-execution_count="6">
+<div id="f50b349b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>band_df<span class="op">=</span>data[ticker]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>band_df<span class="op">=</span>pd.concat([band_df,hb,lb],axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>band_df.columns<span class="op">=</span>[<span class="st">"price"</span>,<span class="st">"hband"</span>,<span class="st">"lband"</span>]</span>
@@ -535,7 +541,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>We plot the result.</p>
-<div id="39139853" class="cell" data-execution_count="7">
+<div id="edc26ea0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>band_df.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -548,7 +554,7 @@ Name: hband, dtype: float64</code></pre>
 <p>The following code is to create the following signal:</p>
 <p>When the price is higher or equal to the “high (h)” band, it is a sell or short sell signal (-1). When the price is lower than the “low (l)” band, it’s a buy signal (1). Otherwise, it’s a neutral signal or doing nothing (0).</p>
 <p>This is the “Loop For” for performing the procedure (getting the signals) for all the observations in the stock.</p>
-<div id="00d7740f" class="cell" data-execution_count="8">
+<div id="2eeabc43" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>signal<span class="op">=</span>[] </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,band_df.shape[<span class="dv">0</span>]): </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -567,7 +573,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>Here we print the result:</p>
-<div id="5e900d9e" class="cell" data-execution_count="9">
+<div id="5908c827" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> signal_df<span class="op">=</span>pd.DataFrame(signal,columns<span class="op">=</span>[<span class="st">"signal"</span>])</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a> signal_df.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -580,7 +586,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 <p>To estimate the strategy’s return, we will multiply the signal by the return for that day. We use the price of the signal day and the price one day after. Assuming it is a buying signal, we buy today and sell it tomorrow, making a one-day profit.</p>
 <p>Then, the price of the signal day for observation 19 is:</p>
-<div id="d5c30f0d" class="cell" data-execution_count="10">
+<div id="2f0a115e" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>j<span class="op">=</span><span class="dv">19</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>band_df[<span class="st">"price"</span>].iloc[j,] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -588,14 +594,14 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>The price of the day after is:</p>
-<div id="29f07e9b" class="cell" data-execution_count="11">
+<div id="bd9b3653" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>band_df[<span class="st">"price"</span>].iloc[j<span class="op">+</span><span class="dv">1</span>,] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>130.113998</code></pre>
 </div>
 </div>
 <p>The associated signal for that observation:</p>
-<div id="63390dfd" class="cell" data-execution_count="12">
+<div id="1e82a789" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>signal_df[<span class="st">"signal"</span>].iloc[j,] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>-1</code></pre>
@@ -604,7 +610,7 @@ Name: hband, dtype: float64</code></pre>
 <p>The intuition for doing that is: If the signal is one(minus one), it means that the strategy was to buy (sell or short sale) the stock that day and sell (buy) it the next day. If the return is positive (negative), then it implies that the stock price increased (decreased), and by multiplying the return with the signal, we validate that the return of our strategy is positive.</p>
 <p>On the contrary, if the signal is one (minus one) and the return negative (positive), it would imply that the price decreased (increased), and by buying (selling or short selling) the stock, we would have a loss, which is represented by the negative return.</p>
 <p>Finally, if the signal is zero and the return is positive (negative), the result will be zero, implying that we did not buy (sell) the stock and didn’t have a return for that.</p>
-<div id="0058c85d" class="cell" data-execution_count="13">
+<div id="e0bad644" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>((band_df[<span class="st">"price"</span>].iloc[j<span class="op">+</span><span class="dv">1</span>,]<span class="op">/</span>band_df[<span class="st">"price"</span>].iloc[j,])<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>signal_df[<span class="st">"signal"</span>].iloc[j,] <span class="co"># el rendimiento aritmético</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>-0.015230684245782333</code></pre>
@@ -612,7 +618,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 <p>The previous is a daily return. Also, that procedure is for one signal, but we are looking for the return of all signals.</p>
 <p>The next code is to get the location of all signals inside signal_df</p>
-<div id="a4a178c6" class="cell" data-execution_count="14">
+<div id="9310f315" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sig_ret<span class="op">=</span>[]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(signal_df.shape[<span class="dv">0</span>]):</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> signal_df[<span class="st">"signal"</span>].iloc[i,] <span class="op">!=</span> <span class="dv">0</span>: <span class="co"># for signals different than 1 or -1</span></span>
@@ -623,7 +629,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>The following code estimates the daily return strategy for each signal multiplied by the signal.</p>
-<div id="17135900" class="cell" data-execution_count="15">
+<div id="1132e959" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ret_i<span class="op">=</span>[]</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> sig_ret:</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  ret_i.append(((band_df[<span class="st">"price"</span>].iloc[j<span class="op">+</span><span class="dv">1</span>,]<span class="op">/</span>band_df[<span class="st">"price"</span>].iloc[j,])<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>signal_df[<span class="st">"signal"</span>].iloc[j,])</span>
@@ -638,7 +644,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>The previous are daily returns. Here, we estimate the strategy annualized return for this stock as the average return.</p>
-<div id="ab69f985" class="cell" data-execution_count="16">
+<div id="b4f38ad3" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ret<span class="op">=</span>pd.DataFrame(ret_i,columns<span class="op">=</span>[<span class="st">"ret"</span>]) </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pow</span>((<span class="dv">1</span><span class="op">+</span>ret.mean().loc[<span class="st">"ret"</span>,]),<span class="dv">252</span>)<span class="op">-</span><span class="dv">1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -647,7 +653,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>The next step is to create a “Loop For” to perform the same procedure we did for Tesla for all stock inside data and store the results in a data frame.</p>
-<div id="e285318b" class="cell" data-execution_count="17">
+<div id="ade1ea1f" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ret_all<span class="op">=</span>[] </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ticker <span class="kw">in</span> data.columns:</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  bb<span class="op">=</span>ta.volatility.BollingerBands(data[ticker], window<span class="op">=</span><span class="dv">20</span>, window_dev<span class="op">=</span><span class="dv">2</span>)</span>
@@ -713,7 +719,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="02853409" class="cell" data-execution_count="18">
+<div id="ef95e690" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ret_df.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
@@ -754,7 +760,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>As we can see, returns range from -0.908307 to 1.430348. The following filter is to keep the stocks for which the strategy return is higher than 10% (0.1).</p>
-<div id="dec590ae" class="cell" data-execution_count="19">
+<div id="e7de2a32" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ret_filt<span class="op">=</span>ret_df[ret_df[<span class="st">"ret"</span>]<span class="op">&gt;</span><span class="fl">.10</span>]</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ret_filt.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -796,7 +802,7 @@ Name: hband, dtype: float64</code></pre>
 </div>
 </div>
 <p>Finally, we store the prices of those stocks only with a strategy return higher than a threshold, in this case, 10%.</p>
-<div id="787a63ef" class="cell" data-execution_count="20">
+<div id="04865b72" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data2<span class="op">=</span>data.loc[:,ret_filt.index]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
@@ -1236,8 +1242,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./portfolio.html" class="pagination-link" aria-label="Portfolio management">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Portfolio management</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
