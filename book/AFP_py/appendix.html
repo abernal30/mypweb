@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Appendix – Algorithms and Financial Programing in Python</title>
+<title>6&nbsp; Appendix – Algorithms and Financial Programing in Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,7 +84,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./portfolio.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -134,7 +135,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Appendix</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Appendix</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -191,14 +192,20 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./portfolio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Portfolio management</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
@@ -211,10 +218,10 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#python-loops-for" id="toc-python-loops-for" class="nav-link active" data-scroll-target="#python-loops-for"><span class="header-section-number">5.1</span> Python Loops For</a></li>
-  <li><a href="#python-conditionals" id="toc-python-conditionals" class="nav-link" data-scroll-target="#python-conditionals"><span class="header-section-number">5.2</span> Python, conditionals</a></li>
-  <li><a href="#the-macd-and-signals." id="toc-the-macd-and-signals." class="nav-link" data-scroll-target="#the-macd-and-signals."><span class="header-section-number">5.3</span> The MACD and signals.</a></li>
-  <li><a href="#the-bollinger-bands" id="toc-the-bollinger-bands" class="nav-link" data-scroll-target="#the-bollinger-bands"><span class="header-section-number">5.4</span> The Bollinger Bands</a></li>
+  <li><a href="#python-loops-for" id="toc-python-loops-for" class="nav-link active" data-scroll-target="#python-loops-for"><span class="header-section-number">6.1</span> Python Loops For</a></li>
+  <li><a href="#python-conditionals" id="toc-python-conditionals" class="nav-link" data-scroll-target="#python-conditionals"><span class="header-section-number">6.2</span> Python, conditionals</a></li>
+  <li><a href="#the-macd-and-signals." id="toc-the-macd-and-signals." class="nav-link" data-scroll-target="#the-macd-and-signals."><span class="header-section-number">6.3</span> The MACD and signals.</a></li>
+  <li><a href="#the-bollinger-bands" id="toc-the-bollinger-bands" class="nav-link" data-scroll-target="#the-bollinger-bands"><span class="header-section-number">6.4</span> The Bollinger Bands</a></li>
   </ul>
 </nav>
     </div>
@@ -223,7 +230,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Appendix</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Appendix</span></h1>
 </div>
 
 
@@ -240,8 +247,8 @@ div.csl-indent {
 </header>
 
 
-<section id="python-loops-for" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="python-loops-for"><span class="header-section-number">5.1</span> Python Loops For</h2>
+<section id="python-loops-for" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="python-loops-for"><span class="header-section-number">6.1</span> Python Loops For</h2>
 <p>The For Loop is a sequence iteration that assigns items in sequence to target one at a time and runs the block of code for each item.</p>
 <p>Example. Create a loop for printing each of the elements in list num.</p>
 <div id="b0d56806" class="cell" data-execution_count="1">
@@ -334,8 +341,8 @@ div.csl-indent {
 <p>range(5, 22) Generates numbers from 5 to 22 - 1.</p>
 <p>range(7, 14, 2): Generates numbers from 7 to 14 - 1, incrementing by 2.</p>
 </section>
-<section id="python-conditionals" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="python-conditionals"><span class="header-section-number">5.2</span> Python, conditionals</h2>
+<section id="python-conditionals" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="python-conditionals"><span class="header-section-number">6.2</span> Python, conditionals</h2>
 <p>In Python, conditionals allow you to execute certain blocks of code based on whether a condition is true or false. The primary conditional statements in Python are if, elif, and else.</p>
 <p>Here’s how they work: if Statement:</p>
 <p>The if statement is used to test a specific condition. If the condition is true, the code block following the if statement will be executed.</p>
@@ -376,13 +383,13 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="the-macd-and-signals." class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="the-macd-and-signals."><span class="header-section-number">5.3</span> The MACD and signals.</h2>
+<section id="the-macd-and-signals." class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-macd-and-signals."><span class="header-section-number">6.3</span> The MACD and signals.</h2>
 <p>According to <span class="citation" data-cites="macd">(<a href="references.html#ref-macd" role="doc-biblioref">Lothian, n.d.</a>)</span>, the Moving Average Convergence Divergence (MACD) is a trend-following momentum indicator that shows the relationship between two moving averages of a security’s price. The MACD is calculated by subtracting the 26-period Exponential Moving Average (EMA) from the 12-period EMA.</p>
 <p>The result of that calculation is the MACD line. A nine-day EMA of the MACD called the “signal line,” is then plotted with the MACD line, which can be a signal for buy and sell. Traders may buy the security when the MACD crosses above its signal line and sell - or short - the security when the MACD crosses below the signal line.</p>
 </section>
-<section id="the-bollinger-bands" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="the-bollinger-bands"><span class="header-section-number">5.4</span> The Bollinger Bands</h2>
+<section id="the-bollinger-bands" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="the-bollinger-bands"><span class="header-section-number">6.4</span> The Bollinger Bands</h2>
 <p>According to <span class="citation" data-cites="bb">(<a href="references.html#ref-bb" role="doc-biblioref">Chen, n.d.</a>)</span>, The Bollinger Bands are a technical analysis tool developed by John Bollinger for generating oversold or overbought signals.</p>
 <p>There are three lines that compose Bollinger Bands: A simple moving average (middle band) and an upper and lower band.</p>
 <p>The upper and lower bands are typically 2 standard deviations +/- from a 20-day simple moving average (which is the center line), but they can be modified.</p>
@@ -822,11 +829,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./portfolio.html" class="pagination-link" aria-label="Portfolio management">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Portfolio management</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
