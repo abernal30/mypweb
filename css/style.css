@@ -1,0 +1,149 @@
+:root{
+  --paper:#FFFFFF;
+  --paper-alt:#F5F2EA;
+  --ink:#1C2230;
+  --ink-dim:#5B6472;
+  --rule:#E1DDD1;
+  --maroon:#7A2A32;
+  --maroon-dim:#A5555C;
+  --navy:#2B3A55;
+  --gold:#A9812F;
+  --font-serif:'Newsreader', Georgia, serif;
+  --font-sans:'IBM Plex Sans', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-serif);
+  font-size:18px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--maroon); text-decoration:none;}
+a:hover, a:focus-visible{text-decoration:underline;}
+img{max-width:100%; display:block;}
+.wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+}
+
+/* NAV */
+header{border-bottom:1px solid var(--ink); background:var(--paper);}
+nav.wrap{
+  display:flex; align-items:baseline; justify-content:space-between;
+  height:76px; font-family:var(--font-sans);
+}
+.brand{font-family:var(--font-serif); font-weight:600; font-size:20px; color:var(--ink); letter-spacing:0.01em;}
+.brand em{font-style:italic; color:var(--maroon); font-weight:500;}
+.nav-links{display:flex; gap:30px; list-style:none;}
+.nav-links a{
+  color:var(--ink-dim); font-size:14px; letter-spacing:0.03em; text-transform:uppercase;
+  text-decoration:none; padding-bottom:4px; border-bottom:2px solid transparent;
+}
+.nav-links a:hover, .nav-links a.active{color:var(--ink); border-bottom-color:var(--maroon);}
+@media (max-width:640px){ .nav-links{gap:16px;} .nav-links a{font-size:12px;} }
+
+/* HERO */
+.hero{padding:64px 0 56px; border-bottom:1px solid var(--rule);}
+.hero-grid{display:grid; grid-template-columns:1fr 220px; gap:48px; align-items:start;}
+.kicker{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--maroon); margin-bottom:18px;
+}
+h1{
+  font-family:var(--font-serif); font-weight:600; font-size:clamp(36px,5vw,52px);
+  line-height:1.1; color:var(--ink); letter-spacing:-0.01em;
+}
+h1 .role{display:block; font-size:0.42em; font-weight:400; font-style:italic; color:var(--ink-dim); margin-top:10px;}
+.hero-photo{border:1px solid var(--rule); filter:grayscale(0.25) contrast(1.03);}
+.hero p.lede{font-size:19px; color:var(--ink); max-width:60ch; margin-top:22px;}
+@media (max-width:640px){ .hero-grid{grid-template-columns:1fr;} .hero-photo{max-width:160px;} }
+
+/* CREDENTIAL STRIP */
+.strip{padding:22px 0; border-bottom:1px solid var(--rule); background:var(--paper-alt);}
+.strip .wrap{
+  display:flex; flex-wrap:wrap; gap:8px 34px; justify-content:space-between;
+  font-family:var(--font-sans); font-size:13px; color:var(--ink-dim);
+}
+.strip strong{color:var(--ink); font-weight:600;}
+
+/* SECTIONS */
+section{padding:64px 0;}
+.section-head{margin-bottom:36px;}
+.section-num{
+  font-family:var(--font-mono); font-size:12px; color:var(--maroon-dim); letter-spacing:0.1em;
+}
+h2{
+  font-family:var(--font-serif); font-weight:600; font-size:clamp(24px,3vw,30px);
+  color:var(--ink); margin-top:6px;
+}
+h3{font-family:var(--font-serif); font-weight:600; font-size:19px; color:var(--ink);}
+.section-sub{font-family:var(--font-sans); color:var(--ink-dim); font-size:15px; margin-top:10px; max-width:60ch;}
+
+/* TWO-COLUMN INFO BLOCKS (home) */
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+.cols + .cols{margin-top:8px; border-top:1px solid var(--rule); padding-top:36px;}
+dl.field dt{font-family:var(--font-sans); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-dim); margin-bottom:6px;}
+dl.field dd{margin-bottom:20px; font-size:17px;}
+@media (max-width:640px){ .cols{grid-template-columns:1fr;} }
+
+/* BIBLIOGRAPHY LISTS */
+ol.biblio{list-style:none; counter-reset:cite;}
+ol.biblio li{
+  counter-increment:cite;
+  position:relative; padding-left:44px; padding-bottom:22px; margin-bottom:22px;
+  border-bottom:1px solid var(--rule); font-size:16.5px;
+}
+ol.biblio li::before{
+  content:counter(cite);
+  position:absolute; left:0; top:1px;
+  font-family:var(--font-mono); font-size:13px; color:var(--maroon);
+  border:1px solid var(--rule); border-radius:2px; width:26px; height:26px;
+  display:flex; align-items:center; justify-content:center;
+}
+ol.biblio li:last-child{border-bottom:none;}
+ol.biblio .venue{font-style:italic;}
+
+/* SERVICE LIST */
+ul.service-list{list-style:none;}
+ul.service-list li{
+  padding:18px 0; border-bottom:1px solid var(--rule); font-size:17px;
+  display:flex; gap:16px;
+}
+ul.service-list li:last-child{border-bottom:none;}
+ul.service-list .yr{font-family:var(--font-mono); font-size:13px; color:var(--ink-dim); min-width:70px;}
+
+/* BOOKS GRID */
+.books-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+.book-card{display:flex; flex-direction:column;}
+.book-cover{
+  aspect-ratio:3/4.2; border-radius:2px; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:space-between; padding:22px;
+  border:1px solid rgba(0,0,0,0.08);
+}
+.book-cover.maroon{background:var(--maroon); color:#F3E6E4;}
+.book-cover.navy{background:var(--navy); color:#E4E8F0;}
+.book-cover.gold{background:var(--gold); color:#2A2010;}
+.book-tag{
+  font-family:var(--font-mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+  opacity:0.85; align-self:flex-start; border:1px solid currentColor; padding:3px 8px; border-radius:20px;
+}
+.book-cover .cover-title{font-family:var(--font-serif); font-size:24px; font-weight:600; line-height:1.2;}
+.book-cover .cover-author{font-family:var(--font-sans); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; opacity:0.85;}
+.book-meta{padding-top:16px;}
+.book-meta h3{margin-bottom:6px;}
+.book-meta p{font-family:var(--font-sans); font-size:14px; color:var(--ink-dim); margin-bottom:12px;}
+.book-meta a{font-family:var(--font-sans); font-size:13px; text-transform:uppercase; letter-spacing:0.05em;}
+@media (max-width:820px){ .books-grid{grid-template-columns:1fr; max-width:340px; margin:0 auto;} }
+
+/* HOME BOOKS PREVIEW STRIP */
+.books-preview{background:var(--paper-alt); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);}
+
+footer{padding:32px 0; border-top:1px solid var(--ink);}
+footer .wrap{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  font-family:var(--font-mono); font-size:12px; color:var(--ink-dim);
+}
